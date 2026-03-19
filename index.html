@@ -3,19 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SkillVault — The Claude Skills Marketplace. Search, preview and download expert skill files for Claude Projects.">
-  <meta property="og:title" content="SkillVault — Claude Skills Library">
-  <meta property="og:description" content="54 expert skill files for Claude Projects. Download free .md skill files and unlock domain expertise instantly.">
-  <meta name="theme-color" content="#f9f7f4">
-  <title>SkillVault — Claude Skills Library</title>
-
-  <!-- Fonts -->
+  <meta name="description" content="SkillGalaxy — The Claude Skills Marketplace. Download and share expert skill files for Claude Projects.">
+  <meta property="og:title" content="SkillGalaxy — Claude Skills Library">
+  <meta property="og:description" content="109+ expert skill files for Claude Projects. Download free .md files and share your own skills with the community.">
+  <title>SkillGalaxy — Claude Skills Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -23,49 +20,45 @@
      SIDEBAR
 ═══════════════════════════════════════════ -->
 <aside class="sidebar">
-
   <div class="logo-wrap">
     <div class="logo-mark">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z"
-              stroke="#f9f7f4" stroke-width="1.2" fill="none"/>
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
         <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
       </svg>
     </div>
-    <span class="logo-text">Skill<em>Vault</em></span>
+    <span class="logo-text">Skill<em>Galaxy</em></span>
   </div>
 
   <div class="s-label">Browse</div>
-
   <div class="nav-item active" id="navAll-item" onclick="setFilterAll()">
     <span class="nav-dot" style="background:var(--text-ter)"></span>
     All Skills
-    <span class="nav-count" id="navAll">54</span>
+    <span class="nav-count" id="navAll">109</span>
   </div>
-
-  <!-- Dynamic category nav built by app.js -->
   <div id="catNav"></div>
 
   <div class="sidebar-hr"></div>
-  <div class="s-label">Contribute</div>
-
-  <div class="nav-item" onclick="openSubmit()">
-    <span style="font-size:11px;opacity:.6">↑</span>
-    Submit a Skill
+  <div class="s-label">My Account</div>
+  <div class="nav-item" id="mySkillsBtn" onclick="requireLogin(showMySkills)">
+    <span style="font-size:11px;opacity:.6">◈</span> My Submissions
+  </div>
+  <div class="nav-item" onclick="requireLogin(openSubmit)">
+    <span style="font-size:11px;opacity:.6">↑</span> Submit a Skill
   </div>
 
+  <div class="sidebar-hr"></div>
+  <div class="s-label">Contribute</div>
   <div class="nav-item" onclick="document.getElementById('uploadSection').scrollIntoView({behavior:'smooth',block:'center'})">
-    <span style="font-size:11px;opacity:.6">⌁</span>
-    Upload .md File
+    <span style="font-size:11px;opacity:.6">⌁</span> Quick Upload
   </div>
 
   <div class="sidebar-bottom">
     <div class="sidebar-hr"></div>
     <a class="ph-btn" href="https://www.producthunt.com" target="_blank" rel="noopener">
-      🚀 Launch on Product Hunt
+      🚀 Product Hunt
     </a>
   </div>
-
 </aside>
 
 <!-- ═══════════════════════════════════════════
@@ -73,25 +66,33 @@
 ═══════════════════════════════════════════ -->
 <div class="main">
 
-  <!-- TOP BAR -->
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="search-wrap">
       <span class="search-ic">⌕</span>
-      <input type="text" id="searchInput" placeholder="Search skills, tools, tags…" autocomplete="off">
+      <input type="text" id="searchInput" placeholder="Search skills, tools, tags… (⌘K)" autocomplete="off">
     </div>
     <div class="tb-right">
-      <div class="tb-pill"><strong id="countDisplay">54</strong>&nbsp;skills</div>
-      <div class="tb-pill">Free forever</div>
-      <button class="btn-submit-top" onclick="openSubmit()">+ Submit Skill</button>
+      <div class="tb-pill"><strong id="countDisplay">109</strong>&nbsp;skills</div>
+
+      <!-- Logged-out state -->
+      <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')">Sign In</button>
+
+      <!-- Logged-in state -->
+      <div class="user-chip hidden" id="userChip">
+        <div class="user-dot" id="userInitial">U</div>
+        <span id="userName"></span>
+      </div>
+      <button class="btn-submit-top hidden" id="btnSubmitNav" onclick="openSubmit()">+ Submit Skill</button>
+      <button class="btn-logout hidden" id="btnLogout" onclick="handleSignOut()">Sign Out</button>
     </div>
   </div>
 
   <!-- CONTENT -->
   <div class="content">
-
     <div class="page-head">
       <div class="page-title">Claude Skills Library</div>
-      <div class="page-sub">Ready-made skill files for Claude Projects. Download, upload, and unlock domain expertise instantly — free forever.</div>
+      <div class="page-sub">Download expert skill files for Claude Projects — or share your own. Skills submitted here appear live for everyone once approved.</div>
     </div>
 
     <!-- DIFFICULTY PILLS -->
@@ -106,28 +107,27 @@
 
     <div class="sec-row">
       <div class="sec-label">
-        Skills
-        <span class="sec-count" id="sectionCount">54</span>
+        Skills <span class="sec-count" id="sectionCount">109</span>
       </div>
+      <button class="btn-ghost" style="font-size:.72rem;padding:5px 12px" onclick="showAllSkills()">Show All</button>
     </div>
 
     <div id="skillsGrid"></div>
 
-    <!-- UPLOAD SECTION -->
+    <!-- QUICK UPLOAD -->
     <div class="upload-section" id="uploadSection">
       <div class="sec-row" style="margin-bottom:10px">
         <div class="sec-label">Quick Upload</div>
       </div>
-      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('quickFileInput').click()">
+      <div class="upload-zone" id="uploadZone" onclick="requireLogin(()=>document.getElementById('quickFileInput').click())">
         <div style="font-size:1.8rem;margin-bottom:8px">↑</div>
         <h3>Drop a .md skill file here</h3>
-        <p>Instantly adds it to your local library</p>
+        <p>Sign in first — then drop your skill file to add it to the library</p>
         <button class="btn-ghost" style="display:inline-flex;gap:5px;align-items:center"
-                onclick="event.stopPropagation();document.getElementById('quickFileInput').click()">
+          onclick="event.stopPropagation();requireLogin(()=>document.getElementById('quickFileInput').click())">
           Choose file
         </button>
-        <input type="file" id="quickFileInput" accept=".md,.txt" style="display:none"
-               onchange="handleFileUpload(this.files[0]);this.value=''">
+        <input type="file" id="quickFileInput" accept=".md,.txt" style="display:none">
       </div>
     </div>
 
@@ -154,37 +154,103 @@
 
 
 <!-- ═══════════════════════════════════════════
+     AUTH MODAL
+═══════════════════════════════════════════ -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-modal">
+    <div class="auth-head">
+      <div class="auth-logo">
+        <div class="auth-logo-mark">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
+            <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
+          </svg>
+        </div>
+        <span class="auth-logo-text">Skill<em>Galaxy</em></span>
+      </div>
+      <div class="auth-title" id="authTitle">Welcome back</div>
+      <div class="auth-subtitle" id="authSubtitle">Sign in to your SkillGalaxy account</div>
+    </div>
+    <div class="auth-body">
+      <div class="auth-error" id="authError"></div>
+
+      <div class="form-group">
+        <label class="form-label" for="authEmail">Email address</label>
+        <input class="form-input" id="authEmail" type="email" placeholder="you@example.com" autocomplete="email"
+          onkeydown="if(event.key==='Enter')handleAuthSubmit()">
+      </div>
+
+      <div id="authPwWrap">
+        <div class="form-group">
+          <label class="form-label" for="authPassword">Password</label>
+          <input class="form-input" id="authPassword" type="password" placeholder="Min. 6 characters" autocomplete="current-password"
+            onkeydown="if(event.key==='Enter')handleAuthSubmit()">
+        </div>
+      </div>
+
+      <button class="btn-main" id="authSubmitBtn" onclick="handleAuthSubmit()" style="width:100%">
+        Sign In
+      </button>
+
+      <div class="auth-switch" id="authSwitch">
+        No account? <button onclick="switchAuthMode('signup')">Create one</button> ·
+        <button onclick="switchAuthMode('reset')">Forgot password?</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PASSWORD RESET MODAL
+═══════════════════════════════════════════ -->
+<div class="reset-overlay" id="resetOverlay">
+  <div class="reset-modal">
+    <div style="font-family:'Newsreader',Georgia,serif;font-size:1.1rem;margin-bottom:16px">Set New Password</div>
+    <div class="auth-error" id="resetError" style="display:none"></div>
+    <div class="form-group">
+      <label class="form-label" for="newPassword">New Password</label>
+      <input class="form-input" id="newPassword" type="password" placeholder="Min. 6 characters"
+        onkeydown="if(event.key==='Enter')handlePasswordReset()">
+    </div>
+    <button class="btn-main" onclick="handlePasswordReset()" style="width:100%">Update Password</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
      SUBMIT SKILL MODAL
 ═══════════════════════════════════════════ -->
 <div class="submit-overlay" id="submitOverlay">
   <div class="submit-modal">
-
     <div class="sm-head">
       <span class="sm-title">Submit a Skill</span>
       <button class="modal-close" onclick="closeSubmit()">✕</button>
     </div>
-
     <div class="sm-body">
 
-      <!-- TABS -->
       <div class="tabs-row">
         <button class="tab-btn active" data-tab="form"   onclick="switchTab('form')">Fill in Form</button>
         <button class="tab-btn"        data-tab="upload" onclick="switchTab('upload')">Upload .md File</button>
       </div>
 
-      <!-- FORM TAB -->
+      <!-- Errors / Success -->
+      <div class="submit-error" id="submitError"></div>
+      <div class="submit-success" id="submitSuccess"></div>
+
+      <!-- ── FORM TAB ── -->
       <div class="tab-panel active" data-panel="form">
         <form id="submitForm" onsubmit="event.preventDefault();handleFormSubmit()">
 
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="f-name">Skill Name <span>*</span></label>
+              <label class="form-label" for="f-name">Skill Name <span style="color:var(--copper)">*</span></label>
               <input class="form-input" id="f-name" type="text" placeholder="e.g. Prompt Engineer" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="f-cat">Category <span>*</span></label>
+              <label class="form-label" for="f-cat">Category <span style="color:var(--copper)">*</span></label>
               <select class="form-select" id="f-cat" required>
-                <option value="">Select category…</option>
+                <option value="">Select…</option>
                 <option value="ai">AI & ML</option>
                 <option value="security">Cybersecurity</option>
                 <option value="data">Data Engineering</option>
@@ -206,15 +272,16 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="f-desc">Description <span>*</span></label>
+            <label class="form-label" for="f-desc">Description <span style="color:var(--copper)">*</span></label>
             <textarea class="form-textarea" id="f-desc" rows="3"
-              placeholder="What does this skill do? When is it useful?"></textarea>
+              placeholder="What does this skill do? When should Claude use it? (min. 30 chars)"></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="f-trigger">When to Use</label>
+            <label class="form-label" for="f-trigger">Trigger Phrase</label>
             <input class="form-input" id="f-trigger" type="text"
-              placeholder="e.g. Use when designing prompts for LLMs">
+              placeholder="Use when designing prompts for LLMs or debugging AI behavior">
+            <div class="form-hint">Tell Claude exactly when to activate this skill</div>
           </div>
 
           <div class="form-row">
@@ -229,75 +296,84 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="f-time">Time to Master</label>
-              <input class="form-input" id="f-time" type="text" placeholder="e.g. 3-6 months">
+              <input class="form-input" id="f-time" type="text" placeholder="3-6 months">
             </div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="f-skills">Atomic Skills</label>
             <input class="form-input" id="f-skills" type="text"
-              placeholder="Comma-separated: Prompt Design, Chain-of-Thought…">
-            <div class="form-hint">Separate each skill with a comma</div>
+              placeholder="Prompt Design, Chain-of-Thought, Few-Shot…">
+            <div class="form-hint">Comma-separated micro-skills</div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="f-tools">Essential Tools</label>
             <input class="form-input" id="f-tools" type="text"
-              placeholder="Comma-separated: LangChain, OpenAI, Anthropic…">
+              placeholder="LangChain, OpenAI, Anthropic API…">
           </div>
 
           <div class="form-group">
             <label class="form-label" for="f-tags">Tags</label>
             <input class="form-input" id="f-tags" type="text"
-              placeholder="Comma-separated: ai, prompting, llm…">
+              placeholder="ai, prompting, llm, production…">
+            <div class="form-hint">Comma-separated, max 10</div>
           </div>
 
-          <div class="form-row">
+          <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
             <div class="form-group">
-              <label class="form-label" for="f-demand">Demand Score (1–10)</label>
+              <label class="form-label" for="f-demand">Demand (1-10)</label>
               <input class="form-input" id="f-demand" type="number" min="1" max="10" value="7">
             </div>
             <div class="form-group">
-              <label class="form-label" for="f-income">Income Score (1–10)</label>
+              <label class="form-label" for="f-income">Income (1-10)</label>
               <input class="form-input" id="f-income" type="number" min="1" max="10" value="7">
             </div>
             <div class="form-group">
-              <label class="form-label" for="f-future">Future Score (1–10)</label>
+              <label class="form-label" for="f-future">Future (1-10)</label>
               <input class="form-input" id="f-future" type="number" min="1" max="10" value="7">
             </div>
           </div>
 
-          <div class="sm-foot">
-            <button type="submit" class="btn-main">Submit Skill</button>
+          <div style="padding:10px 12px;background:var(--cream-dark);border-radius:var(--r-sm);font-size:.72rem;color:var(--text-ter);margin-bottom:14px">
+            💡 Your skill will be reviewed before appearing publicly (usually within 24 hours). You'll be able to see it in "My Submissions" while pending.
+          </div>
+
+          <div style="display:flex;gap:7px;padding-top:4px">
+            <button type="submit" class="btn-main" id="submitFormBtn">Submit Skill</button>
             <button type="button" class="btn-ghost" onclick="closeSubmit()">Cancel</button>
           </div>
 
         </form>
       </div>
 
-      <!-- UPLOAD TAB -->
+      <!-- ── UPLOAD TAB ── -->
       <div class="tab-panel" data-panel="upload">
-        <div class="file-zone" id="fileZone"
-             onclick="document.getElementById('modalFileInput').click()">
+        <div class="file-zone" id="fileZone" onclick="document.getElementById('modalFileInput').click()">
           <div style="font-size:1.6rem;margin-bottom:7px">↑</div>
           <h4>Drop your .md skill file here</h4>
-          <p>The file will be parsed and added to SkillVault automatically</p>
+          <p>Must follow the Anthropic SKILL.md format with YAML frontmatter</p>
           <button class="btn-ghost"
-                  onclick="event.stopPropagation();document.getElementById('modalFileInput').click()">
+            onclick="event.stopPropagation();document.getElementById('modalFileInput').click()">
             Choose .md file
           </button>
-          <input type="file" id="modalFileInput" accept=".md,.txt" style="display:none"
-                 onchange="handleFileUpload(this.files[0]);this.value=''">
+          <input type="file" id="modalFileInput" accept=".md,.txt" style="display:none">
         </div>
 
+        <div id="uploadValidation"></div>
+
         <div style="margin-top:12px">
-          <div class="m-lbl">Preview</div>
+          <div class="m-lbl">File Preview</div>
           <div class="code-block" id="uploadPreview" style="min-height:60px">
-            <span style="color:var(--text-ter);font-style:italic">File preview will appear here…</span>
+            <span style="color:var(--text-ter);font-style:italic">File preview appears here…</span>
           </div>
         </div>
 
-        <div class="sm-foot" style="margin-top:14px">
+        <div style="padding:10px 12px;background:var(--cream-dark);border-radius:var(--r-sm);font-size:.72rem;color:var(--text-ter);margin-top:12px">
+          📋 Required format: starts with <code>---</code> frontmatter containing <code>name:</code> and <code>description:</code> fields. After uploading, switch to the Form tab to fill in any missing details.
+        </div>
+
+        <div style="display:flex;gap:7px;margin-top:16px">
           <button class="btn-ghost" onclick="closeSubmit()">Cancel</button>
         </div>
       </div>
@@ -317,25 +393,22 @@
 
 
 <!-- ═══════════════════════════════════════════
-     SCRIPTS  (order matters: db → app)
+     SCRIPTS (order is critical)
 ═══════════════════════════════════════════ -->
-<script src="js/db.js"></script>
-<script src="js/app.js"></script>
+<script src="js/config.js"></script>    <!-- SUPABASE_URL + SUPABASE_ANON first -->
+<script src="js/db.js"></script>        <!-- SKILLS_DB + CATEGORIES -->
+<script src="js/auth.js"></script>      <!-- sb client + auth functions -->
+<script src="js/skills-api.js"></script><!-- Supabase skill operations -->
+<script src="js/app.js"></script>       <!-- UI logic -->
 
-<!-- File drop zone in modal -->
+<!-- User initial in chip -->
 <script>
-  (function () {
-    const fz = document.getElementById('fileZone');
-    if (!fz) return;
-    fz.addEventListener('dragover',  e => { e.preventDefault(); fz.classList.add('over'); });
-    fz.addEventListener('dragleave', () => fz.classList.remove('over'));
-    fz.addEventListener('drop', e => {
-      e.preventDefault();
-      fz.classList.remove('over');
-      const f = e.dataTransfer.files[0];
-      if (f) handleFileUpload(f);
-    });
-  })();
+  setInterval(() => {
+    const init = document.getElementById('userInitial');
+    if (init && currentUser) {
+      init.textContent = (getUserName(currentUser)||'U')[0].toUpperCase();
+    }
+  }, 500);
 </script>
 
 </body>

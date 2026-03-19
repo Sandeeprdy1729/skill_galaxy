@@ -1,152 +1,193 @@
 /**
- * SkillVault — app.js
- * Frontend application logic.
- * Depends on: db.js (SKILLS_DB, CATEGORIES, getAllSkills, saveCommunitySkill)
+ * SkillGalaxy — app.js
+ * UI logic: render grid, modals, submit form, file upload, download.
+ * Depends on: config.js → auth.js → skills-api.js → db.js
  */
 
-/* ─────────────────────────────────────────────
-   STATE
-───────────────────────────────────────────── */
-let state = {
-  filter: 'all',      // category key or 'all'
-  diff: 'all',        // difficulty or 'all'
-  query: '',          // search string
-  submitTab: 'form',  // 'form' | 'upload'
+/* ── STATE ───────────────────────────────────────── */
+const appState = {
+  filter: 'all',
+  diff:   'all',
+  query:  '',
+  submitTab: 'form',
+  view:   'all', // 'all' | 'mine'
 };
 
-/* ─────────────────────────────────────────────
-   HELPERS
-───────────────────────────────────────────── */
-function scoreClass(v) { return v >= 9 ? 'hi' : ''; }
-function scoreColorClass(v) { return v >= 9 ? 'green' : 'amber'; }
+/* ── INIT ────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', async () => {
+  await initAuth();
+  checkResetFlow();
 
-function esc(str) {
-  return String(str)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
+  // Load community skills from Supabase
+  showGridSkeleton();
+  await fetchCommunitySkills();
+  subscribeToSkillUpdates();
+
+  buildSidebar();
+  renderGrid();
+  updateTotalCount();
+
+  // Search
+  document.getElementById('searchInput')?.addEventListener('input', e => {
+    appState.query = e.target.value;
+    renderGrid();
+  });
+
+  // Close modals on overlay click
+  document.getElementById('overlay')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('overlay')) closeDetail();
+  });
+  document.getElementById('authOverlay')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('authOverlay')) closeAuthModal();
+  });
+  document.getElementById('submitOverlay')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('submitOverlay')) closeSubmit();
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeDetail(); closeAuthModal(); closeSubmit(); }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault(); document.getElementById('searchInput')?.focus();
+    }
+  });
+
+  // File drop zone
+  initDropZone('uploadZone',   'quickFileInput');
+  initDropZone('fileZone',     'modalFileInput');
+});
+
+/* ── SKELETON ────────────────────────────────────── */
+function showGridSkeleton() {
+  const grid = document.getElementById('skillsGrid');
+  if (!grid) return;
+  grid.innerHTML = Array.from({length:6}, () => `
+    <div class="skill-card skeleton">
+      <div class="sk-icon"></div>
+      <div class="sk-lines"><div class="sk-line w70"></div><div class="sk-line w40"></div></div>
+      <div class="sk-body"><div class="sk-line w100"></div><div class="sk-line w90"></div><div class="sk-line w60"></div></div>
+    </div>`).join('');
 }
 
+/* ── FILTER / SEARCH ─────────────────────────────── */
 function getFiltered() {
-  const skills = getAllSkills();
-  const q = state.query.toLowerCase();
-  return skills.filter(s => {
-    const catOk  = state.filter === 'all' || s.cat === state.filter;
-    const diffOk = state.diff   === 'all' || s.difficulty === state.diff;
-    if (!q) return catOk && diffOk;
-    const haystack = [s.name, s.desc, ...(s.tags||[]), ...(s.skills||[]), ...(s.tools||[]),
-      CATEGORIES[s.cat]?.label || ''].join(' ').toLowerCase();
-    return catOk && diffOk && haystack.includes(q);
+  const all = getAllSkills();
+  const q = appState.query.toLowerCase().trim();
+
+  return all.filter(s => {
+    const catOk  = appState.filter === 'all' || s.cat === appState.filter;
+    const diffOk = appState.diff   === 'all' || s.difficulty === appState.diff;
+    const viewOk = appState.view   === 'all' || (appState.view === 'mine' && s.source === 'community' && s.submittedBy === getUserName(currentUser));
+    if (!catOk || !diffOk || !viewOk) return false;
+    if (!q) return true;
+    const hay = [s.name, s.desc, ...(s.tags||[]), ...(s.skills||[]), ...(s.tools||[]),
+      CATEGORIES[s.cat]?.label||''].join(' ').toLowerCase();
+    return hay.includes(q);
   });
 }
 
-/* ─────────────────────────────────────────────
-   RENDER GRID
-───────────────────────────────────────────── */
+/* ── RENDER GRID ─────────────────────────────────── */
 function renderGrid() {
   const list = getFiltered();
   const grid = document.getElementById('skillsGrid');
-  const countEl = document.getElementById('sectionCount');
-  const tbCount = document.getElementById('countDisplay');
-  const navAll  = document.getElementById('navAll');
+  if (!grid) return;
 
-  const total = getAllSkills().length;
-  if (countEl) countEl.textContent = list.length;
-  if (tbCount)  tbCount.textContent = total;
-  if (navAll)   navAll.textContent  = total;
+  document.getElementById('sectionCount').textContent = list.length;
 
   if (!list.length) {
     grid.innerHTML = `
       <div class="empty-state">
+        <div style="font-size:2rem;margin-bottom:12px">◌</div>
         <h3>No skills found</h3>
-        <p>Try a different search or category — or <button onclick="openSubmit()" style="background:none;border:none;color:var(--copper);cursor:pointer;font-size:inherit;text-decoration:underline">submit a new skill</button></p>
+        <p>Try a different search or <button onclick="requireLogin(openSubmit)" style="background:none;border:none;color:var(--copper);cursor:pointer;font-size:inherit;text-decoration:underline">submit a new skill</button></p>
       </div>`;
     return;
   }
 
   grid.innerHTML = list.map(s => {
     const c = CATEGORIES[s.cat] || CATEGORIES.ai;
+    const isCommunity = s.source === 'community';
     return `
-    <div class="skill-card" onclick="openDetail('${esc(s.id)}')">
+    <div class="skill-card${isCommunity ? ' community-card' : ''}" onclick="openDetail('${esc(s.id)}')">
       <div class="card-head">
         <div class="card-icon" style="background:${c.tag}">${s.icon}</div>
         <div class="card-head-r">
           <div class="card-name">${esc(s.name)}</div>
-          <span class="card-tag" style="background:${c.tag};color:${c.tagText}">${esc(c.label)}</span>
-          <span class="diff-badge ${esc(s.difficulty || '')}">${esc(s.difficulty || 'intermediate')}</span>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:3px">
+            <span class="card-tag" style="background:${c.tag};color:${c.tagText}">${esc(c.label)}</span>
+            <span class="diff-badge ${esc(s.difficulty||'')}">${esc(s.difficulty||'intermediate')}</span>
+            ${isCommunity ? `<span class="source-badge community">community</span>` : ''}
+          </div>
         </div>
       </div>
       <div class="card-desc">${esc(s.desc)}</div>
       <div class="card-foot">
         <div class="score-row">
-          <span class="s-pill ${scoreClass(s.d)}">Demand ${s.d}/10</span>
-          <span class="s-pill ${scoreClass(s.f)}">Future ${s.f}/10</span>
-          ${s.source === 'community' ? '<span class="source-badge community">community</span>' : ''}
+          <span class="s-pill ${s.d>=9?'hi':''}">Demand ${s.d}/10</span>
+          <span class="s-pill ${s.f>=9?'hi':''}">Future ${s.f}/10</span>
+          ${isCommunity && s.upvotes > 0 ? `<span class="s-pill" style="color:var(--copper)">▲ ${s.upvotes}</span>` : ''}
         </div>
-        <button class="btn-dl" onclick="event.stopPropagation();dlSkill('${esc(s.id)}')">↓ .md</button>
+        <button class="btn-dl" onclick="event.stopPropagation();handleDownload('${esc(s.id)}')">↓ .md</button>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ─────────────────────────────────────────────
-   SIDEBAR NAVIGATION
-───────────────────────────────────────────── */
+/* ── SIDEBAR ─────────────────────────────────────── */
 function buildSidebar() {
   const nav = document.getElementById('catNav');
   if (!nav) return;
-
-  // count per category
   const all = getAllSkills();
   const counts = {};
-  all.forEach(s => { counts[s.cat] = (counts[s.cat] || 0) + 1; });
+  all.forEach(s => { counts[s.cat] = (counts[s.cat]||0)+1; });
 
-  nav.innerHTML = Object.entries(CATEGORIES).map(([key, c]) => {
-    const n = counts[key] || 0;
-    if (!n) return '';
-    return `
-    <div class="nav-item${state.filter === key ? ' active' : ''}" 
-         onclick="setFilter('${key}',this)" data-cat="${key}">
+  nav.innerHTML = Object.entries(CATEGORIES)
+    .filter(([key]) => counts[key])
+    .map(([key, c]) => `
+    <div class="nav-item${appState.filter===key?' active':''}" onclick="setFilter('${key}',this)" data-cat="${key}">
       <span class="nav-dot" style="background:${c.dot}"></span>
       ${esc(c.label)}
-      <span class="nav-count">${n}</span>
-    </div>`;
-  }).join('');
+      <span class="nav-count">${counts[key]}</span>
+    </div>`).join('');
+
+  document.getElementById('navAll').textContent = all.length;
 }
 
 function setFilter(cat, el) {
-  state.filter = cat;
-  // update active state
+  appState.filter = cat;
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
-  const allItem = document.getElementById('navAll-item');
-  if (allItem) allItem.classList.remove('active');
+  document.getElementById('navAll-item')?.classList.remove('active');
   if (el) el.classList.add('active');
-  if (cat === 'all' && allItem) allItem.classList.add('active');
   renderGrid();
 }
 
 function setFilterAll() {
-  state.filter = 'all';
+  appState.filter = 'all';
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
-  const allItem = document.getElementById('navAll-item');
-  if (allItem) allItem.classList.add('active');
+  document.getElementById('navAll-item')?.classList.add('active');
   renderGrid();
 }
 
-/* ─────────────────────────────────────────────
-   DIFFICULTY FILTER PILLS
-───────────────────────────────────────────── */
 function setDiff(d, el) {
-  state.diff = d;
+  appState.diff = d;
   document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('active'));
-  if (el) el.classList.add('active');
+  el?.classList.add('active');
   renderGrid();
 }
 
-/* ─────────────────────────────────────────────
-   DETAIL MODAL
-───────────────────────────────────────────── */
+function showMySkills() {
+  appState.view = 'mine';
+  renderGrid();
+  document.getElementById('mySkillsBtn')?.classList.add('active');
+}
+
+function showAllSkills() {
+  appState.view = 'all';
+  renderGrid();
+  document.getElementById('mySkillsBtn')?.classList.remove('active');
+}
+
+/* ── DETAIL MODAL ────────────────────────────────── */
 function openDetail(id) {
   const s = getAllSkills().find(x => x.id === id);
   if (!s) return;
@@ -157,32 +198,29 @@ function openDetail(id) {
   document.getElementById('mTitle').textContent = s.name;
   document.getElementById('mMeta').innerHTML = `
     <span class="card-tag" style="background:${c.tag};color:${c.tagText}">${esc(c.label)}</span>
-    <span class="diff-badge ${esc(s.difficulty || '')}">${esc(s.difficulty || '')}</span>
-    ${s.timeToMaster ? `<span style="color:var(--text-ter);font-size:.7rem">· ${esc(s.timeToMaster)}</span>` : ''}`;
+    <span class="diff-badge ${esc(s.difficulty||'')}">${esc(s.difficulty||'')}</span>
+    ${s.timeToMaster ? `<span style="color:var(--text-ter);font-size:.7rem">· ${esc(s.timeToMaster)}</span>` : ''}
+    ${s.source==='community' ? `<span class="source-badge community">by ${esc(s.submittedBy||'Community')}</span>` : ''}`;
 
   document.getElementById('mBody').innerHTML = `
     <p class="modal-desc">${esc(s.desc)}</p>
-    <p style="font-size:.74rem;color:var(--text-ter);font-style:italic;margin-bottom:12px">
-      Trigger: ${esc(s.trigger || '')}
-    </p>
+    ${s.trigger ? `<p style="font-size:.74rem;color:var(--text-ter);font-style:italic;margin-bottom:14px">📍 ${esc(s.trigger)}</p>` : ''}
 
     <div class="m-lbl">Market Scores</div>
     <div class="scores-row">
       ${[['Demand',s.d],['Income',s.i],['Future',s.f]].map(([l,v])=>`
-      <div class="score-block">
-        <div class="lbl">${l}</div>
-        <div class="val ${scoreColorClass(v)}">${v}/10</div>
-      </div>`).join('')}
+      <div class="score-block"><div class="lbl">${l}</div>
+      <div class="val ${v>=9?'green':'amber'}">${v}/10</div></div>`).join('')}
     </div>
 
-    <div class="m-lbl">Atomic Skills</div>
-    <div class="chips">${(s.skills||[]).map(sk=>`<span class="chip">${esc(sk)}</span>`).join('')}</div>
+    ${s.skills?.length ? `<div class="m-lbl">Atomic Skills</div>
+    <div class="chips">${s.skills.map(sk=>`<span class="chip">${esc(sk)}</span>`).join('')}</div>` : ''}
 
-    <div class="m-lbl">Essential Tools</div>
-    <div class="chips">${(s.tools||[]).map(t=>`<span class="tool-chip">${esc(t)}</span>`).join('')}</div>
+    ${s.tools?.length ? `<div class="m-lbl">Essential Tools</div>
+    <div class="chips">${s.tools.map(t=>`<span class="tool-chip">${esc(t)}</span>`).join('')}</div>` : ''}
 
     <div class="m-lbl">Skill File Preview</div>
-    <div class="code-block">${esc(s.md||'')}</div>
+    <div class="code-block">${esc((s.md||'').slice(0,600))}${(s.md||'').length>600?'\n…':''}</div>
 
     <div class="m-lbl">How to use in Claude</div>
     <div class="how-to">
@@ -192,13 +230,18 @@ function openDetail(id) {
       <div class="ht-step"><div class="step-n">4</div><div>Claude uses this skill automatically in all project conversations</div></div>
     </div>
 
+    ${s._dbId ? `<div class="m-lbl">Community Stats</div>
+    <div style="display:flex;gap:10px;margin-bottom:4px">
+      <button class="btn-upvote" id="upvoteBtn-${s._dbId}" onclick="handleUpvote('${s._dbId}')">▲ Upvote <span id="uv-${s._dbId}">${s.upvotes||0}</span></button>
+      <span style="color:var(--text-ter);font-size:.72rem;align-self:center">↓ ${s.downloads||0} downloads</span>
+    </div>` : ''}
+
     <div class="modal-actions">
-      <button class="btn-main" onclick="dlSkill('${esc(s.id)}')">↓ Download .md file</button>
+      <button class="btn-main" onclick="handleDownload('${esc(s.id)}')">↓ Download .md file</button>
       <button class="btn-ghost" onclick="closeDetail()">Close</button>
     </div>`;
 
-  const ov = document.getElementById('overlay');
-  ov.classList.add('open');
+  document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
@@ -207,24 +250,35 @@ function closeDetail() {
   document.body.style.overflow = '';
 }
 
-/* ─────────────────────────────────────────────
-   DOWNLOAD
-───────────────────────────────────────────── */
-function dlSkill(id) {
+/* ── DOWNLOAD ────────────────────────────────────── */
+async function handleDownload(id) {
   const s = getAllSkills().find(x => x.id === id);
   if (!s) return;
-  const blob = new Blob([s.md || `---\nname: ${s.id}\n---\n\n${s.desc}`], { type: 'text/markdown' });
+  const content = s.md || `---\nname: ${s.id}\ndescription: ${s.desc}\n---\n\n${s.desc}`;
+  const blob = new Blob([content], { type: 'text/markdown' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `${s.id}.md`;
+  a.download = `${s.id.replace(/-community-\w+$/, '')}.md`;
   a.click();
   toast(`Downloaded ${s.name}.md`);
+  if (s._dbId) await logDownload(s._dbId);
 }
 
-/* ─────────────────────────────────────────────
-   SUBMIT SKILL MODAL
-───────────────────────────────────────────── */
+/* ── UPVOTE ──────────────────────────────────────── */
+async function handleUpvote(dbId) {
+  try {
+    const newCount = await upvoteSkill(dbId);
+    const el = document.getElementById(`uv-${dbId}`);
+    if (el) el.textContent = newCount;
+    const btn = document.getElementById(`upvoteBtn-${dbId}`);
+    btn?.classList.toggle('upvoted');
+  } catch(e) { toast(e.message, true); }
+}
+
+/* ── SUBMIT MODAL ────────────────────────────────── */
 function openSubmit() {
+  if (!isLoggedIn()) { openAuthModal('login'); window.__afterLogin = openSubmit; return; }
+  resetSubmitForm();
   document.getElementById('submitOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   switchTab('form');
@@ -233,149 +287,215 @@ function openSubmit() {
 function closeSubmit() {
   document.getElementById('submitOverlay').classList.remove('open');
   document.body.style.overflow = '';
-  document.getElementById('submitForm').reset();
-  const preview = document.getElementById('uploadPreview');
-  if (preview) preview.textContent = '';
+}
+
+function resetSubmitForm() {
+  document.getElementById('submitForm')?.reset();
+  document.getElementById('uploadPreview').innerHTML = '<span style="color:var(--text-ter);font-style:italic">File preview appears here…</span>';
+  clearSubmitError();
+  clearSubmitSuccess();
 }
 
 function switchTab(tab) {
-  state.submitTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
+  appState.submitTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel===tab));
 }
 
-/* ── Form submission ── */
-function handleFormSubmit() {
+function setSubmitError(msg) {
+  const el = document.getElementById('submitError');
+  if (el) { el.innerHTML = msg.replace(/\n/g,'<br>'); el.style.display = 'block'; }
+}
+
+function clearSubmitError() {
+  const el = document.getElementById('submitError');
+  if (el) { el.textContent = ''; el.style.display = 'none'; }
+}
+
+function clearSubmitSuccess() {
+  const el = document.getElementById('submitSuccess');
+  if (el) el.style.display = 'none';
+}
+
+function setSubmitLoading(loading) {
+  const btn = document.getElementById('submitFormBtn');
+  if (btn) { btn.disabled = loading; btn.textContent = loading ? 'Submitting…' : 'Submit Skill'; }
+}
+
+/* Form submit handler */
+async function handleFormSubmit() {
+  clearSubmitError();
+  clearSubmitSuccess();
+
   const get = id => document.getElementById(id)?.value?.trim() || '';
-  const name      = get('f-name');
-  const cat       = get('f-cat');
-  const diff      = get('f-diff');
-  const time      = get('f-time');
-  const desc      = get('f-desc');
-  const trigger   = get('f-trigger');
   const skillsRaw = get('f-skills');
   const toolsRaw  = get('f-tools');
   const tagsRaw   = get('f-tags');
-  const d         = parseInt(get('f-demand')) || 7;
-  const i         = parseInt(get('f-income')) || 7;
-  const f         = parseInt(get('f-future')) || 7;
 
-  if (!name || !cat || !desc) {
-    toast('Please fill in Name, Category, and Description', true);
-    return;
-  }
+  const name    = get('f-name');
+  const cat     = get('f-cat');
+  const diff    = get('f-diff');
+  const time    = get('f-time');
+  const desc    = get('f-desc');
+  const trigger = get('f-trigger');
+  const demand  = get('f-demand');
+  const income  = get('f-income');
+  const future  = get('f-future');
 
-  const id = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-' + Date.now();
-  const skillsList = skillsRaw.split(',').map(s => s.trim()).filter(Boolean);
-  const toolsList  = toolsRaw.split(',').map(s => s.trim()).filter(Boolean);
-  const tagsList   = tagsRaw.split(',').map(s => s.trim()).filter(Boolean);
+  const skillsList = skillsRaw.split(',').map(s=>s.trim()).filter(Boolean);
+  const toolsList  = toolsRaw.split(',').map(s=>s.trim()).filter(Boolean);
+  const tagsList   = tagsRaw.split(',').map(s=>s.trim()).filter(Boolean);
 
-  const md = `---\nname: ${id}\ndescription: ${desc}\ntags: ${tagsList.join(', ')}\ndifficulty: ${diff}\ntime_to_master: ${time}\n---\n\n## DESCRIPTION\n${desc}\n\n## WHEN TO USE\n${trigger}\n\n## ATOMIC SKILLS\n${skillsList.map(s => `- ${s}`).join('\n')}\n\n## ESSENTIAL TOOLS\n${toolsList.map(t => `- ${t}`).join('\n')}`;
+  // Auto-generate markdown if no file was uploaded
+  const existingMd = document.getElementById('generatedMd')?.value;
+  const md = existingMd || buildMarkdownFromForm({
+    name, cat, diff, time, desc, trigger, tagsList, skillsList, toolsList
+  });
 
-  const skill = {
-    id, name, icon: '◈', cat, difficulty: diff, timeToMaster: time,
-    d, i, f, desc, trigger, tags: tagsList,
-    skills: skillsList, tools: toolsList,
-    source: 'community', md
+  const formData = {
+    name, cat, difficulty: diff, timeToMaster: time,
+    description: desc, trigger,
+    demand, income, future,
+    tags: tagsList, skillsList, toolsList,
+    md_content: md,
+    icon: '◈',
   };
 
-  saveCommunitySkill(skill);
-  buildSidebar();
-  renderGrid();
-  closeSubmit();
-  toast(`"${name}" submitted to SkillVault!`);
+  setSubmitLoading(true);
+  try {
+    await submitSkill(formData);
+    setSubmitLoading(false);
+
+    const succ = document.getElementById('submitSuccess');
+    if (succ) {
+      succ.style.display = 'block';
+      succ.innerHTML = `
+        <div style="text-align:center;padding:16px">
+          <div style="font-size:2rem;margin-bottom:8px">🎉</div>
+          <div style="font-weight:600;color:var(--text-pri);margin-bottom:4px">Skill submitted!</div>
+          <div style="font-size:.78rem;color:var(--text-sec)">It's under review and will appear in the library once approved. Usually within 24hrs.</div>
+        </div>`;
+    }
+    setTimeout(closeSubmit, 2500);
+    toast(`"${name}" submitted for review!`);
+    document.getElementById('submitForm')?.reset();
+
+  } catch(e) {
+    setSubmitLoading(false);
+    setSubmitError(e.message);
+  }
 }
 
-/* ── File upload (inside submit modal) ── */
-function handleFileUpload(file) {
+/* Auto-build markdown from form fields */
+function buildMarkdownFromForm({name, cat, diff, time, desc, trigger, tagsList, skillsList, toolsList}) {
+  const id = name.toLowerCase().replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,'-');
+  return `---
+name: ${id}
+description: ${desc}. ${trigger ? 'Use when ' + trigger + '.' : ''}
+tags: ${tagsList.join(', ')}
+difficulty: ${diff}
+time_to_master: ${time}
+---
+
+# ${name}
+
+## Description
+${desc}
+
+${trigger ? `## When to Use\n${trigger}\n` : ''}
+
+${skillsList.length ? `## Atomic Skills\n${skillsList.map(s=>`- ${s}`).join('\n')}\n` : ''}
+
+${toolsList.length ? `## Essential Tools\n${toolsList.map(t=>`- ${t}`).join('\n')}\n` : ''}`;
+}
+
+/* File upload handler */
+async function handleFileUpload(file) {
   if (!file) return;
+  if (!file.name.match(/\.(md|txt)$/i)) { toast('Please upload a .md or .txt file', true); return; }
+  if (file.size > 100000) { toast('File too large (max 100KB)', true); return; }
+
   const reader = new FileReader();
   reader.onload = e => {
     const text = e.target.result;
-    const nm   = (text.match(/^name:\s*(.+)/m)  || ['',''])[1].trim() || file.name.replace('.md','');
-    const desc = (text.match(/^description:\s*(.+)/m) || ['','Custom uploaded skill.'])[1].trim();
-    const tags = (text.match(/^tags:\s*(.+)/m)  || ['',''])[1].trim().split(',').map(s=>s.trim()).filter(Boolean);
-    const diff = (text.match(/^difficulty:\s*(.+)/m) || ['','intermediate'])[1].trim();
-    const time = (text.match(/^time_to_master:\s*(.+)/m) || ['',''])[1].trim();
-    const id   = nm.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'') + '-' + Date.now();
+    const fm = parseFrontmatter(text);
 
-    // show preview
+    // Show preview
     const preview = document.getElementById('uploadPreview');
-    if (preview) preview.textContent = text.slice(0, 400) + (text.length > 400 ? '\n…' : '');
+    if (preview) preview.textContent = text.slice(0, 500) + (text.length > 500 ? '\n…' : '');
 
-    const skill = {
-      id, name: nm, icon: '◈', cat: 'ai', difficulty: diff, timeToMaster: time,
-      d: 8, i: 8, f: 8, desc, trigger: desc, tags,
-      skills: [], tools: [], source: 'community', md: text
-    };
+    // Store for submission
+    const hiddenMd = document.getElementById('generatedMd') || (() => {
+      const inp = document.createElement('input');
+      inp.type = 'hidden'; inp.id = 'generatedMd';
+      document.getElementById('submitForm')?.appendChild(inp);
+      return inp;
+    })();
+    hiddenMd.value = text;
 
-    saveCommunitySkill(skill);
-    buildSidebar();
-    renderGrid();
-    closeSubmit();
-    toast(`"${nm}" uploaded to SkillVault!`);
+    // Auto-fill form fields from frontmatter
+    const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+    setVal('f-name', fm.name?.replace(/-/g,' ').replace(/\b\w/g, l=>l.toUpperCase()));
+    setVal('f-desc', fm.description);
+    setVal('f-diff', fm.difficulty);
+    setVal('f-time', fm.time_to_master);
+    setVal('f-tags', fm.tags);
+
+    // Validation preview
+    const errors = validateSkillForm({
+      name: fm.name || 'uploaded',
+      cat:  document.getElementById('f-cat')?.value || 'ai',
+      description: fm.description || '',
+      md_content: text
+    });
+
+    const validEl = document.getElementById('uploadValidation');
+    if (validEl) {
+      if (errors.length > 0) {
+        validEl.innerHTML = `<div class="val-errors"><strong>⚠️ Issues found:</strong><ul>${errors.map(e=>`<li>${esc(e)}</li>`).join('')}</ul></div>`;
+        validEl.style.display = 'block';
+      } else {
+        validEl.innerHTML = `<div class="val-ok">✅ Skill file looks good! Fill in the form details and submit.</div>`;
+        validEl.style.display = 'block';
+      }
+    }
+
+    // Switch to form tab so user can fill remaining fields
+    switchTab('form');
+    toast(`File "${file.name}" loaded — fill in any missing details`);
   };
   reader.readAsText(file);
 }
 
-/* ─────────────────────────────────────────────
-   DRAG & DROP (bottom upload zone)
-───────────────────────────────────────────── */
-function initDropZone() {
-  const uz = document.getElementById('uploadZone');
-  if (!uz) return;
+/* ── DROP ZONES ──────────────────────────────────── */
+function initDropZone(zoneId, inputId) {
+  const zone = document.getElementById(zoneId);
+  const inp  = document.getElementById(inputId);
+  if (!zone) return;
 
-  uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('over'); });
-  uz.addEventListener('dragleave', () => uz.classList.remove('over'));
-  uz.addEventListener('drop', e => {
-    e.preventDefault();
-    uz.classList.remove('over');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('over');
     const f = e.dataTransfer.files[0];
     if (f) handleFileUpload(f);
   });
+  inp?.addEventListener('change', e => { if (e.target.files[0]) handleFileUpload(e.target.files[0]); e.target.value = ''; });
 }
 
-/* ─────────────────────────────────────────────
-   TOAST
-───────────────────────────────────────────── */
+/* ── TOAST ───────────────────────────────────────── */
 function toast(msg, isError = false) {
   const el = document.getElementById('toast');
   const m  = document.getElementById('toastMsg');
+  if (!el || !m) return;
   m.textContent = msg;
   el.style.background = isError ? '#8a3a4e' : 'var(--text-pri)';
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 3000);
+  setTimeout(() => el.classList.remove('show'), 3200);
 }
 
-/* ─────────────────────────────────────────────
-   KEYBOARD / CLICK OUTSIDE
-───────────────────────────────────────────── */
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeDetail(); closeSubmit(); }
-});
-
-document.getElementById('overlay')?.addEventListener('click', e => {
-  if (e.target === document.getElementById('overlay')) closeDetail();
-});
-
-document.getElementById('submitOverlay')?.addEventListener('click', e => {
-  if (e.target === document.getElementById('submitOverlay')) closeSubmit();
-});
-
-/* ─────────────────────────────────────────────
-   INIT
-───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  buildSidebar();
-  renderGrid();
-  initDropZone();
-
-  // search
-  document.getElementById('searchInput')?.addEventListener('input', e => {
-    state.query = e.target.value;
-    renderGrid();
-  });
-
-  // cat counts in sidebar nav (refresh after community loads)
-  buildSidebar();
-});
+/* ── UTILS ───────────────────────────────────────── */
+function esc(str) {
+  return String(str||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
