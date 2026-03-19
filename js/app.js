@@ -175,10 +175,12 @@ function setDiff(d, el) {
   renderGrid();
 }
 
-function showMySkills() {
+async function showMySkills() {
+  const mine = await fetchMySkills();
+  // render mine separately with pending/approved/rejected badges
   appState.view = 'mine';
-  renderGrid();
   document.getElementById('mySkillsBtn')?.classList.add('active');
+  renderGrid();
 }
 
 function showAllSkills() {

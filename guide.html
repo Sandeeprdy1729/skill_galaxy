@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Create a Skill — SkillGalaxy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #f9f7f4;
+      --cream-dark: #f2ede6;
+      --warm-white: #fefcfa;
+      --sidebar-bg: #f4f0ea;
+      --text-pri:   #1a1814;
+      --text-sec:   #5c564e;
+      --text-ter:   #9c9389;
+      --border:     #e0d9cf;
+      --border-lt:  #ece7e0;
+      --copper:     #c07b4a;
+      --copper-lt:  #f0e4d8;
+      --teal:       #3a7d6e;
+      --teal-lt:    #d8ede9;
+      --green:      #2d7a3a;
+      --green-lt:   #d8eedd;
+      --red:        #8a3a4e;
+      --red-lt:     #f4dce0;
+      --blue:       #3a5f8a;
+      --blue-lt:    #dce8f4;
+      --purple:     #5a3a8a;
+      --purple-lt:  #e8dcf4;
+      --sh-sm: 0 1px 3px rgba(26,24,20,.06);
+      --sh-md: 0 4px 12px rgba(26,24,20,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text-pri);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(249,247,244,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lt);
+      padding: 0 40px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: var(--text-pri);
+    }
+
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--text-pri); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 14px; height: 14px; }
+
+    .logo-text {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: .95rem; color: var(--text-pri);
+    }
+    .logo-text em { font-style: normal; color: var(--copper); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-sec);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-back:hover { background: var(--cream-dark); color: var(--text-pri); }
+
+    .btn-download-sample {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 16px;
+      background: var(--text-pri); color: var(--cream);
+      border: none; border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-download-sample:hover { background: #2d2a25; transform: translateY(-1px); }
+
+    /* ── LAYOUT ── */
+    .page { display: flex; max-width: 1100px; margin: 0 auto; gap: 48px; padding: 40px 40px 80px; }
+
+    /* ── TOC SIDEBAR ── */
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 76px;
+      height: fit-content;
+    }
+
+    .toc-title {
+      font-size: .65rem; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-ter); margin-bottom: 10px;
+    }
+
+    .toc a {
+      display: block;
+      font-size: .78rem; color: var(--text-sec);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-left: 2px solid var(--border-lt);
+      margin-bottom: 2px;
+      transition: all .15s;
+    }
+
+    .toc a:hover { color: var(--copper); border-color: var(--copper); }
+    .toc a.active { color: var(--copper); border-color: var(--copper); font-weight: 500; }
+    .toc a.sub { padding-left: 20px; font-size: .74rem; }
+
+    /* ── MAIN CONTENT ── */
+    .main { flex: 1; min-width: 0; }
+
+    /* ── HERO ── */
+    .guide-hero {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 36px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--copper-lt);
+      border: 1px solid rgba(192,123,74,.25);
+      color: var(--copper);
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .8px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .guide-hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 2rem;
+      color: var(--text-pri); letter-spacing: -.5px;
+      margin-bottom: 10px;
+    }
+
+    .guide-hero p {
+      color: var(--text-sec); font-size: .88rem;
+      line-height: 1.7; max-width: 580px;
+    }
+
+    .hero-steps {
+      display: flex; gap: 0;
+      margin-top: 24px; border-top: 1px solid var(--border-lt); padding-top: 20px;
+    }
+
+    .hero-step {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    .hero-step:not(:last-child)::after {
+      content: '→';
+      color: var(--text-ter); font-size: .8rem;
+      margin-right: 8px;
+    }
+
+    .hs-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--copper); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 600; flex-shrink: 0;
+    }
+
+    .hs-text { font-size: .78rem; color: var(--text-sec); line-height: 1.3; }
+    .hs-text strong { color: var(--text-pri); display: block; }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 40px; }
+
+    .section-anchor { position: relative; top: -80px; visibility: hidden; display: block; }
+
+    h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 1.35rem;
+      color: var(--text-pri); letter-spacing: -.3px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    h3 {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text-pri); margin: 20px 0 8px;
+    }
+
+    p { color: var(--text-sec); font-size: .84rem; line-height: 1.75; margin-bottom: 12px; }
+
+    ul, ol { color: var(--text-sec); font-size: .84rem; line-height: 1.75; padding-left: 20px; margin-bottom: 12px; }
+
+    li { margin-bottom: 4px; }
+
+    strong { color: var(--text-pri); font-weight: 600; }
+
+    a { color: var(--copper); }
+
+    /* ── CODE BLOCKS ── */
+    pre {
+      background: #1c1a18;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      position: relative;
+    }
+
+    pre code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: .78rem; line-height: 1.7;
+      color: #e8e4de; white-space: pre;
+    }
+
+    .copy-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.5);
+      font-size: .65rem; padding: 3px 10px; border-radius: 5px;
+      cursor: pointer; transition: all .15s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .copy-btn.copied { color: #7ecb9a; border-color: #7ecb9a; }
+
+    /* Code syntax colours */
+    .ky { color: #c97c52; }   /* key */
+    .vl { color: #a5d6a7; }   /* value / string */
+    .cm { color: #5c6e5a; }   /* comment */
+    .hd { color: #80cbc4; }   /* heading */
+    .bd { color: #e8e4de; }   /* body */
+    .tg { color: #ce93d8; }   /* tag */
+    .nm { color: #f7c97a; }   /* number */
+
+    /* Inline code */
+    code {
+      background: var(--cream-darker, #e8e1d8);
+      color: var(--red);
+      font-family: 'SF Mono', monospace;
+      font-size: .8em; padding: 1px 5px; border-radius: 4px;
+    }
+
+    pre code { background: none; color: inherit; padding: 0; border-radius: 0; }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      border-radius: 10px; padding: 14px 16px;
+      margin: 16px 0; font-size: .82rem; line-height: 1.65;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .callout.tip    { background: var(--teal-lt);   border: 1px solid rgba(58,125,110,.2); color: #2a5a50; }
+    .callout.warn   { background: var(--copper-lt); border: 1px solid rgba(192,123,74,.25); color: #7a4a22; }
+    .callout.info   { background: var(--blue-lt);   border: 1px solid rgba(58,95,138,.2);  color: #2a4a6a; }
+    .callout.success{ background: var(--green-lt);  border: 1px solid rgba(45,122,58,.2);  color: #1e5528; }
+    .callout.danger { background: var(--red-lt);    border: 1px solid rgba(138,58,78,.2);  color: #6a1e2e; }
+
+    /* ── FIELD TABLE ── */
+    .field-table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: .8rem; }
+
+    .field-table th {
+      background: var(--cream-dark); color: var(--text-sec);
+      font-weight: 600; font-size: .7rem; text-transform: uppercase; letter-spacing: .5px;
+      padding: 8px 12px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field-table td {
+      padding: 9px 12px; border-bottom: 1px solid var(--border-lt);
+      color: var(--text-sec); vertical-align: top;
+    }
+
+    .field-table tr:last-child td { border-bottom: none; }
+    .field-table td:first-child { font-family: 'SF Mono', monospace; font-size: .75rem; color: var(--red); font-weight: 500; }
+
+    .req { color: var(--copper); font-weight: 600; font-size: .7rem; }
+    .opt { color: var(--text-ter); font-size: .7rem; }
+
+    /* ── GOOD / BAD ── */
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 20px; }
+
+    .compare-box {
+      border-radius: 10px; padding: 14px 16px; font-size: .78rem;
+    }
+
+    .compare-box.good {
+      background: var(--green-lt); border: 1px solid rgba(45,122,58,.2);
+    }
+
+    .compare-box.bad {
+      background: var(--red-lt); border: 1px solid rgba(138,58,78,.2);
+    }
+
+    .compare-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    .compare-box.good .compare-label { color: var(--green); }
+    .compare-box.bad  .compare-label { color: var(--red); }
+
+    .compare-box pre {
+      background: rgba(0,0,0,.06); border: none;
+      padding: 10px 12px; border-radius: 6px; margin: 0;
+    }
+
+    .compare-box pre code { font-size: .72rem; color: var(--text-pri); }
+    .compare-box.bad pre code { color: var(--text-sec); }
+
+    /* ── CATEGORY GRID ── */
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px; margin: 14px 0;
+    }
+
+    .cat-pill {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 12px; border-radius: 8px;
+      background: var(--warm-white); border: 1px solid var(--border-lt);
+      font-size: .75rem; color: var(--text-sec);
+    }
+
+    .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; padding: 0; }
+
+    .checklist li {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding: 5px 0; font-size: .82rem; color: var(--text-sec);
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-icon { color: var(--teal); font-size: .9rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── FULL EXAMPLE SECTION ── */
+    .example-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .example-header {
+      background: var(--cream-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .example-title { font-size: .78rem; font-weight: 600; color: var(--text-sec); }
+
+    .example-body pre {
+      background: #1c1a18; border: none; border-radius: 0; margin: 0;
+      max-height: 520px; overflow-y: auto;
+    }
+
+    /* ── STEPS ── */
+    .step-list { list-style: none; padding: 0; counter-reset: steps; }
+
+    .step-list li {
+      counter-increment: steps;
+      display: flex; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--border-lt);
+      font-size: .83rem; color: var(--text-sec);
+    }
+
+    .step-list li:last-child { border-bottom: none; }
+
+    .step-list li::before {
+      content: counter(steps);
+      min-width: 26px; height: 26px;
+      background: var(--copper); color: white;
+      border-radius: 50%; font-size: .72rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page { padding: 24px 20px 60px; }
+      .compare { grid-template-columns: 1fr; }
+      .hero-steps { flex-direction: column; gap: 10px; }
+      .hero-step::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { padding: 0 16px; }
+      .guide-hero { padding: 22px 20px; }
+      .guide-hero h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
+        <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
+      </svg>
+    </div>
+    <span class="logo-text">Skill<em>Galaxy</em></span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="btn-back">← Back to Library</a>
+    <button class="btn-download-sample" onclick="downloadSample()">↓ Download Sample Skill</button>
+  </div>
+</nav>
+
+<!-- PAGE LAYOUT -->
+<div class="page">
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#overview">Overview</a>
+    <a href="#format">Skill File Format</a>
+    <a href="#frontmatter" class="sub">Frontmatter Fields</a>
+    <a href="#body" class="sub">Skill Body</a>
+    <a href="#categories">Categories</a>
+    <a href="#rules">Rules & Validation</a>
+    <a href="#good-bad">Good vs Bad</a>
+    <a href="#full-example">Full Example</a>
+    <a href="#submit">How to Submit</a>
+    <a href="#approval">Review Process</a>
+    <a href="#checklist">Final Checklist</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="guide-hero">
+      <div class="hero-badge">📖 Documentation</div>
+      <h1>How to Create a Skill for Claude</h1>
+      <p>A skill is a <code>.md</code> markdown file that teaches Claude how to handle a specific task or workflow. Once uploaded and approved, it appears in the SkillGalaxy library for everyone to download and use in their Claude Projects.</p>
+
+      <div class="hero-steps">
+        <div class="hero-step">
+          <div class="hs-num">1</div>
+          <div class="hs-text"><strong>Write the .md file</strong>YAML frontmatter + instructions</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">2</div>
+          <div class="hs-text"><strong>Submit it here</strong>Form or file upload</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">3</div>
+          <div class="hs-text"><strong>Gets reviewed</strong>Usually within 24 hrs</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">4</div>
+          <div class="hs-text"><strong>Goes live</strong>Visible to everyone</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="section">
+      <span class="section-anchor" id="overview"></span>
+      <h2>What is a Claude Skill?</h2>
+      <p>When you add a skill file to a Claude Project, Claude reads it and permanently knows how to do that task — every conversation in that project automatically benefits from the skill. You don't need to re-explain your preferences or process every time.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div><strong>Think of skills like job training for Claude.</strong> Instead of telling Claude "here's how I want code reviewed" in every chat, you write it once as a skill — and Claude applies it automatically in every conversation in that project.</div>
+      </div>
+
+      <p>Skills work across <strong>Claude.ai Projects</strong>, <strong>Claude Code</strong>, and the <strong>Claude API</strong>. A skill you write once works everywhere.</p>
+    </div>
+
+    <!-- FORMAT -->
+    <div class="section">
+      <span class="section-anchor" id="format"></span>
+      <h2>Skill File Format</h2>
+
+      <p>Every skill is a single <code>.md</code> (Markdown) file with two parts:</p>
+      <ol>
+        <li><strong>YAML Frontmatter</strong> — metadata between <code>---</code> delimiters at the very top</li>
+        <li><strong>Skill Body</strong> — the actual instructions in Markdown below the frontmatter</li>
+      </ol>
+
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="ky">---</span>
+<span class="ky">name:</span> <span class="vl">your-skill-name</span>
+<span class="ky">description:</span> <span class="vl">What it does. Use when [specific trigger phrase].</span>
+<span class="ky">tags:</span> <span class="vl">tag1, tag2, tag3</span>
+<span class="ky">difficulty:</span> <span class="vl">intermediate</span>
+<span class="ky">time_to_master:</span> <span class="vl">3-6 months</span>
+<span class="ky">---</span>
+
+<span class="hd"># Your Skill Name</span>
+
+<span class="bd">Your instructions go here in plain Markdown...</span>
+
+<span class="hd">## When to Use</span>
+<span class="bd">Describe exactly when Claude should apply this skill.</span>
+
+<span class="hd">## Instructions</span>
+<span class="bd">1. Step one</span>
+<span class="bd">2. Step two</span>
+<span class="bd">3. Step three</span></code></pre>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div>The file <strong>must start with <code>---</code></strong> on the very first line. No blank lines, no spaces before it. If the frontmatter is missing or malformed, the submission will be rejected.</div>
+      </div>
+    </div>
+
+    <!-- FRONTMATTER -->
+    <div class="section">
+      <span class="section-anchor" id="frontmatter"></span>
+      <h2>Frontmatter Fields</h2>
+
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Required?</th>
+            <th>Rules</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td><span class="req">Required</span></td>
+            <td>kebab-case only, no spaces, no capitals, no special chars</td>
+            <td><code>prompt-engineer</code></td>
+          </tr>
+          <tr>
+            <td>description</td>
+            <td><span class="req">Required</span></td>
+            <td>Under 300 chars. Must include WHAT it does AND WHEN to use it. No <code>&lt; &gt;</code> characters.</td>
+            <td><code>Optimizes LLM prompts. Use when building AI features or debugging model outputs.</code></td>
+          </tr>
+          <tr>
+            <td>tags</td>
+            <td><span class="opt">Optional</span></td>
+            <td>Comma-separated, max 10 tags, lowercase</td>
+            <td><code>ai, prompting, llm</code></td>
+          </tr>
+          <tr>
+            <td>difficulty</td>
+            <td><span class="opt">Optional</span></td>
+            <td>Must be one of: <code>beginner</code> <code>intermediate</code> <code>advanced</code> <code>expert</code></td>
+            <td><code>intermediate</code></td>
+          </tr>
+          <tr>
+            <td>time_to_master</td>
+            <td><span class="opt">Optional</span></td>
+            <td>Free text estimate</td>
+            <td><code>2-4 weeks</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>The <code>name</code> field — Critical Rules</h3>
+      <ul>
+        <li>Must be <strong>kebab-case</strong>: lowercase letters and hyphens only</li>
+        <li>No spaces: <code>prompt engineer</code> ❌ → <code>prompt-engineer</code> ✅</li>
+        <li>No underscores: <code>prompt_engineer</code> ❌</li>
+        <li>No capitals: <code>PromptEngineer</code> ❌</li>
+        <li>Cannot start with <code>claude</code> or <code>anthropic</code> (reserved)</li>
+        <li>Must match the folder name if distributing as a folder</li>
+      </ul>
+
+      <h3>The <code>description</code> field — Most Important</h3>
+      <p>This is how Claude decides whether to load your skill. It must answer two questions:</p>
+      <ol>
+        <li><strong>What does it do?</strong> — the core capability</li>
+        <li><strong>When should it activate?</strong> — specific trigger phrases users would say</li>
+      </ol>
+
+      <div class="compare">
+        <div class="compare-box good">
+          <div class="compare-label">✅ Good</div>
+          <pre><code>description: Optimizes prompts for LLMs using
+chain-of-thought and few-shot techniques. Use
+when building AI features, debugging model
+outputs, or asking "how do I prompt Claude?"</code></pre>
+        </div>
+        <div class="compare-box bad">
+          <div class="compare-label">❌ Bad — too vague</div>
+          <pre><code>description: Helps with AI stuff and makes
+prompts better for language models.</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="section">
+      <span class="section-anchor" id="body"></span>
+      <h2>Writing the Skill Body</h2>
+
+      <p>After the closing <code>---</code>, write your instructions in plain Markdown. There's no strict template — use whatever structure makes the skill clearest. But these sections work well:</p>
+
+      <table class="field-table">
+        <thead>
+          <tr><th>Section</th><th>Purpose</th><th>Required?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td># Title</td><td>Skill name as a heading</td><td><span class="opt">Optional</span></td></tr>
+          <tr><td>## When to Use</td><td>Specific trigger conditions</td><td><span class="req">Recommended</span></td></tr>
+          <tr><td>## Instructions</td><td>Step-by-step numbered steps</td><td><span class="req">Recommended</span></td></tr>
+          <tr><td>## Rules</td><td>Hard constraints Claude must follow</td><td><span class="opt">Optional</span></td></tr>
+          <tr><td>## Examples</td><td>Sample inputs and outputs</td><td><span class="opt">Optional</span></td></tr>
+          <tr><td>## Tone & Style</td><td>How Claude should communicate</td><td><span class="opt">Optional</span></td></tr>
+          <tr><td>## Always Output</td><td>Non-negotiable output requirements</td><td><span class="opt">Optional</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div><strong>Best practice:</strong> Use analogies to explain complex concepts. "Think of this skill like a sous chef prep list — everything prepared before service starts." Analogies help Claude apply the skill more naturally.</div>
+      </div>
+
+      <h3>Writing effective instructions</h3>
+
+      <div class="compare">
+        <div class="compare-box good">
+          <div class="compare-label">✅ Specific &amp; actionable</div>
+          <pre><code>## Instructions
+1. Always write a failing test FIRST
+   before any production code
+2. Run the test — confirm it fails (RED)
+3. Write minimal code to pass — no
+   elegance yet (GREEN)
+4. Refactor while tests stay green</code></pre>
+        </div>
+        <div class="compare-box bad">
+          <div class="compare-label">❌ Vague &amp; generic</div>
+          <pre><code>## Instructions
+- Write good code
+- Make sure tests pass
+- Follow best practices
+- Be clean and readable</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="section">
+      <span class="section-anchor" id="categories"></span>
+      <h2>Available Categories</h2>
+      <p>Choose the category that best matches your skill. Use the exact value shown in the <em>Code</em> column in your submission form.</p>
+
+      <div class="cat-grid">
+        <div class="cat-pill"><span class="cat-dot" style="background:#7c5cfc"></span><span><strong>ai</strong> — AI &amp; ML</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#8a3a4e"></span><span><strong>security</strong> — Cybersecurity</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#8a6a1a"></span><span><strong>data</strong> — Data Eng.</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#3a5f8a"></span><span><strong>cloud</strong> — Cloud &amp; Infra</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#5a3a8a"></span><span><strong>quantum</strong> — Quantum</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#5a7a5a"></span><span><strong>bio</strong> — Comp. Bio</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#3a7d6e"></span><span><strong>spatial</strong> — Spatial</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#8a5a1a"></span><span><strong>blockchain</strong> — Web3</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#4a6a8a"></span><span><strong>robotics</strong> — Robotics</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#3a7a3a"></span><span><strong>climate</strong> — Climate</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#c07b4a"></span><span><strong>product</strong> — Product</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#8a3a6a"></span><span><strong>creative</strong> — Creative Tech</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#3a7d6e"></span><span><strong>dev</strong> — Development</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#7a5a1a"></span><span><strong>writing</strong> — Writing</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#1a5a7a"></span><span><strong>business</strong> — Business</span></div>
+        <div class="cat-pill"><span class="cat-dot" style="background:#7a5a8a"></span><span><strong>education</strong> — Education</span></div>
+      </div>
+    </div>
+
+    <!-- RULES -->
+    <div class="section">
+      <span class="section-anchor" id="rules"></span>
+      <h2>Validation Rules</h2>
+      <p>Your skill is automatically checked when submitted. It will be rejected if any of these fail:</p>
+
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>File must start with <code>---</code> on line 1 (YAML frontmatter)</li>
+        <li><span class="check-icon">✓</span>Frontmatter must contain a <code>name:</code> field</li>
+        <li><span class="check-icon">✓</span>Frontmatter must contain a <code>description:</code> field</li>
+        <li><span class="check-icon">✓</span><code>name</code> must be kebab-case (lowercase + hyphens only)</li>
+        <li><span class="check-icon">✓</span>Description must be 30–500 characters</li>
+        <li><span class="check-icon">✓</span>Total file content must be at least 100 characters</li>
+        <li><span class="check-icon">✓</span>No <code>&lt;script&gt;</code> tags or JavaScript event handlers allowed</li>
+        <li><span class="check-icon">✓</span>No <code>javascript:</code> URLs</li>
+        <li><span class="check-icon">✓</span>File size must be under 100KB</li>
+        <li><span class="check-icon">✓</span>File must be <code>.md</code> or <code>.txt</code></li>
+      </ul>
+
+      <div class="callout danger">
+        <span class="callout-icon">🚫</span>
+        <div><strong>Never include:</strong> personal data, API keys, passwords, proprietary code, content that promotes harm, or plagiarised content from other sources. Violations result in permanent account suspension.</div>
+      </div>
+    </div>
+
+    <!-- GOOD VS BAD -->
+    <div class="section">
+      <span class="section-anchor" id="good-bad"></span>
+      <h2>Good vs Bad Examples</h2>
+
+      <h3>Skill names</h3>
+      <div class="compare">
+        <div class="compare-box good">
+          <div class="compare-label">✅ Correct</div>
+          <pre><code>name: code-reviewer
+name: rag-engineering
+name: daily-planning
+name: ab-test-design</code></pre>
+        </div>
+        <div class="compare-box bad">
+          <div class="compare-label">❌ Will be rejected</div>
+          <pre><code>name: Code Reviewer       (spaces)
+name: RAG_Engineering     (underscore + caps)
+name: claude-helper       (reserved prefix)
+name: My Cool Skill !!!   (spaces + symbols)</code></pre>
+        </div>
+      </div>
+
+      <h3>Description quality</h3>
+      <div class="compare">
+        <div class="compare-box good">
+          <div class="compare-label">✅ Triggers correctly</div>
+          <pre><code>description: Conducts systematic code reviews
+across 6 layers: logic, patterns, performance,
+dead code, edge cases, and security. Use when
+reviewing PRs, preparing code for commit, or
+assessing legacy code quality.</code></pre>
+        </div>
+        <div class="compare-box bad">
+          <div class="compare-label">❌ Claude won't know when to load this</div>
+          <pre><code>description: A helpful skill that reviews
+code and makes it better and more readable
+and follows best practices for developers.</code></pre>
+        </div>
+      </div>
+
+      <h3>Instructions quality</h3>
+      <div class="compare">
+        <div class="compare-box good">
+          <div class="compare-label">✅ Clear, specific, actionable</div>
+          <pre><code>## Instructions
+1. **Logic check**: Can this be simplified?
+   Does it violate single responsibility?
+2. **Performance**: N+1 queries? Blocking ops?
+3. **Dead code**: Unused imports, unreachable
+   branches, commented-out legacy code?
+
+Always fix issues — don't just flag them.
+Output a severity-rated summary: Critical /
+Warning / Suggestion.</code></pre>
+        </div>
+        <div class="compare-box bad">
+          <div class="compare-label">❌ Too vague to be useful</div>
+          <pre><code>## Instructions
+- Review the code carefully
+- Look for problems
+- Make suggestions
+- Be thorough and helpful</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL EXAMPLE -->
+    <div class="section">
+      <span class="section-anchor" id="full-example"></span>
+      <h2>Complete Working Example</h2>
+      <p>This is a real, production-quality skill you can use as a template. Download it below and test it in a Claude Project.</p>
+
+      <div class="example-card">
+        <div class="example-header">
+          <span class="example-title">📄 daily-planner.md — Sample Skill</span>
+          <button class="btn-download-sample" onclick="downloadSample()" style="padding:5px 12px;font-size:.72rem">↓ Download</button>
+        </div>
+        <div class="example-body">
+          <pre><code id="sampleCode"><span class="ky">---</span>
+<span class="ky">name:</span> <span class="vl">daily-planner</span>
+<span class="ky">description:</span> <span class="vl">Structures daily work around 3 Most Important Tasks with</span>
+<span class="vl">  time blocks, energy matching, and clear done criteria. Use when</span>
+<span class="vl">  starting your workday, planning tasks, or saying "help me plan today".</span>
+<span class="ky">tags:</span> <span class="vl">productivity, planning, tasks, daily-routine, focus, time-management</span>
+<span class="ky">difficulty:</span> <span class="vl">beginner</span>
+<span class="ky">time_to_master:</span> <span class="vl">1-2 weeks</span>
+<span class="ky">---</span>
+
+<span class="hd"># Daily Planner</span>
+
+<span class="hd">## When to Use</span>
+<span class="bd">Activate this skill when the user:</span>
+<span class="bd">- Says "help me plan my day" or "what should I work on today?"</span>
+<span class="bd">- Asks to prioritise or organise their tasks</span>
+<span class="bd">- Starts the conversation with what they need to do today</span>
+<span class="bd">- Seems overwhelmed or unfocused about work</span>
+
+<span class="hd">## Instructions</span>
+
+<span class="bd">When helping someone plan their day, always follow this process:</span>
+
+<span class="bd">1. **Review Context**: Ask what's on their plate today (or read from conversation)</span>
+<span class="bd">2. **Identify 3 MITs**: Help them select maximum 3 Most Important Tasks</span>
+<span class="bd">   - MITs = tasks that would make today a success if completed</span>
+<span class="bd">   - Never more than 3 — protect focus</span>
+<span class="bd">3. **Time Block**: Assign realistic time estimates to each MIT</span>
+<span class="bd">   - Include 20% buffer for interruptions and overruns</span>
+<span class="bd">4. **Energy Match**: Place hard cognitive work in morning, admin/meetings afternoon</span>
+<span class="bd">5. **Define Done**: For each MIT, write a specific, testable completion criterion</span>
+
+<span class="hd">## Output Format</span>
+
+<span class="bd">Always produce this exact structure:</span>
+
+<span class="bd">```</span>
+<span class="bd">## Daily Plan — [Day, Date]</span>
+
+<span class="bd">### 🎯 Top 3 Priorities</span>
+<span class="bd">1. [Task] — [Time block] — Done when: [specific criterion]</span>
+<span class="bd">2. [Task] — [Time block] — Done when: [specific criterion]</span>
+<span class="bd">3. [Task] — [Time block] — Done when: [specific criterion]</span>
+
+<span class="bd">### ⚡ Quick Wins (under 15 min each)</span>
+<span class="bd">- [small task 1]</span>
+<span class="bd">- [small task 2]</span>
+
+<span class="bd">### 📋 Notes</span>
+<span class="bd">[Blockers, context, dependencies]</span>
+<span class="bd">```</span>
+
+<span class="hd">## Rules</span>
+<span class="bd">- Never put more than 3 items in Top 3 Priorities</span>
+<span class="bd">- "Done when" criteria must be specific and testable — not "finish report"</span>
+<span class="bd">  but "complete sections 1-3 of Q4 report, ready for manager review"</span>
+<span class="bd">- If the user lists 10 things, help them ruthlessly cut to 3</span>
+<span class="bd">- Energy matching is non-negotiable — creative/hard work always morning</span>
+
+<span class="hd">## Analogy</span>
+<span class="bd">Daily planning is like packing for a trip — you can't take everything,</span>
+<span class="bd">so you pack what you actually need for today, not what might be nice to have.</span></code></pre>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div><strong>This skill passes all validation checks.</strong> It starts with frontmatter, has a clear description with trigger phrases, specific numbered instructions, an output template, hard rules, and an analogy. Use this as your starting template.</div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="section">
+      <span class="section-anchor" id="submit"></span>
+      <h2>How to Submit</h2>
+
+      <p>There are two ways to submit a skill:</p>
+
+      <h3>Option A — Fill in the Form</h3>
+      <ol class="step-list">
+        <li>Sign in to SkillGalaxy (create a free account if needed)</li>
+        <li>Click <strong>"+ Submit Skill"</strong> in the top right or sidebar</li>
+        <li>Fill in: Name, Category, Description, Trigger Phrase, Difficulty</li>
+        <li>Optionally add: Atomic Skills, Tools, Tags, and Scores</li>
+        <li>Click <strong>Submit Skill</strong> — the form auto-generates a valid <code>.md</code> file from your inputs</li>
+      </ol>
+
+      <h3>Option B — Upload a .md File (Recommended)</h3>
+      <ol class="step-list">
+        <li>Write your skill file locally (use the example above as a template)</li>
+        <li>Sign in to SkillGalaxy</li>
+        <li>Click <strong>"+ Submit Skill"</strong> → switch to the <strong>"Upload .md File"</strong> tab</li>
+        <li>Drop your <code>.md</code> file — it auto-fills the form fields from your frontmatter</li>
+        <li>Fill in any missing fields → click <strong>Submit Skill</strong></li>
+      </ol>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div>After submitting, your skill appears in <strong>"My Submissions"</strong> (sidebar) with status <strong>Pending</strong>. It won't be visible to other users yet.</div>
+      </div>
+    </div>
+
+    <!-- APPROVAL -->
+    <div class="section">
+      <span class="section-anchor" id="approval"></span>
+      <h2>Review &amp; Approval Process</h2>
+
+      <p>Every submitted skill goes through a quick review before going live:</p>
+
+      <table class="field-table">
+        <thead><tr><th>Status</th><th>Meaning</th><th>What happens next</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>pending</td>
+            <td>Submitted, awaiting review</td>
+            <td>Visible only to you; admin reviews within 24hrs</td>
+          </tr>
+          <tr>
+            <td>approved</td>
+            <td>Passes review</td>
+            <td>Goes live instantly — visible to everyone on all devices</td>
+          </tr>
+          <tr>
+            <td>rejected</td>
+            <td>Doesn't meet standards</td>
+            <td>You'll see the rejection reason; you can edit and resubmit</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>What reviewers check for</h3>
+      <ul>
+        <li>Clear, specific description with real trigger phrases</li>
+        <li>Actionable, numbered instructions (not vague guidance)</li>
+        <li>Correct frontmatter format and valid <code>name</code> field</li>
+        <li>Skill is genuinely useful and not a duplicate of an existing skill</li>
+        <li>No harmful content, spam, or promotional material</li>
+        <li>At least 150 words of actual instruction content</li>
+      </ul>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div><strong>Tip to get approved fast:</strong> Look at the existing skills in the library before writing yours. Match that level of detail and specificity. Skills that include output templates, rules, and analogies are approved almost instantly.</div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST -->
+    <div class="section">
+      <span class="section-anchor" id="checklist"></span>
+      <h2>Pre-Submission Checklist</h2>
+      <p>Run through this before submitting. Every item should be ✅.</p>
+
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>File starts with <code>---</code> on line 1 (no blank lines before it)</li>
+        <li><span class="check-icon">✓</span><code>name:</code> is kebab-case — no spaces, no caps, no underscores</li>
+        <li><span class="check-icon">✓</span><code>description:</code> says WHAT it does AND WHEN to use it</li>
+        <li><span class="check-icon">✓</span>Description includes at least 2 specific trigger phrases</li>
+        <li><span class="check-icon">✓</span>Instructions are numbered and specific, not vague bullet points</li>
+        <li><span class="check-icon">✓</span>Skill body is at least 150 words</li>
+        <li><span class="check-icon">✓</span>No <code>&lt;script&gt;</code> tags or raw HTML</li>
+        <li><span class="check-icon">✓</span>No API keys, passwords, or personal data in the file</li>
+        <li><span class="check-icon">✓</span>Content is original (not copy-pasted from another skill)</li>
+        <li><span class="check-icon">✓</span>Tested the skill in a real Claude Project before submitting</li>
+      </ul>
+
+      <div style="margin-top:24px;padding:20px 22px;background:var(--warm-white);border:1px solid var(--border-lt);border-radius:12px;text-align:center">
+        <div style="font-family:'Newsreader',Georgia,serif;font-size:1.1rem;margin-bottom:6px">Ready to submit?</div>
+        <div style="font-size:.8rem;color:var(--text-ter);margin-bottom:16px">Download the sample skill first to test the submission flow</div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="btn-download-sample" onclick="downloadSample()">↓ Download Sample Skill</button>
+          <a href="index.html" class="btn-back" style="padding:8px 18px">→ Go Submit a Skill</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── SAMPLE SKILL CONTENT ── */
+const SAMPLE_MD = `---
+name: daily-planner
+description: Structures daily work around 3 Most Important Tasks with time blocks, energy matching, and clear done criteria. Use when starting your workday, planning tasks, or saying "help me plan today".
+tags: productivity, planning, tasks, daily-routine, focus, time-management
+difficulty: beginner
+time_to_master: 1-2 weeks
+---
+
+# Daily Planner
+
+## When to Use
+Activate this skill when the user:
+- Says "help me plan my day" or "what should I work on today?"
+- Asks to prioritise or organise their tasks
+- Starts the conversation with what they need to do today
+- Seems overwhelmed or unfocused about work
+
+## Instructions
+
+When helping someone plan their day, always follow this process:
+
+1. **Review Context**: Ask what's on their plate today (or read from conversation)
+2. **Identify 3 MITs**: Help them select maximum 3 Most Important Tasks
+   - MITs = tasks that would make today a success if completed
+   - Never more than 3 — protect focus
+3. **Time Block**: Assign realistic time estimates to each MIT
+   - Include 20% buffer for interruptions and overruns
+4. **Energy Match**: Place hard cognitive work in morning, admin/meetings afternoon
+5. **Define Done**: For each MIT, write a specific, testable completion criterion
+
+## Output Format
+
+Always produce this exact structure:
+
+\`\`\`
+## Daily Plan — [Day, Date]
+
+### 🎯 Top 3 Priorities
+1. [Task] — [Time block] — Done when: [specific criterion]
+2. [Task] — [Time block] — Done when: [specific criterion]
+3. [Task] — [Time block] — Done when: [specific criterion]
+
+### ⚡ Quick Wins (under 15 min each)
+- [small task 1]
+- [small task 2]
+
+### 📋 Notes
+[Blockers, context, dependencies]
+\`\`\`
+
+## Rules
+- Never put more than 3 items in Top 3 Priorities
+- "Done when" criteria must be specific and testable — not "finish report"
+  but "complete sections 1-3 of Q4 report, ready for manager review"
+- If the user lists 10 things, help them ruthlessly cut to 3
+- Energy matching is non-negotiable — creative/hard work always morning
+
+## Analogy
+Daily planning is like packing for a trip — you can't take everything,
+so you pack what you actually need for today, not what might be nice to have.
+
+## Always Output
+- A structured daily plan following the template above
+- "Done when" criterion for each MIT that is specific and testable
+- At least 2 Quick Wins if user has small pending tasks
+`;
+
+function downloadSample() {
+  const blob = new Blob([SAMPLE_MD], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'daily-planner.md';
+  a.click();
+}
+
+/* ── COPY CODE BUTTONS ── */
+function copyCode(btn) {
+  const pre = btn.closest('pre');
+  const text = pre.querySelector('code').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ── TOC ACTIVE STATE ── */
+const sections = document.querySelectorAll('.section-anchor');
+const tocLinks  = document.querySelectorAll('.toc a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-60px 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
