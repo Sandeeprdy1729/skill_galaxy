@@ -1,30 +1,138 @@
-# SkillVault — Claude Skills Marketplace
+# ✦ SkillGalaxy — Claude Skills Marketplace
 
-> The free, open library of expert skill files for Claude Projects.
+> **The free, open marketplace of `.md` skill files for Claude Projects.**  
+> Download once. Claude applies it automatically in every conversation. Forever.
+
+[![Live Site](https://img.shields.io/badge/Live-skill--galaxy.vercel.app-black?style=flat-square)](https://skill-galaxy.vercel.app/)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Launch%20Day-orange?style=flat-square)](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](LICENSE)
+[![Skills](https://img.shields.io/badge/Skills-109%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
+[![Built by Timps](https://img.shields.io/badge/Built%20by-Timps-purple?style=flat-square)](https://timps-website.vercel.app/)
+
+---
+
+## What is SkillGalaxy?
+
+Every time you start a new Claude conversation, you re-explain the same instructions. Copy-paste. Again and again.
+
+**SkillGalaxy fixes that.**
+
+It's a community-powered library of `.md` skill files designed for **Claude Projects**. Add a skill once to your project instructions — Claude applies it automatically in every conversation from that point forward.
+
+No repeated prompts. No wasted tokens. Just results.
+
+---
+
+## How It Works
+
+```
+1. Browse SkillGalaxy → find a skill
+2. Click Download .md
+3. Open Claude → go to a Project → paste into Project Instructions
+4. Done. Claude applies the skill in every conversation automatically.
+```
+
+No account needed to download. No friction.
+
+---
+
+## Stats
+
+| | |
+|---|---|
+| 🧠 Skills | 109+ and growing |
+| 🌐 Domains | 16 |
+| 💰 Price | Free. Always. |
+| 👥 Model | Community-built, reviewed within 24hrs |
+
+---
+
+## Domains Covered
+
+`AI & ML` · `Cybersecurity` · `Data Engineering` · `Cloud & Infra` · `Quantum Computing` · `Computational Biology` · `Spatial Computing` · `Blockchain & Web3` · `Robotics & Automation` · `Climate Tech` · `Product & Strategy` · `Creative Technology` · `Development` · `Writing` · `Business` · `Design & Education`
+
+---
 
 ## Project Structure
 
 ```
-skillvault/
-├── index.html          # Main HTML shell — markup only, no logic
+skill_galaxy/
+├── index.html              # Main app shell
+├── guide.html              # Skill creation guide
 ├── css/
-│   └── styles.css      # All styles — Claude-inspired warm theme
+│   └── styles.css          # All styles — Claude-inspired theme
 ├── js/
-│   ├── db.js           # Skills database + localStorage community layer
-│   └── app.js          # All frontend logic (render, filter, modals, download)
+│   ├── db.js               # Skills database + Supabase community layer
+│   └── app.js              # Frontend logic: render, filter, modals, download
+├── SUPABASE_SETUP.sql      # Database schema for community skills
+├── supabase-setup.sql      # Alternate setup script
+├── SETUP_GUIDE.md          # Full local setup instructions
 └── README.md
 ```
 
-## File Responsibilities
+---
 
-| File | Purpose |
-|------|---------|
-| `index.html` | DOM structure, semantic HTML, script/style links |
-| `css/styles.css` | All visual styling, CSS variables, responsive rules |
-| `js/db.js` | `SKILLS_DB` array, `CATEGORIES` map, `getCommunitySkills()`, `saveCommunitySkill()`, `getAllSkills()` |
-| `js/app.js` | `renderGrid()`, `openDetail()`, `openSubmit()`, `handleFormSubmit()`, `handleFileUpload()`, search, filter, download, toast |
+## Running Locally
 
-## Adding New Skills (Official)
+No build step. Pure HTML/CSS/JS — zero dependencies.
+
+```bash
+git clone https://github.com/Sandeeprdy1729/skill_galaxy.git
+cd skill_galaxy
+
+# Just open index.html in your browser
+open index.html
+```
+
+For community skill submissions (Supabase backend):
+
+1. Create a free [Supabase](https://supabase.com) project
+2. Run `SUPABASE_SETUP.sql` in the Supabase SQL editor
+3. Add your Supabase URL + anon key in `js/db.js`
+4. See `SETUP_GUIDE.md` for full details
+
+---
+
+## Deploying
+
+**Vercel (recommended)**
+```bash
+npx vercel
+```
+
+**Netlify**
+Drag and drop the repo folder to [Netlify Drop](https://app.netlify.com/drop)
+
+**GitHub Pages**
+Settings → Pages → Branch: `main` → Save
+
+---
+
+## Contributing a Skill
+
+1. Go to [skill-galaxy.vercel.app](https://skill-galaxy.vercel.app/)
+2. Sign in → click **Submit a Skill**
+3. Fill in the form or upload a `.md` file following the [Skill Format Guide](https://skill-galaxy.vercel.app/guide.html)
+4. Your skill goes live within **24 hours** after review
+
+**Skill `.md` format (minimum required frontmatter):**
+
+```markdown
+---
+name: my-skill-name
+description: What this skill does and when Claude should apply it.
+---
+
+## Skill Content
+
+Your instructions for Claude go here.
+```
+
+**Attribution:** Your name + profile link appears on every skill card. Contributors retain full ownership — SkillGalaxy is a distribution platform, not a rights holder. You can remove your skill at any time.
+
+---
+
+## Adding Official Skills (via code)
 
 Open `js/db.js` and push a new object into `SKILLS_DB`:
 
@@ -32,13 +140,13 @@ Open `js/db.js` and push a new object into `SKILLS_DB`:
 {
   id: 'my-skill-name',           // kebab-case, unique
   name: 'My Skill Name',
-  icon: '◎',                     // single character/emoji
+  icon: '◎',                     // single character or emoji
   cat: 'ai',                     // must match a key in CATEGORIES
-  d: 8,                          // demand score 1-10
-  i: 8,                          // income score 1-10
-  f: 9,                          // future score 1-10
+  d: 8,                          // demand score 1–10
+  i: 8,                          // income score 1–10
+  f: 9,                          // future score 1–10
   difficulty: 'intermediate',    // beginner | intermediate | advanced | expert
-  timeToMaster: '3-6 months',
+  timeToMaster: '3–6 months',
   tags: ['ai', 'my-tag'],
   desc: 'Short description shown on the card.',
   trigger: 'Use when…',
@@ -49,66 +157,26 @@ Open `js/db.js` and push a new object into `SKILLS_DB`:
 }
 ```
 
-## Community Skills
+---
 
-Community-submitted skills are stored in **`localStorage`** under the key `sv_community`.
-They persist across page loads for the same browser.
+## Tech Stack
 
-For a production backend, replace `getCommunitySkills()` / `saveCommunitySkill()` in `db.js`
-with API calls to your database.
+- **Frontend:** Pure HTML, CSS, JavaScript — no frameworks, no build tools
+- **Backend:** [Supabase](https://supabase.com) (Postgres + REST API)
+- **Hosting:** [Vercel](https://vercel.com)
+- **Auth:** Supabase Auth (email + password)
 
-## Deploy on Netlify / Vercel (static)
-
-```bash
-# Drag and drop the skillvault/ folder to Netlify Drop
-# https://app.netlify.com/drop
-
-# Or via Vercel CLI
-npx vercel skillvault/
-```
-
-No build step required. Pure HTML/CSS/JS — zero dependencies.
-
-## Deploy on GitHub Pages
-
-1. Push the `skillvault/` contents to a GitHub repository root
-2. Settings → Pages → Branch: `main` → Save
-3. Live at `https://<username>.github.io/<repo>/`
-
-## Backend Integration (optional)
-
-To persist community submissions across users, replace the localStorage layer in `db.js`:
-
-```js
-// db.js — replace getCommunitySkills with an API call
-async function getCommunitySkills() {
-  const res = await fetch('/api/skills/community');
-  return res.json();
-}
-
-async function saveCommunitySkill(skill) {
-  await fetch('/api/skills/community', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(skill)
-  });
-}
-```
-
-Recommended backend stack:
-- **Supabase** (Postgres + REST API, free tier)
-- **PlanetScale** (MySQL, free tier)
-- **Firebase Firestore** (real-time, free tier)
-
-## Skills Count
-
-- 34 skills from the Master Pack (AI/ML, Cybersecurity, Data Engineering, Cloud & Infra,
-  Quantum Computing, Computational Biology, Spatial Computing, Blockchain & Web3,
-  Robotics & Automation, Climate Tech, Product & Strategy, Creative Technology)
-- 20 original SkillVault skills (Development, Writing, Business, Education)
-- **54 total official skills**
-- Unlimited community-contributed skills via Submit form or .md upload
+---
 
 ## License
 
-All skill files are free to use, share, and modify.
+Apache 2.0 — free to use, fork, and modify with attribution.  
+All skill files are free to use, share, and adapt.
+
+---
+
+## Built by Timps
+
+[timps-website.vercel.app](https://timps-website.vercel.app/) · [Product Hunt](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
+
+If SkillGalaxy is useful to you, consider ⭐ starring the repo and upvoting on Product Hunt — it genuinely helps.
