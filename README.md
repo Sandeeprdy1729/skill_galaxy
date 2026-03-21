@@ -72,42 +72,6 @@ skill_galaxy/
 
 ---
 
-## Running Locally
-
-No build step. Pure HTML/CSS/JS — zero dependencies.
-
-```bash
-git clone https://github.com/Sandeeprdy1729/skill_galaxy.git
-cd skill_galaxy
-
-# Just open index.html in your browser
-open index.html
-```
-
-For community skill submissions (Supabase backend):
-
-1. Create a free [Supabase](https://supabase.com) project
-2. Run `SUPABASE_SETUP.sql` in the Supabase SQL editor
-3. Add your Supabase URL + anon key in `js/db.js`
-4. See `SETUP_GUIDE.md` for full details
-
----
-
-## Deploying
-
-**Vercel (recommended)**
-```bash
-npx vercel
-```
-
-**Netlify**
-Drag and drop the repo folder to [Netlify Drop](https://app.netlify.com/drop)
-
-**GitHub Pages**
-Settings → Pages → Branch: `main` → Save
-
----
-
 ## Contributing a Skill
 
 1. Go to [skill-galaxy.vercel.app](https://skill-galaxy.vercel.app/)
