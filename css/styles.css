@@ -250,3 +250,217 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   .form-row{grid-template-columns:1fr}
   .tb-pill:not(:first-child){display:none}
 }
+
+/* ════════════════════════════════════════════════════════════
+   SKILLGALAXY — ICON STYLES PATCH
+   INSTRUCTIONS: Paste this block at the END of your css/styles.css
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Skill card icon wrapper ── */
+.skill-icon-wrap {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: background 0.2s;
+}
+
+.skill-card:hover .skill-icon-wrap {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ── Simple Icons img ── */
+.skill-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  filter: var(--icon-filter, none);
+}
+
+/* Dark mode: invert very dark icons so they're visible */
+@media (prefers-color-scheme: dark) {
+  .skill-icon-img[src*="/000000/"] {
+    filter: invert(1) brightness(0.85);
+  }
+}
+
+/* Force invert for known dark icons in SkillGalaxy dark UI */
+.skill-icon-img[src*="/000000/"],
+.skill-icon-img[src*="/181717/"],
+.skill-icon-img[src*="/2D2D2D/"] {
+  filter: invert(1) brightness(0.85);
+}
+
+/* ── Emoji fallback ── */
+.skill-icon-emoji,
+.skill-icon-fallback {
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Brand accent on card hover ── */
+.skill-card[data-brand] {
+  --brand: attr(data-brand);
+}
+
+.skill-card:hover {
+  border-color: var(--brand-color, rgba(255,255,255,0.15));
+}
+
+/* ── Icon in modal/detail view ── */
+.detail-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detail-icon-wrap .skill-icon-img {
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Loading skeleton for icons ── */
+.skill-icon-img[src=""] {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── App skills badge ── */
+.skill-card[data-source="official"] .skill-name::after {
+  content: '';
+}
+
+/* ── Responsive icon sizes ── */
+@media (max-width: 480px) {
+  .skill-icon-wrap { width: 36px; height: 36px; }
+  .skill-icon-img { width: 20px; height: 20px; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   SKILLGALAXY — Simple Icons CSS additions
+   Paste this entire block at the END of your css/styles.css
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Simple Icons <img> ─────────────────────────── */
+.si-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ── Emoji / character fallback ─────────────────── */
+.icon-fallback {
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+/* ── Card icon wrapper — override existing .card-icon ── */
+.card-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  overflow: hidden;
+}
+
+.skill-card:hover .card-icon {
+  opacity: 0.9;
+}
+
+/* ── Brand-colored hover border via CSS var ─────── */
+.skill-card {
+  --brand: transparent;
+  transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.skill-card:hover {
+  border-color: var(--brand, rgba(255,255,255,0.12));
+  box-shadow: 0 0 0 1px var(--brand, transparent),
+              0 4px 24px rgba(0,0,0,0.25);
+}
+
+/* ── Modal icon (larger) ────────────────────────── */
+#mIcon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#mIcon .si-icon {
+  width: 32px;
+  height: 32px;
+}
+
+#mIcon .icon-fallback {
+  font-size: 22px;
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Loading shimmer for icons ──────────────────── */
+.si-icon[src=""],
+.si-icon:not([src]) {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: sg-shimmer 1.4s infinite;
+  border-radius: 4px;
+}
+
+@keyframes sg-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 480px) {
+  .card-icon { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; }
+  .si-icon   { width: 20px; height: 20px; }
+  #mIcon     { width: 42px; height: 42px; }
+  #mIcon .si-icon { width: 26px; height: 26px; }
+}

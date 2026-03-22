@@ -3090,6 +3090,12307 @@ Hi [Name],
 - Delay Send: Options → Delay Delivery (prevents send regret)
 - @mention in email body: pulls person into To field automatically`
   },
+  // ─────────────────────────────────────────────────────────
+// APP SKILLS — 99 entries — paste into SKILLS_DB in db.js
+// ─────────────────────────────────────────────────────────
+
+  {
+    id: "lightroom-assistant",
+    name: "Lightroom Assistant",
+    icon: "adobelightroom",
+    iconType: 'simpleicons',
+    brandColor: "#31A8FF",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["photo-editing", "adobe", "presets", "workflow-documentation"],
+    desc: "Document photo editing workflows and create Lightroom preset notes. Use when recording editing processes, explaining adjustments, or building consistent photo treatment guides.",
+    trigger: "Use when working with Lightroom",
+    skills: [], tools: ["Lightroom"],
+    source: 'official',
+    md: `---
+name: lightroom-assistant
+description: Document photo editing workflows and create Lightroom preset notes. Use when recording editing processes, explaining adjustments, or building consistent photo treatment guides.
+tags: photo-editing, adobe, presets, workflow-documentation
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Adobe Lightroom Photo Editing Workflow Notes
+
+## When to Use
+Activate when the user:
+- "Document my Lightroom editing workflow"
+- "Help me create preset documentation"
+- "Explain these Lightroom adjustments"
+- "I need to standardize my photo editing process"
+
+## Instructions
+1. Identify the photo genre and intended mood:
+   - Portrait (skin tones, background separation)
+   - Landscape (dynamic range, color grading)
+   - Product (color accuracy, detail enhancement)
+   - Street/documentary (grain, contrast, mood)
+2. Document the editing sequence using Lightroom panels:
+   - Basic panel: Exposure, Contrast, Highlights, Shadows, Whites, Blacks
+   - Tone Curve: RGB adjustments, point curve modifications
+   - HSL/Color: Hue, Saturation, Luminance per color
+   - Detail: Sharpening, Noise reduction settings
+   - Effects: Clarity, Dehaze, Vignette, Grain
+   - Calibration: Profile adjustments
+3. Record specific numerical values for reproducibility
+4. Explain the creative intent behind each adjustment
+5. Note any masking or local adjustments used:
+   - Brush tool settings
+   - Linear/radial gradient parameters
+   - Range mask applications
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Workflow Name: [Descriptive Title]
+
+**Photo Type:** [Genre]
+**Mood/Style:** [Descriptive adjective]
+**Base Profile:** [Adobe Color/Portrait/Landscape/etc.]
+
+---
+
+## Step-by-Step Adjustments
+
+### Basic Panel
+- Exposure: [+/- X.XX] — [reason]
+- Contrast: [+/- XX] — [reason]
+- Highlights: [+/- XX] — [reason]
+- Shadows: [+/- XX] — [reason]
+- Whites: [+/- XX] — [reason]
+- Blacks: [+/- XX] — [reason]
+
+### Tone Curve
+[Describe curve shape or point values]
+
+### HSL Adjustments
+| Color | Hue | Saturation | Luminance | Reason |
+|-------|-----|------------|-----------|--------|
+| [Color] | [+/- X] | [+/- X] | [+/- X] | [Brief note] |
+
+### Local Adjustments
+- [Tool used]: [Settings applied] — [Area affected]
+
+---
+
+## Preset Notes
+- **Best for:** [Lighting conditions/subject types]
+- **Avoid when:** [Situations where this won't work]
+- **Quick tip:** [One practical insight]
+\`\`\`
+
+## Rules
+- Always include numerical values, not just "increased" or "decreased"
+- Explain creative intent, not just technical steps
+- Note when adjustments are subjective vs. technical necessity
+- Include before/after reference points when possible
+
+## Analogy
+Lightroom workflow documentation is like writing a recipe—the ingredients and quantities must be precise so others can recreate the result.
+`
+  },
+  {
+    id: "substack-assistant",
+    name: "Substack Assistant",
+    icon: "substack",
+    iconType: 'simpleicons',
+    brandColor: "#FF6719",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["substack", "newsletter", "writing", "subscribers", "email"],
+    desc: "Substack newsletter structure, voice development, and subscriber engagement. Use when users need to write newsletters, develop their voice, or grow their subscriber base.",
+    trigger: "Use when working with Substack",
+    skills: [], tools: ["Substack"],
+    source: 'official',
+    md: `---
+name: substack-assistant
+description: Substack newsletter structure, voice development, and subscriber engagement. Use when users need to write newsletters, develop their voice, or grow their subscriber base.
+tags: substack, newsletter, writing, subscribers, email
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Substack Assistant
+
+## When to Use
+Activate when the user:
+- "Write a Substack newsletter about [topic]"
+- "Help me find my newsletter voice"
+- "Create a Substack post that grows subscribers"
+- "Structure my weekly newsletter"
+- "Write a welcome email for new subscribers"
+
+## Instructions
+1. Understand the newsletter:
+   - What is your unique perspective?
+   - Who is your target subscriber?
+   - What value do you provide? (education, entertainment, curation)
+   - What is your posting cadence?
+2. Structure the post:
+   - Subject line that drives opens
+   - Personal opening that connects
+   - Core content with clear value
+   - Engagement element (question, poll, CTA)
+   - Subscribe CTA for new readers
+3. Develop voice:
+   - Consistency in tone and style
+   - Personal touches (stories, opinions)
+   - Authentic perspective, not generic advice
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Substack Newsletter: [Title]
+
+### Post Details
+**Subject Line:** [Under 60 characters, curiosity-driven]
+**Preview Text:** [First 50 characters visible in inbox]
+**Estimated Read Time:** [X] minutes
+
+---
+
+### [Title]
+
+[Personal opening—share a thought, observation, or story that hooks readers]
+
+[Transition to main content]
+
+---
+
+### [Section Heading]
+
+[Main content with:
+- Your unique perspective
+- Concrete examples or data
+- Scannable formatting]
+
+[Continued content]
+
+---
+
+### Quick Hits / Links / Resources
+(If applicable—a curated section)
+- [Link 1 with brief description]
+- [Link 2 with brief description]
+
+---
+
+### [Closing]
+
+[Personal sign-off with vulnerability or warmth]
+
+**[Question for readers? What do you think about X? Reply and let me know.]**
+
+---
+
+👋 **New here?** Subscribe to get [value proposition] delivered to your inbox every [cadence].
+
+[Your signature]
+
+---
+
+### Notes for Growth
+- **Cross-post:** [Y/N - consider expanding reach]
+- **Recommend:** [Other Substacks to recommend/mention]
+- **Engagement:** [Question to prompt comments/replies]
+\`\`\`
+
+## Rules
+- Subject lines create curiosity, not clickbait
+- Personal opening every time (not generic intro)
+- One main idea per newsletter
+- End with engagement prompt (question, poll)
+- Include subscribe CTA for growth
+
+## Analogy
+Like having a writing coach who helps you build genuine relationships with your readers through email.
+`
+  },
+  {
+    id: "replit-assistant",
+    name: "Replit Assistant",
+    icon: "replit",
+    iconType: 'simpleicons',
+    brandColor: "#F26207",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "3-5 hours",
+    tags: ["coding", "debugging", "scaffolding", "development"],
+    desc: "Code scaffolding and debugging for rapid development. Use when starting new projects, debugging code errors, or setting up development environments.",
+    trigger: "Use when working with Replit",
+    skills: [], tools: ["Replit"],
+    source: 'official',
+    md: `---
+name: replit-assistant
+description: Code scaffolding and debugging for rapid development. Use when starting new projects, debugging code errors, or setting up development environments.
+tags: coding, debugging, scaffolding, development
+difficulty: intermediate
+time_to_master: 3-5 hours
+---
+
+# Replit Assistant
+
+## When to Use
+Activate when the user:
+- "Help me start a [language/framework] project"
+- "Debug this error: [error message]"
+- "Set up a development environment for [project]"
+
+## Instructions
+1. Understand project requirements and technology stack
+2. Generate starter code with proper structure
+3. Identify and explain errors with solutions
+4. Provide step-by-step debugging guidance
+5. Suggest improvements and best practices
+6. Include necessary dependencies and configuration
+
+## Output Format
+Always produce this exact structure:
+## Project Setup
+**Name**: [Project Name]
+**Stack**: [Language/Framework]
+**Purpose**: [What it does]
+
+## File Structure
+\`\`\`
+project-root/
+├── src/
+│   ├── main.py (or index.js)
+│   ├── config.py
+│   └── utils/
+│       └── helpers.py
+├── tests/
+│   └── test_main.py
+├── requirements.txt (or package.json)
+├── .env.example
+└── README.md
+\`\`\`
+
+## Starter Code
+
+### Main File
+\`\`\`[language]
+# [filename]
+"""
+[Description]
+"""
+
+[imports]
+
+[main code with comments]
+
+if __name__ == "__main__":
+    [entry point]
+\`\`\`
+
+### Configuration
+\`\`\`[language]
+# config.py (or similar)
+[configuration code]
+\`\`\`
+
+### Dependencies
+\`\`\`
+# requirements.txt or package.json
+[dependency list with versions]
+\`\`\`
+
+## Error Analysis (if debugging)
+**Error**: \`[exact error message]\`
+
+**Root Cause**: [Explanation of why it happened]
+
+**Solution**:
+\`\`\`[language]
+# Before (problematic)
+[code with issue]
+
+# After (fixed)
+[corrected code]
+\`\`\`
+
+**Why This Works**: [Explanation]
+
+## Development Commands
+| Command | Purpose |
+|---------|---------|
+| \`npm install\` | Install dependencies |
+| \`npm run dev\` | Start development server |
+| \`npm test\` | Run tests |
+
+## Rules
+- Always include error handling in starter code
+- Provide .env.example for sensitive configuration
+- Add comments explaining non-obvious code
+- Include at least one test file
+- Use conventional file/folder names for the stack
+
+## Analogy
+A senior developer who sets up your project structure and debugs your code side-by-side.
+`
+  },
+  {
+    id: "wordpress-assistant",
+    name: "Wordpress Assistant",
+    icon: "wordpress",
+    iconType: 'simpleicons',
+    brandColor: "#21759B",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["wordpress", "blog", "seo", "content", "copywriting"],
+    desc: "WordPress blog post SEO writing, content optimization, and site copy. Use when users need to write blog posts, optimize content for SEO, or create website copy.",
+    trigger: "Use when working with Wordpress",
+    skills: [], tools: ["Wordpress"],
+    source: 'official',
+    md: `---
+name: wordpress-assistant
+description: WordPress blog post SEO writing, content optimization, and site copy. Use when users need to write blog posts, optimize content for SEO, or create website copy.
+tags: wordpress, blog, seo, content, copywriting
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# WordPress Assistant
+
+## When to Use
+Activate when the user:
+- "Write a WordPress blog post about [topic]"
+- "Optimize this blog post for SEO"
+- "Create meta descriptions for my WordPress posts"
+- "Write WordPress page copy for [page type]"
+- "Help me plan a blog content strategy"
+
+## Instructions
+1. Understand the content goal:
+   - What is the primary keyword?
+   - Who is the target audience?
+   - What is the search intent? (informational, commercial, transactional)
+   - What action should readers take?
+2. Structure for SEO:
+   - Compelling title with keyword
+   - Meta description under 160 characters
+   - H2/H3 heading hierarchy
+   - Short paragraphs for readability
+   - Internal and external links
+   - Image alt text suggestions
+3. Write engaging content:
+   - Strong hook in first paragraph
+   - Value in every section
+   - Scannable format
+   - Clear CTA at the end
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Blog Post: [Title]
+
+### SEO Metadata
+**Focus Keyword:** [primary keyword]
+**Title Tag:** [Under 60 characters, includes keyword]
+**Meta Description:** [Under 160 characters, includes keyword and CTA]
+**Slug:** /keyword-rich-url-slug
+**Category:** [WordPress category]
+**Tags:** [tag1], [tag2], [tag3]
+
+---
+
+### [H1: Blog Title with Keyword]
+
+[Opening paragraph with hook and keyword naturally included. State the problem and promise the solution.]
+
+### [H2: First Major Section with Keyword Variation]
+
+[Content with:
+- Short paragraphs (2-3 sentences)
+- Bullet points for lists
+- Internal link to related post]
+
+### [H2: Second Major Section]
+
+[Content with:
+- Subheadings for scannability
+- External links to authoritative sources
+- Examples or data to support claims]
+
+#### [H3: Subsection if needed]
+
+[Detailed content]
+
+### [H2: Conclusion and Next Steps]
+
+[Summary of key points]
+
+**Ready to [take action]?** [CTA with link]
+
+---
+
+### Image Suggestions
+| Placement | Suggested Image | Alt Text |
+|-----------|-----------------|----------|
+| After intro | [Image description] | [Keyword-rich alt text] |
+| Section 2 | [Image description] | [Keyword-rich alt text] |
+
+### Internal Links to Include
+- [Existing post 1]: Link when mentioning [topic]
+- [Existing post 2]: Link when mentioning [topic]
+\`\`\`
+
+## Rules
+- Keyword in title, first paragraph, and at least one H2
+- Meta description includes keyword and CTA
+- Paragraphs under 150 words
+- Every image needs descriptive alt text
+- Minimum 1,000 words for pillar content
+
+## Analogy
+Like having an SEO specialist who writes content that both Google and your readers will love.
+`
+  },
+  {
+    id: "teladoc-assistant",
+    name: "Teladoc Assistant",
+    icon: "teladoc",
+    iconType: 'simpleicons',
+    brandColor: "#00A0C7",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["telehealth", "symptoms", "healthcare", "preparation"],
+    desc: "Prepare symptom documentation for telehealth appointments. Use when organizing symptoms before virtual doctor visits or preparing to describe health concerns.",
+    trigger: "Use when working with Teladoc",
+    skills: [], tools: ["Teladoc"],
+    source: 'official',
+    md: `---
+name: teladoc-assistant
+description: Prepare symptom documentation for telehealth appointments. Use when organizing symptoms before virtual doctor visits or preparing to describe health concerns.
+tags: telehealth, symptoms, healthcare, preparation
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Teladoc Symptom Documentation Prep
+
+## When to Use
+Activate when the user:
+- "Help me prepare for my telehealth appointment"
+- "Organize my symptoms for a virtual doctor visit"
+- "What should I tell my doctor about this issue?"
+- "Create a symptom summary for my appointment"
+- "I have a Teladoc call—help me prepare"
+
+## Instructions
+1. Gather symptom details:
+   - When it started (onset and timeline)
+   - What it feels like (quality and character)
+   - How severe it is (0-10 scale)
+   - What makes it better or worse
+   - Associated symptoms
+   - Impact on daily life
+
+2. Prepare relevant history:
+   - Previous similar issues
+   - Current medications
+   - Allergies
+   - Recent life changes or stressors
+
+3. Create clear communication:
+   - Prioritize main concerns
+   - Use specific, descriptive language
+   - Prepare questions in advance
+   - Have relevant information ready
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Telehealth Visit Prep: [Provider/Type]
+
+### Appointment Details:
+**Date/Time:** [Date and time]
+**Provider:** [Name if known]
+**Visit Type:** [General, specialist, follow-up]
+**Platform:** [Teladoc, Zoom, phone, etc.]
+
+---
+
+### Chief Concern:
+[One sentence describing main reason for visit]
+
+---
+
+### Symptom Details:
+
+**Symptom 1: [Primary symptom name]**
+| Aspect | Details |
+|--------|---------|
+| When it started | [Date, how it began] |
+| Location | [Where in/on body] |
+| Quality | [Sharp, dull, burning, pressure, etc.] |
+| Severity | [X/10] |
+| Duration | [How long each episode lasts] |
+| Frequency | [How often it occurs] |
+| Triggers | [What brings it on] |
+| Relieving factors | [What helps] |
+| Pattern changes | [Getting better/worse/same] |
+
+**Associated Symptoms:**
+- [Related symptom 1]: [Details]
+- [Related symptom 2]: [Details]
+
+**Impact on Daily Life:**
+- Sleep: [Affected? How?]
+- Work: [Affected? How?]
+- Activities: [What can't you do?]
+- Appetite: [Changes?]
+
+---
+
+### Relevant History:
+
+**Similar Past Issues:**
+- [Previous occurrence]: [What happened, what worked]
+
+**Current Medications:**
+| Medication | Dose | Frequency | Prescribing Doctor |
+|------------|------|-----------|-------------------|
+| [Name] | [Dose] | [How often] | [Doctor] |
+
+**Allergies:**
+- [Allergy]: [Reaction]
+
+**Recent Changes:**
+- [New medications, diet, activity, stress, travel]
+
+---
+
+### Questions for Provider:
+1. [Most important question]
+2. [Secondary question]
+3. [Additional question]
+
+---
+
+### Information to Have Ready:
+- [ ] Insurance card
+- [ ] Current medication list
+- [ ] Previous test results (if relevant)
+- [ ] thermometer, blood pressure cuff (if applicable)
+- [ ] Good lighting for video exam (if applicable)
+
+### Notes Space:
+[Room for doctor's responses and instructions]
+
+---
+
+### Post-Visit Summary (to fill after):
+**Diagnosis/Impression:** [Provider's assessment]
+**Recommendations:** [What to do]
+**Follow-up:** [Next steps]
+**Prescriptions:** [Any new medications]
+\`\`\`
+
+## Rules
+- Never diagnose or suggest treatments—this is preparation only
+- Help users be thorough but concise for limited appointment time
+- Encourage mentioning all symptoms even if they seem unrelated
+- Remind users to have medications visible for video visits
+
+## Analogy
+Like having a nurse triage you before the doctor comes in, making sure you don't forget to mention the important stuff.
+`
+  },
+  {
+    id: "duolingo-assistant",
+    name: "Duolingo Assistant",
+    icon: "duolingo",
+    iconType: 'simpleicons',
+    brandColor: "#58CC02",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "2-3 hours",
+    tags: ["language-learning", "education", "practice", "translation"],
+    desc: "Language learning acceleration with personalized practice and concept explanation. Use when stuck on grammar rules, practicing conversation, or preparing for language milestones.",
+    trigger: "Use when working with Duolingo",
+    skills: [], tools: ["Duolingo"],
+    source: 'official',
+    md: `---
+name: duolingo-assistant
+description: Language learning acceleration with personalized practice and concept explanation. Use when stuck on grammar rules, practicing conversation, or preparing for language milestones.
+tags: language-learning, education, practice, translation
+difficulty: beginner
+time_to_master: 2-3 hours
+---
+
+# Duolingo Assistant
+
+## When to Use
+Activate when the user:
+- "Explain this grammar rule in [language]"
+- "Help me practice [language] conversation"
+- "Why is this sentence structured this way?"
+
+## Instructions
+1. Identify the target language and current proficiency level
+2. Break down complex grammar into digestible concepts
+3. Create contextual examples that reinforce learning
+4. Design practice exercises with immediate feedback
+5. Connect new concepts to previously learned material
+6. Use spaced repetition principles for review suggestions
+
+## Output Format
+Always produce this exact structure:
+## Concept Explanation
+**Topic**: [grammar point]
+**Rule**: [clear explanation]
+**Pattern**: [formula if applicable]
+
+## Examples
+1. [Example sentence] → [Translation] → [Why it works]
+2. [Example sentence] → [Translation] → [Why it works]
+
+## Practice Exercise
+Translate these sentences:
+1. [Sentence] → [Your answer]
+2. [Sentence] → [Your answer]
+
+## Common Mistakes
+- ❌ [Incorrect example] → ✅ [Correct version]
+
+## Next Steps
+Review these related concepts: [linked topics]
+
+## Rules
+- Always provide translations with word-by-word breakdowns
+- Use CEFR levels (A1-C2) to match content to ability
+- Never introduce more than 2-3 new concepts at once
+- Include audio pronunciation guides when possible
+
+## Analogy
+A patient language tutor who meets you at your level and builds step by step.
+`
+  },
+  {
+    id: "google-docs-assistant",
+    name: "Google Docs Assistant",
+    icon: "googledocs",
+    iconType: 'simpleicons',
+    brandColor: "#4285F4",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["documents", "collaboration", "formatting", "structure"],
+    desc: "Document structure and collaborative editing guidance. Use when organizing long documents, setting up collaboration workflows, or formatting for publication.",
+    trigger: "Use when working with Google Docs",
+    skills: [], tools: ["Google Docs"],
+    source: 'official',
+    md: `---
+name: google-docs-assistant
+description: Document structure and collaborative editing guidance. Use when organizing long documents, setting up collaboration workflows, or formatting for publication.
+tags: documents, collaboration, formatting, structure
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Google Docs Assistant
+
+## When to Use
+Activate when the user:
+- "Help me structure this long document"
+- "Set up a collaborative editing workflow"
+- "Format this document for [purpose]"
+
+## Instructions
+1. Analyze document purpose and target audience
+2. Recommend optimal document structure with headings hierarchy
+3. Suggest collaboration settings based on team size and project phase
+4. Create table of contents and navigation structure
+5. Design consistent formatting using styles
+6. Set up comment resolution workflows
+
+## Output Format
+Always produce this exact structure:
+## Document Structure Recommendation
+**Document Type**: [report/proposal/guide/other]
+**Estimated Length**: [pages]
+
+### Heading Hierarchy
+\`\`\`
+H1: [Main Title]
+  H2: [Section 1]
+    H3: [Subsection 1.1]
+    H3: [Subsection 1.2]
+  H2: [Section 2]
+\`\`\`
+
+## Collaboration Setup
+| Role | Permissions | Best For |
+|------|-------------|----------|
+| Editor | Full edit access | Core team |
+| Commenter | Comments only | Reviewers |
+| Viewer | Read only | Stakeholders |
+
+## Formatting Checklist
+- [ ] Styles applied consistently
+- [ ] Table of contents inserted
+- [ ] Headers/footers configured
+- [ ] Line spacing set to [1.15/1.5]
+- [ ] Margins set to [1 inch]
+
+## Rules
+- Never recommend more than 3 levels of headings for readability
+- Always suggest using styles instead of manual formatting
+- Include version history naming conventions
+- Recommend comment assignees for accountability
+
+## Analogy
+A document architect who ensures your content is built on solid structure.
+`
+  },
+  {
+    id: "zocdoc-practo-assistant",
+    name: "Zocdoc Practo Assistant",
+    icon: "zocdoc",
+    iconType: 'simpleicons',
+    brandColor: "#428BCA",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["healthcare", "appointment-prep", "medical-organization", "patient-readiness"],
+    desc: "Prepare for doctor appointments using Zocdoc/Practo booking information. Use when organizing medical history, preparing questions for doctors, or tracking health appointment follow-ups.",
+    trigger: "Use when working with Zocdoc Practo",
+    skills: [], tools: ["Zocdoc Practo"],
+    source: 'official',
+    md: `---
+name: zocdoc-practo-assistant
+description: Prepare for doctor appointments using Zocdoc/Practo booking information. Use when organizing medical history, preparing questions for doctors, or tracking health appointment follow-ups.
+tags: healthcare, appointment-prep, medical-organization, patient-readiness
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Zocdoc / Practo Doctor Appointment Prep
+
+## When to Use
+Activate when the user:
+- "Help me prepare for my doctor appointment"
+- "What should I bring to my [specialist] visit?"
+- "Create a list of questions for my doctor"
+- "Organize my medical history for a new doctor"
+
+## Instructions
+1. Identify appointment type:
+   - Primary care: General checkup, new symptoms
+   - Specialist: Specific condition or system
+   - Follow-up: Existing condition monitoring
+   - Telehealth: Remote consultation
+   - New patient: First visit with provider
+2. Gather relevant medical information:
+   - Current medications (name, dosage, frequency)
+   - Allergies and reactions
+   - Recent test results or imaging
+   - Family history relevant to specialty
+   - Previous treatments and outcomes
+3. Document current concerns:
+   - Primary symptoms with timeline
+   - Severity and frequency
+   - Triggers and relieving factors
+   - Impact on daily life
+   - What you've already tried
+4. Prepare questions for the doctor:
+   - Diagnosis-focused questions
+   - Treatment options and alternatives
+   - Expected timeline and outcomes
+   - Lifestyle modifications
+   - Warning signs to watch for
+5. Plan for post-appointment:
+   - Note-taking strategy
+   - Follow-up scheduling
+   - Prescription pickup
+   - Test or referral coordination
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Appointment Prep: [Doctor/Specialty Type]
+
+**Provider:** [Dr. Name]
+**Specialty:** [Specialty]
+**Clinic:** [Facility name]
+**Date/Time:** [Date] at [Time]
+**Appointment Type:** [New patient/Follow-up/Telehealth]
+
+---
+
+## Pre-Appointment Checklist
+
+### Documents to Bring
+- [ ] Insurance card (front and back)
+- [ ] Photo ID
+- [ ] Referral paperwork (if required)
+- [ ] Previous test results/imaging (CD or printout)
+- [ ] List of current medications
+
+### Information to Prepare
+- [ ] Medical history summary
+- [ ] Family history relevant to visit
+- [ ] Current symptoms documented
+- [ ] Questions written down
+- [ ] Insurance pre-authorization (if needed)
+
+---
+
+## Current Symptoms Log
+
+### Primary Concern
+**Symptom:** [Main symptom]
+**Started:** [When did it begin]
+**Severity (1-10):** [X]
+**Pattern:** [Constant/Intermittent/Specific times]
+
+### Symptom Details
+| Aspect | Description |
+|--------|-------------|
+| Location | [Where specifically] |
+| Quality | [Sharp/dull/aching/etc.] |
+| Triggers | [What makes it worse] |
+| Relief | [What makes it better] |
+| Progression | [Getting better/worse/same] |
+
+### Impact on Daily Life
+- Sleep: [How affected]
+- Work: [How affected]
+- Activities: [What you can't do]
+- Appetite/Energy: [Changes noted]
+
+---
+
+## Current Medications
+
+| Medication | Dosage | Frequency | Prescribing Doctor | Purpose |
+|------------|--------|-----------|-------------------|---------|
+| [Name] | [X mg] | [X times daily] | [Dr. Name] | [Condition] |
+
+**Supplements/OTC:** [List any vitamins, supplements, or over-the-counter medications]
+
+**Allergies:**
+- [Medication/food/environmental] - [Reaction type]
+
+---
+
+## Questions for the Doctor
+
+### About Diagnosis
+1. What do you think is causing my symptoms?
+2. Are there tests needed to confirm this?
+3. Is this condition temporary or chronic?
+
+### About Treatment
+1. What are my treatment options?
+2. What are the side effects of [medication/procedure]?
+3. Are there alternatives to medication?
+4. How long until I see improvement?
+
+### About Next Steps
+1. When should I schedule a follow-up?
+2. What symptoms should prompt me to call you?
+3. Are there lifestyle changes that would help?
+4. Should I see any other specialists?
+
+### Personal Questions
+1. [Your specific concern]
+2. [Your specific concern]
+
+---
+
+## Medical History Summary
+
+### Past Conditions/Surgeries
+| Year | Condition/Procedure | Outcome |
+|------|---------------------|---------|
+| [Year] | [Condition/surgery] | [Result] |
+
+### Family History (Relevant to Specialty)
+| Relation | Condition | Notes |
+|----------|-----------|-------|
+| [Relation] | [Condition] | [Age diagnosed/outcome] |
+
+---
+
+## Post-Appointment Notes Section
+
+[Leave blank for taking notes during appointment]
+
+### Key Takeaways
+- [Diagnosis/conclusion]
+- [Treatment plan]
+- [Follow-up timeline]
+
+### Action Items
+- [ ] [Task from appointment]
+- [ ] [Prescription to fill]
+- [ ] [Test to schedule]
+
+**Next Appointment:** [Date if scheduled]
+\`\`\`
+
+## Rules
+- Never skip documenting symptoms—memory fails in the exam room
+- Include timeline context for all symptoms
+- Prioritize questions (most important first)
+- Be honest about lifestyle factors
+- Ask for written instructions if needed
+
+## Analogy
+Doctor appointment prep is like preparing for a deposition—you want all your facts organized and your questions ready before time runs out.
+`
+  },
+  {
+    id: "booking-assistant",
+    name: "Booking Assistant",
+    icon: "bookingcom",
+    iconType: 'simpleicons',
+    brandColor: "#003580",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["travel", "itinerary", "planning", "trips"],
+    desc: "Travel itinerary building and trip planning assistance. Use when creating travel plans, organizing trip logistics, or researching destinations.",
+    trigger: "Use when working with Booking",
+    skills: [], tools: ["Booking"],
+    source: 'official',
+    md: `---
+name: booking-assistant
+description: Travel itinerary building and trip planning assistance. Use when creating travel plans, organizing trip logistics, or researching destinations.
+tags: travel, itinerary, planning, trips
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Booking.com Assistant
+
+## When to Use
+Activate when the user:
+- "Build a travel itinerary for [destination]"
+- "Plan a [duration] trip to [location]"
+- "Create a day-by-day schedule for my vacation"
+
+## Instructions
+1. Understand destination, duration, travel dates, and preferences
+2. Research key attractions, restaurants, and activities
+3. Create logical day-by-day itinerary with timing
+4. Include transportation between locations
+5. Add booking links and reservation details
+6. Build in flexibility and backup options
+
+## Output Format
+Always produce this exact structure:
+## Trip Overview
+**Destination**: [City/Country]
+**Dates**: [Start - End]
+**Duration**: [Number of days]
+**Travelers**: [Number and type]
+**Budget Level**: [Budget/Mid-range/Luxury]
+
+## Trip Summary
+| Day | Location | Theme | Highlights |
+|-----|----------|-------|------------|
+| 1 | [Area] | [Theme] | [Key activity] |
+| 2 | [Area] | [Theme] | [Key activity] |
+
+## Day-by-Day Itinerary
+
+### Day 1: [Title/Theme]
+**Location**: [Neighborhood/Area]
+
+| Time | Activity | Duration | Notes |
+|------|----------|----------|-------|
+| 9:00 AM | [Activity] | 2h | [Details, booking needed?] |
+| 11:00 AM | [Activity] | 1h | [Details] |
+| 12:00 PM | Lunch at [Restaurant] | 1h | [Cuisine, price range] |
+| 1:30 PM | [Activity] | 3h | [Details] |
+| 5:00 PM | [Activity] | 2h | [Details] |
+| 7:30 PM | Dinner at [Restaurant] | 2h | [Reservation needed?] |
+
+**Transportation**: [How to get around]
+**Total Estimated Cost**: $[amount]
+
+### Day 2: [Title/Theme]
+[Same format as Day 1]
+
+## Accommodation Recommendations
+| Name | Area | Price/Night | Rating | Book |
+|------|------|-------------|--------|------|
+| [Hotel 1] | [Area] | $[X] | ⭐ 4.5 | [Link] |
+
+## Travel Tips
+- **Best way to get around**: [Transportation]
+- **Local customs**: [Important customs]
+- **Must-try food**: [Local dishes]
+- **What to pack**: [Essentials]
+- **Currency**: [Currency and tips]
+
+## Booking Checklist
+- [ ] Flights booked
+- [ ] Accommodation reserved
+- [ ] Restaurant reservations
+- [ ] Activity tickets
+- [ ] Travel insurance
+- [ ] Local transportation cards
+
+## Rules
+- Allow buffer time between activities (15-30 min)
+- Don't schedule more than 3 major activities per day
+- Include meal times and rest breaks
+- Provide backup indoor options for weather
+- Note which activities require advance booking
+
+## Analogy
+A travel agent who hands you a ready-to-book itinerary with everything organized.
+`
+  },
+  {
+    id: "pinterest-assistant",
+    name: "Pinterest Assistant",
+    icon: "pinterest",
+    iconType: 'simpleicons',
+    brandColor: "#BD081C",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["pinterest", "visual-marketing", "content-strategy", "seo"],
+    desc: "Develop Pinterest board strategies and craft pin copy for discovery. Use when planning visual content strategies, writing pin descriptions, or optimizing boards for search and engagement.",
+    trigger: "Use when working with Pinterest",
+    skills: [], tools: ["Pinterest"],
+    source: 'official',
+    md: `---
+name: pinterest-assistant
+description: Develop Pinterest board strategies and craft pin copy for discovery. Use when planning visual content strategies, writing pin descriptions, or optimizing boards for search and engagement.
+tags: pinterest, visual-marketing, content-strategy, seo
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Pinterest Board Strategy & Pin Copy
+
+## When to Use
+Activate when the user:
+- "Help me plan my Pinterest board structure"
+- "Write descriptions for my pins"
+- "How do I get more visibility on Pinterest?"
+- "Create a Pinterest content strategy"
+
+## Instructions
+1. Analyze the Pinterest account purpose:
+   - Business/brand: Drive traffic, build awareness, generate leads
+   - Creator: Showcase portfolio, grow following, monetize
+   - Personal: Save ideas, organize inspiration, share interests
+2. Develop board architecture:
+   - Main boards: Broad categories (10-15 pins minimum)
+   - Sub-boards: Specific subtopics
+   - Secret boards: Draft pins, competitor research
+   - Section organization within large boards
+3. Optimize for Pinterest SEO:
+   - Keywords in board titles
+   - Rich descriptions with natural keyword placement
+   - Category selection for discoverability
+   - Related boards for cross-promotion
+4. Craft pin copy elements:
+   - Title: Clear, keyword-rich, intriguing (under 100 chars)
+   - Description: Value proposition + call-to-action (under 500 chars)
+   - Text overlay on image: Hook + benefit statement
+   - Alt text: Accessibility + additional keywords
+5. Plan pin strategy:
+   - Fresh pins vs. repins ratio (aim for 80% fresh)
+   - Pinning frequency and timing
+   - Cross-promotion to other platforms
+   - Idea Pins vs. standard pins usage
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Pinterest Strategy Plan
+
+**Account Type:** [Business/Creator/Personal]
+**Niche/Focus:** [Primary category]
+**Target Audience:** [Who you're trying to reach]
+
+---
+
+## Board Architecture
+
+### Main Boards
+| Board Name | Description | Keywords | Pin Count Goal |
+|------------|-------------|----------|----------------|
+| [Board 1] | [SEO description] | [kw1, kw2, kw3] | [Target #] |
+| [Board 2] | [SEO description] | [kw1, kw2, kw3] | [Target #] |
+
+### Board Sections (for large boards)
+**[Board Name]**
+- [Section 1]: [Description]
+- [Section 2]: [Description]
+
+---
+
+## Pin Template
+
+**Title:** [Keyword-rich headline - under 100 characters]
+
+**Description:**
+[Hook sentence with benefit]
+[Additional context or tips]
+[Call-to-action with link context]
+
+**Keywords:** [keyword 1], [keyword 2], [keyword 3], [keyword 4], [keyword 5]
+
+**Alt Text:** [Descriptive text for accessibility + SEO]
+
+**Text Overlay (on image):**
+- Main headline: [Large text - 3-6 words]
+- Subtitle: [Smaller text - benefit or context]
+
+---
+
+## Content Calendar
+
+| Day | Pin Type | Topic | Target Board | Best Time |
+|-----|----------|-------|--------------|-----------|
+| Monday | Fresh | [Topic] | [Board] | [Time] |
+| Wednesday | Repin | [Topic] | [Board] | [Time] |
+| Friday | Idea Pin | [Topic] | [Board] | [Time] |
+
+## SEO Keywords to Target
+1. [High volume keyword] - [Competition level]
+2. [Medium volume keyword] - [Competition level]
+3. [Niche keyword] - [Low competition opportunity]
+\`\`\`
+
+## Rules
+- Every pin must link somewhere valuable (not dead ends)
+- Titles should include primary keyword naturally
+- Avoid keyword stuffing—write for humans first
+- Minimum 5 relevant keywords per pin
+- Board descriptions should be 2-3 sentences minimum
+
+## Analogy
+Pinterest strategy is like organizing a department store—customers should find what they're looking for through clear signage and logical department layout.
+`
+  },
+  {
+    id: "zapier-assistant",
+    name: "Zapier Assistant",
+    icon: "zapier",
+    iconType: 'simpleicons',
+    brandColor: "#FF4A00",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "3-4 hours",
+    tags: ["automation", "workflows", "integrations", "productivity"],
+    desc: "Automation workflow mapping and integration design. Use when connecting apps, automating repetitive tasks, or building multi-step workflows.",
+    trigger: "Use when working with Zapier",
+    skills: [], tools: ["Zapier"],
+    source: 'official',
+    md: `---
+name: zapier-assistant
+description: Automation workflow mapping and integration design. Use when connecting apps, automating repetitive tasks, or building multi-step workflows.
+tags: automation, workflows, integrations, productivity
+difficulty: intermediate
+time_to_master: 3-4 hours
+---
+
+# Zapier Assistant
+
+## When to Use
+Activate when the user:
+- "Automate [task] between [app A] and [app B]"
+- "Create a workflow for [business process]"
+- "Connect [app] to trigger [action]"
+
+## Instructions
+1. Identify trigger events and desired outcomes
+2. Map data flow between connected apps
+3. Design conditional logic for different scenarios
+4. Build in error handling and notifications
+5. Test workflow with sample data
+6. Document the automation for team reference
+
+## Output Format
+Always produce this exact structure:
+## Workflow Overview
+**Name**: [Workflow Name]
+**Purpose**: [What it accomplishes]
+**Apps Involved**: [App 1] → [App 2] → [App 3]
+
+## Zap Structure
+\`\`\`
+Trigger: [App] - [Event]
+│
+├── Filter (optional): [Condition]
+│
+├── Action 1: [App] - [Action]
+│   └── Field Mapping: [details]
+│
+├── Action 2: [App] - [Action]
+│   └── Field Mapping: [details]
+│
+└── Action 3: [App] - [Action]
+    └── Field Mapping: [details]
+\`\`\`
+
+## Field Mappings
+| Source Field | Destination Field | Transform |
+|--------------|-------------------|-----------|
+| [App.Field] | [App.Field] | [None/Format/Formula] |
+
+## Conditions & Logic
+- **IF** [condition]: → Do [action]
+- **ELSE IF** [condition]: → Do [action]
+- **ELSE**: → Do [default action]
+
+## Error Handling
+- On failure: [Send notification to Slack/email]
+- Retry logic: [X attempts, Y delay]
+- Fallback action: [description]
+
+## Rules
+- Always include error notifications
+- Test with sample data before activation
+- Document field mappings for maintenance
+- Use filters to prevent unnecessary triggers
+- Set up a test Zap before production
+
+## Analogy
+A workflow architect who connects your apps so they talk to each other automatically.
+`
+  },
+  {
+    id: "udemy-assistant",
+    name: "Udemy Assistant",
+    icon: "udemy",
+    iconType: 'simpleicons',
+    brandColor: "#EC5252",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "45 minutes",
+    tags: ["course-creation", "curriculum", "elearning", "education"],
+    desc: "Design course outlines and curriculum structures for online learning. Use when planning course content, structuring lessons, or creating learning paths.",
+    trigger: "Use when working with Udemy",
+    skills: [], tools: ["Udemy"],
+    source: 'official',
+    md: `---
+name: udemy-assistant
+description: Design course outlines and curriculum structures for online learning. Use when planning course content, structuring lessons, or creating learning paths.
+tags: course-creation, curriculum, elearning, education
+difficulty: intermediate
+time_to_master: 45 minutes
+---
+
+# Udemy Course Outline & Curriculum Design
+
+## When to Use
+Activate when the user:
+- "Help me create a course outline"
+- "Design a curriculum for teaching [topic]"
+- "Structure my online course"
+- "Create learning objectives for my course"
+- "Plan my Udemy course sections"
+
+## Instructions
+1. Define course foundation:
+   - Target audience and skill level
+   - Course length and format
+   - Learning outcomes (3-5 major objectives)
+   - Prerequisites (if any)
+
+2. Structure curriculum:
+   - Logical progression from basics to advanced
+   - Section breaks at natural stopping points
+   - Mix of lecture types (video, reading, quizzes, exercises)
+   - Practice opportunities throughout
+
+3. Design individual lectures:
+   - Clear learning objective per lecture
+   - Appropriate length (5-15 minutes ideal)
+   - Engaging hooks and summaries
+   - Actionable takeaways
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Course Outline: [Course Title]
+
+### Course Overview:
+**Target Audience:** [Who this is for]
+**Skill Level:** Beginner / Intermediate / Advanced
+**Duration:** [X hours] of content
+**Prerequisites:** [None / List requirements]
+
+### Learning Outcomes:
+By the end of this course, students will be able to:
+1. [Outcome 1 - action verb + measurable result]
+2. [Outcome 2]
+3. [Outcome 3]
+4. [Outcome 4]
+
+---
+
+### Curriculum Structure:
+
+#### Section 1: [Section Title]
+**Duration:** [X minutes]
+**Objective:** [What students will learn]
+
+| Lecture | Title | Type | Duration | Description |
+|---------|-------|------|----------|-------------|
+| 1.1 | [Title] | Video | [X min] | [Brief description] |
+| 1.2 | [Title] | Exercise | [X min] | [Brief description] |
+
+#### Section 2: [Section Title]
+**Duration:** [X minutes]
+**Objective:** [What students will learn]
+
+| Lecture | Title | Type | Duration | Description |
+|---------|-------|------|----------|-------------|
+
+[Continue for all sections]
+
+---
+
+### Course Components:
+
+**Total Content:**
+- [X] Video Lectures
+- [X] Practical Exercises
+- [X] Quizzes
+- [X] Downloadable Resources
+
+### Assessment Strategy:
+| Checkpoint | Type | Purpose |
+|------------|------|---------|
+| End of Section | Quiz | [What it tests] |
+| Mid-Course | Project | [What it assesses] |
+| Final | Assessment | [Comprehensive evaluation] |
+
+### Production Notes:
+- **Equipment Needed:** [Camera, mic, screen recording software]
+- **Visual Aids:** [Slides, diagrams, code demos]
+- **Practice Files:** [What to prepare for students]
+\`\`\`
+
+## Rules
+- Each section must have a clear, single focus
+- Learning outcomes must be measurable and action-oriented
+- Include practical application, not just theory
+- Respect student attention spans—break up long content
+
+## Analogy
+Like having an instructional designer who ensures your expertise translates into a course students actually finish and learn from.
+`
+  },
+  {
+    id: "amazon-assistant",
+    name: "Amazon Assistant",
+    icon: "amazon",
+    iconType: 'simpleicons',
+    brandColor: "#FF9900",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["shopping", "research", "comparison", "products"],
+    desc: "Product research and comparison for informed purchasing decisions. Use when comparing products, analyzing reviews, or finding best-value options.",
+    trigger: "Use when working with Amazon",
+    skills: [], tools: ["Amazon"],
+    source: 'official',
+    md: `---
+name: amazon-assistant
+description: Product research and comparison for informed purchasing decisions. Use when comparing products, analyzing reviews, or finding best-value options.
+tags: shopping, research, comparison, products
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Amazon Assistant
+
+## When to Use
+Activate when the user:
+- "Compare [product type] for [use case]"
+- "Research the best [product category]"
+- "Help me choose between [Product A] and [Product B]"
+
+## Instructions
+1. Understand the user's specific needs, budget, and use case
+2. Identify key features and specifications that matter
+3. Compare top options across relevant criteria
+4. Analyze review patterns and common issues
+5. Calculate total value (price + quality + longevity)
+6. Provide clear recommendation with reasoning
+
+## Output Format
+Always produce this exact structure:
+## Product Research: [Category]
+**Use Case**: [What user needs]
+**Budget**: [Range if specified]
+**Key Requirements**: [List of must-haves]
+
+## Comparison Matrix
+| Feature | [Product 1] | [Product 2] | [Product 3] |
+|---------|-------------|-------------|-------------|
+| Price | $[X] | $[Y] | $[Z] |
+| Rating | ⭐ 4.X | ⭐ 4.Y | ⭐ 4.Z |
+| [Feature 1] | ✅/❌ | ✅/❌ | ✅/❌ |
+| [Feature 2] | [Spec] | [Spec] | [Spec] |
+| [Feature 3] | [Spec] | [Spec] | [Spec] |
+
+## Product Breakdowns
+
+### [Product 1]
+**Price**: $[X] | **Rating**: ⭐ 4.X ([number] reviews)
+
+**Pros**:
+- [Strength 1]
+- [Strength 2]
+- [Strength 3]
+
+**Cons**:
+- [Weakness 1]
+- [Weakness 2]
+
+**Best For**: [Who this is ideal for]
+
+**Common Praise**: "[Representative positive review theme]"
+**Common Complaint**: "[Representative negative review theme]"
+
+## Value Analysis
+| Product | Price | Quality Score | Value Rating |
+|---------|-------|---------------|--------------|
+| [Product 1] | $[X] | 8/10 | ⭐⭐⭐⭐ |
+| [Product 2] | $[Y] | 9/10 | ⭐⭐⭐⭐⭐ |
+
+## Recommendation
+**Best Overall**: [Product] - [Why]
+
+**Best Budget**: [Product] - [Why]
+
+**Best Premium**: [Product] - [Why]
+
+## Buying Tips
+- [Tip about timing, warranties, or alternatives]
+- [Tip about reviews to trust]
+
+## Rules
+- Always include at least 3 comparison options
+- Base analysis on verified purchase reviews
+- Consider long-term value, not just price
+- Note if products have known issues or recalls
+- Disclose if more specific info would help
+
+## Analogy
+A savvy shopper who reads all the reviews so you don't have to.
+`
+  },
+  {
+    id: "flo-clue-assistant",
+    name: "Flo Clue Assistant",
+    icon: "flo",
+    iconType: 'simpleicons',
+    brandColor: "#FF5376",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["health", "wellness", "tracking", "journaling"],
+    desc: "Support health journaling and cycle tracking note organization. Use when documenting health symptoms, tracking patterns, or preparing notes for healthcare visits.",
+    trigger: "Use when working with Flo Clue",
+    skills: [], tools: ["Flo Clue"],
+    source: 'official',
+    md: `---
+name: flo-clue-assistant
+description: Support health journaling and cycle tracking note organization. Use when documenting health symptoms, tracking patterns, or preparing notes for healthcare visits.
+tags: health, wellness, tracking, journaling
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Flo / Clue Health Journaling & Cycle Tracking
+
+## When to Use
+Activate when the user:
+- "Help me track my symptoms this week"
+- "Write notes for my doctor's appointment"
+- "Organize my health journal entries"
+- "Create a cycle tracking summary"
+- "Document patterns I'm noticing in my health"
+
+## Instructions
+1. For daily health journaling:
+   - Capture symptoms with specific details
+   - Note severity and duration
+   - Record relevant context (sleep, stress, diet, activity)
+   - Track emotional and physical state
+
+2. For cycle tracking notes:
+   - Document physical symptoms
+   - Note energy and mood patterns
+   - Track relevant lifestyle factors
+   - Record any changes from typical patterns
+
+3. For healthcare visit preparation:
+   - Summarize symptoms chronologically
+   - Note questions and concerns
+   - List current medications and supplements
+   - Prepare relevant history
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Health Journal Entry: [Date]
+
+### Daily Check-in:
+
+**Physical State:**
+| Area | Status | Notes |
+|------|--------|-------|
+| Energy | Low/Medium/High | [Context] |
+| Sleep | Poor/Fair/Good | [Hours slept, quality] |
+| Pain/Discomfort | None/Mild/Moderate/Severe | [Location, type] |
+| Digestion | Normal/Issues | [Details] |
+| Other Symptoms | Present/Absent | [Description] |
+
+**Emotional State:**
+- Mood: [Description]
+- Stress Level: Low/Medium/High
+- Notable feelings: [List]
+
+**Context:**
+- Activity: [Exercise, movement]
+- Diet notes: [Any notable foods, changes]
+- Sleep: [Bedtime, wake time, quality]
+- Stressors: [Work, personal, other]
+- Medications/Supplements: [List]
+
+---
+
+## Weekly Summary: [Date Range]
+
+### Pattern Observations:
+| Day | Key Symptoms | Energy | Mood | Notes |
+|-----|--------------|--------|------|-------|
+| Mon | [Symptoms] | [X]/5 | [X]/5 | [Context] |
+| Tue | [Symptoms] | [X]/5 | [X]/5 | [Context] |
+
+### Trends Noticed:
+- **Improving:** [Patterns getting better]
+- **Consistent:** [Stable patterns]
+- **Worsening:** [Patterns to watch]
+- **Triggers Identified:** [What seems to affect symptoms]
+
+### Questions for Further Tracking:
+- [Question about potential pattern]
+
+---
+
+## Healthcare Visit Prep: [Provider/Appointment Type]
+
+### Visit Information:
+**Date:** [Date]
+**Provider:** [Name, specialty]
+**Purpose:** [Reason for visit]
+
+### Symptom Summary:
+[2-3 sentence overview of main concerns]
+
+### Timeline of Concerns:
+| Date | Symptom | Severity | Context |
+|------|---------|----------|---------|
+| [Date] | [Issue] | [X/10] | [What was happening] |
+
+### Questions to Ask:
+1. [Question 1]
+2. [Question 2]
+3. [Question 3]
+
+### Current Medications/Supplements:
+| Name | Dose | Frequency | Started |
+|------|------|-----------|---------|
+| [Medication] | [Dose] | [How often] | [Date] |
+
+### Relevant History:
+- [Important context for this visit]
+
+### Notes Space:
+[Room for provider responses and instructions]
+\`\`\`
+
+## Rules
+- This is personal health tracking—always respect privacy
+- Never diagnose or provide medical advice
+- Encourage professional consultation for concerning symptoms
+- Note that tracking data helps but doesn't replace medical care
+
+## Analogy
+Like having a health-conscious friend who helps you notice patterns in your body and remember everything for your doctor.
+`
+  },
+  {
+    id: "monday-assistant",
+    name: "Monday Assistant",
+    icon: "monday",
+    iconType: 'simpleicons',
+    brandColor: "#FF3D57",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "2-3 hours",
+    tags: ["project-management", "workflows", "sprints", "planning"],
+    desc: "Workflow and sprint design for project management. Use when setting up project boards, designing sprint workflows, or creating team processes.",
+    trigger: "Use when working with Monday",
+    skills: [], tools: ["Monday"],
+    source: 'official',
+    md: `---
+name: monday-assistant
+description: Workflow and sprint design for project management. Use when setting up project boards, designing sprint workflows, or creating team processes.
+tags: project-management, workflows, sprints, planning
+difficulty: intermediate
+time_to_master: 2-3 hours
+---
+
+# Monday.com Assistant
+
+## When to Use
+Activate when the user:
+- "Set up a project board for [project type]"
+- "Design a sprint workflow for my team"
+- "Create a [process] tracking system"
+
+## Instructions
+1. Understand project type, team size, and workflow needs
+2. Design board structure with appropriate columns
+3. Create status workflow with clear stages
+4. Build automations for status changes and notifications
+5. Set up dashboards for progress visibility
+6. Define views for different stakeholders
+
+## Output Format
+Always produce this exact structure:
+## Board Overview
+**Name**: [Board Name]
+**Purpose**: [What it tracks]
+**Team**: [Who uses it]
+
+## Column Structure
+| Column | Type | Purpose | Options/Settings |
+|--------|------|---------|------------------|
+| Task | Name | Primary identifier | - |
+| Status | Status | Progress tracking | [Stages] |
+| Assignee | People | Responsibility | Team members |
+| Date | Date | Deadline | With reminders |
+| Priority | Status | Urgency | High/Medium/Low |
+| Effort | Numbers | Story points/hours | - |
+
+## Status Workflow
+\`\`\`
+[Backlog] → [To Do] → [In Progress] → [Review] → [Done]
+                              ↓
+                          [Blocked]
+\`\`\`
+
+## Automations
+| Trigger | Action |
+|---------|--------|
+| Status changes to "Done" | Archive item, notify manager |
+| Item created | Set default values, notify team lead |
+| Due date arrives | Notify assignee |
+| Status = "Blocked" | Notify project manager |
+
+## Views to Create
+| View Name | Type | Filters | Group By |
+|-----------|------|---------|----------|
+| My Tasks | Table | Assignee = Me | Status |
+| Sprint View | Kanban | Sprint = Current | Status |
+| Timeline | Gantt | All | None |
+| Team Load | Chart | All | Assignee |
+
+## Dashboard Widgets
+- **Workload**: Assignee capacity view
+- **Status Breakdown**: Pie chart of statuses
+- **Timeline**: Project Gantt view
+- **Burndown**: Sprint progress chart
+
+## Rules
+- Keep status labels action-oriented and clear
+- Limit columns to what's actively used
+- Create separate boards for separate workflows
+- Use subitems for task breakdown
+- Document board conventions in board description
+
+## Analogy
+A project architect who designs the workspace so your team can see everything at a glance.
+`
+  },
+  {
+    id: "grammarly-assistant",
+    name: "Grammarly Assistant",
+    icon: "grammarly",
+    iconType: 'simpleicons',
+    brandColor: "#15C39A",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["writing", "editing", "grammar", "tone", "style"],
+    desc: "Advanced style and tone editing using Grammarly principles. Use when polishing professional writing, adjusting tone for audiences, or eliminating passive voice and wordiness.",
+    trigger: "Use when working with Grammarly",
+    skills: [], tools: ["Grammarly"],
+    source: 'official',
+    md: `---
+name: grammarly-assistant
+description: Advanced style and tone editing using Grammarly principles. Use when polishing professional writing, adjusting tone for audiences, or eliminating passive voice and wordiness.
+tags: writing, editing, grammar, tone, style
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Grammarly Assistant
+
+## When to Use
+Activate when the user:
+- "Check this for grammar and style issues"
+- "Make this sound more professional/casual/confident"
+- "Remove passive voice from my writing"
+
+## Instructions
+1. Analyze the text for clarity, correctness, engagement, and delivery
+2. Identify issues by category:
+   - **Correctness**: Spelling, grammar, punctuation
+   - **Clarity**: Sentence length, passive voice, adverbs
+   - **Engagement**: Repetitive words, monotone sections
+   - **Delivery**: Formality level, confidence markers
+3. Provide rewrites with before/after comparisons
+4. Offer multiple tone variations when requested
+5. Explain WHY each change improves the writing
+
+## Output Format
+Always produce this exact structure:
+## Writing Analysis
+**Overall Score**: [X/100]
+**Tone**: [Formal/Neutral/Casual]
+
+## Issues Found
+| Original | Correction | Reason |
+|----------|------------|--------|
+| [text] | [text] | [brief explanation] |
+
+## Enhanced Version
+[Full rewritten text]
+
+## Tone Alternatives
+- **Professional**: [version]
+- **Friendly**: [version]
+- **Confident**: [version]
+
+## Rules
+- Never change the core meaning of the text
+- Preserve the author's voice while improving mechanics
+- Flag ambiguous pronouns and unclear antecedents
+- Keep explanations concise and actionable
+
+## Analogy
+A digital copy editor who polishes your writing without changing your message.
+`
+  },
+  {
+    id: "webflow-assistant",
+    name: "Webflow Assistant",
+    icon: "webflow",
+    iconType: 'simpleicons',
+    brandColor: "#4353FF",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["webflow", "no-code", "seo-copy", "cms-content"],
+    desc: "Write SEO-optimized copy for Webflow no-code websites. Use when creating content that integrates with Webflow CMS, structuring pages for SEO, or writing for dynamic content collections.",
+    trigger: "Use when working with Webflow",
+    skills: [], tools: ["Webflow"],
+    source: 'official',
+    md: `---
+name: webflow-assistant
+description: Write SEO-optimized copy for Webflow no-code websites. Use when creating content that integrates with Webflow CMS, structuring pages for SEO, or writing for dynamic content collections.
+tags: webflow, no-code, seo-copy, cms-content
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Webflow No-Code Site SEO & Copy
+
+## When to Use
+Activate when the user:
+- "Write SEO copy for my Webflow site"
+- "Help me structure content for Webflow CMS"
+- "Create meta descriptions and page titles for Webflow"
+- "Optimize my Webflow site content for search"
+
+## Instructions
+1. Understand Webflow's SEO capabilities:
+   - Page-level meta fields (title, description)
+   - CMS collection fields for dynamic meta
+   - Schema markup options
+   - Image alt text fields
+   - URL slug customization
+2. Structure copy for Webflow CMS collections:
+   - Collection items need consistent field structures
+   - Reference fields for internal linking
+   - Rich text fields for flexible content
+   - Multi-reference for categories/tags
+3. Apply SEO best practices:
+   - Keyword research for target terms
+   - Title tags: 50-60 characters, keyword near front
+   - Meta descriptions: 150-160 characters with CTA
+   - H1-H6 hierarchy for content structure
+   - Internal linking with descriptive anchor text
+4. Write for dynamic content:
+   - Template fields that work across items
+   - Conditional visibility content
+   - Placeholder text that scales
+5. Create content that integrates with Webflow features:
+   - Interactions-trigger text (appear on scroll)
+   - Tab and accordion content
+   - Slider/carousel copy
+   - Form labels and success messages
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Webflow Content Package: [Site Name]
+
+**Site Type:** [Portfolio/E-commerce/Blog/Services]
+**Target Keywords:** [kw1, kw2, kw3]
+**CMS Collections:** [List collection names]
+
+---
+
+## Page-Level SEO
+
+### Homepage
+**Page Title:** [50-60 characters with primary keyword]
+**Meta Description:** [150-160 characters with CTA]
+**URL Slug:** / [keyword-rich-slug]
+**H1:** [Single H1 with primary keyword]
+
+**Open Graph (Social Sharing):**
+- OG Title: [Title for social]
+- OG Description: [Description for social]
+- OG Image: [Recommended size: 1200x630]
+
+### [Page Name] Page
+[Same structure repeated for each static page]
+
+---
+
+## CMS Collection: [Collection Name]
+
+### Collection Fields Structure
+| Field Name | Type | Purpose |
+|------------|------|---------|
+| Name | Plain Text | Item title (H2) |
+| Slug | Slug | URL identifier |
+| Excerpt | Plain Text | Card preview text |
+| Content | Rich Text | Main body content |
+| Feature Image | Image | Hero/thumbnail |
+| Category | Reference | Taxonomy link |
+| SEO Title | Plain Text | Override page title |
+| SEO Description | Plain Text | Override meta description |
+
+### Template Copy Structure
+
+**Card/Item Preview:**
+\`\`\`
+[Item Name] — [Category Badge]
+[Excerpt: 120-150 characters]
+[Read More →]
+\`\`\`
+
+**Item Detail Page:**
+\`\`\`
+H1: [Item Name]
+Meta: [Category] | [Date]
+
+[Intro paragraph with keyword]
+
+[Rich text content area]
+
+[Related items section]
+\`\`\`
+
+### Sample Collection Items (for testing)
+
+**Item 1:**
+- Name: [Item title with keyword]
+- Slug: /collection/[keyword-slug]
+- Excerpt: [Compelling preview text]
+- Content: [Full content with proper H2/H3 structure]
+- SEO Title: [Optimized title]
+- SEO Description: [Optimized description]
+
+---
+
+## Static Page Content
+
+### Hero Section
+**Headline (H1):** [Primary value proposition with keyword]
+
+**Subhead:** [Supporting benefit statement]
+
+**Primary CTA:** [Button text] → [Link destination]
+
+### Feature/Benefit Sections
+**Section Header (H2):** [Benefit-focused with keyword variation]
+
+**Feature Cards (3x):**
+| Icon/Image | Title (H3) | Description |
+|------------|------------|-------------|
+| [Visual] | [Feature name] | [2 lines of benefit copy] |
+
+### Social Proof Section
+**Header (H2):** [What clients say / Results]
+
+**Testimonials (CMS Collection):**
+- [Set up testimonial collection with: Quote, Name, Title, Photo]
+
+### CTA Section
+**Header (H2):** [Action question]
+**Supporting text:** [Reinforce benefit/urgency]
+**Button:** [Clear action text]
+
+---
+
+## Form Content
+
+### Contact Form Labels
+- Name: "Your Name" (required)
+- Email: "Email Address" (required)
+- Phone: "Phone Number" (optional)
+- Message: "How Can We Help?" (required)
+
+**Success Message:**
+"Thanks for reaching out! We'll get back to you within 24 hours."
+
+**Error Message:**
+"Something went wrong. Please try again or email us directly at [email]."
+
+---
+
+## Rich Text Formatting Guide (for CMS users)
+- **H2** for major sections (use keyword naturally)
+- **H3** for subsections
+- **Bold** for emphasis (not entire paragraphs)
+- **Links** should use descriptive anchor text (not "click here")
+- **Lists** for scannable content
+- **Images** need alt text in Webflow image settings
+
+---
+
+## Webflow-Specific SEO Checklist
+- [ ] Set custom page titles for all pages
+- [ ] Add meta descriptions to all pages
+- [ ] Configure Open Graph images
+- [ ] Set up 301 redirects for URL changes
+- [ ] Enable SSL (automatic with Webflow)
+- [ ] Submit sitemap to Google Search Console
+- [ ] Add alt text to all images
+- [ ] Check mobile responsiveness
+\`\`\`
+
+## Rules
+- Each page must have unique title and meta description
+- Never duplicate H1 tags on a single page
+- CMS item slugs should be short and keyword-relevant
+- All images require alt text for accessibility and SEO
+- Test content in Webflow's responsive preview
+
+## Analogy
+Webflow content is like building blocks with labels—each piece needs the right text in the right field for the whole structure to work together.
+`
+  },
+  {
+    id: "google-sheets-assistant",
+    name: "Google Sheets Assistant",
+    icon: "googlesheets",
+    iconType: 'simpleicons',
+    brandColor: "#34A853",
+    cat: "data",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["google-sheets", "formulas", "data-analysis", "spreadsheets", "automation"],
+    desc: "Google Sheets formula generation, data analysis, and spreadsheet automation. Use when users need help with formulas, pivot tables, data cleaning, or analysis.",
+    trigger: "Use when working with Google Sheets",
+    skills: [], tools: ["Google Sheets"],
+    source: 'official',
+    md: `---
+name: google-sheets-assistant
+description: Google Sheets formula generation, data analysis, and spreadsheet automation. Use when users need help with formulas, pivot tables, data cleaning, or analysis.
+tags: google-sheets, formulas, data-analysis, spreadsheets, automation
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Google Sheets Assistant
+
+## When to Use
+Activate when the user:
+- "Write a formula to [calculation]"
+- "How do I calculate [metric] in Google Sheets?"
+- "Create a pivot table for [data]"
+- "Clean this data in Google Sheets"
+- "Analyze this spreadsheet and find insights"
+
+## Instructions
+1. Understand the data context:
+   - What data is in the sheet?
+   - What calculation or analysis is needed?
+   - What is the data range?
+2. Provide the formula:
+   - Write the complete, ready-to-paste formula
+   - Explain each part of the formula
+   - Note which cells to adjust for their data
+3. For complex requests:
+   - Break down into multiple formulas
+   - Suggest helper columns if needed
+   - Provide step-by-step setup instructions
+4. Include alternatives:
+   - Simpler formula options
+   - Different approaches for different skill levels
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Formula Solution: [Purpose]
+
+### The Formula
+\`\`\`
+=FORMULA_HERE
+\`\`\`
+
+### Explanation
+- \`[FUNCTION_NAME]\`: [What this function does]
+- \`[ARGUMENT]\`: [What this argument represents]
+
+### How to Use
+1. Click cell [CELL_REFERENCE]
+2. Paste the formula
+3. Adjust [SPECIFIC_PART] for your data range
+
+### Alternative Approaches
+**Simpler Version:**
+\`\`\`
+=SIMPLER_FORMULA
+\`\`\`
+
+**Advanced Version:**
+\`\`\`
+=ADVANCED_FORMULA
+\`\`\`
+
+### Common Errors to Avoid
+- [Error 1 and how to fix]
+- [Error 2 and how to fix]
+\`\`\`
+
+## Rules
+- Always provide copy-paste ready formulas
+- Use A1 notation for cell references
+- Explain what the formula does, not just how
+- Suggest ARRAYFORMULA for bulk operations
+- Handle edge cases (blanks, errors, text vs numbers)
+
+## Analogy
+Like having a spreadsheet expert who writes formulas for you and explains them in plain English.
+`
+  },
+  {
+    id: "spotify-assistant",
+    name: "Spotify Assistant",
+    icon: "spotify",
+    iconType: 'simpleicons',
+    brandColor: "#1DB954",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["music", "playlists", "curation", "discovery"],
+    desc: "Curate playlists and analyze music patterns for Spotify. Use when creating themed playlists, analyzing listening habits, or building music discovery recommendations.",
+    trigger: "Use when working with Spotify",
+    skills: [], tools: ["Spotify"],
+    source: 'official',
+    md: `---
+name: spotify-assistant
+description: Curate playlists and analyze music patterns for Spotify. Use when creating themed playlists, analyzing listening habits, or building music discovery recommendations.
+tags: music, playlists, curation, discovery
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Spotify Playlist Curation & Music Analysis
+
+## When to Use
+Activate when the user:
+- "Help me create a playlist for [mood/activity]"
+- "Analyze my Spotify listening habits"
+- "Build a themed playlist with these songs"
+- "What songs would fit with [style/vibe]?"
+
+## Instructions
+1. Identify the playlist purpose:
+   - Mood/emotion: Sad, happy, chill, energized
+   - Activity: Workout, focus, commute, party, sleep
+   - Theme: Era, genre, artist influence, lyric topic
+   - Discovery: Introduce new music, expand horizons
+2. Apply curation principles:
+   - Flow and energy progression
+   - Tempo and key compatibility
+   - Artist variety (avoid same artist clustering)
+   - Length appropriate to purpose (workout: 45-60 min, focus: 2-3 hours)
+3. Analyze musical elements:
+   - BPM range for energy level
+   - Key signatures for smooth transitions
+   - Genre consistency or intentional variety
+   - Vocal vs. instrumental balance
+   - Production style coherence
+4. Structure playlist flow:
+   - Opening: Hook that sets the mood
+   - Middle: Journey with peaks and valleys
+   - End: Resolution or transition out
+   - Crossfade consideration for seamless experience
+5. Optimize for engagement:
+   - Title that's searchable and descriptive
+   - Description with context and keywords
+   - Cover image that matches aesthetic
+   - Update frequency for followers
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Playlist Curation: [Playlist Title]
+
+**Purpose:** [Mood/Activity/Theme]
+**Target Length:** [X minutes / X songs]
+**Energy Level:** [1-10 scale]
+**Primary Genre(s):** [Genre focus]
+
+---
+
+## Playlist Concept
+
+### The Vibe
+[Describe the emotional and sonic atmosphere in 2-3 sentences]
+
+### Target Listener
+[Who would enjoy this: activities, preferences, context]
+
+### Key Elements
+- **Tempo Range:** [X-X BPM]
+- **Vocal Style:** [Predominant vocal type: male/female/instrumental mix]
+- **Production:** [Lo-fi, polished, acoustic, electronic, etc.]
+- **Era Focus:** [Decade range or "all eras"]
+
+---
+
+## Track List
+
+### Opening (Set the mood)
+| # | Song | Artist | BPM | Key | Why It Works |
+|---|------|--------|-----|-----|--------------|
+| 1 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+| 2 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+
+### Building (Develop the energy)
+| # | Song | Artist | BPM | Key | Why It Works |
+|---|------|--------|-----|-----|--------------|
+| 3 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+| 4 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+
+### Peak (Maximum energy/emotion)
+| # | Song | Artist | BPM | Key | Why It Works |
+|---|------|--------|-----|-----|--------------|
+| 5 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+
+### Resolution (Wind down)
+| # | Song | Artist | BPM | Key | Why It Works |
+|---|------|--------|-----|-----|--------------|
+| 6 | [Title] | [Artist] | [X] | [Key] | [Transition note] |
+
+---
+
+## Playlist Metadata
+
+### Title Options
+1. [Creative, evocative title]
+2. [Descriptive, searchable title]
+3. [Playful, memorable title]
+
+### Description
+[2-3 sentences describing the playlist's purpose and vibe. Include keywords for searchability.]
+
+### Tags/Keywords
+[genre], [mood], [activity], [era], [style]
+
+### Cover Image Suggestion
+[Describe visual aesthetic: colors, style, imagery that matches the sonic vibe]
+
+---
+
+## Listening Journey Map
+
+\`\`\`
+Energy Level
+    |
+10  |           ████
+ 9  |          ██████
+ 8  |     ████████████
+ 7  |   ██████████████
+ 6  | ████████████████
+ 5  | ████████████████
+ 4  | ████████████████████
+ 3  | ████████████████████████
+    |________________________________
+      Opening  Build  Peak  Resolve
+\`\`\`
+
+---
+
+## Additional Recommendations
+
+### Songs That Almost Made It
+- [Song] by [Artist] — [Why it didn't fit but is similar]
+
+### Sequel Playlist Ideas
+- [Related concept for future playlist]
+- [Variation on this theme]
+
+### Discovery Suggestions
+Based on this playlist, you might enjoy:
+- **Artist:** [Name] — [Why they fit this vibe]
+- **Album:** [Title] by [Artist] — [Connection]
+- **Genre Deep Dive:** [Related subgenre to explore]
+
+---
+
+## Curation Notes
+
+### Flow Principles Applied
+- [Note about transition strategy: key matching, tempo progression, etc.]
+- [Note about artist variety or intentional repetition]
+
+### What to Avoid Adding
+- Songs that break the [mood/tempo/style] established
+- Overplayed songs that might fatigue listeners
+- Genre clashes that disrupt flow
+
+### Update Strategy
+- Refresh every [X weeks] with [X] new songs
+- Remove songs after [X months] for seasonal playlists
+- Keep core [X] songs as "anchor tracks"
+\`\`\`
+
+## Rules
+- Never include more than 2 songs by the same artist
+- Opening track must immediately establish the mood
+- Total duration should match the intended activity length
+- Avoid jarring tempo changes (unless intentionally experimental)
+- Description should help with Spotify search discovery
+
+## Analogy
+Playlist curation is like being a DJ for someone's life—you're creating the soundtrack that enhances their moment without them having to think about it.
+`
+  },
+  {
+    id: "vscode-assistant",
+    name: "Vscode Assistant",
+    icon: "visualstudiocode",
+    iconType: 'simpleicons',
+    brandColor: "#007ACC",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["code", "refactoring", "explanation", "development"],
+    desc: "Explain code concepts and suggest refactoring improvements. Use when understanding existing code, refactoring for clarity, or learning programming patterns.",
+    trigger: "Use when working with Vscode",
+    skills: [], tools: ["Vscode"],
+    source: 'official',
+    md: `---
+name: vscode-assistant
+description: Explain code concepts and suggest refactoring improvements. Use when understanding existing code, refactoring for clarity, or learning programming patterns.
+tags: code, refactoring, explanation, development
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# VS Code Code Explanation & Refactoring
+
+## When to Use
+Activate when the user:
+- "Explain what this code does"
+- "Refactor this function for better readability"
+- "How can I optimize this code?"
+- "What design pattern should I use here?"
+- "Review this code for improvements"
+
+## Instructions
+1. For code explanation:
+   - Start with high-level purpose
+   - Explain key components step by step
+   - Identify important patterns and decisions
+   - Note any dependencies or external calls
+   - Clarify edge cases and error handling
+
+2. For refactoring:
+   - Identify code smells and issues
+   - Apply SOLID principles where relevant
+   - Suggest more readable alternatives
+   - Maintain functional equivalence
+   - Explain benefits of each change
+
+3. For optimization:
+   - Analyze time and space complexity
+   - Identify bottlenecks
+   - Suggest algorithmic improvements
+   - Consider language-specific optimizations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Code Explanation: [Function/Module Name]
+
+### Purpose:
+[1-2 sentence description of what this code accomplishes]
+
+### How It Works:
+[Step-by-step walkthrough]
+1. [Step 1 explanation]
+2. [Step 2 explanation]
+3. [Step 3 explanation]
+
+### Key Components:
+| Component | Role | Notes |
+|-----------|------|-------|
+| [Name] | [Purpose] | [Details] |
+
+### Dependencies:
+- [Dependency 1]: [Why it's needed]
+- [Dependency 2]: [Why it's needed]
+
+### Edge Cases Handled:
+- [Edge case]: [How it's handled]
+
+---
+
+## Refactoring Suggestions:
+
+### Original:
+\`\`\`[language]
+[Original code]
+\`\`\`
+
+### Refactored:
+\`\`\`[language]
+[Improved code]
+\`\`\`
+
+### Changes Made:
+| Change | Reason | Benefit |
+|--------|--------|---------|
+| [Change] | [Why] | [Result] |
+
+### Metrics:
+| Metric | Before | After |
+|--------|--------|-------|
+| Lines of Code | [X] | [X] |
+| Cyclomatic Complexity | [X] | [X] |
+| Readability Score | [X]/10 | [X]/10 |
+
+---
+
+### Additional Improvements:
+1. [Suggestion with code example if applicable]
+2. [Suggestion with code example if applicable]
+\`\`\`
+
+## Rules
+- Never suggest changes that alter functionality without explicit note
+- Always preserve comments that add value
+- Explain trade-offs of refactoring decisions
+- Suggest incremental improvements, not just complete rewrites
+
+## Analogy
+Like having a code mentor who helps you understand the "why" behind good code patterns, not just the "what."
+`
+  },
+  {
+    id: "loom-assistant",
+    name: "Loom Assistant",
+    icon: "loom",
+    iconType: 'simpleicons',
+    brandColor: "#625DF5",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["loom", "screen-recording", "async", "video", "communication"],
+    desc: "Loom screen recording script preparation and viewer engagement optimization. Use when users need to prepare for screen recordings or improve their Loom videos.",
+    trigger: "Use when working with Loom",
+    skills: [], tools: ["Loom"],
+    source: 'official',
+    md: `---
+name: loom-assistant
+description: Loom screen recording script preparation and viewer engagement optimization. Use when users need to prepare for screen recordings or improve their Loom videos.
+tags: loom, screen-recording, async, video, communication
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Loom Assistant
+
+## When to Use
+Activate when the user:
+- "Help me prepare a Loom recording for [purpose]"
+- "Write a script for my Loom screen recording"
+- "Create a Loom video outline for [topic]"
+- "Structure my Loom walkthrough"
+- "Write a Loom video description"
+
+## Instructions
+1. Understand the recording:
+   - What are you showing? (demo, walkthrough, feedback, training)
+   - Who is watching? (team, client, customer)
+   - What action should they take after?
+   - How long should it be? (aim for under 5 minutes)
+2. Structure the recording:
+   - Quick intro (who you are, what you're covering)
+   - Context setting (why this matters)
+   - Core content (step-by-step, clear and concise)
+   - Summary and next steps
+   - Clear call to action
+3. Optimize for async:
+   - Add chapters if longer than 3 minutes
+   - Include links in description
+   - Mention specific timestamps for key points
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Loom Recording: [Title]
+
+### Recording Details
+**Purpose:** [What this recording accomplishes]
+**Audience:** [Who will watch]
+**Target Duration:** [X] minutes
+**Topic:** [Main subject]
+
+### Pre-Recording Checklist
+- [ ] Close unnecessary tabs and notifications
+- [ ] Prepare the screen/window you'll record
+- [ ] Test microphone and camera
+- [ ] Have any links ready to add to description
+
+### Script Outline
+
+**[0:00-0:15] INTRO**
+"Hi, I'm [Name]. In this video, I'll walk you through [topic] so you can [outcome]."
+
+**[0:15-0:30] CONTEXT**
+"Before we dive in, here's why this matters: [context/relevance]."
+
+**[0:30-X:XX] MAIN CONTENT**
+
+*Section 1: [Topic]*
+- [Key point to cover]
+- [What to show on screen]
+- [What to emphasize]
+
+*Section 2: [Topic]*
+- [Key point to cover]
+- [What to show on screen]
+- [What to emphasize]
+
+**[X:XX-X:XX] SUMMARY & NEXT STEPS**
+"To recap: [2-3 bullet summary]. Your next step is to [specific action]."
+
+**[X:XX-X:XX] CTA**
+"If you have questions, leave a comment or reach out at [contact]. Thanks for watching!"
+
+### Video Description
+\`\`\`
+In this video, I cover:
+• [Point 1]
+• [Point 2]
+• [Point 3]
+
+🔗 Relevant links:
+• [Link 1 with description]
+• [Link 2 with description]
+
+⏱️ Chapters:
+0:00 - Intro
+0:15 - [Section 1]
+X:XX - [Section 2]
+X:XX - Summary
+\`\`\`
+
+### Engagement Tips
+- [Tip for maintaining viewer attention]
+- [When to use screen drawing/pointer]
+- [Personal touch suggestion]
+\`\`\`
+
+## Rules
+- Keep recordings under 5 minutes when possible
+- Always start with context—why should they watch?
+- Speak clearly, slightly slower than normal
+- Add chapters for videos over 3 minutes
+- Include clear CTA at the end
+
+## Analogy
+Like having a video producer who makes sure your async recording gets watched and understood.
+`
+  },
+  {
+    id: "calm-assistant",
+    name: "Calm Assistant",
+    icon: "calm",
+    iconType: 'simpleicons',
+    brandColor: "#6DCFE7",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["meditation", "mindfulness", "wellness", "relaxation"],
+    desc: "Personalized meditation scripts and mindfulness guidance. Use when creating meditation sessions, designing relaxation content, or building mindfulness routines.",
+    trigger: "Use when working with Calm",
+    skills: [], tools: ["Calm"],
+    source: 'official',
+    md: `---
+name: calm-assistant
+description: Personalized meditation scripts and mindfulness guidance. Use when creating meditation sessions, designing relaxation content, or building mindfulness routines.
+tags: meditation, mindfulness, wellness, relaxation
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Calm/Headspace Assistant
+
+## When to Use
+Activate when the user:
+- "Create a meditation script for [purpose]"
+- "Write a [X]-minute guided meditation"
+- "Help me build a mindfulness routine for [situation]"
+
+## Instructions
+1. Understand the specific purpose (stress, sleep, focus, anxiety)
+2. Determine session length and experience level
+3. Write script with appropriate pacing and pauses
+4. Include breathing cues and body awareness
+5. Create ambient visualization elements
+6. Build progressive structure with beginning, middle, end
+
+## Output Format
+Always produce this exact structure:
+## Meditation Session
+**Title**: [Meditation Name]
+**Duration**: [X] minutes
+**Purpose**: [What it addresses]
+**Level**: [Beginner/Intermediate/Advanced]
+
+## Session Structure
+| Section | Duration | Focus |
+|---------|----------|-------|
+| Opening | [X] min | Settling in |
+| Body Scan | [X] min | Physical awareness |
+| Core Practice | [X] min | Main technique |
+| Integration | [X] min | Absorption |
+| Closing | [X] min | Return |
+
+## Full Script
+
+### Opening (0:00 - [X:XX])
+*[Pause 5 seconds between paragraphs]*
+
+"Welcome. Find a comfortable position... either seated or lying down.
+
+Allow your eyes to gently close... or soften your gaze downward.
+
+Take a moment to arrive here... setting aside whatever came before... and whatever waits after.
+
+[PAUSE 10 seconds]"
+
+### Body Scan ([X:XX] - [X:XX])
+"Let's begin by noticing your body... starting at the top of your head.
+
+Feel any sensation at the crown of your head... temperature... pressure... [PAUSE 5 seconds]
+
+Now let your attention drift down to your forehead... notice if there's tension... and allow it to soften... [PAUSE 5 seconds]
+
+[Continue body scan progression]"
+
+### Core Practice ([X:XX] - [X:XX])
+"[Main meditation technique - breathing exercise, visualization, or focus]
+
+Breathe in... [PAUSE 2 seconds]
+Breathe out... [PAUSE 4 seconds]
+
+[Continue with specific technique]"
+
+### Integration ([X:XX] - [X:XX])
+"Now let the practice settle... no need to do anything...
+
+Simply rest in this awareness... [PAUSE 15 seconds]"
+
+### Closing ([X:XX] - [X:XX])
+"Slowly... gently... begin to bring awareness back to your body.
+
+Wiggle your fingers... your toes... [PAUSE 5 seconds]
+
+When you're ready... take a deeper breath... and open your eyes.
+
+Thank you for practicing today."
+
+## Audio Production Notes
+| Element | Guidance |
+|---------|----------|
+| Voice | Calm, measured, warm tone |
+| Pace | Slow - approximately 100 words/minute |
+| Pauses | [PAUSE X seconds] = silence |
+| Background | [Nature sounds/Bells/Silence] |
+
+## Variations
+**For Sleep**: Extend body scan, add progressive relaxation, slower pacing
+
+**For Anxiety**: Include grounding (5-4-3-2-1), longer exhales, safety cues
+
+**For Focus**: Shorter opening, concentration anchor, energizing close
+
+**For Morning**: Uplifting language, body activation, intention setting
+
+## Rules
+- Always include explicit pause markers
+- Use present tense, active but gentle language
+- Avoid negative framing (don't say "don't think about...")
+- Include options for position (seated/lying)
+- Never assume specific physical ability
+
+## Analogy
+A meditation teacher who scripts personalized sessions you can record and reuse.
+`
+  },
+  {
+    id: "airtable-assistant",
+    name: "Airtable Assistant",
+    icon: "airtable",
+    iconType: 'simpleicons',
+    brandColor: "#18BFFF",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "3-5 hours",
+    tags: ["database", "schema", "airtable", "data-modeling"],
+    desc: "Database schema design and base structure planning. Use when building relational databases, designing data models, or setting up Airtable bases.",
+    trigger: "Use when working with Airtable",
+    skills: [], tools: ["Airtable"],
+    source: 'official',
+    md: `---
+name: airtable-assistant
+description: Database schema design and base structure planning. Use when building relational databases, designing data models, or setting up Airtable bases.
+tags: database, schema, airtable, data-modeling
+difficulty: intermediate
+time_to_master: 3-5 hours
+---
+
+# Airtable Assistant
+
+## When to Use
+Activate when the user:
+- "Design a database for [use case]"
+- "Create an Airtable base for [workflow]"
+- "Set up related tables for [data]"
+
+## Instructions
+1. Understand the data entities and their relationships
+2. Design table structure with appropriate field types
+3. Establish relationships (one-to-many, many-to-many)
+4. Create views for different user needs
+5. Build automations for workflow logic
+6. Set up interfaces/dashboards for end users
+
+## Output Format
+Always produce this exact structure:
+## Base Overview
+**Name**: [Base Name]
+**Purpose**: [What it tracks/manages]
+**Primary Users**: [Who uses it]
+
+## Table Structure
+
+### Table: [Table Name]
+**Purpose**: [What this table stores]
+
+| Field Name | Type | Options | Description |
+|------------|------|---------|-------------|
+| [Name] | Single Select | [Options] | [Purpose] |
+| [Name] | Linked Record | → [Table] | [Relationship] |
+| [Name] | Formula | [Formula] | [Calculation] |
+| [Name] | Rollup/Lookup | [Source] | [Aggregation] |
+
+## Relationships
+\`\`\`
+[Table A] ──< [Table B] (One-to-Many)
+[Table B] >──< [Table C] (Many-to-Many via Junction)
+\`\`\`
+
+## Views to Create
+| View Name | Type | Filter | Group By |
+|-----------|------|--------|----------|
+| [Name] | Grid | [Filter] | [Field] |
+| [Name] | Kanban | [Filter] | Status |
+| [Name] | Calendar | [Filter] | Date |
+
+## Automations
+| Trigger | Action | Condition |
+|---------|--------|-----------|
+| [Event] | [Action] | [If applicable] |
+
+## Rules
+- Always use linked records instead of duplicate data
+- Create a primary field that uniquely identifies each record
+- Use single select for fields with known options
+- Build in created/modified timestamps
+- Document formulas in field descriptions
+
+## Analogy
+A database designer who turns messy spreadsheets into structured, relational data systems.
+`
+  },
+  {
+    id: "discord-assistant",
+    name: "Discord Assistant",
+    icon: "discord",
+    iconType: 'simpleicons',
+    brandColor: "#5865F2",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["discord", "community-management", "moderation", "server-setup"],
+    desc: "Create community management templates for Discord servers. Use when setting up server structure, writing moderation guidelines, or building engagement systems.",
+    trigger: "Use when working with Discord",
+    skills: [], tools: ["Discord"],
+    source: 'official',
+    md: `---
+name: discord-assistant
+description: Create community management templates for Discord servers. Use when setting up server structure, writing moderation guidelines, or building engagement systems.
+tags: discord, community-management, moderation, server-setup
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Discord Community Management Templates
+
+## When to Use
+Activate when the user:
+- "Help me set up my Discord server"
+- "Write rules for my Discord community"
+- "Create moderation guidelines for Discord"
+- "Design roles and channels for my server"
+
+## Instructions
+1. Define the community purpose:
+   - Gaming clan: LFG, strategy, social hangout
+   - Creator community: Content sharing, collabs, support
+   - Professional network: Industry discussion, job board, resources
+   - Fan community: Discussion, fanart, news, events
+2. Design channel architecture:
+   - Information channels: Welcome, rules, announcements
+   - Main discussion: General chat, off-topic, introductions
+   - Topic channels: Specific to community purpose
+   - Voice channels: Casual, focused, events
+   - Support channels: Help, suggestions, modmail
+3. Create role hierarchy:
+   - Staff: Owner, Admin, Moderator, Helper
+   - Members: Veteran, Regular, New
+   - Special roles: Contributor, Event winner, Booster
+   - Bot roles: With appropriate permissions
+4. Write community guidelines:
+   - Welcome message and community values
+   - Behavioral expectations (positive framing)
+   - Prohibited content and actions
+   - Consequence ladder and appeal process
+5. Design engagement systems:
+   - Leveling system and rewards
+   - Event formats and scheduling
+   - Recognition and shoutout processes
+   - Member feedback channels
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Discord Server Setup: [Server Name]
+
+**Community Type:** [Gaming/Creator/Professional/Fan]
+**Target Size:** [Small <100 / Medium <1000 / Large 1000+]
+
+---
+
+## Channel Structure
+
+### 📋 INFORMATION
+- \`#welcome\` - [Description]
+- \`#rules\` - [Description]
+- \`#announcements\` - [Description - locked to staff]
+- \`#server-guide\` - [Description]
+
+### 💬 DISCUSSION
+- \`#general\` - [Description]
+- \`#introductions\` - [Description]
+- \`#off-topic\` - [Description]
+
+### 🎯 [TOPIC CATEGORY]
+- \`#channel-name\` - [Description]
+- \`#channel-name\` - [Description]
+
+### 🔊 VOICE CHANNELS
+- \`🔊 General\` - [Capacity limit if any]
+- \`🔊 [Topic] Room\` - [Capacity limit if any]
+- \`🎥 Stage\` - [For events/announcements]
+
+### 🛠️ SUPPORT
+- \`#help\` - [Description]
+- \`#suggestions\` - [Description with reaction info]
+- \`#modmail\` - [Ticket system description]
+
+---
+
+## Role Hierarchy
+
+| Role | Color | Permissions | How to Earn |
+|------|-------|-------------|-------------|
+| 👑 Owner | [Color] | All permissions | Server creator |
+| 🛡️ Admin | [Color] | Manage server | Promotion |
+| ⚔️ Moderator | [Color] | Moderate members | Application |
+| ⭐ Veteran | [Color] | Special channels | Level X / Time |
+| 💬 Member | [Color] | Basic access | Accept rules |
+
+---
+
+## Community Rules
+
+### ✅ Welcome to [Server Name]
+[2-3 sentence warm welcome explaining community purpose]
+
+### 📜 Our Values
+1. **[Value 1]** - [Brief explanation]
+2. **[Value 2]** - [Brief explanation]
+3. **[Value 3]** - [Brief explanation]
+
+### ⚠️ Guidelines
+1. [Positive behavior expectation]
+2. [Positive behavior expectation]
+3. [Positive behavior expectation]
+
+### 🚫 Not Allowed
+- [Prohibited behavior 1]
+- [Prohibited behavior 2]
+- [Prohibited behavior 3]
+
+### 📋 Consequences
+1. **Warning** - First offense, verbal reminder
+2. **Mute** - [X hours], repeated violation
+3. **Kick** - Severe or repeated violations
+4. **Ban** - Zero tolerance violations
+
+*To appeal: [appeal process]*
+
+---
+
+## Moderation Protocols
+
+### Warning Template
+\`\`\`
+⚠️ **Warning Notice**
+User: @username
+Reason: [Specific violation]
+Rule Broken: [Rule #]
+Action: [Warning/Mute/Kick]
+Moderator: @moderator
+Next Step: [Consequence for repeat]
+\`\`\`
+
+## Engagement Ideas
+- [Weekly event type and day]
+- [Monthly recognition program]
+- [Special channel unlock system]
+\`\`\`
+
+## Rules
+- Rules should be fewer than 15—too many creates confusion
+- Always frame guidelines positively where possible
+- Include appeal process for every consequence type
+- Test permissions thoroughly before launch
+
+## Analogy
+Discord server setup is like building a house—you need a solid foundation (rules), clear rooms (channels), and a way for everyone to know where they belong (roles).
+`
+  },
+  {
+    id: "airbnb-assistant",
+    name: "Airbnb Assistant",
+    icon: "airbnb",
+    iconType: 'simpleicons',
+    brandColor: "#FF5A5F",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["hospitality", "listings", "messaging", "hosting"],
+    desc: "Listing copy and guest messaging for vacation rentals. Use when optimizing listings, drafting guest communications, or handling hosting situations.",
+    trigger: "Use when working with Airbnb",
+    skills: [], tools: ["Airbnb"],
+    source: 'official',
+    md: `---
+name: airbnb-assistant
+description: Listing copy and guest messaging for vacation rentals. Use when optimizing listings, drafting guest communications, or handling hosting situations.
+tags: hospitality, listings, messaging, hosting
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# Airbnb Assistant
+
+## When to Use
+Activate when the user:
+- "Write an Airbnb listing description for [property]"
+- "Help me respond to this guest message"
+- "Optimize my listing for more bookings"
+
+## Instructions
+1. Understand property features, location, and target guests
+2. Write compelling listing titles and descriptions
+3. Highlight unique selling points and amenities
+4. Create message templates for common situations
+5. Optimize for search visibility and conversion
+6. Maintain professional, welcoming tone throughout
+
+## Output Format
+Always produce this exact structure:
+## Listing Content
+
+### Title Options
+1. [Title option 1 - focus on unique feature]
+2. [Title option 2 - focus on location]
+3. [Title option 3 - focus on experience]
+
+### Description
+**The Space**
+[2-3 paragraphs describing the property, layout, and key features]
+
+**Guest Access**
+[What guests can access - entire home, private room, amenities]
+
+**The Neighborhood**
+[Location highlights, nearby attractions, transportation]
+
+**Other Things to Note**
+[House rules, parking, quirks, or special considerations]
+
+### Amenities Highlight
+- ✅ [Key amenity 1]
+- ✅ [Key amenity 2]
+- ✅ [Key amenity 3]
+
+## Guest Message Templates
+
+### Pre-Booking Inquiry
+"Hi [Guest Name]! Thanks for your interest in [Property Name]. [Answer their question]. I'd be happy to host you. Let me know if you have any other questions!"
+
+### Booking Confirmation
+"Welcome, [Guest Name]! 🎉 I'm excited to host you at [Property Name]. [Check-in details]. Looking forward to your stay!"
+
+### Check-in Instructions
+"Hi [Guest Name], here are your check-in details:
+- **Address**: [Full address]
+- **Check-in**: [Time] ([key/code instructions])
+- **Wifi**: [Network] / [Password]
+- **My number**: [Contact]
+See you soon!"
+
+### Check-out Reminder
+"Hi [Guest Name], just a reminder that check-out is at [time]. [Any instructions]. Hope you had a wonderful stay!"
+
+### Review Response
+"Thank you, [Guest Name]! It was a pleasure hosting you. [Personal detail]. You're welcome back anytime! 🏠"
+
+## Optimization Tips
+- [ ] High-quality cover photo showing best feature
+- [ ] Keywords in title and first 2 sentences
+- [ ] Clear house rules listed
+- [ ] Response time under 1 hour
+- [ ] Instant book enabled
+
+## Rules
+- Never make claims you can't verify
+- Set accurate expectations to avoid complaints
+- Respond to messages within 1 hour when possible
+- Keep tone warm and professional
+- Address guests by name
+
+## Analogy
+A superhost who writes listings that book and messages that guests remember.
+`
+  },
+  {
+    id: "microsoft-word-assistant",
+    name: "Microsoft Word Assistant",
+    icon: "microsoftword",
+    iconType: 'simpleicons',
+    brandColor: "#2B579A",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "2-3 hours",
+    tags: ["documents", "reports", "proposals", "business-writing"],
+    desc: "Report and proposal writing with professional formatting. Use when creating business documents, proposals, or formal reports requiring Word's advanced features.",
+    trigger: "Use when working with Microsoft Word",
+    skills: [], tools: ["Microsoft Word"],
+    source: 'official',
+    md: `---
+name: microsoft-word-assistant
+description: Report and proposal writing with professional formatting. Use when creating business documents, proposals, or formal reports requiring Word's advanced features.
+tags: documents, reports, proposals, business-writing
+difficulty: intermediate
+time_to_master: 2-3 hours
+---
+
+# Microsoft Word Assistant
+
+## When to Use
+Activate when the user:
+- "Create a professional business report template"
+- "Help me write a project proposal"
+- "Format this document with proper styles and sections"
+
+## Instructions
+1. Determine document type and business context
+2. Design structure with executive summary, body, and appendices
+3. Create reusable styles for consistent formatting
+4. Set up tables, figures, and captions with auto-numbering
+5. Configure headers, footers, and page numbering
+6. Build table of contents and index if needed
+7. Prepare document for track changes and review
+
+## Output Format
+Always produce this exact structure:
+## Document Outline
+**Type**: [Report/Proposal/Memo/White Paper]
+**Audience**: [Executive/Technical/General]
+
+### Structure
+1. **Title Page**: [Title, Author, Date, Organization]
+2. **Executive Summary**: [2-3 paragraph overview]
+3. **Table of Contents**: [Auto-generated]
+4. **Introduction**: [Background, Purpose, Scope]
+5. **[Main Sections]**: [Customize per document]
+6. **Conclusion**: [Summary, Recommendations]
+7. **Appendices**: [Supporting materials]
+
+## Style Guide
+| Element | Style Name | Format |
+|---------|------------|--------|
+| Title | Title | 24pt, Bold, Centered |
+| Heading 1 | Heading 1 | 16pt, Bold, Navy |
+| Body Text | Normal | 11pt, Calibri, 1.15 spacing |
+
+## Word Features to Enable
+- [ ] Track Changes for review
+- [ ] Document Properties for metadata
+- [ ] Cross-references for figures/tables
+- [ ] Mail merge for personalization (if applicable)
+
+## Rules
+- Always start with a clear executive summary under 1 page
+- Use field codes for dynamic content (dates, page numbers)
+- Maintain consistent margin settings (1" standard)
+- Enable version control with filename conventions
+
+## Analogy
+A corporate communications professional who turns rough notes into boardroom-ready documents.
+`
+  },
+  {
+    id: "miro-assistant",
+    name: "Miro Assistant",
+    icon: "miro",
+    iconType: 'simpleicons',
+    brandColor: "#FFD02F",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "2-4 hours",
+    tags: ["workshops", "facilitation", "collaboration", "brainstorming"],
+    desc: "Workshop facilitation scripts and collaborative session design. Use when planning workshops, designing brainstorming sessions, or creating facilitation guides.",
+    trigger: "Use when working with Miro",
+    skills: [], tools: ["Miro"],
+    source: 'official',
+    md: `---
+name: miro-assistant
+description: Workshop facilitation scripts and collaborative session design. Use when planning workshops, designing brainstorming sessions, or creating facilitation guides.
+tags: workshops, facilitation, collaboration, brainstorming
+difficulty: intermediate
+time_to_master: 2-4 hours
+---
+
+# Miro Assistant
+
+## When to Use
+Activate when the user:
+- "Design a workshop for [purpose]"
+- "Create a facilitation script for [session]"
+- "Plan a brainstorming session for [team]"
+
+## Instructions
+1. Define workshop objectives and participant context
+2. Design session flow with time-boxed activities
+3. Create Miro board structure with frames and templates
+4. Write facilitator prompts and transition scripts
+5. Plan for different participation styles
+6. Build in breaks and energy management
+
+## Output Format
+Always produce this exact structure:
+## Workshop Overview
+**Title**: [Workshop Name]
+**Duration**: [hours]
+**Participants**: [number and roles]
+**Objective**: [What participants will achieve]
+
+## Session Agenda
+| Time | Activity | Method | Materials |
+|------|----------|--------|-----------|
+| 0:00 | Opening | [Format] | [Miro frame] |
+| 0:15 | Activity 1 | [Format] | [Template] |
+| 0:45 | Break | - | - |
+| 1:00 | Activity 2 | [Format] | [Template] |
+| 2:00 | Close | [Format] | [Frame] |
+
+## Miro Board Structure
+\`\`\`
+Frame 1: Welcome & Instructions
+├── Session agenda
+├── Parking lot
+└── Participant names
+
+Frame 2: [Activity Name]
+├── Instructions
+├── Working area
+└── Voting dots
+
+Frame 3: Synthesis & Actions
+├── Key insights
+├── Action items
+└── Next steps
+\`\`\`
+
+## Facilitator Script
+### Opening (5 min)
+"Welcome everyone. Today we're going to [objective]. Let's start by..."
+
+### Activity 1: [Name] (20 min)
+**Instructions to read**: "[Exact wording]"
+**Prompt for board**: "[Question/statement]"
+**Time warning**: "2 minutes remaining, start wrapping up"
+
+### Transition
+"Now that we've [completed activity], let's move to..."
+
+## Participation Tips
+- **Quiet participants**: "[Prompt to engage]"
+- **Dominant voices**: "Let's hear from others first"
+- **Stuck moment**: "[Reframing question]"
+
+## Rules
+- Always include clear instructions on the board
+- Plan for 20% buffer time
+- Create a parking lot for off-topic ideas
+- Use timer widgets for time-boxing
+- End with clear next steps and owners
+
+## Analogy
+A workshop producer who hands you the script and set design for a flawless collaborative session.
+`
+  },
+  {
+    id: "wix-squarespace-assistant",
+    name: "Wix Squarespace Assistant",
+    icon: "wix",
+    iconType: 'simpleicons',
+    brandColor: "#0C6EFC",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["website-copy", "landing-pages", "seo-writing", "content-strategy"],
+    desc: "Write website copy for Wix and Squarespace sites. Use when creating page content, structuring website messaging, or optimizing copy for conversions and SEO.",
+    trigger: "Use when working with Wix Squarespace",
+    skills: [], tools: ["Wix Squarespace"],
+    source: 'official',
+    md: `---
+name: wix-squarespace-assistant
+description: Write website copy for Wix and Squarespace sites. Use when creating page content, structuring website messaging, or optimizing copy for conversions and SEO.
+tags: website-copy, landing-pages, seo-writing, content-strategy
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Wix / Squarespace Website Copy Writing
+
+## When to Use
+Activate when the user:
+- "Help me write copy for my Wix website"
+- "Create landing page content for my Squarespace site"
+- "Write website copy that converts"
+- "I need content for my homepage/about page"
+
+## Instructions
+1. Understand the website purpose:
+   - Business/services: Lead generation, bookings, sales
+   - Portfolio: Showcase work, attract clients
+   - E-commerce: Product sales, cart optimization
+   - Blog/content: Subscriber growth, engagement
+   - Personal brand: Authority building, networking
+2. Structure copy by page type:
+   
+   **Homepage:** Value proposition, key benefits, social proof, CTA
+   **About:** Story, mission, team, credibility markers
+   **Services:** Problem-solution format, deliverables, pricing
+   **Contact:** Trust elements, multiple contact options
+   **Landing pages:** Single focus, benefit-driven, clear CTA
+   
+3. Apply conversion copy principles:
+   - Lead with benefits, not features
+   - Use "you" language over "we" language
+   - Address objections proactively
+   - Create urgency when appropriate
+   - Include clear calls-to-action
+4. Optimize for SEO:
+   - Primary keyword in H1 and first paragraph
+   - Secondary keywords in H2s
+   - Meta descriptions under 160 characters
+   - Alt text for all images
+   - Internal linking strategy
+5. Match platform conventions:
+   - Wix: Strip sections, boxes, repeaters
+   - Squarespace: Blocks, spacer awareness, mobile preview
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Website Copy Package: [Site Name]
+
+**Industry:** [Business type]
+**Target Audience:** [Primary visitor]
+**Primary Goal:** [Conversion goal]
+**Tone:** [Professional/Friendly/Authority/Playful]
+
+---
+
+## Homepage Copy
+
+### Hero Section
+**Headline (H1):** [Primary value proposition - 6-10 words]
+
+**Subheadline:** [Supporting benefit statement - 10-15 words]
+
+**Primary CTA:** [Action word + benefit] (e.g., "Start Free Trial")
+
+**Secondary CTA:** [Alternative action] (e.g., "Watch Demo")
+
+### Trust Banner
+[Client logos, press mentions, or statistics]
+
+**Stat Line:** "[X] customers served | [X] years in business | [X]% satisfaction"
+
+### Value Proposition Section
+**Section Header (H2):** [Why choose us]
+
+**Three Key Benefits:**
+
+1. **[Benefit 1]**
+   - [Supporting detail]
+   - [Result achieved]
+
+2. **[Benefit 2]**
+   - [Supporting detail]
+   - [Result achieved]
+
+3. **[Benefit 3]**
+   - [Supporting detail]
+   - [Result achieved]
+
+### Social Proof Section
+**Header:** What Our Clients Say
+
+**Testimonial 1:**
+> "[Testimonial quote here]"
+> — [Name], [Title], [Company]
+
+### Final CTA Section
+**Header:** [Action-oriented question]
+**Body:** [Restate the transformation or benefit]
+**CTA Button:** [Clear action]
+
+---
+
+## About Page Copy
+
+### Introduction
+**Headline (H1):** Meet [Company/Your Name]
+
+**Opening Paragraph:**
+[Hook + mission statement - 2-3 sentences]
+
+### Our Story (H2)
+[Origin story, 2-3 paragraphs with key milestones]
+
+### Our Values (H2)
+1. **[Value 1]:** [What it means in practice]
+2. **[Value 2]:** [What it means in practice]
+3. **[Value 3]:** [What it means in practice]
+
+### The Team (if applicable)
+| Name | Role | Fun Fact |
+|------|------|----------|
+| [Name] | [Title] | [Personal detail] |
+
+---
+
+## Services/Products Page Copy
+
+### Service 1: [Name]
+**Tagline:** [One-line benefit statement]
+
+**Problem:** [What pain point does this solve?]
+
+**Solution:** [How you solve it - 2-3 sentences]
+
+**Deliverables:**
+- [What's included]
+- [What's included]
+- [What's included]
+
+**Investment:** Starting at $[X]
+
+**CTA:** [Book Consultation / Learn More]
+
+---
+
+## SEO Elements
+
+### Homepage Meta
+**Title:** [Primary Keyword] | [Brand Name] (under 60 chars)
+**Description:** [Compelling summary with CTA, under 160 chars]
+
+### Page Structure Keywords
+| Page | Primary Keyword | Secondary Keywords |
+|------|-----------------|-------------------|
+| Homepage | [Keyword] | [kw1, kw2, kw3] |
+| About | [Keyword] | [kw1, kw2, kw3] |
+| Services | [Keyword] | [kw1, kw2, kw3] |
+
+---
+
+## Mobile Optimization Notes
+- Keep hero text under 50 characters for mobile
+- Ensure CTA buttons are thumb-friendly
+- Test all copy on mobile preview before publishing
+\`\`\`
+
+## Rules
+- Every page needs a clear CTA (even About pages)
+- Headlines should work alone (visitors scan, don't read)
+- Limit paragraphs to 3-4 lines for readability
+- Include trust elements on every page
+- Test copy on mobile before publishing
+
+## Analogy
+Website copy is like a salesperson who works 24/7—it needs to anticipate questions, overcome objections, and guide visitors to action without you being there.
+`
+  },
+  {
+    id: "salesforce-assistant",
+    name: "Salesforce Assistant",
+    icon: "salesforce",
+    iconType: 'simpleicons',
+    brandColor: "#00A1E0",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["sales", "CRM", "pipeline", "deal-notes"],
+    desc: "Write effective deal notes and pipeline documentation in Salesforce format. Use when documenting sales interactions, updating opportunities, or preparing for client meetings.",
+    trigger: "Use when working with Salesforce",
+    skills: [], tools: ["Salesforce"],
+    source: 'official',
+    md: `---
+name: salesforce-assistant
+description: Write effective deal notes and pipeline documentation in Salesforce format. Use when documenting sales interactions, updating opportunities, or preparing for client meetings.
+tags: sales, CRM, pipeline, deal-notes
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Salesforce Deal Note & Pipeline Writing
+
+## When to Use
+Activate when the user:
+- "Help me write a deal note for this client call"
+- "Update my opportunity in Salesforce"
+- "Prepare account notes for my meeting"
+- "Write a follow-up email based on this call"
+- "Document this sales interaction properly"
+
+## Instructions
+1. Gather deal context:
+   - Account name and key stakeholders
+   - Opportunity stage and amount
+   - Previous interactions and notes
+   - Next steps and timeline
+
+2. Structure deal notes:
+   - Date and interaction type
+   - Participants and their roles
+   - Key discussion points
+   - Objections raised and responses
+   - Action items with owners and deadlines
+   - Updated probability assessment
+
+3. Pipeline documentation:
+   - Stage-appropriate language
+   - Clear close date rationale
+   - Competitor mentions
+   - Decision criteria identified
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Deal Note: [Account Name]
+
+**Date:** [Date]
+**Type:** Call / Meeting / Email / Demo
+**Attendees:** [Names and titles]
+
+---
+
+### Summary:
+[2-3 sentence overview of interaction]
+
+### Key Discussion Points:
+- [Point 1 with stakeholder reaction]
+- [Point 2 with stakeholder reaction]
+- [Point 3 with stakeholder reaction]
+
+### Objections Raised:
+| Objection | Response Given | Status |
+|-----------|----------------|--------|
+| [Objection] | [Response] | Resolved / Pending |
+
+### Action Items:
+| Task | Owner | Due Date |
+|------|-------|----------|
+| [Action] | [Name] | [Date] |
+
+### Opportunity Update:
+- **Stage:** [Current stage]
+- **Amount:** [$X]
+- **Close Date:** [Date]
+- **Probability:** [X%]
+- **Confidence:** High / Medium / Low
+
+### Next Steps:
+[Specific actions with timeline]
+
+### Internal Notes:
+[Information for team, not client-facing]
+\`\`\`
+
+## Rules
+- Never include confidential competitor information that could cause issues if shared
+- Keep notes factual—avoid subjective characterizations of clients
+- Action items must have clear owners and dates
+- Update stage only when genuine progress warrants it
+
+## Analogy
+Like having a sales manager who helps you document everything properly so nothing falls through the cracks.
+`
+  },
+  {
+    id: "powerpoint-assistant",
+    name: "Powerpoint Assistant",
+    icon: "microsoftpowerpoint",
+    iconType: 'simpleicons',
+    brandColor: "#B7472A",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "3-4 hours",
+    tags: ["presentations", "slides", "narrative", "design"],
+    desc: "Slide deck narrative building and presentation design. Use when structuring presentations, creating compelling narratives, or designing slide layouts.",
+    trigger: "Use when working with Powerpoint",
+    skills: [], tools: ["Powerpoint"],
+    source: 'official',
+    md: `---
+name: powerpoint-assistant
+description: Slide deck narrative building and presentation design. Use when structuring presentations, creating compelling narratives, or designing slide layouts.
+tags: presentations, slides, narrative, design
+difficulty: intermediate
+time_to_master: 3-4 hours
+---
+
+# PowerPoint Assistant
+
+## When to Use
+Activate when the user:
+- "Build a presentation outline for [topic]"
+- "Help me create a narrative arc for my slides"
+- "Design slide layouts for [audience]"
+
+## Instructions
+1. Identify presentation purpose, audience, and time constraint
+2. Create narrative structure with clear beginning, middle, and end
+3. Design slide-by-slide content with speaker notes
+4. Apply consistent visual theme and layout principles
+5. Build in audience engagement moments
+6. Create compelling opening and closing slides
+
+## Output Format
+Always produce this exact structure:
+## Presentation Overview
+**Title**: [Presentation Title]
+**Duration**: [minutes]
+**Audience**: [description]
+**Goal**: [What audience should do/think/feel]
+
+## Narrative Arc
+\`\`\`
+Opening (10%) → Hook + Agenda
+Problem (20%) → Establish stakes
+Solution (40%) → Core content
+Evidence (20%) → Proof points
+Close (10%) → Call to action
+\`\`\`
+
+## Slide Outline
+| Slide # | Title | Content | Speaker Notes |
+|---------|-------|---------|---------------|
+| 1 | Title Slide | [Title, subtitle, presenter] | [Opening line] |
+| 2 | Agenda | [3-5 bullet points] | [Transition to problem] |
+| 3 | [Section] | [Key points] | [What to emphasize] |
+
+## Visual Guidelines
+- **Fonts**: [Headings font] / [Body font]
+- **Colors**: Primary [#hex], Secondary [#hex], Accent [#hex]
+- **Layout**: [Title at top, content below, etc.]
+
+## Engagement Moments
+- Slide X: [Poll/Question/Activity]
+- Slide Y: [Story/Case study]
+- Slide Z: [Video/Demo]
+
+## Rules
+- Maximum 6 words per bullet point
+- One key idea per slide
+- No more than 6 bullets per slide
+- Always include speaker notes
+- End with clear call to action
+
+## Analogy
+A presentation coach who ensures every slide serves the story you're telling.
+`
+  },
+  {
+    id: "ebay-assistant",
+    name: "Ebay Assistant",
+    icon: "ebay",
+    iconType: 'simpleicons',
+    brandColor: "#E53238",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "1-2 hours",
+    tags: ["marketplace", "listings", "selling", "descriptions"],
+    desc: "Listing description writing for marketplace sales. Use when creating eBay listings, optimizing for search, or writing condition descriptions.",
+    trigger: "Use when working with Ebay",
+    skills: [], tools: ["Ebay"],
+    source: 'official',
+    md: `---
+name: ebay-assistant
+description: Listing description writing for marketplace sales. Use when creating eBay listings, optimizing for search, or writing condition descriptions.
+tags: marketplace, listings, selling, descriptions
+difficulty: beginner
+time_to_master: 1-2 hours
+---
+
+# eBay Assistant
+
+## When to Use
+Activate when the user:
+- "Write an eBay listing for [item]"
+- "Help me describe the condition of [product]"
+- "Create a selling description that ranks in search"
+
+## Instructions
+1. Identify item specifics, condition, and unique features
+2. Research comparable sold listings for pricing
+3. Write detailed, honest condition descriptions
+4. Include all relevant specifications and details
+5. Optimize title for eBay search algorithm
+6. Set clear shipping and return policies
+
+## Output Format
+Always produce this exact structure:
+## Listing Content
+
+### Title (80 characters max)
+[Brand + Model + Key Features + Size/Specs + Condition]
+
+**Example**: "Apple iPhone 14 Pro 256GB Space Black Unlocked Excellent Condition"
+
+### Item Specifics
+| Field | Value |
+|-------|-------|
+| Brand | [Brand name] |
+| Model | [Model number/name] |
+| Type | [Category] |
+| Color | [Color] |
+| Size/Dimensions | [Specifics] |
+| Material | [If applicable] |
+| Year | [If applicable] |
+| Condition | [Condition level] |
+
+### Condition Description
+**Overall Condition**: [New/Opened/Used/For parts]
+
+**Detailed Description**:
+"This [item] is in [condition] condition. [Specific details about wear, damage, functionality]. [What's included]. [What's not included]."
+
+**Flaws/Issues** (be specific):
+- [Issue 1, with location on item]
+- [Issue 2, with location on item]
+- [Or "No visible flaws or issues"]
+
+**Functionality**: [Tested and working/Untested/For repair]
+
+### Description Body
+**What You're Getting**:
+- [Item itself with full name]
+- [Accessories included]
+- [Original packaging if applicable]
+
+**Why Buy From Me**:
+- [Fast shipping]
+- [Return policy]
+- [Seller rating]
+- [Other benefit]
+
+**Shipping & Returns**:
+- Ships from: [Location]
+- Shipping: [Free/Fixed price/Calculated]
+- Handling time: [X business days]
+- Returns: [Accepted/Not accepted] within [X days]
+
+### Photos to Include
+1. Front view (main image)
+2. Back/bottom view
+3. Close-up of any flaws
+4. Size reference (with ruler or hand)
+5. Accessories included
+6. Box/packaging (if available)
+
+### Pricing Research
+| Sold Listing | Price | Condition | Date |
+|--------------|-------|-----------|------|
+| [Item] | $[X] | [Condition] | [Date] |
+
+**Suggested Starting Price**: $[X]
+**Suggested Buy It Now**: $[X]
+
+## Rules
+- Be 100% honest about condition - overdisclose flaws
+- Include measurements in listing
+- State return policy clearly
+- Never use stock photos for used items
+- Respond to questions within 24 hours
+
+## Analogy
+An eBay power seller who writes listings that build buyer trust and sell fast.
+`
+  },
+  {
+    id: "medium-assistant",
+    name: "Medium Assistant",
+    icon: "medium",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["medium", "article", "long-form", "writing", "publication"],
+    desc: "Medium long-form article writing, story structure, and publication strategy. Use when users need to write Medium articles, structure stories, or grow their Medium presence.",
+    trigger: "Use when working with Medium",
+    skills: [], tools: ["Medium"],
+    source: 'official',
+    md: `---
+name: medium-assistant
+description: Medium long-form article writing, story structure, and publication strategy. Use when users need to write Medium articles, structure stories, or grow their Medium presence.
+tags: medium, article, long-form, writing, publication
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Medium Assistant
+
+## When to Use
+Activate when the user:
+- "Write a Medium article about [topic]"
+- "Structure a long-form article for Medium"
+- "Help me get published in [Medium publication]"
+- "Create a viral Medium story about [topic]"
+- "Optimize my Medium article for reads"
+
+## Instructions
+1. Define the story:
+   - What is the core insight or argument?
+   - Why does it matter now?
+   - What personal experience makes it authentic?
+   - What will readers take away?
+2. Structure for Medium:
+   - Compelling title (how-to, list, or provocative statement)
+   - Strong subtitle with the promise
+   - Image to break up the preview
+   - 7-minute read sweet spot (1,500-2,000 words)
+   - Clear sections with subheadings
+   - Powerful ending with takeaway
+3. Optimize for engagement:
+   - First paragraph must hook
+   - Use pull quotes for emphasis
+   - Include personal stories
+   - End with a question or call to action
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Medium Article: [Title]
+
+### Article Details
+**Title:** [Compelling headline—can be provocative or how-to]
+**Subtitle:** [The promise—what readers will get]
+**Read Time:** ~[X] minutes ([word count] words)
+**Tags:** [tag1], [tag2], [tag3], [tag4], [tag5]
+**Publication Target:** [Publication name or self-publish]
+
+---
+
+### [Title]
+
+[Opening paragraph—start with a story, provocative statement, or question. Hook immediately.]
+
+[Second paragraph—develop the hook, hint at the solution]
+
+---
+
+### [First Major Section]
+
+[Content with:
+- Personal story or example
+- Concrete details
+- Transition to next point]
+
+### [Second Major Section]
+
+[Content with:
+- The core insight or argument
+- Supporting examples or data
+- Subheadings for scannability]
+
+### [Third Major Section]
+
+[Content with:
+- Application or how-to
+- Actionable takeaways]
+
+---
+
+### The Takeaway
+
+[Powerful closing paragraph]
+
+[End with a question or call to action]
+
+---
+
+**If you found this valuable, clap and follow for more.**
+
+---
+
+### Publication Notes
+**Best Publications for This Topic:**
+- [Publication 1]: [Why it fits]
+- [Publication 2]: [Why it fits]
+
+**Submission Requirements:**
+- [Word count requirement]
+- [Formatting requirements]
+- [Tag suggestions]
+\`\`\`
+
+## Rules
+- Title and subtitle are sacred—spend time on them
+- Start with story or provocative statement
+- 5 tags maximum (choose wisely)
+- Aim for 7-minute read time
+- Include one personal element minimum
+
+## Analogy
+Like having an editor who knows what makes Medium readers click, read, and clap.
+`
+  },
+  {
+    id: "linkedin-assistant",
+    name: "Linkedin Assistant",
+    icon: "linkedin",
+    iconType: 'simpleicons',
+    brandColor: "#0A66C2",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["linkedin", "profile", "networking", "posts", "professional"],
+    desc: "LinkedIn profile optimization, post writing, and professional networking content. Use when users need to improve their profile, write posts, or craft connection messages.",
+    trigger: "Use when working with Linkedin",
+    skills: [], tools: ["Linkedin"],
+    source: 'official',
+    md: `---
+name: linkedin-assistant
+description: LinkedIn profile optimization, post writing, and professional networking content. Use when users need to improve their profile, write posts, or craft connection messages.
+tags: linkedin, profile, networking, posts, professional
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# LinkedIn Assistant
+
+## When to Use
+Activate when the user:
+- "Optimize my LinkedIn headline"
+- "Write a LinkedIn post about [topic]"
+- "Help me write my LinkedIn About section"
+- "Craft a connection request message for [person]"
+- "Review and improve my LinkedIn profile"
+
+## Instructions
+1. For profile optimization:
+   - Analyze current headline for keywords and impact
+   - Rewrite About section with achievement focus
+   - Suggest Experience bullet points with metrics
+   - Recommend Skills based on target roles
+2. For post writing:
+   - Determine post type (insight, story, announcement, engagement)
+   - Write a strong hook (first 2 lines visible before "see more")
+   - Structure with line breaks for readability
+   - Include relevant hashtags (3-5 maximum)
+   - End with engagement question or CTA
+3. For connection messages:
+   - Reference mutual connection or shared interest
+   - State reason for connecting clearly
+   - Keep under 300 characters
+
+## Output Format
+Always produce this exact structure:
+
+**For Posts:**
+\`\`\`
+## LinkedIn Post: [Topic]
+
+### The Post
+[Hook - compelling first line]
+
+[Second line that draws them in]
+
+[Main content with line breaks
+for easy mobile reading]
+
+[Key insight or takeaway]
+
+[Engagement question?]
+
+#Hashtag1 #Hashtag2 #Hashtag3
+
+---
+**Character count:** [X]/3000
+**Hook preview:** "[First 140 characters]"
+\`\`\`
+
+**For Profile Sections:**
+\`\`\`
+## [Section Name]
+
+### Optimized Version:
+[Content]
+
+### Why This Works:
+- [Improvement 1]
+- [Improvement 2]
+\`\`\`
+
+## Rules
+- Headlines: Under 220 characters, include role + value proposition
+- Posts: Strong hook in first 140 characters (mobile preview)
+- About: First person, achievement-focused, keyword-rich
+- No hashtag overuse (3-5 per post maximum)
+- Avoid LinkedIn clichés ("I'm humbled to announce")
+
+## Analogy
+Like having a career coach who knows exactly what recruiters and your network want to see.
+`
+  },
+  {
+    id: "github-assistant",
+    name: "Github Assistant",
+    icon: "github",
+    iconType: 'simpleicons',
+    brandColor: "#181717",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["github", "pull-requests", "commits", "code-review", "documentation"],
+    desc: "GitHub PR reviews, commit message writing, and repository documentation. Use when users need to write pull requests, review code, or improve their GitHub workflow.",
+    trigger: "Use when working with Github",
+    skills: [], tools: ["Github"],
+    source: 'official',
+    md: `---
+name: github-assistant
+description: GitHub PR reviews, commit message writing, and repository documentation. Use when users need to write pull requests, review code, or improve their GitHub workflow.
+tags: github, pull-requests, commits, code-review, documentation
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# GitHub Assistant
+
+## When to Use
+Activate when the user:
+- "Write a pull request description for [changes]"
+- "Help me review this pull request"
+- "Craft commit messages for my changes"
+- "Create a PR template for my team"
+- "Write GitHub issue descriptions for [bug/feature]"
+
+## Instructions
+1. For pull requests:
+   - Write clear title with type prefix (feat:, fix:, docs:)
+   - Summarize what and why (not how)
+   - List changes in scannable format
+   - Include testing information
+   - Add screenshots for UI changes
+   - Link related issues
+2. For commit messages:
+   - Use conventional commit format
+   - Keep first line under 72 characters
+   - Add body for context if needed
+   - Reference issue numbers
+3. For code reviews:
+   - Focus on logic, not style (use linters)
+   - Suggest improvements, don't demand
+   - Ask questions for clarification
+   - Acknowledge good solutions
+
+## Output Format
+Always produce this exact structure:
+
+**For Pull Requests:**
+\`\`\`
+## Pull Request: [Title]
+
+### Description
+[What does this PR do? Why is it needed?]
+
+### Changes
+- [Change 1]
+- [Change 2]
+- [Change 3]
+
+### Type of Change
+- [ ] Bug fix (non-breaking change fixing an issue)
+- [ ] New feature (non-breaking change adding functionality)
+- [ ] Breaking change (fix or feature causing existing functionality to change)
+- [ ] Documentation update
+
+### Testing
+- [Test scenario 1]
+- [Test scenario 2]
+
+### Screenshots (if applicable)
+[Screenshot descriptions or placeholders]
+
+### Related Issues
+Closes #[issue number]
+
+### Checklist
+- [ ] I have performed a self-review
+- [ ] I have added tests
+- [ ] Documentation has been updated
+\`\`\`
+
+**For Commit Messages:**
+\`\`\`
+[type]: [subject]
+
+[optional body explaining why]
+
+[optional footer with breaking changes or issues]
+\`\`\`
+
+## Rules
+- Use conventional commit prefixes (feat, fix, docs, style, refactor, test, chore)
+- PR titles should tell reviewers what to expect
+- Always link related issues
+- Include test instructions for reviewers
+- Be specific about what needs review
+
+## Analogy
+Like having a senior engineer who knows exactly how to communicate code changes to your team.
+`
+  },
+  {
+    id: "khan-academy-assistant",
+    name: "Khan Academy Assistant",
+    icon: "khanacademy",
+    iconType: 'simpleicons',
+    brandColor: "#14BF96",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "25 minutes",
+    tags: ["study-plans", "learning", "education", "concepts"],
+    desc: "Create personalized study plans and break down complex concepts into understandable parts. Use when planning learning schedules or explaining difficult topics.",
+    trigger: "Use when working with Khan Academy",
+    skills: [], tools: ["Khan Academy"],
+    source: 'official',
+    md: `---
+name: khan-academy-assistant
+description: Create personalized study plans and break down complex concepts into understandable parts. Use when planning learning schedules or explaining difficult topics.
+tags: study-plans, learning, education, concepts
+difficulty: beginner
+time_to_master: 25 minutes
+---
+
+# Khan Academy Study Plan & Concept Breakdown
+
+## When to Use
+Activate when the user:
+- "Create a study plan for [subject]"
+- "Explain [concept] like I'm 5"
+- "Help me learn [topic] step by step"
+- "Break down this concept for me"
+- "Design a learning schedule for finals"
+
+## Instructions
+1. For study plans:
+   - Assess current knowledge level
+   - Identify goal and timeline
+   - Break subject into manageable chunks
+   - Schedule review and practice sessions
+   - Include progress checkpoints
+
+2. For concept breakdown:
+   - Start with the simplest explanation
+   - Use analogies and real-world examples
+   - Build complexity gradually
+   - Address common misconceptions
+   - Provide practice examples
+
+3. For learning schedules:
+   - Balance new learning with review
+   - Include spaced repetition
+   - Schedule breaks and rest days
+   - Account for other commitments
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Study Plan: [Subject/Topic]
+
+### Goal: [Specific learning objective]
+**Timeline:** [Duration]
+**Current Level:** [Assessment]
+**Target Level:** [Goal level]
+
+---
+
+### Weekly Schedule:
+
+#### Week 1: [Focus Area]
+| Day | Topic | Activity | Duration | Resources |
+|-----|-------|----------|----------|-----------|
+| Mon | [Topic] | [Video/Practice] | [X min] | [Khan link] |
+| Tue | [Topic] | [Video/Practice] | [X min] | [Khan link] |
+| Wed | Review | [Quiz/Practice] | [X min] | [Khan link] |
+| Thu | [Topic] | [Video/Practice] | [X min] | [Khan link] |
+| Fri | [Topic] | [Video/Practice] | [X min] | [Khan link] |
+| Sat | Practice | [Exercises] | [X min] | [Khan link] |
+| Sun | Review | [Weekly quiz] | [X min] | [Khan link] |
+
+[Continue for all weeks]
+
+---
+
+### Progress Checkpoints:
+| Week | Milestone | Assessment Method |
+|------|-----------|-------------------|
+| [X] | [Milestone] | [How to measure] |
+
+---
+
+## Concept Breakdown: [Concept Name]
+
+### Simple Explanation:
+[One sentence that captures the essence]
+
+### The "Like You're 5" Version:
+[Analogy using everyday concepts]
+
+### Building Up:
+
+**Level 1: The Basics**
+[Simplest form of the concept]
+
+**Level 2: Adding Complexity**
+[More detailed explanation]
+
+**Level 3: Full Understanding**
+[Complete technical explanation]
+
+### Common Misconceptions:
+| Myth | Reality |
+|------|---------|
+| [Misconception] | [Correct understanding] |
+
+### Practice Examples:
+1. **Example 1:** [Problem]
+   **Solution:** [Step-by-step solution]
+
+2. **Example 2:** [Problem]
+   **Solution:** [Step-by-step solution]
+
+### Quick Check:
+[2-3 questions to test understanding]
+\`\`\`
+
+## Rules
+- Always start simpler than you think is necessary
+- Use concrete examples, not just abstract explanations
+- Each concept should build on the previous
+- Include "why this matters" context
+
+## Analogy
+Like having a patient tutor who never gets frustrated explaining something a third time in a different way until you get it.
+`
+  },
+  {
+    id: "uber-ola-assistant",
+    name: "Uber Ola Assistant",
+    icon: "uber",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["rideshare", "expense-tracking", "travel-reporting", "reimbursement"],
+    desc: "Create trip expense reports and track ride history from Uber/Ola data. Use when documenting travel expenses, analyzing ride patterns, or preparing reimbursement requests.",
+    trigger: "Use when working with Uber Ola",
+    skills: [], tools: ["Uber Ola"],
+    source: 'official',
+    md: `---
+name: uber-ola-assistant
+description: Create trip expense reports and track ride history from Uber/Ola data. Use when documenting travel expenses, analyzing ride patterns, or preparing reimbursement requests.
+tags: rideshare, expense-tracking, travel-reporting, reimbursement
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Uber / Ola Trip Expense Reporting
+
+## When to Use
+Activate when the user:
+- "Help me create an expense report from my Uber rides"
+- "Organize my rideshare trips for reimbursement"
+- "Analyze my Uber spending patterns"
+- "Format my ride history for expense tracking"
+
+## Instructions
+1. Gather trip data from the app:
+   - Export ride history or screenshots
+   - Date and time of rides
+   - Pickup and drop-off locations
+   - Trip distance and duration
+   - Fare breakdown (base, distance, time, surge)
+   - Payment method used
+2. Categorize trips by purpose:
+   - Business/Work: Client meetings, office commute, airport
+   - Personal: Social, errands, entertainment
+   - Mixed: Partial business use
+3. Format for expense reports:
+   - Standard company template requirements
+   - Required fields and documentation
+   - Receipt attachment needs
+   - Approval workflow considerations
+4. Calculate summaries:
+   - Total spending by category
+   - Monthly/weekly averages
+   - Tax-deductible portion identification
+   - Comparison with alternative transport costs
+5. Prepare supporting documentation:
+   - Organized receipt PDFs
+   - Business purpose descriptions
+   - Client/project associations
+   - Manager approval requirements
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Uber/Ola Expense Report
+
+**Reporting Period:** [Start Date] - [End Date]
+**Report Prepared By:** [Name]
+**Employee ID:** [ID if applicable]
+**Department:** [Department]
+
+---
+
+## Executive Summary
+
+| Category | Trips | Total Distance | Total Amount |
+|----------|-------|----------------|--------------|
+| Business | [X] | [X miles/km] | $[X.XX] |
+| Personal | [X] | [X miles/km] | $[X.XX] |
+| **Total** | **[X]** | **[X miles/km]** | **$[X.XX]** |
+
+**Reimbursement Eligible:** $[X.XX]
+**Personal Expense:** $[X.XX]
+
+---
+
+## Detailed Trip Log
+
+| Date | Time | Pickup | Drop-off | Purpose | Distance | Amount |
+|------|------|--------|----------|---------|----------|--------|
+| [MM/DD] | [HH:MM AM/PM] | [Location] | [Location] | [Business reason] | [X mi/km] | $[X.XX] |
+| [MM/DD] | [HH:MM AM/PM] | [Location] | [Location] | [Business reason] | [X mi/km] | $[X.XX] |
+
+---
+
+## Business Purpose Details
+
+### Trip 1: [Date]
+- **From:** [Pickup address]
+- **To:** [Drop-off address]
+- **Purpose:** [Specific business reason]
+- **Client/Project:** [If applicable]
+- **Amount:** $[X.XX]
+- **Receipt:** [Attached/Reference #]
+
+### Trip 2: [Date]
+[Same structure]
+
+---
+
+## Fare Breakdown Analysis
+
+| Component | Amount | % of Total |
+|-----------|--------|------------|
+| Base fare | $[X.XX] | [X%] |
+| Distance | $[X.XX] | [X%] |
+| Time | $[X.XX] | [X%] |
+| Surge pricing | $[X.XX] | [X%] |
+| Tolls | $[X.XX] | [X%] |
+| Tips | $[X.XX] | [X%] |
+| **Total** | **$[X.XX]** | **100%** |
+
+---
+
+## Spending Trends
+
+### Monthly Summary
+| Month | Trips | Business | Personal | Total |
+|-------|-------|----------|----------|-------|
+| [Month] | [X] | $[X.XX] | $[X.XX] | $[X.XX] |
+
+### Cost Optimization Notes
+- Average cost per mile/km: $[X.XX]
+- Surge pricing encounters: [X] ([X]% of trips)
+- Most expensive route: [Route] at $[X.XX]
+- Potential savings with alternative timing: $[X.XX]
+
+---
+
+## Reimbursement Checklist
+- [ ] All business trips documented with purpose
+- [ ] Receipts attached for each business trip
+- [ ] Client/project codes assigned where required
+- [ ] Manager approval email included
+- [ ] Company policy compliance verified
+
+## Notes for Finance Team
+[Any additional context, exceptional circumstances, or special requests]
+\`\`\`
+
+## Rules
+- Include receipts for every business expense claim
+- Clearly separate business and personal trips
+- Use actual pickup/drop-off addresses, not approximations
+- Note surge pricing and justify if unusual for business hours
+- Include timezone if reporting across regions
+
+## Analogy
+Trip expense reporting is like keeping a travel journal with receipts—you're creating an audit trail that tells the story of where business took you.
+`
+  },
+  {
+    id: "duolingo-practice-assistant",
+    name: "Duolingo Practice Assistant",
+    icon: "duolingo",
+    iconType: 'simpleicons',
+    brandColor: "#58CC02",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["language-learning", "practice", "conversation", "scripts"],
+    desc: "Create language practice scripts and conversation exercises for language learners. Use when practicing conversations, writing dialogues, or improving language skills.",
+    trigger: "Use when working with Duolingo Practice",
+    skills: [], tools: ["Duolingo Practice"],
+    source: 'official',
+    md: `---
+name: duolingo-practice-assistant
+description: Create language practice scripts and conversation exercises for language learners. Use when practicing conversations, writing dialogues, or improving language skills.
+tags: language-learning, practice, conversation, scripts
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Duolingo Language Practice Script
+
+## When to Use
+Activate when the user:
+- "Create a practice conversation in [language]"
+- "Write a dialogue for ordering food in Spanish"
+- "Help me practice [language] small talk"
+- "Create language practice scenarios"
+- "Write a role-play script for language learning"
+
+## Instructions
+1. Identify practice context:
+   - Target language and proficiency level
+   - Topic or scenario (restaurant, shopping, travel, etc.)
+   - Grammar points to practice
+   - Vocabulary focus areas
+
+2. Design practice scripts:
+   - Start with common, useful phrases
+   - Include variations and alternatives
+   - Add pronunciation guides (phonetic or IPA)
+   - Provide translations for context
+   - Include cultural notes when relevant
+
+3. Create progressive exercises:
+   - Basic exchanges (simple Q&A)
+   - Intermediate dialogues (complex situations)
+   - Advanced scenarios (negotiation, debate)
+   - Role-play variations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Language Practice Script: [Scenario]
+
+**Language:** [Target Language]
+**Level:** Beginner / Intermediate / Advanced
+**Focus:** [Grammar/Vocabulary focus]
+
+---
+
+### Vocabulary Preview:
+| [Language] | Pronunciation | English | Notes |
+|------------|---------------|---------|-------|
+| [Word] | [Phonetic] | [Translation] | [Usage note] |
+
+---
+
+### Basic Dialogue:
+
+**Context:** [Setting description]
+
+| Speaker | [Language] | Pronunciation | English |
+|---------|------------|---------------|---------|
+| A | [Phrase] | [Phonetic] | [Translation] |
+| B | [Phrase] | [Phonetic] | [Translation] |
+| A | [Phrase] | [Phonetic] | [Translation] |
+| B | [Phrase] | [Phonetic] | [Translation] |
+
+---
+
+### Expanded Version:
+
+**[Speaker A]:** [Full sentence in target language]
+*[Pronunciation guide]*
+(Translation: [English])
+📝 *Grammar note:* [Explanation]
+
+**[Speaker B]:** [Response in target language]
+*[Pronunciation guide]*
+(Translation: [English])
+
+[Continue dialogue]
+
+---
+
+### Practice Variations:
+
+**Variation 1: [Scenario change]**
+- Instead of [original], try [alternative]
+
+**Variation 2: [Different context]**
+- Use the same phrases but in [new situation]
+
+---
+
+### Role-Play Exercise:
+
+**Your Role:** [Description]
+**Partner's Role:** [Description]
+**Goal:** [Communication objective]
+
+**Starter phrases for you:**
+- [Phrase 1] - [When to use]
+- [Phrase 2] - [When to use]
+- [Phrase 3] - [When to use]
+
+**Possible responses to prepare for:**
+- [Response type 1]
+- [Response type 2]
+
+---
+
+### Cultural Notes:
+- [Cultural context that affects language use]
+- [Politeness level considerations]
+
+### Practice Tips:
+1. [Specific practice suggestion]
+2. [Specific practice suggestion]
+\`\`\`
+
+## Rules
+- Always include pronunciation guides for beginners
+- Provide literal translations alongside natural translations
+- Keep dialogues realistic and commonly used
+- Note regional differences when significant
+
+## Analogy
+Like having a language exchange partner who's always ready to practice and never judges your accent.
+`
+  },
+  {
+    id: "canva-assistant",
+    name: "Canva Assistant",
+    icon: "canva",
+    iconType: 'simpleicons',
+    brandColor: "#00C4CC",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["canva", "design", "graphics", "copywriting", "visual-content"],
+    desc: "Canva design brief creation, copy writing, and visual content planning. Use when users need to create designs, write copy for graphics, or plan visual content.",
+    trigger: "Use when working with Canva",
+    skills: [], tools: ["Canva"],
+    source: 'official',
+    md: `---
+name: canva-assistant
+description: Canva design brief creation, copy writing, and visual content planning. Use when users need to create designs, write copy for graphics, or plan visual content.
+tags: canva, design, graphics, copywriting, visual-content
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Canva Assistant
+
+## When to Use
+Activate when the user:
+- "Create a design brief for [project]"
+- "Write copy for a [type] graphic"
+- "Help me design a [social media post/infographic/presentation]"
+- "Plan a series of graphics for [campaign]"
+- "Write text for my Canva design"
+
+## Instructions
+1. Understand the design context:
+   - What is the purpose? (announcement, promotion, education, branding)
+   - Where will it be used? (social platform, print, presentation)
+   - Who is the audience?
+   - What is the brand style? (colors, fonts, vibe)
+2. Create the brief:
+   - Define the key message (one main takeaway)
+   - List required elements (logo, CTA, imagery)
+   - Specify dimensions for platform
+   - Provide copy hierarchy (headline, subhead, body, CTA)
+3. Write copy for visuals:
+   - Keep text minimal (less is more)
+   - Hierarchy: Headline > Subhead > Body > CTA
+   - Strong verbs for CTAs
+   - Consider text placement in design
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Design Brief: [Project Name]
+
+### Overview
+**Purpose:** [What this design accomplishes]
+**Platform:** [Where it will be used]
+**Dimensions:** [Size in pixels or Canva preset]
+**Audience:** [Who will see this]
+
+### Key Message
+[One sentence: what should viewers remember?]
+
+### Copy Elements
+**Headline:** [Main attention-grabbing text]
+**Subheadline:** [Supporting text]
+**Body Copy:** [Details if needed—keep minimal]
+**CTA:** [Action you want viewers to take]
+
+### Visual Direction
+**Style:** [Modern/Minimal/Bold/Playful/etc.]
+**Colors:** [Primary color, secondary color, accent]
+**Fonts:** [Header font style, body font style]
+**Imagery:** [Type of images or graphics needed]
+
+### Layout Suggestions
+- [Placement recommendation 1]
+- [Placement recommendation 2]
+
+### Canva Elements to Use
+- [Specific element type or search term]
+- [Template recommendation if applicable]
+\`\`\`
+
+## Rules
+- Keep copy minimal—visuals do the heavy lifting
+- One key message per design
+- CTAs should be action verbs
+- Consider safe zones for social platforms
+- Specify exact dimensions for best quality
+
+## Analogy
+Like having a creative director who helps you plan exactly what to create before you open Canva.
+`
+  },
+  {
+    id: "reddit-assistant",
+    name: "Reddit Assistant",
+    icon: "reddit",
+    iconType: 'simpleicons',
+    brandColor: "#FF4500",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["reddit", "community-engagement", "social-media", "discussion-posts"],
+    desc: "Craft engaging Reddit posts and comments that follow platform conventions. Use when writing posts for specific subreddits, optimizing for engagement, or navigating Reddit etiquette.",
+    trigger: "Use when working with Reddit",
+    skills: [], tools: ["Reddit"],
+    source: 'official',
+    md: `---
+name: reddit-assistant
+description: Craft engaging Reddit posts and comments that follow platform conventions. Use when writing posts for specific subreddits, optimizing for engagement, or navigating Reddit etiquette.
+tags: reddit, community-engagement, social-media, discussion-posts
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Reddit Post & Comment Crafting
+
+## When to Use
+Activate when the user:
+- "Help me write a post for r/[subreddit]"
+- "How do I format this for Reddit?"
+- "Write a Reddit comment that won't get downvoted"
+- "I want to post about [topic] on Reddit"
+
+## Instructions
+1. Research the target subreddit culture:
+   - Read the sidebar rules and posting guidelines
+   - Observe top posts of all time for format patterns
+   - Note common post structures and tones
+   - Identify what gets upvoted vs. downvoted
+2. Choose appropriate post type:
+   - Text post: Discussion, story, question, guide
+   - Link post: Article, image, video (if allowed)
+   - Crosspost: Sharing across related subreddits
+3. Structure for Reddit conventions:
+   - Title: Clear, intriguing, not clickbait
+   - Opening hook in first sentence
+   - TL;DR at end for long posts
+   - Proper formatting (bold, bullets, headers)
+4. Write with community voice:
+   - Match the subreddit's formality level
+   - Use appropriate terminology (OP, EDIT, UPDATE)
+   - Avoid self-promotion unless permitted
+   - Credit sources and avoid reposts
+5. Add engagement elements:
+   - End with a question for discussion
+   - Invite personal experiences
+   - Request advice or feedback appropriately
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Reddit Post Draft
+
+**Target Subreddit:** r/[name]
+**Post Type:** [Text/Link/Image]
+**Expected Reception:** [Hot/New/Controversial]
+
+---
+
+## Title
+[Under 300 characters, descriptive yet intriguing]
+
+---
+
+## Post Body
+
+[Opening hook - first line that appears in previews]
+
+[Main content with proper Reddit formatting]
+
+**Key points in bold when appropriate**
+
+- Bullet points for lists
+- Easy to scan
+
+[Story or main argument continues]
+
+---
+
+**TL;DR:** [One sentence summary for long posts]
+
+---
+
+## Comment Engagement Strategy
+
+### Potential Comments to Prepare
+- "Thanks for sharing [personal reaction]"
+- [Anticipated question]: [Your prepared answer]
+- [Common objection]: [Your thoughtful response]
+
+### Red Flags to Avoid
+- [ ] Self-promotion without disclosure
+- [ ] Repost of recent content
+- [ ] Rule violation: [Specific rule to check]
+
+## Best Posting Time
+[Recommended time based on subreddit activity patterns]
+\`\`\`
+
+## Rules
+- Never use clickbait titles that don't deliver
+- Always check subreddit rules before posting
+- Disclose any conflicts of interest or self-promotion
+- Edit post for typos—Reddit judges grammar harshly
+- Include TL;DR for posts over 3 paragraphs
+
+## Analogy
+Reddit posting is like joining a conversation at a party—listen first, match the energy, and contribute value rather than just promoting yourself.
+`
+  },
+  {
+    id: "myfitnesspal-assistant",
+    name: "Myfitnesspal Assistant",
+    icon: "myfitnesspal",
+    iconType: 'simpleicons',
+    brandColor: "#00B2FF",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "2-3 hours",
+    tags: ["nutrition", "meal-planning", "macros", "health"],
+    desc: "Meal planning and macro analysis for nutrition goals. Use when planning meals, calculating macros, or analyzing nutritional content.",
+    trigger: "Use when working with Myfitnesspal",
+    skills: [], tools: ["Myfitnesspal"],
+    source: 'official',
+    md: `---
+name: myfitnesspal-assistant
+description: Meal planning and macro analysis for nutrition goals. Use when planning meals, calculating macros, or analyzing nutritional content.
+tags: nutrition, meal-planning, macros, health
+difficulty: beginner
+time_to_master: 2-3 hours
+---
+
+# MyFitnessPal Assistant
+
+## When to Use
+Activate when the user:
+- "Plan meals for [goal] with [calories] calories"
+- "Calculate macros for [foods]"
+- "Analyze the nutrition of my daily intake"
+
+## Instructions
+1. Understand user's goals (weight loss, muscle gain, maintenance)
+2. Calculate appropriate calorie and macro targets
+3. Create balanced meal plans meeting targets
+4. Provide specific food suggestions with portions
+5. Account for dietary restrictions and preferences
+6. Include shopping list and meal prep guidance
+
+## Output Format
+Always produce this exact structure:
+## Nutrition Targets
+**Goal**: [Weight loss/Maintenance/Muscle gain]
+**Daily Calories**: [Target]
+**Macros**:
+- Protein: [g] ([%] of calories)
+- Carbs: [g] ([%] of calories)
+- Fat: [g] ([%] of calories)
+
+## Daily Meal Plan
+**Total**: [Calories] cal | Protein: [g]g | Carbs: [g]g | Fat: [g]g
+
+### Breakfast ([X] calories)
+| Food | Portion | Protein | Carbs | Fat | Calories |
+|------|---------|---------|-------|-----|----------|
+| [Food] | [Amount] | [g] | [g] | [g] | [cal] |
+
+**Meal Total**: [cal] cal | [g]g protein
+
+### Lunch ([X] calories)
+[Same format]
+
+### Dinner ([X] calories)
+[Same format]
+
+### Snacks ([X] calories)
+[Same format]
+
+## Weekly Meal Overview
+| Day | Breakfast | Lunch | Dinner | Snacks |
+|-----|-----------|-------|--------|--------|
+| Mon | [Meal] | [Meal] | [Meal] | [Snack] |
+| Tue | [Meal] | [Meal] | [Meal] | [Snack] |
+
+## Shopping List
+**Proteins**
+- [Item] - [Amount]
+
+**Produce**
+- [Item] - [Amount]
+
+**Grains/Carbs**
+- [Item] - [Amount]
+
+**Dairy/Alternatives**
+- [Item] - [Amount]
+
+**Other**
+- [Item] - [Amount]
+
+## Meal Prep Tips
+- [Tip 1]
+- [Tip 2]
+- [Tip 3]
+
+## Macro Analysis
+\`\`\`
+Current Intake vs Target
+Protein: [X]g / [Target]g ([%]%)
+Carbs:   [X]g / [Target]g ([%]%)
+Fat:     [X]g / [Target]g ([%]%)
+
+Suggestions:
+- [Adjustment 1]
+- [Adjustment 2]
+\`\`\`
+
+## Rules
+- Protein target should be 0.7-1g per lb body weight for muscle goals
+- Never go below 1200 calories (F) or 1500 calories (M) without medical supervision
+- Include at least 25g fiber per day
+- Account for dietary restrictions mentioned
+- Provide alternatives for common allergens
+
+## Analogy
+A nutritionist who plans your meals and does the math so you hit your goals.
+`
+  },
+  {
+    id: "skillgalaxy-assistant",
+    name: "Skillgalaxy Assistant",
+    icon: "astro",
+    iconType: 'simpleicons',
+    brandColor: "#FF5D01",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["skills", "documentation", "creation", "submission"],
+    desc: "Create and submit skill files following the SkillGalaxy format specification. Use when creating new skills, formatting skill documentation, or submitting skills to the repository.",
+    trigger: "Use when working with Skillgalaxy",
+    skills: [], tools: ["Skillgalaxy"],
+    source: 'official',
+    md: `---
+name: skillgalaxy-assistant
+description: Create and submit skill files following the SkillGalaxy format specification. Use when creating new skills, formatting skill documentation, or submitting skills to the repository.
+tags: skills, documentation, creation, submission
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# SkillGalaxy Skill File Creation & Submission
+
+## When to Use
+Activate when the user:
+- "Create a skill file for [app/purpose]"
+- "Help me write a SkillGalaxy skill"
+- "Format this skill documentation"
+- "Submit a skill to SkillGalaxy"
+- "I want to create a new skill for [application]"
+
+## Instructions
+1. Understand skill purpose:
+   - Target application or use case
+   - Primary function the skill enables
+   - User triggers that should activate it
+   - Difficulty level and time to master
+
+2. Structure the skill file:
+   - YAML frontmatter with required fields
+   - Clear when-to-use triggers
+   - Numbered, actionable instructions
+   - Specific output format template
+   - Hard constraints as rules
+   - Clarifying analogy
+
+3. Validate skill quality:
+   - All required fields present
+   - Triggers are natural user phrases
+   - Instructions are specific and actionable
+   - Output format has real template structure
+   - Rules define clear boundaries
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+---
+name: [kebab-case-name]
+description: [What it does]. Use when [trigger 1], [trigger 2], or [trigger 3].
+tags: tag1, tag2, tag3
+difficulty: beginner | intermediate | advanced | expert
+time_to_master: [time estimate]
+---
+
+# [Skill Title]
+
+## When to Use
+Activate when the user:
+- "[Specific trigger phrase 1 — exact natural language]"
+- "[Specific trigger phrase 2]"
+- "[Specific trigger phrase 3]"
+
+## Instructions
+1. [Numbered, specific, actionable steps]
+2. [Sub-steps with bullet points if needed]
+   - [Bullet sub-step]
+   - [Bullet sub-step]
+3. [Continue numbering as needed]
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+[Real template with actual placeholders]
+\`\`\`
+
+## Rules
+- [Hard constraint — non-negotiable behavior]
+- [Edge case handling]
+- [Scope limit]
+
+## Analogy
+[One sentence that makes the skill's purpose instantly clear]
+\`\`\`
+
+---
+
+### Submission Checklist:
+
+**Required Fields:**
+- [ ] name: kebab-case format
+- [ ] description: Clear purpose + use triggers
+- [ ] tags: 3-5 relevant tags, comma-separated
+- [ ] difficulty: One of four levels
+- [ ] time_to_master: Realistic estimate
+
+**Content Sections:**
+- [ ] Title: Clear, descriptive heading
+- [ ] When to Use: 3+ specific trigger phrases
+- [ ] Instructions: Numbered, actionable steps
+- [ ] Output Format: Real template structure
+- [ ] Rules: 3+ hard constraints
+- [ ] Analogy: One clear sentence
+
+**Quality Checks:**
+- [ ] Triggers match how users actually speak
+- [ ] Instructions are specific (not vague)
+- [ ] Template has actual placeholders
+- [ ] Rules define clear boundaries
+- [ ] No placeholder text remains in final skill
+
+---
+
+### Skill Quality Guidelines:
+
+**Good Trigger Examples:**
+- "Create a playlist for my workout" ✓
+- "What should I watch on Netflix?" ✓
+- "Write copy using the AIDA framework" ✓
+
+**Poor Trigger Examples:**
+- "Help me" ✗ (too vague)
+- "Use the app" ✗ (not specific enough)
+
+**Good Instruction Examples:**
+- "Identify the appropriate framework from: AIDA, PAS, or FAB" ✓
+- "Create 3 headline variations under 30 characters each" ✓
+
+**Poor Instruction Examples:**
+- "Do the thing" ✗ (not actionable)
+- "Be helpful" ✗ (too vague)
+
+---
+
+### File Naming Convention:
+- Format: [app-name]-assistant.md
+- Use kebab-case
+- Be consistent with similar skills
+
+### Submission Process:
+1. Validate skill against checklist
+2. Save with correct filename
+3. Submit via [submission method]
+4. Await review feedback
+
+### Common Issues to Avoid:
+| Issue | Fix |
+|-------|-----|
+| Missing frontmatter | Add YAML block at top |
+| Vague triggers | Use specific user phrases |
+| Generic instructions | Add specific, numbered steps |
+| No output template | Include real structure |
+| Missing analogy | Add one clear sentence |
+\`\`\`
+
+## Rules
+- Every skill must follow the exact format specified
+- Triggers must be phrases users would naturally type
+- Instructions must be numbered and actionable
+- Output format must have real template structure
+- All required fields must be present
+
+## Analogy
+Like having a template librarian who ensures every skill follows the same format so users always know what to expect.
+`
+  },
+  {
+    id: "twitch-assistant",
+    name: "Twitch Assistant",
+    icon: "twitch",
+    iconType: 'simpleicons',
+    brandColor: "#9146FF",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["streaming", "twitch", "content-creation", "clips"],
+    desc: "Plan streaming schedules and write compelling clip descriptions. Use when organizing stream content, writing clip titles, or planning streaming strategy.",
+    trigger: "Use when working with Twitch",
+    skills: [], tools: ["Twitch"],
+    source: 'official',
+    md: `---
+name: twitch-assistant
+description: Plan streaming schedules and write compelling clip descriptions. Use when organizing stream content, writing clip titles, or planning streaming strategy.
+tags: streaming, twitch, content-creation, clips
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Twitch Stream Planning & Clip Writing
+
+## When to Use
+Activate when the user:
+- "Help me plan my Twitch streaming schedule"
+- "Write a title for my Twitch clip"
+- "What games should I stream this week?"
+- "Create a clip description that will go viral"
+- "Plan my stream segments for today"
+
+## Instructions
+1. For stream scheduling:
+   - Identify optimal streaming times based on target audience
+   - Balance game variety with audience expectations
+   - Plan segment structure (intro, gameplay, interaction, outro)
+   - Include community engagement activities
+
+2. For clip writing:
+   - Analyze the clip's key moment or hook
+   - Create attention-grabbing titles (under 45 characters ideal)
+   - Write descriptions that encourage sharing
+   - Include relevant tags and categories
+
+3. For content strategy:
+   - Suggest trending games within user's niche
+   - Recommend collaboration opportunities
+   - Plan special events (subathons, raids, giveaways)
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Stream Plan: [Date/Session]
+
+**Schedule:**
+| Time | Segment | Activity |
+|------|---------|----------|
+| [start] | Intro | [specific activities] |
+| [+X min] | Main Content | [game/content] |
+| [+X min] | Interactive | [engagement activity] |
+| [+X min] | Wrap-up | [closing activities] |
+
+**Clip Recommendation:**
+**Title:** [Attention-grabbing title, <45 chars]
+**Description:** [2-3 sentences explaining the moment]
+**Tags:** [3-5 relevant tags]
+**Best Posting Time:** [Optimal social media timing]
+
+**Engagement Tips:**
+- [Tip 1]
+- [Tip 2]
+\`\`\`
+
+## Rules
+- Titles must be catchy but honest (no clickbait that misleads)
+- Consider the streamer's brand and audience when suggesting content
+- Include raid/host recommendations when relevant
+- Suggest realistic timeframes based on content type
+
+## Analogy
+Like having a producer who knows Twitch culture and helps you look professional while staying authentic.
+`
+  },
+  {
+    id: "pocket-feedly-assistant",
+    name: "Pocket Feedly Assistant",
+    icon: "pocket",
+    iconType: 'simpleicons',
+    brandColor: "#EF3F56",
+    cat: "writing",
+    d: 7, i: 7, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "20 minutes",
+    tags: ["reading-productivity", "content-synthesis", "knowledge-management", "article-summary"],
+    desc: "Synthesize saved articles from Pocket or Feedly into actionable insights. Use when summarizing read-later content, extracting themes across articles, or creating knowledge from saved reading lists.",
+    trigger: "Use when working with Pocket Feedly",
+    skills: [], tools: ["Pocket Feedly"],
+    source: 'official',
+    md: `---
+name: pocket-feedly-assistant
+description: Synthesize saved articles from Pocket or Feedly into actionable insights. Use when summarizing read-later content, extracting themes across articles, or creating knowledge from saved reading lists.
+tags: reading-productivity, content-synthesis, knowledge-management, article-summary
+difficulty: intermediate
+time_to_master: 20 minutes
+---
+
+# Pocket / Feedly Saved Article Synthesis
+
+## When to Use
+Activate when the user:
+- "Summarize my saved articles from Pocket"
+- "What themes are in my read-later list?"
+- "Help me process my Feedly reading queue"
+- "Extract insights from these articles I saved"
+
+## Instructions
+1. Request or review the saved article list:
+   - Titles and sources
+   - Tags or folders used
+   - Save dates for recency context
+2. Identify content clusters and themes:
+   - Topic groupings (technology, productivity, health, etc.)
+   - Source patterns (specific publications, authors)
+   - Time-based patterns (what's trending in saves)
+3. Synthesize key insights across articles:
+   - Find common arguments or perspectives
+   - Identify contradictions or debates
+   - Extract actionable recommendations
+4. Create a prioritized reading guide:
+   - Must-read articles with justification
+   - Quick-scan articles for key points
+   - Skippable content with summary
+5. Generate follow-up actions:
+   - Ideas sparked by the content
+   - Connections to current projects
+   - Further reading recommendations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Saved Article Synthesis
+
+**Total Articles:** [X]
+**Date Range:** [Oldest save to newest]
+**Primary Themes:** [Theme 1], [Theme 2], [Theme 3]
+
+---
+
+## Theme 1: [Theme Name]
+
+### Key Articles
+1. **[Article Title]** ([Source])
+   - Main insight: [One sentence]
+   - Actionable takeaway: [Specific action]
+
+2. **[Article Title]** ([Source])
+   - Main insight: [One sentence]
+   - Actionable takeaway: [Specific action]
+
+### Cross-Article Synthesis
+[2-3 sentences connecting insights across articles]
+
+---
+
+## Theme 2: [Theme Name]
+[Same structure as Theme 1]
+
+---
+
+## Quick Actions
+- [ ] [Action from Article A]
+- [ ] [Action from Article B]
+- [ ] [Action from Article C]
+
+## Further Reading
+- [Related topic to explore]
+- [Author or source to follow]
+\`\`\`
+
+## Rules
+- Never invent content not in the provided articles
+- Group at least 2 articles per theme for meaningful synthesis
+- Prioritize actionable insights over theoretical concepts
+- Include source attribution for every insight
+
+## Analogy
+Pocket synthesis is like panning for gold—you sift through river sediment to find the precious nuggets worth keeping.
+`
+  },
+  {
+    id: "kindle-assistant",
+    name: "Kindle Assistant",
+    icon: "amazonkindle",
+    iconType: 'simpleicons',
+    brandColor: "#FF9900",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["reading-comprehension", "note-taking", "book-summaries", "highlight-organization"],
+    desc: "Create reading summaries and organize Kindle highlights into actionable insights. Use when processing book notes, creating retention summaries, or turning highlights into knowledge.",
+    trigger: "Use when working with Kindle",
+    skills: [], tools: ["Kindle"],
+    source: 'official',
+    md: `---
+name: kindle-assistant
+description: Create reading summaries and organize Kindle highlights into actionable insights. Use when processing book notes, creating retention summaries, or turning highlights into knowledge.
+tags: reading-comprehension, note-taking, book-summaries, highlight-organization
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Kindle Reading Summaries & Highlights
+
+## When to Use
+Activate when the user:
+- "Summarize my Kindle highlights from this book"
+- "Help me organize my reading notes"
+- "Create a retention summary from my highlights"
+- "Turn these Kindle notes into actionable takeaways"
+
+## Instructions
+1. Access or request Kindle data:
+   - Exported highlights from read.amazon.com/notebook
+   - Pasted highlights from the app
+   - Book title and context for framework
+2. Organize highlights by theme:
+   - Group related ideas together
+   - Identify the book's core argument structure
+   - Note where examples support concepts
+   - Flag action items vs. theoretical points
+3. Create retention-focused summaries:
+   - Main thesis in one sentence
+   - Supporting arguments (3-5 key points)
+   - Practical applications
+   - Questions the book raised
+4. Structure for different purposes:
+   - Quick reference: Key concepts and definitions
+   - Action guide: Implementation steps
+   - Discussion prep: Key questions and insights
+   - Knowledge base: Connected to other readings
+5. Apply spaced repetition principles:
+   - Include review prompts
+   - Suggest connection questions
+   - Flag evergreen concepts vs. timely information
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Reading Summary: [Title]
+
+**Author:** [Name]
+**Genre:** [Category]
+**Date Completed:** [Date]
+**Format:** Kindle highlights
+
+---
+
+## The One-Sentence Thesis
+[The book's central argument in a single sentence]
+
+---
+
+## Core Framework
+
+### The Problem
+[What issue or question does this book address?]
+
+### The Solution
+[What is the author's proposed approach or answer?]
+
+### Key Concepts
+1. **[Concept Name]:** [Definition and significance]
+2. **[Concept Name]:** [Definition and significance]
+3. **[Concept Name]:** [Definition and significance]
+
+---
+
+## Organized Highlights
+
+### Theme 1: [Theme Name]
+
+**Key Insight:**
+[The main point of this section]
+
+**Supporting Highlights:**
+> "[Quote from highlight]"
+> — Location [X]
+
+**My Take:**
+[Your interpretation or connection]
+
+### Theme 2: [Theme Name]
+[Same structure as Theme 1]
+
+### Theme 3: [Theme Name]
+[Same structure as Theme 1]
+
+---
+
+## Actionable Takeaways
+
+| Insight | Application | Timeline |
+|---------|-------------|----------|
+| [Concept] | [Specific action to take] | [When to implement] |
+| [Concept] | [Specific action to take] | [When to implement] |
+| [Concept] | [Specific action to take] | [When to implement] |
+
+---
+
+## Memorable Quotes
+
+> "[Quote]"
+> — Location [X]
+> **Context:** [Why this matters]
+
+> "[Quote]"
+> — Location [X]
+> **Context:** [Why this matters]
+
+---
+
+## Retention Summary (for review in 1 week)
+
+### What This Book Taught Me
+1. [Key learning 1]
+2. [Key learning 2]
+3. [Key learning 3]
+
+### Questions to Ask Myself
+- [Question that applies the book's concepts to your life]
+- [Question that applies the book's concepts to your life]
+
+### Connection Points
+- **Similar to:** [Other books with related ideas]
+- **Contrasts with:** [Books that argue differently]
+- **Extends:** [Books this builds upon]
+
+---
+
+## Vocabulary & Concepts Learned
+
+| Term/Concept | Definition | Example from Book |
+|--------------|------------|-------------------|
+| [Term] | [Simple definition] | [How it was used] |
+
+---
+
+## Review Prompts (Spaced Repetition)
+
+**Review in 1 week:**
+- What was the main thesis of [Title]?
+- How can I apply [key concept] this week?
+
+**Review in 1 month:**
+- What's changed in my thinking since reading this?
+- What actions have I taken from this book?
+
+**Review in 3 months:**
+- Would I recommend this? What would I say?
+- What do I still remember without checking notes?
+\`\`\`
+
+## Rules
+- Include location numbers for all quotes (enables easy reference)
+- Distinguish between the author's claims and your interpretation
+- Keep the one-sentence thesis under 25 words
+- Every actionable takeaway must be specific, not vague
+- Note conflicting ideas within the book if present
+
+## Analogy
+Processing Kindle highlights is like panning for gold—you're separating the valuable nuggets from the stream of text so you can actually use them later.
+`
+  },
+  {
+    id: "figma-assistant",
+    name: "Figma Assistant",
+    icon: "figma",
+    iconType: 'simpleicons',
+    brandColor: "#F24E1E",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "20 minutes",
+    tags: ["figma", "ux-writing", "design", "ui", "critique"],
+    desc: "Figma UX writing, design critique, and design documentation. Use when users need to write UI copy, get design feedback, or document their designs.",
+    trigger: "Use when working with Figma",
+    skills: [], tools: ["Figma"],
+    source: 'official',
+    md: `---
+name: figma-assistant
+description: Figma UX writing, design critique, and design documentation. Use when users need to write UI copy, get design feedback, or document their designs.
+tags: figma, ux-writing, design, ui, critique
+difficulty: intermediate
+time_to_master: 20 minutes
+---
+
+# Figma Assistant
+
+## When to Use
+Activate when the user:
+- "Write UX copy for [component/screen]"
+- "Review and critique this Figma design"
+- "Help me write button labels and error messages"
+- "Create design documentation for [project]"
+- "Review this UI for accessibility and clarity"
+
+## Instructions
+1. For UX writing:
+   - Keep microcopy short and action-oriented
+   - Use consistent terminology across the product
+   - Write helpful error messages (what went wrong + how to fix)
+   - Consider all states (empty, loading, error, success)
+2. For design critique:
+   - Start with positive observations
+   - Focus on user experience, not personal preference
+   - Identify specific issues with actionable suggestions
+   - Consider accessibility (contrast, font size, touch targets)
+   - Check consistency with design system
+3. For documentation:
+   - Document component usage and variants
+   - Explain design decisions with rationale
+   - Include do's and don'ts
+
+## Output Format
+Always produce this exact structure:
+
+**For UX Copy:**
+\`\`\`
+## UX Copy: [Component/Page]
+
+### Copy Specifications
+| Element | Copy | Notes |
+|---------|------|-------|
+| [Button] | "[Label]" | [Action verb, under 20 chars] |
+| [Header] | "[Text]" | [Context] |
+| [Error] | "[Message]" | [What + How to fix] |
+
+### State Variations
+**Empty State:**
+[Title]: "[Copy]"
+[Description]: "[Copy]"
+
+**Loading State:**
+[Copy]: "[Loading message]"
+
+**Error State:**
+[Copy]: "[Error message with solution]"
+
+**Success State:**
+[Copy]: "[Confirmation message]"
+\`\`\`
+
+**For Design Critique:**
+\`\`\`
+## Design Review: [Screen Name]
+
+### What's Working
+• [Positive observation 1]
+• [Positive observation 2]
+
+### Opportunities for Improvement
+**[Issue Category]:**
+- Issue: [What's wrong]
+- Impact: [Why it matters]
+- Suggestion: [How to fix]
+
+### Accessibility Check
+- [ ] Color contrast ratios meet WCAG 2.1 AA
+- [ ] Font sizes readable at 16px minimum
+- [ ] Touch targets at least 44x44px
+- [ ] Error messages don't rely solely on color
+
+### Questions for the Designer
+- [Question about design decision]
+\`\`\`
+
+## Rules
+- Microcopy should be shorter than you think
+- Error messages must offer solutions
+- Use the same word for the same action everywhere
+- Avoid jargon users won't understand
+- Always consider screen readers
+
+## Analogy
+Like having a UX writer and accessibility expert looking over your shoulder in Figma.
+`
+  },
+  {
+    id: "bitbucket-gitlab-assistant",
+    name: "Bitbucket Gitlab Assistant",
+    icon: "bitbucket",
+    iconType: 'simpleicons',
+    brandColor: "#0052CC",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "40 minutes",
+    tags: ["code-review", "documentation", "git", "development"],
+    desc: "Write effective code reviews and documentation for repositories. Use when reviewing code, writing PR descriptions, or documenting codebases.",
+    trigger: "Use when working with Bitbucket Gitlab",
+    skills: [], tools: ["Bitbucket Gitlab"],
+    source: 'official',
+    md: `---
+name: bitbucket-gitlab-assistant
+description: Write effective code reviews and documentation for repositories. Use when reviewing code, writing PR descriptions, or documenting codebases.
+tags: code-review, documentation, git, development
+difficulty: intermediate
+time_to_master: 40 minutes
+---
+
+# Bitbucket / GitLab Code Review & Documentation
+
+## When to Use
+Activate when the user:
+- "Help me write a code review for this PR"
+- "Create documentation for this repository"
+- "Write a good pull request description"
+- "Review this code for best practices"
+- "Document this API endpoint"
+
+## Instructions
+1. For code reviews:
+   - Analyze code structure and patterns
+   - Check for bugs and potential issues
+   - Evaluate performance implications
+   - Assess test coverage
+   - Review security considerations
+   - Provide constructive, actionable feedback
+
+2. For PR descriptions:
+   - Summarize the change and motivation
+   - List affected components
+   - Include testing information
+   - Note breaking changes
+   - Link related issues
+
+3. For documentation:
+   - Write clear installation instructions
+   - Document API endpoints with examples
+   - Include contribution guidelines
+   - Add architecture overviews
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Code Review: [PR Title]
+
+### Overview:
+[2-3 sentence summary of what this PR does]
+
+---
+
+### Summary Table:
+
+| Category | Status | Notes |
+|----------|--------|-------|
+| Functionality | 🟢🟡🔴 | [Assessment] |
+| Code Quality | 🟢🟡🔴 | [Assessment] |
+| Tests | 🟢🟡🔴 | [Assessment] |
+| Documentation | 🟢🟡🔴 | [Assessment] |
+| Security | 🟢🟡🔴 | [Assessment] |
+
+---
+
+### Detailed Feedback:
+
+**🟢 Good:**
+- [Positive observation 1]
+- [Positive observation 2]
+
+**🟡 Suggestions:**
+| Line(s) | Current | Suggested | Reason |
+|---------|---------|-----------|--------|
+| [X] | [Code] | [Code] | [Why] |
+
+**🔴 Must Fix:**
+| Line(s) | Issue | Severity |
+|---------|-------|----------|
+| [X] | [Problem] | High/Medium/Low |
+
+---
+
+### Testing Notes:
+- [ ] [Test scenario 1]
+- [ ] [Test scenario 2]
+
+### Questions:
+1. [Clarifying question]
+
+---
+
+## PR Description Template:
+
+### What does this PR do?
+[1-2 sentence description]
+
+### Why is it needed?
+[Context and motivation]
+
+### Changes:
+- [Change 1]
+- [Change 2]
+
+### Testing:
+- [How to test]
+
+### Related Issues:
+Closes #[issue number]
+
+### Breaking Changes:
+[None / List of breaking changes]
+
+### Screenshots (if applicable):
+[Before/After images]
+\`\`\`
+
+## Rules
+- Never make personal criticisms—focus on code, not the coder
+- Always explain the "why" behind suggestions
+- Acknowledge good code, not just problems
+- Distinguish between blocking issues and suggestions
+
+## Analogy
+Like having a senior developer review your work with the goal of making everyone's code better, not just pointing out flaws.
+`
+  },
+  {
+    id: "calendly-assistant",
+    name: "Calendly Assistant",
+    icon: "calendly",
+    iconType: 'simpleicons',
+    brandColor: "#006BFF",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["meeting-prep", "scheduling", "agenda-planning", "productivity"],
+    desc: "Prepare for meetings and build structured agendas from Calendly bookings. Use when creating meeting prep notes, building agendas from booking questions, or preparing for scheduled conversations.",
+    trigger: "Use when working with Calendly",
+    skills: [], tools: ["Calendly"],
+    source: 'official',
+    md: `---
+name: calendly-assistant
+description: Prepare for meetings and build structured agendas from Calendly bookings. Use when creating meeting prep notes, building agendas from booking questions, or preparing for scheduled conversations.
+tags: meeting-prep, scheduling, agenda-planning, productivity
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Calendly Meeting Prep & Agenda Building
+
+## When to Use
+Activate when the user:
+- "Help me prepare for my upcoming Calendly meeting"
+- "Create an agenda from this booking information"
+- "I have a meeting with [type of person], help me prepare"
+- "Build meeting questions from Calendly booking data"
+
+## Instructions
+1. Gather meeting context from Calendly booking:
+   - Event type and duration
+   - Attendee name and organization
+   - Answers to booking questions
+   - Any notes or special requests
+2. Research the attendee (if appropriate):
+   - Company background and recent news
+   - LinkedIn profile highlights
+   - Mutual connections or interests
+   - Previous interactions (if any)
+3. Structure the agenda by meeting type:
+   - Sales/discovery: Problem identification → Solution fit → Next steps
+   - Consulting: Current state → Challenges → Recommendations
+   - Networking: Connection building → Value exchange → Follow-up
+   - Interview: Background → Competency questions → Candidate questions
+4. Prepare relevant materials:
+   - Documents to share
+   - Demo or presentation prep
+   - Questions to ask
+5. Define clear outcomes:
+   - Primary objective
+   - Acceptable alternative outcomes
+   - Next steps to propose
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Meeting Prep: [Event Type]
+
+**Date/Time:** [Scheduled time]
+**Duration:** [X minutes]
+**Attendee:** [Name] - [Title, Company]
+
+---
+
+## Pre-Meeting Research
+
+### Attendee Background
+- [Role and responsibilities]
+- [Company context or recent news]
+- [Relevant background detail]
+
+### Connection Points
+- [Mutual interest or connection]
+- [Previous interaction summary]
+- [Conversation starter]
+
+---
+
+## Agenda
+
+| Time | Topic | Goal |
+|------|-------|------|
+| 0-5 min | Welcome & Rapport | [Build connection] |
+| 5-15 min | [Main topic 1] | [Specific goal] |
+| 15-25 min | [Main topic 2] | [Specific goal] |
+| 25-30 min | Next Steps & Wrap | [Define follow-up] |
+
+---
+
+## Questions to Ask
+1. [Open-ended discovery question]
+2. [Clarifying question about their needs]
+3. [Closing/commitment question]
+
+## Talking Points
+- [Key message 1]
+- [Key message 2]
+- [Key message 3]
+
+## Expected Outcomes
+- **Ideal outcome:** [Best case result]
+- **Acceptable outcome:** [Minimum acceptable result]
+- **Next meeting trigger:** [When to schedule follow-up]
+
+## Materials to Prepare
+- [ ] [Document or link 1]
+- [ ] [Document or link 2]
+\`\`\`
+
+## Rules
+- Never exceed the scheduled duration in agenda planning
+- Include buffer time for questions in every agenda
+- Research must be professional—avoid overly personal details
+- Always have a clear call-to-action prepared
+
+## Analogy
+Calendly meeting prep is like studying for an exam—you show up confident because you've already anticipated the questions.
+`
+  },
+  {
+    id: "bloomberg-assistant",
+    name: "Bloomberg Assistant",
+    icon: "bloombergquint",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "advanced",
+    timeToMaster: "45 minutes",
+    tags: ["finance", "market-analysis", "news-interpretation", "investing"],
+    desc: "Analyze Bloomberg financial news and market data for actionable insights. Use when interpreting market movements, understanding economic news impact, or preparing financial briefings.",
+    trigger: "Use when working with Bloomberg",
+    skills: [], tools: ["Bloomberg"],
+    source: 'official',
+    md: `---
+name: bloomberg-assistant
+description: Analyze Bloomberg financial news and market data for actionable insights. Use when interpreting market movements, understanding economic news impact, or preparing financial briefings.
+tags: finance, market-analysis, news-interpretation, investing
+difficulty: advanced
+time_to_master: 45 minutes
+---
+
+# Bloomberg Financial News Analysis
+
+## When to Use
+Activate when the user:
+- "Explain this Bloomberg headline's market impact"
+- "What does this economic data mean for my portfolio?"
+- "Summarize today's market-moving news"
+- "Analyze this Bloomberg article for key takeaways"
+
+## Instructions
+1. Identify the news category and immediate impact:
+   - Monetary policy (Fed, ECB, BOJ decisions)
+   - Economic indicators (GDP, CPI, employment)
+   - Corporate earnings or guidance
+   - Geopolitical events
+   - Sector-specific developments
+2. Analyze market implications:
+   - Primary asset class affected (equities, bonds, FX, commodities)
+   - Secondary ripple effects
+   - Timeline for impact (immediate, near-term, long-term)
+3. Extract key data points:
+   - Consensus vs. actual figures
+   - Year-over-year and month-over-month comparisons
+   - Forward guidance or projections
+4. Contextualize within broader trends:
+   - Historical comparisons
+   - Market expectations positioning
+   - Contrarian indicators
+5. Generate actionable frameworks:
+   - Portfolio adjustment considerations
+   - Risk management implications
+   - Watch list for confirmation signals
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## News Analysis: [Headline/Topic]
+
+**Category:** [Policy/Economic/Corporate/Geopolitical]
+**Impact Level:** [High/Medium/Low]
+**Market Sentiment:** [Risk-on/Risk-off/Mixed]
+
+---
+
+## Key Data Points
+
+| Metric | Actual | Consensus | Previous | Implication |
+|--------|--------|-----------|----------|-------------|
+| [Metric 1] | [Value] | [Expected] | [Last] | [Brief note] |
+
+---
+
+## Market Impact Analysis
+
+### Primary Effects
+- **Asset Class:** [Equities/Bonds/FX/Commodities]
+  - [Specific impact explanation]
+
+### Secondary Effects
+- [Related sector or asset affected]
+- [Cross-market implications]
+
+---
+
+## Timeline Considerations
+- **Immediate (0-24 hrs):** [Expected reaction]
+- **Near-term (1-4 weeks):** [Positioning shifts]
+- **Long-term (Quarter+):** [Structural implications]
+
+---
+
+## Action Items to Consider
+- [Portfolio consideration 1]
+- [Risk management action]
+- [Confirmation signals to watch]
+
+## Related Headlines to Monitor
+- [Topic or data release]
+- [Upcoming event]
+\`\`\`
+
+## Rules
+- Never provide specific buy/sell recommendations
+- Always distinguish between facts and interpretation
+- Include timeframe context for all impact assessments
+- Note when analysis conflicts with market pricing
+
+## Analogy
+Bloomberg analysis is like reading weather radar before a flight—you need to understand both current conditions and the forecast to navigate safely.
+`
+  },
+  {
+    id: "trello-assistant",
+    name: "Trello Assistant",
+    icon: "trello",
+    iconType: 'simpleicons',
+    brandColor: "#0052CC",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["trello", "kanban", "cards", "sprint", "project-management"],
+    desc: "Trello card writing, sprint structuring, and board organization. Use when users need to create cards, organize boards, or structure their Trello workflow.",
+    trigger: "Use when working with Trello",
+    skills: [], tools: ["Trello"],
+    source: 'official',
+    md: `---
+name: trello-assistant
+description: Trello card writing, sprint structuring, and board organization. Use when users need to create cards, organize boards, or structure their Trello workflow.
+tags: trello, kanban, cards, sprint, project-management
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Trello Assistant
+
+## When to Use
+Activate when the user:
+- "Create Trello cards for [project/feature]"
+- "Set up a Trello board for [workflow]"
+- "Structure a sprint in Trello"
+- "Write better Trello card descriptions"
+- "Organize my Trello board for [purpose]"
+
+## Instructions
+1. Understand the workflow:
+   - What process are you tracking?
+   - What stages does work go through?
+   - Who is involved?
+2. Design the board structure:
+   - Create lists for each workflow stage
+   - Define what "done" looks like
+   - Set up labels for categorization
+   - Plan automation with Butler if needed
+3. Write effective cards:
+   - Clear, action-oriented titles
+   - Description with context and acceptance criteria
+   - Checklist for subtasks
+   - Due dates and members assigned
+   - Labels for priority/type
+
+## Output Format
+Always produce this exact structure:
+
+**For Board Setup:**
+\`\`\`
+## Trello Board: [Board Name]
+
+### Board Purpose
+[One sentence: what this board tracks]
+
+### List Structure
+1. **[List Name]** - [What cards go here]
+2. **[List Name]** - [What cards go here]
+3. **[List Name]** - [What cards go here]
+4. **[List Name]** - [What cards go here]
+
+### Labels
+🔴 **[Label Name]** - [When to use]
+🟠 **[Label Name]** - [When to use]
+🟢 **[Label Name]** - [When to use]
+🔵 **[Label Name]** - [When to use]
+
+### Power-Ups to Enable
+- [Power-Up 1]: [Why it helps]
+- [Power-Up 2]: [Why it helps]
+
+### Butler Automation Ideas
+- [Trigger] → [Action]
+- [Trigger] → [Action]
+\`\`\`
+
+**For Cards:**
+\`\`\`
+## Trello Card: [Card Title]
+
+### Title
+[Clear, action-oriented title starting with a verb]
+
+### Description
+**What:**
+[What needs to be done]
+
+**Why:**
+[Context and business value]
+
+**Acceptance Criteria:**
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+- [ ] [Criterion 3]
+
+### Checklist
+- [ ] [Subtask 1]
+- [ ] [Subtask 2]
+- [ ] [Subtask 3]
+
+### Metadata
+**Due:** [Date]
+**Members:** @[name]
+**Labels:** [Label names]
+**Attachments:** [Link or description]
+\`\`\`
+
+## Rules
+- Card titles start with a verb
+- Keep one deliverable per card
+- Use checklists, not multiple cards for subtasks
+- Always include acceptance criteria
+- Label meaning should be documented
+
+## Analogy
+Like having a project manager who sets up your Trello board so it actually works for your workflow.
+`
+  },
+  {
+    id: "todoist-assistant",
+    name: "Todoist Assistant",
+    icon: "todoist",
+    iconType: 'simpleicons',
+    brandColor: "#DB4035",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["task-management", "prioritization", "productivity", "gtd"],
+    desc: "Apply task prioritization frameworks to organize Todoist projects. Use when overwhelmed by tasks, creating priority systems, or structuring projects for maximum productivity.",
+    trigger: "Use when working with Todoist",
+    skills: [], tools: ["Todoist"],
+    source: 'official',
+    md: `---
+name: todoist-assistant
+description: Apply task prioritization frameworks to organize Todoist projects. Use when overwhelmed by tasks, creating priority systems, or structuring projects for maximum productivity.
+tags: task-management, prioritization, productivity, gtd
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Todoist Task Prioritization Frameworks
+
+## When to Use
+Activate when the user:
+- "Help me prioritize my Todoist tasks"
+- "I'm overwhelmed by my task list"
+- "Create a priority system for my projects"
+- "Organize my Todoist inbox"
+
+## Instructions
+1. Assess the current task landscape:
+   - Number of tasks per project
+   - Overdue items and their urgency
+   - Tasks without due dates
+   - Project structure and naming
+2. Apply appropriate prioritization framework:
+   
+   **Eisenhower Matrix:**
+   - Priority 1 (p1): Urgent + Important → Do first
+   - Priority 2 (p2): Important + Not Urgent → Schedule
+   - Priority 3 (p3): Urgent + Not Important → Delegate
+   - Priority 4 (p4): Neither → Delete or defer
+   
+   **MoSCoW Method:**
+   - Must have: Non-negotiable, time-sensitive
+   - Should have: Important but flexible timing
+   - Could have: Nice to have, do if time permits
+   - Won't have: Explicitly not doing this period
+   
+   **ICE Scoring (for multiple projects):**
+   - Impact (1-10): How much does this matter?
+   - Confidence (1-10): How sure am I?
+   - Ease (1-10): How quickly can I complete?
+   - Total score = I × C × E
+
+3. Structure Todoist projects:
+   - Use consistent naming conventions
+   - Apply color coding by context or area
+   - Set up filters for quick views
+4. Create daily/weekly planning routines:
+   - Morning review protocol
+   - End-of-day cleanup
+   - Weekly project review
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Task Prioritization Plan
+
+**Framework Applied:** [Eisenhower/MoSCoW/ICE]
+**Current Task Count:** [X total]
+**Overdue Tasks:** [X]
+
+---
+
+## Priority Classification
+
+### P1 - Do Today (Urgent + Important)
+- [ ] [Task 1] - Due: [Date] - [Why urgent]
+- [ ] [Task 2] - Due: [Date] - [Why urgent]
+
+### P2 - Schedule This Week (Important, Not Urgent)
+- [ ] [Task 3] - Schedule for: [Day] - [Strategic value]
+- [ ] [Task 4] - Schedule for: [Day] - [Strategic value]
+
+### P3 - Delegate or Quick Wins
+- [ ] [Task 5] - [Delegate to / Quick win approach]
+- [ ] [Task 6] - [Delegate to / Quick win approach]
+
+### P4 - Eliminate or Defer Indefinitely
+- [Task] - [Reason to delete or defer]
+
+---
+
+## Suggested Project Structure
+
+\`\`\`
+📁 Work
+  📁 Projects
+  📁 Waiting For
+  📁 Someday/Maybe
+📁 Personal
+  📁 Health
+  📁 Learning
+  📁 Home
+📁 Inbox (capture everything here first)
+\`\`\`
+
+## Recommended Filters
+- \`overdue, p1\` → Critical attention needed
+- \`today, p2\` → Today's planned work
+- \`7 days, !assigned\` → Upcoming unassigned tasks
+- \`search: waiting\` → Items blocked on others
+
+## Daily Routine
+- **Morning (5 min):** Review today + overdue
+- **Midday (2 min):** Check off completed, add new captures
+- **Evening (5 min):** Plan tomorrow's P1s and P2s
+\`\`\`
+
+## Rules
+- Never have more than 5 tasks as P1 for a single day
+- All tasks must have a due date or be in Someday/Maybe
+- Inbox must be processed to zero at least weekly
+- Priorities can change—review weekly
+
+## Analogy
+Todoist prioritization is like packing a suitcase—put the essentials in first, then fill gaps with nice-to-haves.
+`
+  },
+  {
+    id: "quickbooks-assistant",
+    name: "Quickbooks Assistant",
+    icon: "quickbooks",
+    iconType: 'simpleicons',
+    brandColor: "#2CA01C",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "45 minutes",
+    tags: ["finance", "accounting", "reports", "business-intelligence"],
+    desc: "Interpret financial reports and explain accounting concepts in plain language. Use when analyzing financial statements, understanding reports, or making business decisions.",
+    trigger: "Use when working with Quickbooks",
+    skills: [], tools: ["Quickbooks"],
+    source: 'official',
+    md: `---
+name: quickbooks-assistant
+description: Interpret financial reports and explain accounting concepts in plain language. Use when analyzing financial statements, understanding reports, or making business decisions.
+tags: finance, accounting, reports, business-intelligence
+difficulty: intermediate
+time_to_master: 45 minutes
+---
+
+# QuickBooks Financial Report Interpretation
+
+## When to Use
+Activate when the user:
+- "Explain my QuickBooks profit and loss report"
+- "What does this balance sheet mean?"
+- "Help me understand my cash flow statement"
+- "Analyze my business financial health"
+- "Compare this quarter to last quarter"
+
+## Instructions
+1. Request the report data or summary:
+   - Profit & Loss (income statement)
+   - Balance Sheet
+   - Cash Flow Statement
+   - Accounts Receivable/Payable Aging
+
+2. Analyze key metrics:
+   - Gross profit margin
+   - Net profit margin
+   - Current ratio (liquidity)
+   - Quick ratio
+   - Accounts receivable turnover
+   - Accounts payable turnover
+
+3. Provide interpretation:
+   - What the numbers mean in business context
+   - Trends and patterns (if comparative data available)
+   - Red flags or areas of concern
+   - Opportunities for improvement
+   - Benchmarks where applicable
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Financial Report Analysis: [Report Type]
+
+### Period: [Date Range]
+
+---
+
+### Executive Summary:
+[3-4 sentence overview of financial health]
+
+### Key Metrics:
+
+| Metric | Value | Status | Interpretation |
+|--------|-------|--------|----------------|
+| Gross Margin | [X%] | 🟢🟡🔴 | [What it means] |
+| Net Margin | [X%] | 🟢🟡🔴 | [What it means] |
+| Current Ratio | [X:1] | 🟢🟡🔴 | [What it means] |
+
+### Revenue Breakdown:
+**Total Revenue:** [$X]
+- [Category 1]: [$X] ([%] of total)
+- [Category 2]: [$X] ([%] of total)
+
+### Expense Analysis:
+**Top 5 Expenses:**
+1. [Expense]: [$X] ([%] of revenue)
+2. [Expense]: [$X] ([%] of revenue)
+
+### Trends & Patterns:
+- **Improving:** [Area with positive trend]
+- **Declining:** [Area with negative trend]
+- **Stable:** [Consistent areas]
+
+### Action Items:
+- 🔴 **Immediate:** [Urgent concerns]
+- 🟡 **Monitor:** [Watch closely]
+- 🟢 **Optimize:** [Growth opportunities]
+
+### Questions to Consider:
+1. [Strategic question based on data]
+2. [Strategic question based on data]
+\`\`\`
+
+## Rules
+- Always clarify if numbers are estimates or actual
+- Flag any ratios that fall outside healthy ranges
+- Never give tax or legal advice—recommend professionals when appropriate
+- Use plain language and explain technical terms
+
+## Analogy
+Like having a CFO who translates numbers into business decisions you can actually understand.
+`
+  },
+  {
+    id: "lensa-faceapp-assistant",
+    name: "Lensa Faceapp Assistant",
+    icon: "googlecamera",
+    iconType: 'simpleicons',
+    brandColor: "#4285F4",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "25 minutes",
+    tags: ["AI-photos", "prompts", "image-editing", "enhancement"],
+    desc: "Write effective prompts for AI photo editing and enhancement apps. Use when creating prompts for AI photo filters, transformations, or enhancements.",
+    trigger: "Use when working with Lensa Faceapp",
+    skills: [], tools: ["Lensa Faceapp"],
+    source: 'official',
+    md: `---
+name: lensa-faceapp-assistant
+description: Write effective prompts for AI photo editing and enhancement apps. Use when creating prompts for AI photo filters, transformations, or enhancements.
+tags: AI-photos, prompts, image-editing, enhancement
+difficulty: beginner
+time_to_master: 25 minutes
+---
+
+# Lensa / FaceApp AI Photo Prompt Writing
+
+## When to Use
+Activate when the user:
+- "Write a prompt for my Lensa avatar"
+- "Help me create FaceApp prompts"
+- "What should I type for AI photo editing?"
+- "Create prompts for AI photo transformation"
+- "Help me get better AI photo results"
+
+## Instructions
+1. Identify transformation goal:
+   - Style change (artistic, realistic, stylized)
+   - Era/period transformation
+   - Enhancement (lighting, quality, features)
+   - Creative (fantasy, sci-fi, abstract)
+   - Professional (headshot, portrait quality)
+
+2. Write effective prompts:
+   - Be specific about desired outcome
+   - Include style references
+   - Specify lighting and mood
+   - Add quality modifiers
+   - Include any constraints
+
+3. Optimize for each platform:
+   - Lensa: Focus on avatar style, artistic direction
+   - FaceApp: Emphasize natural or dramatic transformations
+   - Include platform-specific terminology
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## AI Photo Prompt Set: [Transformation Type]
+
+### Platform: [Lensa / FaceApp / Other]
+### Source Image Type: [Selfie, portrait, group photo, etc.]
+
+---
+
+### Prompt Option 1: [Style Name]
+
+**Prompt:**
+\`\`\`
+[Detailed prompt text]
+\`\`\`
+
+**Why This Works:**
+- [Specific element 1]
+- [Specific element 2]
+
+**Expected Results:**
+[Description of what to expect]
+
+---
+
+### Prompt Option 2: [Style Name]
+
+**Prompt:**
+\`\`\`
+[Detailed prompt text]
+\`\`\`
+
+**Why This Works:**
+- [Specific element 1]
+- [Specific element 2]
+
+**Expected Results:**
+[Description of what to expect]
+
+---
+
+### Prompt Option 3: [Style Name]
+
+**Prompt:**
+\`\`\`
+[Detailed prompt text]
+\`\`\`
+
+**Why This Works:**
+- [Specific element 1]
+- [Specific element 2]
+
+**Expected Results:**
+[Description of what to expect]
+
+---
+
+### Prompt Building Formula:
+
+**Base Structure:**
+[Subject] + [Style] + [Mood/Lighting] + [Quality Modifiers]
+
+**Example:**
+"Professional headshot, corporate photography style, soft studio lighting, high resolution, sharp focus, natural skin texture"
+
+### Quality Modifiers to Use:
+- **For realism:** photorealistic, natural, authentic, true-to-life
+- **For enhancement:** high quality, detailed, sharp, professional
+- **For creative:** artistic, stylized, illustrated, digital art
+
+### Common Issues & Fixes:
+| Issue | Fix |
+|-------|-----|
+| [Problem] | [Solution prompt adjustment] |
+| [Problem] | [Solution prompt adjustment] |
+
+### Pro Tips:
+1. [Platform-specific tip]
+2. [Lighting/angle tip]
+3. [Style combination tip]
+\`\`\`
+
+## Rules
+- Prompts should be specific but not overly long
+- Include both creative and realistic options
+- Note platform limitations honestly
+- Remind users that AI results vary
+
+## Analogy
+Like having a photo editor who knows exactly how to ask the AI for the look you're imagining.
+`
+  },
+  {
+    id: "tiktok-assistant",
+    name: "Tiktok Assistant",
+    icon: "tiktok",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "20 minutes",
+    tags: ["tiktok", "short-video", "scripts", "viral", "hooks"],
+    desc: "TikTok script writing, hook crafting, and short-form video strategy. Use when users need to create viral TikTok scripts, hooks, or plan their content.",
+    trigger: "Use when working with Tiktok",
+    skills: [], tools: ["Tiktok"],
+    source: 'official',
+    md: `---
+name: tiktok-assistant
+description: TikTok script writing, hook crafting, and short-form video strategy. Use when users need to create viral TikTok scripts, hooks, or plan their content.
+tags: tiktok, short-video, scripts, viral, hooks
+difficulty: intermediate
+time_to_master: 20 minutes
+---
+
+# TikTok Assistant
+
+## When to Use
+Activate when the user:
+- "Write a TikTok script about [topic]"
+- "Craft a viral hook for my TikTok about [topic]"
+- "Help me structure a TikTok video"
+- "Turn this idea into a TikTok script"
+- "Create TikTok content ideas for [niche]"
+
+## Instructions
+1. Define the video type:
+   - Educational (tutorial, tips, facts)
+   - Entertainment (comedy, story, trend)
+   - Inspirational (transformation, motivation)
+   - Promotional (product, service)
+2. Write the script with timing:
+   - 0-3 seconds: Hook (must stop the scroll)
+   - 3-15 seconds: Core content/setup
+   - 15-45 seconds: Main value delivery
+   - 45-60 seconds: CTA and engagement
+3. Include production notes:
+   - Suggested visual elements
+   - Text overlay recommendations
+   - Sound/music suggestions
+   - Pacing and delivery tips
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## TikTok Script: [Topic]
+
+### Video Overview
+- **Duration:** [X] seconds
+- **Type:** [Educational/Entertainment/etc.]
+- **Goal:** [Engagement/Followers/Sales]
+
+### Script with Timing
+
+**[0:00-0:03] HOOK**
+[Script text]
+*Visual: [What appears on screen]*
+
+**[0:03-0:15] SETUP/CONTEXT**
+[Script text]
+*Visual: [What appears on screen]*
+
+**[0:15-0:45] MAIN CONTENT**
+[Script text]
+*Visual: [What appears on screen]*
+
+**[0:45-0:60] CTA**
+[Script text]
+*Visual: [What appears on screen]*
+
+### Production Notes
+- **Text overlays:** [When and what text to add]
+- **Suggested sound:** [Trending sound or music type]
+- **Filming tips:** [Camera angle, expression, pace]
+- **Caption:** [Suggested caption for the post]
+
+### Hook Variations (A/B Test)
+1. "[Alternative hook 1]"
+2. "[Alternative hook 2]"
+\`\`\`
+
+## Rules
+- Hook must be under 3 seconds and immediately engaging
+- Total script: aim for 30-60 seconds optimal length
+- Write in conversational, natural speech
+- Include visual direction—not just words
+- Always end with engagement CTA
+
+## Analogy
+Like having a TikTok creator who's cracked the algorithm write your scripts for you.
+`
+  },
+  {
+    id: "descript-assistant",
+    name: "Descript Assistant",
+    icon: "descript",
+    iconType: 'simpleicons',
+    brandColor: "#2D2D2D",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["podcasting", "transcription", "content-editing", "audio-production"],
+    desc: "Edit transcripts and create show notes for Descript audio/video projects. Use when cleaning up transcripts, generating episode summaries, or structuring podcast content.",
+    trigger: "Use when working with Descript",
+    skills: [], tools: ["Descript"],
+    source: 'official',
+    md: `---
+name: descript-assistant
+description: Edit transcripts and create show notes for Descript audio/video projects. Use when cleaning up transcripts, generating episode summaries, or structuring podcast content.
+tags: podcasting, transcription, content-editing, audio-production
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Descript Transcript Editing & Show Notes
+
+## When to Use
+Activate when the user:
+- "Help me clean up this transcript"
+- "I need show notes for my podcast episode"
+- "Format this Descript transcript for readability"
+- "Create chapter markers from this transcript"
+
+## Instructions
+1. Review the raw transcript and identify:
+   - Filler words and false starts to remove
+   - Speaker label consistency
+   - Paragraph breaks at topic transitions
+2. Apply Descript's editing conventions:
+   - Use [MUSIC], [SOUND], [LAUGHTER] for non-speech elements
+   - Mark unintelligible audio as [INAUDIBLE]
+   - Consolidate fragmented sentences naturally
+3. Create show notes structure:
+   - Write a 2-3 sentence episode summary
+   - Extract key timestamps and topics
+   - List guest names with brief bios
+   - Include relevant links mentioned
+4. Generate chapter markers:
+   - Identify 3-5 minute topic segments
+   - Write concise chapter titles (3-7 words)
+   - Note timestamp positions accurately
+5. Format for Descript's "Underlord" AI features:
+   - Prepare clean text for AI summarization
+   - Structure content for automatic highlight detection
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Episode Summary
+[2-3 sentence hook-driven summary]
+
+## Chapter Markers
+00:00 - [Chapter Title]
+[MM:SS] - [Chapter Title]
+[MM:SS] - [Chapter Title]
+
+## Key Takeaways
+1. [First major insight]
+2. [Second major insight]
+3. [Third major insight]
+
+## Guest Information
+- [Name]: [1-sentence bio]
+
+## Resources Mentioned
+- [Resource name]: [URL or description]
+
+## Cleaned Transcript Excerpt
+[Edited paragraph sample]
+\`\`\`
+
+## Rules
+- Preserve speaker voice and personality—don't over-edit
+- Keep timestamps in MM:SS format
+- Chapter titles must be action-oriented or descriptive
+- Never fabricate content not in the original transcript
+
+## Analogy
+Descript transcript editing is like pruning a garden—you remove the dead leaves while keeping the plant's natural shape intact.
+`
+  },
+  {
+    id: "asana-assistant",
+    name: "Asana Assistant",
+    icon: "asana",
+    iconType: 'simpleicons',
+    brandColor: "#F06A6A",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["asana", "tasks", "projects", "planning", "workflow"],
+    desc: "Asana task breakdown, project planning, and workflow design. Use when users need to create projects, break down tasks, or organize their Asana workspace.",
+    trigger: "Use when working with Asana",
+    skills: [], tools: ["Asana"],
+    source: 'official',
+    md: `---
+name: asana-assistant
+description: Asana task breakdown, project planning, and workflow design. Use when users need to create projects, break down tasks, or organize their Asana workspace.
+tags: asana, tasks, projects, planning, workflow
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Asana Assistant
+
+## When to Use
+Activate when the user:
+- "Break down this project into tasks in Asana"
+- "Create an Asana project for [initiative]"
+- "Help me structure my tasks in Asana"
+- "Set up a workflow in Asana for [process]"
+- "Write better task descriptions for Asana"
+
+## Instructions
+1. Understand the project:
+   - What is the goal and timeline?
+   - Who is responsible for what?
+   - What dependencies exist?
+   - What does success look like?
+2. Structure the project:
+   - Create sections for phases or categories
+   - Define milestones for key checkpoints
+   - Set up custom fields if needed
+   - Plan views (list, board, timeline, calendar)
+3. Write tasks effectively:
+   - Clear task names (verb + object)
+   - Description with context and deliverables
+   - Subtasks for breakdown
+   - Due dates and assignees
+   - Dependencies linked
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Asana Project: [Project Name]
+
+### Project Overview
+**Goal:** [What success looks like]
+**Timeline:** [Start date] → [End date]
+**Team:** [Who's involved]
+
+### Project Sections
+1. **[Section Name]** - [What tasks go here]
+2. **[Section Name]** - [What tasks go here]
+3. **[Section Name]** - [What tasks go here]
+
+### Milestones
+🏁 **[Milestone 1]** - [Date] - [What it represents]
+🏁 **[Milestone 2]** - [Date] - [What it represents]
+🏁 **[Milestone 3]** - [Date] - [What it represents]
+
+### Task Breakdown
+
+#### [Section 1]
+- [ ] **[Task Name]**
+  - Description: [What needs to be done]
+  - Assignee: @[name]
+  - Due: [Date]
+  - Subtasks:
+    - [ ] [Subtask 1]
+    - [ ] [Subtask 2]
+
+- [ ] **[Task Name]**
+  - Description: [What needs to be done]
+  - Assignee: @[name]
+  - Due: [Date]
+  - Dependencies: Blocked by [Task Name]
+
+#### [Section 2]
+- [ ] **[Task Name]**
+  - Description: [What needs to be done]
+  - Assignee: @[name]
+  - Due: [Date]
+
+### Custom Fields (Optional)
+| Field Name | Type | Purpose |
+|------------|------|---------|
+| [Name] | [Text/Number/Select] | [What it tracks] |
+
+### Recommended View
+[Timeline/List/Board] - [Why this view works best]
+\`\`\`
+
+## Rules
+- Every task has a clear owner and due date
+- Tasks start with a verb
+- Subtasks only when truly needed
+- Link dependencies explicitly
+- Milestones for major checkpoints only
+
+## Analogy
+Like having a project planner who takes your big goal and turns it into an actionable checklist.
+`
+  },
+  {
+    id: "1password-bitwarden-assistant",
+    name: "1Password Bitwarden Assistant",
+    icon: "bitwarden",
+    iconType: 'simpleicons',
+    brandColor: "#175DDC",
+    cat: "security",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "40 minutes",
+    tags: ["security", "passwords", "audit", "policy"],
+    desc: "Conduct security audits and create password policies for organizations. Use when auditing password security, creating security policies, or improving credential hygiene.",
+    trigger: "Use when working with 1Password Bitwarden",
+    skills: [], tools: ["1Password Bitwarden"],
+    source: 'official',
+    md: `---
+name: 1password-bitwarden-assistant
+description: Conduct security audits and create password policies for organizations. Use when auditing password security, creating security policies, or improving credential hygiene.
+tags: security, passwords, audit, policy
+difficulty: intermediate
+time_to_master: 40 minutes
+---
+
+# 1Password / Bitwarden Security Audit & Password Policy
+
+## When to Use
+Activate when the user:
+- "Help me audit my password security"
+- "Create a password policy for my team"
+- "Review my security settings"
+- "Generate a security audit report"
+- "What are the best password practices?"
+
+## Instructions
+1. Conduct security assessment:
+   - Account security review
+   - Password strength analysis
+   - Two-factor authentication status
+   - Shared access review
+   - Breach exposure check
+
+2. Create password policy:
+   - Password requirements (length, complexity)
+   - Rotation policies (if applicable)
+   - Sharing guidelines
+   - Two-factor requirements
+   - Incident response procedures
+
+3. Provide recommendations:
+   - Immediate action items
+   - Long-term improvements
+   - Training suggestions
+   - Tool recommendations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Security Audit Report: [Organization/Account Name]
+
+**Audit Date:** [Date]
+**Scope:** [Personal / Team / Organization]
+
+---
+
+### Executive Summary:
+[2-3 sentence overview of security posture]
+
+**Security Score:** [X]/100
+
+---
+
+### Account Security Assessment:
+
+| Area | Status | Risk Level | Notes |
+|------|--------|------------|-------|
+| Master Password | ✅❌ | 🟢🟡🔴 | [Assessment] |
+| Two-Factor Auth | ✅❌ | 🟢🟡🔴 | [Assessment] |
+| Secret Key (1Password) | ✅❌ | 🟢🟡🔴 | [Assessment] |
+| Recovery Codes | ✅❌ | 🟢🟡🔴 | [Assessment] |
+| Device Trust | ✅❌ | 🟢🟡🔴 | [Assessment] |
+
+---
+
+### Password Health Analysis:
+
+**Vault Statistics:**
+| Metric | Count | Status |
+|--------|-------|--------|
+| Total Items | [X] | - |
+| Weak Passwords | [X] | 🟢🟡🔴 |
+| Reused Passwords | [X] | 🟢🟡🔴 |
+| Compromised | [X] | 🟢🟡🔴 |
+| Missing 2FA | [X] | 🟢🟡🔴 |
+
+**High-Priority Items:**
+| Item | Issue | Action Required |
+|------|-------|-----------------|
+| [Account name] | [Issue] | [Change password, enable 2FA, etc.] |
+
+---
+
+### Sharing & Access Review:
+
+**Shared Vaults/Collections:**
+| Name | Members | Items | Risk Assessment |
+|------|---------|-------|-----------------|
+| [Vault name] | [X people] | [X items] | [Assessment] |
+
+**Access Concerns:**
+- [Concern 1]
+- [Concern 2]
+
+---
+
+### Immediate Actions Required:
+
+| Priority | Action | Impact | Time to Fix |
+|----------|--------|--------|-------------|
+| 🔴 High | [Action] | [Why it matters] | [X minutes] |
+| 🟡 Medium | [Action] | [Why it matters] | [X minutes] |
+| 🟢 Low | [Action] | [Why it matters] | [X minutes] |
+
+---
+
+## Password Policy: [Organization Name]
+
+### Policy Overview:
+**Effective Date:** [Date]
+**Applies To:** [All users / Specific groups]
+**Review Cycle:** [Annual / Quarterly]
+
+---
+
+### Password Requirements:
+
+**Master Password:**
+- Minimum length: [X] characters (recommend 20+)
+- Must include: [Uppercase, lowercase, numbers, symbols]
+- Must NOT include: [Personal info, dictionary words]
+- Generated by password manager: Required
+
+**Account Passwords:**
+- Minimum length: [X] characters (recommend 16+)
+- Complexity: [Requirements]
+- Uniqueness: Never reuse across accounts
+- Storage: Must be stored in password manager
+
+### Two-Factor Authentication:
+
+**Requirement:** Mandatory for all accounts
+**Approved Methods:**
+- Hardware key (YubiKey) - Preferred
+- Authenticator app (1Password, Bitwarden, Authy)
+- SMS - Only as last resort
+
+### Sharing Guidelines:
+
+| Information Type | Sharing Method | Restrictions |
+|------------------|----------------|--------------|
+| Passwords | Via password manager only | Never email/message |
+| API Keys | Secure vault | Need-to-know basis |
+| Financial Credentials | Shared vault with audit log | Requires approval |
+
+### Incident Response:
+
+**If Password Compromised:**
+1. Change password immediately
+2. Review account for unauthorized access
+3. Enable additional 2FA if available
+4. Notify security team
+5. Document in incident log
+
+**If Master Password Suspected Compromised:**
+1. Change master password immediately
+2. Generate new Secret Key (1Password)
+3. Review all shared vaults
+4. Rotate all critical passwords
+5. Report to security team
+
+---
+
+### Training Requirements:
+
+**All Users:**
+- [ ] Password manager basics training
+- [ ] Phishing recognition
+- [ ] Secure sharing practices
+
+**Administrators:**
+- [ ] Advanced security features
+- [ ] User provisioning/deprovisioning
+- [ ] Audit log review procedures
+
+### Policy Acknowledgment:
+All users must acknowledge receipt and understanding of this policy.
+\`\`\`
+
+## Rules
+- Never ask users to share their actual passwords
+- Security scores should be based on observable factors
+- Acknowledge that different organizations have different threat models
+- Recommend professional security audits for high-risk organizations
+
+## Analogy
+Like having a security auditor who helps you find the weak spots before the bad guys do, then gives you a clear plan to fix them.
+`
+  },
+  {
+    id: "paypal-wise-assistant",
+    name: "Paypal Wise Assistant",
+    icon: "paypal",
+    iconType: 'simpleicons',
+    brandColor: "#003087",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["invoicing", "payments", "business", "billing"],
+    desc: "Write professional business invoices and payment requests. Use when creating invoices, payment reminders, or managing business transactions.",
+    trigger: "Use when working with Paypal Wise",
+    skills: [], tools: ["Paypal Wise"],
+    source: 'official',
+    md: `---
+name: paypal-wise-assistant
+description: Write professional business invoices and payment requests. Use when creating invoices, payment reminders, or managing business transactions.
+tags: invoicing, payments, business, billing
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# PayPal / Wise Business Invoice Writing
+
+## When to Use
+Activate when the user:
+- "Write an invoice for my freelance work"
+- "Create a payment reminder email"
+- "Help me format a business invoice"
+- "Write a late payment follow-up"
+- "Create a recurring invoice template"
+
+## Instructions
+1. Gather invoice essentials:
+   - Your business information (name, address, contact)
+   - Client information
+   - Invoice number and date
+   - Payment terms (Net 15, Net 30, due date)
+   - Line items with descriptions and amounts
+   - Payment methods accepted
+   - Any applicable taxes
+
+2. Structure professional invoices:
+   - Clear header with invoice number
+   - Itemized services/products
+   - Payment terms and methods
+   - Thank you message
+
+3. For payment communications:
+   - Maintain professional tone
+   - Include invoice reference
+   - Provide payment links
+   - Offer payment plan options if appropriate
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Invoice: #[Number]
+
+**From:**
+[Your Name/Business Name]
+[Address]
+[Email] | [Phone]
+
+**Bill To:**
+[Client Name]
+[Company]
+[Address]
+[Email]
+
+---
+
+**Invoice Date:** [Date]
+**Due Date:** [Date]
+**Payment Terms:** [Net 15/Net 30/etc.]
+
+---
+
+### Services/Products:
+
+| Description | Quantity | Rate | Amount |
+|-------------|----------|------|--------|
+| [Service/Product] | [X] | $[X] | $[X] |
+| [Service/Product] | [X] | $[X] | $[X] |
+
+**Subtotal:** $[X]
+**Tax ([X]%):** $[X]
+**Total Due:** $[X]
+
+---
+
+### Payment Methods:
+- **PayPal:** [email@address.com]
+- **Wise:** [Account details]
+- **Bank Transfer:** [Routing/Account info]
+
+### Notes:
+[Thank you message, special instructions, project notes]
+
+---
+
+## Payment Reminder Email (if needed):
+
+**Subject:** [Friendly Reminder] Invoice #[Number] Due [Date]
+
+Dear [Client Name],
+
+I hope this message finds you well. This is a friendly reminder that Invoice #[Number] for $[X] is due on [Date].
+
+[If late: This invoice is now [X] days past due. Please let me know if you have any questions or need to discuss payment arrangements.]
+
+You can pay via:
+- PayPal: [link]
+- Wise: [details]
+- Bank transfer: [details]
+
+Thank you for your prompt attention to this matter. Please don't hesitate to reach out if you have any questions.
+
+Best regards,
+[Your Name]
+\`\`\`
+
+## Rules
+- Always include clear payment terms and due dates
+- Number invoices sequentially for record-keeping
+- Keep reminder emails professional—never aggressive
+- Include multiple payment options when possible
+
+## Analogy
+Like having a billing department that makes sure you get paid on time while keeping client relationships smooth.
+`
+  },
+  {
+    id: "dalle-assistant",
+    name: "Dalle Assistant",
+    icon: "openai",
+    iconType: 'simpleicons',
+    brandColor: "#412991",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["dalle", "ai-art", "prompts", "image-generation", "creative"],
+    desc: "DALL-E detailed image prompt crafting and visual concept development. Use when users need to create precise prompts for DALL-E image generation.",
+    trigger: "Use when working with Dalle",
+    skills: [], tools: ["Dalle"],
+    source: 'official',
+    md: `---
+name: dalle-assistant
+description: DALL-E detailed image prompt crafting and visual concept development. Use when users need to create precise prompts for DALL-E image generation.
+tags: dalle, ai-art, prompts, image-generation, creative
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# DALL-E Assistant
+
+## When to Use
+Activate when the user:
+- "Create a DALL-E prompt for [concept]"
+- "Write a detailed prompt for DALL-E"
+- "Help me describe [visual idea] for DALL-E"
+- "Generate image prompts for [project type]"
+- "Improve my DALL-E prompt to get [result]"
+
+## Instructions
+1. Understand the request:
+   - What is the main subject?
+   - What style is desired? (photorealistic, illustration, 3D, etc.)
+   - What is the mood or atmosphere?
+   - Any specific composition or framing?
+2. Craft the prompt:
+   - Start with the main subject (clear, specific)
+   - Add style descriptors (medium, artist influence, technique)
+   - Include setting and lighting details
+   - Specify composition if important
+   - Add mood and atmosphere
+3. DALL-E specific tips:
+   - DALL-E responds well to natural language
+   - Be descriptive but not overly technical
+   - Specify "digital art," "photograph," "illustration"
+   - Mention specific artists for style guidance
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## DALL-E Prompt: [Concept Name]
+
+### Primary Prompt
+\`\`\`
+[Detailed natural language description of the desired image, including subject, style, setting, lighting, mood, and composition]
+\`\`\`
+
+### Prompt Components
+**Subject:** [Main focus of the image]
+**Style:** [Artistic style or medium]
+**Setting:** [Background or environment]
+**Lighting:** [Time of day, light quality]
+**Mood:** [Emotional atmosphere]
+**Composition:** [Framing or perspective]
+
+### Alternative Prompts
+
+**For Photorealistic Result:**
+\`\`\`
+A photograph of [subject], [setting], [lighting details], shot on [camera/lens if relevant], [composition], hyperrealistic, high detail
+\`\`\`
+
+**For Illustration Style:**
+\`\`\`
+An illustration of [subject] in [art style], [color palette], [composition], [artist reference if applicable], detailed linework
+\`\`\`
+
+**For 3D/Render Style:**
+\`\`\`
+A 3D render of [subject], [style descriptors], [lighting], Octane render, high detail, [composition]
+\`\`\`
+
+### Iteration Tips
+- If too abstract: Add more concrete details
+- If too cluttered: Simplify, focus on main subject
+- If wrong style: Be explicit about medium (photograph, painting, etc.)
+- For consistency: Use similar prompt structure across generations
+\`\`\`
+
+## Rules
+- Natural language works well—be descriptive
+- Specify the medium explicitly (photo, illustration, 3D)
+- DALL-E follows instructions literally—be precise
+- Avoid conflicting descriptors
+- Maximum 400 characters for best results
+
+## Analogy
+Like having an art director who describes your vision so precisely that DALL-E can paint exactly what you imagine.
+`
+  },
+  {
+    id: "doordash-swiggy-assistant",
+    name: "Doordash Swiggy Assistant",
+    icon: "doordash",
+    iconType: 'simpleicons',
+    brandColor: "#FF3008",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["food-delivery", "menu-analysis", "meal-planning", "nutrition"],
+    desc: "Analyze restaurant menus and create meal planning strategies from food delivery platforms. Use when comparing menu options, planning weekly meals, or making healthier ordering decisions.",
+    trigger: "Use when working with Doordash Swiggy",
+    skills: [], tools: ["Doordash Swiggy"],
+    source: 'official',
+    md: `---
+name: doordash-swiggy-assistant
+description: Analyze restaurant menus and create meal planning strategies from food delivery platforms. Use when comparing menu options, planning weekly meals, or making healthier ordering decisions.
+tags: food-delivery, menu-analysis, meal-planning, nutrition
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# DoorDash / Swiggy Menu Analysis & Meal Planning
+
+## When to Use
+Activate when the user:
+- "Help me choose what to order from this menu"
+- "Compare these restaurants for delivery"
+- "Plan my meals for the week from food delivery"
+- "Find healthier options on DoorDash/Swiggy"
+
+## Instructions
+1. Identify the ordering goal:
+   - Quick meal: Fast delivery, simple options
+   - Special occasion: Quality over speed
+   - Dietary needs: Specific restrictions or preferences
+   - Budget-conscious: Best value for money
+   - Group order: Variety and sharing options
+2. Analyze menu structure:
+   - Categories and organization
+   - Price range across items
+   - Popular/highly-rated items
+   - Combo or meal deal options
+   - Customization possibilities
+3. Compare restaurants when relevant:
+   - Delivery time estimates
+   - Minimum order requirements
+   - Fee structure (delivery, service, small order)
+   - Rating and review recency
+   - Promotional offers available
+4. Evaluate for specific criteria:
+   - Nutritional balance (protein, vegetables, portions)
+   - Value metrics (price per portion, combo efficiency)
+   - Customization potential (modifications, add-ons)
+   - Reheatability for leftovers
+5. Create actionable recommendations:
+   - Top 3 picks with justification
+   - Items to avoid with reasons
+   - Best value combinations
+   - Ordering strategy for groups
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Menu Analysis: [Restaurant Name]
+
+**Cuisine:** [Type]
+**Platform:** [DoorDash/Swiggy]
+**Delivery Time:** [Estimated range]
+**Rating:** [X.X] ⭐ ([X] reviews)
+**Price Range:** [$-$$$]
+
+---
+
+## Quick Recommendations
+
+| Goal | Best Choice | Why | Price |
+|------|-------------|-----|-------|
+| Best Overall | [Item] | [Reason] | $X |
+| Best Value | [Item] | [Reason] | $X |
+| Healthiest | [Item] | [Reason] | $X |
+| Most Popular | [Item] | [Reason] | $X |
+
+---
+
+## Menu Highlights
+
+### ⭐ Top Picks
+1. **[Item Name]** - $X.XX
+   - [Description or standout feature]
+   - [Why recommended]
+   - [Customization tip if applicable]
+
+2. **[Item Name]** - $X.XX
+   - [Description or standout feature]
+   - [Why recommended]
+
+### ⚠️ Skip These
+- **[Item]** - [Reason: price/portion/reviews]
+- **[Item]** - [Reason]
+
+### 💡 Hidden Gems
+- **[Item]** - [Why it's underrated]
+
+---
+
+## Value Analysis
+
+### Best Deals
+| Deal | What's Included | Value Rating |
+|------|-----------------|--------------|
+| [Combo/Meal name] | [Items included] | ⭐⭐⭐⭐⭐ |
+| [Combo/Meal name] | [Items included] | ⭐⭐⭐⭐ |
+
+### Cost Breakdown
+- Subtotal: $X.XX
+- Delivery fee: $X.XX
+- Service fee: $X.XX
+- **Total:** $X.XX
+
+---
+
+## Dietary Notes
+[Specific guidance for vegetarian/vegan/gluten-free/etc. if applicable]
+
+## Group Ordering Strategy
+| Person | Recommended Item | Price |
+|--------|------------------|-------|
+| [Role/Taste] | [Item] | $X |
+| [Role/Taste] | [Item] | $X |
+| **Shared** | [Appetizer/Dessert] | $X |
+| **Group Total** | | **$XX** |
+
+---
+
+## Weekly Meal Planning Option
+[If user wants meal prep approach]
+
+| Day | Meal | Restaurant | Prep Time |
+|-----|------|------------|-----------|
+| Monday | [Item] | [Restaurant] | [Order by] |
+| Tuesday | [Item] | [Restaurant] | [Order by] |
+\`\`\`
+
+## Rules
+- Always factor in delivery fees when comparing value
+- Note minimum order requirements for small orders
+- Include estimated delivery time in recommendations
+- Warn about items that don't travel well
+- Consider restaurant distance for food quality
+
+## Analogy
+Menu analysis is like being a sommelier for takeout—you're matching the right option to the customer's mood, budget, and needs.
+`
+  },
+  {
+    id: "robinhood-assistant",
+    name: "Robinhood Assistant",
+    icon: "robinhood",
+    iconType: 'simpleicons',
+    brandColor: "#00C805",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "3-5 hours",
+    tags: ["investing", "stocks", "research", "analysis"],
+    desc: "Investment research summaries for informed trading decisions. Use when analyzing stocks, understanding company fundamentals, or summarizing market research.",
+    trigger: "Use when working with Robinhood",
+    skills: [], tools: ["Robinhood"],
+    source: 'official',
+    md: `---
+name: robinhood-assistant
+description: Investment research summaries for informed trading decisions. Use when analyzing stocks, understanding company fundamentals, or summarizing market research.
+tags: investing, stocks, research, analysis
+difficulty: intermediate
+time_to_master: 3-5 hours
+---
+
+# Robinhood Assistant
+
+## When to Use
+Activate when the user:
+- "Summarize research on [ticker]"
+- "Explain [company]'s fundamentals"
+- "What should I know before investing in [stock]?"
+
+## Instructions
+1. Gather key financial metrics and recent news
+2. Analyze business model and competitive position
+3. Identify key risks and catalysts
+4. Compare valuation to peers and history
+5. Summarize in clear, accessible language
+6. Provide balanced perspective without financial advice
+
+## Output Format
+Always produce this exact structure:
+## Investment Research Summary
+**Company**: [Name]
+**Ticker**: [SYMBOL]
+**Sector**: [Industry]
+**Price**: $[X] (as of [date])
+**Market Cap**: $[X]B
+
+## Quick Snapshot
+| Metric | Value | vs Industry |
+|--------|-------|-------------|
+| P/E Ratio | [X] | [Above/Below avg] |
+| Revenue Growth (YoY) | [X]% | [Context] |
+| Profit Margin | [X]% | [Context] |
+| Debt/Equity | [X] | [Context] |
+| Dividend Yield | [X]% | [Context] |
+
+## Business Overview
+**What They Do**: [1-2 sentence description of core business]
+
+**Revenue Streams**:
+1. [Segment 1]: [X]% of revenue
+2. [Segment 2]: [X]% of revenue
+3. [Segment 3]: [X]% of revenue
+
+**Competitive Position**: [Moat, market share, competitive advantages]
+
+## Recent News & Catalysts
+| Date | Event | Impact |
+|------|-------|--------|
+| [Date] | [News item] | [Bullish/Bearish/Neutral] |
+
+## Financial Health
+**Strengths**:
+- [Strength 1]
+- [Strength 2]
+
+**Concerns**:
+- [Concern 1]
+- [Concern 2]
+
+## Key Risks
+1. **[Risk Category]**: [Description]
+2. **[Risk Category]**: [Description]
+3. **[Risk Category]**: [Description]
+
+## Analyst Sentiment
+| Rating | Count |
+|--------|-------|
+| Buy | [X] |
+| Hold | [X] |
+| Sell | [X] |
+
+**Price Targets**: Low $[X] | Median $[Y] | High $[Z]
+
+## Key Metrics to Watch
+- **[Metric 1]**: [Why it matters]
+- **[Metric 2]**: [Why it matters]
+
+## Summary
+[2-3 sentence balanced summary of investment thesis, not advice]
+
+---
+⚠️ **Disclaimer**: This is research summary only, not financial advice. Always do your own due diligence and consider consulting a financial advisor.
+
+## Rules
+- Never provide buy/sell recommendations
+- Always include risk factors
+- Use recent, verifiable data
+- Present balanced bullish and bearish factors
+- Include data sources where applicable
+
+## Analogy
+A research analyst who distills 50 pages of financials into a one-page summary.
+`
+  },
+  {
+    id: "google-maps-assistant",
+    name: "Google Maps Assistant",
+    icon: "googlemaps",
+    iconType: 'simpleicons',
+    brandColor: "#4285F4",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["travel-planning", "location-research", "itinerary-creation", "maps"],
+    desc: "Research locations and plan trips using Google Maps data. Use when exploring destinations, creating itineraries, or organizing travel logistics around geographic information.",
+    trigger: "Use when working with Google Maps",
+    skills: [], tools: ["Google Maps"],
+    source: 'official',
+    md: `---
+name: google-maps-assistant
+description: Research locations and plan trips using Google Maps data. Use when exploring destinations, creating itineraries, or organizing travel logistics around geographic information.
+tags: travel-planning, location-research, itinerary-creation, maps
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Google Maps Location Research & Trip Planning
+
+## When to Use
+Activate when the user:
+- "Help me plan a trip using Google Maps"
+- "Research things to do in [location]"
+- "Create an itinerary for [destination]"
+- "Find the best route for my trip"
+
+## Instructions
+1. Gather trip parameters:
+   - Destination(s) and duration
+   - Travel dates and season
+   - Group size and interests
+   - Budget level and transportation mode
+2. Research locations using Google Maps features:
+   - Explore nearby restaurants, attractions, hotels
+   - Check operating hours and busy times
+   - Read recent reviews for current conditions
+   - Note travel times between locations
+   - Identify parking and transit options
+3. Create logical itinerary structure:
+   - Group nearby attractions by day
+   - Build in travel time between locations
+   - Consider meal timing and restaurant reservations
+   - Include backup indoor options for weather
+4. Optimize route planning:
+   - Minimize backtracking across the city/region
+   - Balance must-sees with discovery time
+   - Include rest stops and buffer time
+   - Note alternative routes for traffic
+5. Compile practical details:
+   - Entry fees and reservation requirements
+   - Best photo spots and timing
+   - Local transportation options
+   - Emergency services and pharmacies
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Trip Plan: [Destination]
+
+**Dates:** [Start Date] - [End Date]
+**Duration:** [X days]
+**Travelers:** [X people]
+**Transportation:** [Car/Transit/Walking/Mix]
+
+---
+
+## Overview Map Description
+[Describe the general layout: downtown area, spread of attractions, neighborhoods to visit]
+
+---
+
+## Day 1: [Theme/Area Name]
+
+### Morning (9 AM - 12 PM)
+| Time | Activity | Location | Notes |
+|------|----------|----------|-------|
+| 9:00 | [Attraction/Activity] | [Address] | [Ticket info, duration] |
+| 10:30 | [Next stop] | [Address] | [Notes] |
+
+**Travel Time:** [X min] between locations
+**Backup Plan:** [Indoor alternative if weather/issue]
+
+### Lunch (12 PM - 1:30 PM)
+- **Restaurant:** [Name]
+- **Cuisine:** [Type]
+- **Price Range:** [$-$$$]
+- **Reservation:** [Required/Recommended/Walk-in OK]
+- **Google Maps Link:** [Would be pasted here]
+
+### Afternoon (1:30 PM - 5 PM)
+[Same table format as morning]
+
+### Evening (5 PM - 9 PM)
+[Same table format, include dinner]
+
+---
+
+## Day 2: [Theme/Area Name]
+[Same structure as Day 1]
+
+---
+
+## Logistics Summary
+
+### Transportation
+- **Airport to hotel:** [Option 1] ($X) or [Option 2] ($Y)
+- **Getting around:** [Transit pass/rideshare/walking]
+- **Parking tips:** [Locations, costs, restrictions]
+
+### Reservations Needed
+- [ ] [Attraction 1] - Book by [date]
+- [ ] [Restaurant 1] - Reserve on [platform]
+- [ ] [Experience 1] - Limited availability
+
+### Budget Estimate
+| Category | Daily | Trip Total |
+|----------|-------|------------|
+| Food | $X | $XX |
+| Attractions | $X | $XX |
+| Transport | $X | $XX |
+| **Total** | **$X** | **$XX** |
+
+### Practical Tips
+- **Best photo times:** [Golden hour locations]
+- **Avoid crowds:** [Less busy times for popular spots]
+- **Local apps:** [City-specific transit or ordering apps]
+- **Emergency:** [Nearest hospital, embassy number]
+
+## Google Maps Lists to Create
+1. "[Destination] Must-See" - Core attractions
+2. "[Destination] Food" - Restaurants by neighborhood
+3. "[Destination] Backup" - Indoor/weather alternatives
+\`\`\`
+
+## Rules
+- Always include travel time between locations
+- Verify operating hours (they change seasonally)
+- Include at least one backup option per day
+- Note reservation requirements clearly
+- Keep first day lighter for travel fatigue
+
+## Analogy
+Google Maps trip planning is like storyboarding a film—you're creating a narrative flow with scene transitions that make sense.
+`
+  },
+  {
+    id: "excel-assistant",
+    name: "Excel Assistant",
+    icon: "microsoftexcel",
+    iconType: 'simpleicons',
+    brandColor: "#217346",
+    cat: "data",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "4-6 hours",
+    tags: ["spreadsheets", "formulas", "data-analysis", "modeling"],
+    desc: "Complex formulas and data modeling for spreadsheet analysis. Use when building financial models, creating dashboards, or solving formula errors.",
+    trigger: "Use when working with Excel",
+    skills: [], tools: ["Excel"],
+    source: 'official',
+    md: `---
+name: excel-assistant
+description: Complex formulas and data modeling for spreadsheet analysis. Use when building financial models, creating dashboards, or solving formula errors.
+tags: spreadsheets, formulas, data-analysis, modeling
+difficulty: intermediate
+time_to_master: 4-6 hours
+---
+
+# Excel Assistant
+
+## When to Use
+Activate when the user:
+- "Help me write a formula for [calculation]"
+- "Build a financial model for [purpose]"
+- "Why is my formula returning #N/A?"
+
+## Instructions
+1. Understand the data structure and desired outcome
+2. Select appropriate functions for the task
+3. Build formulas with error handling built in
+4. Create clear column/row references using named ranges
+5. Test with sample data and edge cases
+6. Document assumptions and dependencies
+
+## Output Format
+Always produce this exact structure:
+## Formula Solution
+**Purpose**: [What the formula does]
+**Cell**: [Where to place it]
+
+### Formula
+\`\`\`excel
+=FORMULA_HERE
+\`\`\`
+
+### Formula Breakdown
+| Component | Function | Purpose |
+|-----------|----------|---------|
+| [part] | [function] | [explanation] |
+
+## Alternative Approaches
+1. **[Method Name]**: \`=FORMULA\` - [When to use]
+2. **[Method Name]**: \`=FORMULA\` - [When to use]
+
+## Error Handling
+\`\`\`excel
+=IFERROR([formula], "fallback value")
+\`\`\`
+
+## Named Ranges to Create
+| Range Name | Cells | Description |
+|------------|-------|-------------|
+| [Name] | A1:A100 | [What it contains] |
+
+## Rules
+- Always use IFERROR for formulas that might fail
+- Prefer XLOOKUP over VLOOKUP for modern Excel
+- Document all assumptions in a assumptions sheet
+- Never hardcode values that might change
+- Use absolute references ($) for fixed ranges
+
+## Analogy
+A spreadsheet architect who builds formulas that work the first time and keep working.
+`
+  },
+  {
+    id: "notion-ai-assistant",
+    name: "Notion Ai Assistant",
+    icon: "notion",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "intermediate",
+    timeToMaster: "50 minutes",
+    tags: ["Notion", "AI-workflows", "automation", "databases"],
+    desc: "Design AI workflows and database automations in Notion. Use when setting up Notion AI features, creating automated workflows, or building database systems.",
+    trigger: "Use when working with Notion Ai",
+    skills: [], tools: ["Notion Ai"],
+    source: 'official',
+    md: `---
+name: notion-ai-assistant
+description: Design AI workflows and database automations in Notion. Use when setting up Notion AI features, creating automated workflows, or building database systems.
+tags: Notion, AI-workflows, automation, databases
+difficulty: intermediate
+time_to_master: 50 minutes
+---
+
+# Notion AI Workflow & Database Automation
+
+## When to Use
+Activate when the user:
+- "Help me set up Notion AI workflows"
+- "Create an automated database in Notion"
+- "Design a Notion system with AI features"
+- "Set up Notion automations"
+- "Build a Notion template with AI assistance"
+
+## Instructions
+1. Understand the workflow need:
+   - Primary use case (content, project management, CRM, notes)
+   - Automation goals
+   - AI feature requirements
+   - Database structure needs
+   - Integration requirements
+
+2. Design database structure:
+   - Properties and their types
+   - Relations between databases
+   - Views and filters
+   - Templates and automation triggers
+
+3. Configure AI workflows:
+   - AI blocks and their purposes
+   - Prompt templates for consistent output
+   - Automation rules and triggers
+   - Quality control measures
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Notion System Design: [System Name]
+
+### Purpose:
+[What this system accomplishes]
+
+### Core Features:
+- [Feature 1]
+- [Feature 2]
+- [Feature 3]
+
+---
+
+### Database Structure:
+
+**Main Database: [Database Name]**
+
+| Property | Type | Purpose | AI Automation |
+|----------|------|---------|---------------|
+| Name | Title | Entry identifier | None |
+| [Property] | [Type] | [Purpose] | [AI feature if applicable] |
+| [Property] | [Type] | [Purpose] | [AI feature if applicable] |
+
+**Related Database: [Database Name]**
+
+| Property | Type | Relation |
+|----------|------|----------|
+| [Property] | [Type] | Connects to [Main DB].[Property] |
+
+---
+
+### Views Configuration:
+
+**View 1: [Name]**
+- Type: [Table/Board/List/Calendar/Gallery]
+- Filter: [Filter rules]
+- Sort: [Sort rules]
+- Properties shown: [List]
+- Purpose: [What this view is for]
+
+**View 2: [Name]**
+- Type: [Type]
+- Filter: [Filter rules]
+- Sort: [Sort rules]
+- Properties shown: [List]
+- Purpose: [What this view is for]
+
+---
+
+### AI Workflow Configuration:
+
+**AI Block 1: [Name]**
+\`\`\`
+Purpose: [What this AI block does]
+Trigger: [When it runs - manual/auto]
+Location: [Where in the page]
+
+Prompt Template:
+"""
+[Prompt text with variables like {{Name}} or {{Content}}]
+"""
+
+Output Property: [Which property stores the result]
+\`\`\`
+
+**AI Block 2: [Name]**
+\`\`\`
+Purpose: [What this AI block does]
+Trigger: [When it runs]
+Location: [Where in the page]
+
+Prompt Template:
+"""
+[Prompt text]
+"""
+
+Output Property: [Which property stores the result]
+\`\`\`
+
+---
+
+### Automation Rules:
+
+| Trigger | Condition | Action |
+|---------|-----------|--------|
+| [When this happens] | [If this condition] | [Do this action] |
+
+**Button Automations:**
+\`\`\`
+Button: [Button Name]
+Actions:
+1. [First action]
+2. [Second action]
+\`\`\`
+
+---
+
+### Templates:
+
+**Template 1: [Name]**
+\`\`\`
+## [Section 1]
+
+[Template content with placeholders]
+
+## [Section 2]
+
+[Template content]
+
+---
+AI Summary: [AI block placeholder]
+\`\`\`
+
+---
+
+### Setup Instructions:
+
+**Phase 1: Database Creation**
+1. [ ] Create main database with properties
+2. [ ] Add views as specified
+3. [ ] Create related databases
+4. [ ] Set up relations and rollups
+
+**Phase 2: AI Configuration**
+1. [ ] Add AI blocks to templates
+2. [ ] Configure prompt templates
+3. [ ] Test AI outputs
+4. [ ] Refine prompts as needed
+
+**Phase 3: Automation Setup**
+1. [ ] Create button automations
+2. [ ] Set up recurring automations (if using Notion add-ons)
+3. [ ] Configure templates
+4. [ ] Test full workflow
+
+---
+
+### Example Use Cases:
+
+**For Content Creation:**
+- AI generates summaries from long-form content
+- AI suggests tags based on content analysis
+- AI creates social media posts from articles
+
+**For Project Management:**
+- AI generates task descriptions from brief input
+- AI summarizes meeting notes
+- AI creates project briefs from templates
+
+**For CRM:**
+- AI generates personalized outreach messages
+- AI summarizes interaction history
+- AI suggests next actions based on notes
+
+### AI Prompt Library:
+
+| Use Case | Prompt Template |
+|----------|-----------------|
+| Summarization | "Summarize this in 3 bullet points: {{Content}}" |
+| Tagging | "Suggest 3-5 relevant tags for this content: {{Content}}" |
+| Enhancement | "Improve this writing for clarity: {{Content}}" |
+\`\`\`
+
+## Rules
+- Notion AI features require Notion AI subscription
+- Database relations should serve clear purposes
+- AI prompts should be tested and refined
+- Automation complexity should match user's skill level
+
+## Analogy
+Like having a Notion power user who sets up the complex stuff so you can just use it without understanding how it works.
+`
+  },
+  {
+    id: "headspace-journaling-assistant",
+    name: "Headspace Journaling Assistant",
+    icon: "headspace",
+    iconType: 'simpleicons',
+    brandColor: "#F47D31",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["mindfulness", "journaling", "meditation", "reflection"],
+    desc: "Guide mindfulness journaling practices and reflection exercises. Use when writing mindfulness journals, processing emotions, or developing self-awareness.",
+    trigger: "Use when working with Headspace Journaling",
+    skills: [], tools: ["Headspace Journaling"],
+    source: 'official',
+    md: `---
+name: headspace-journaling-assistant
+description: Guide mindfulness journaling practices and reflection exercises. Use when writing mindfulness journals, processing emotions, or developing self-awareness.
+tags: mindfulness, journaling, meditation, reflection
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Headspace Mindfulness Journaling
+
+## When to Use
+Activate when the user:
+- "Help me write a mindfulness journal entry"
+- "Create a gratitude journal prompt"
+- "Guide me through a reflection exercise"
+- "I want to process my emotions through writing"
+- "Create a morning journal routine"
+
+## Instructions
+1. Establish journaling intention:
+   - Current emotional state
+   - Purpose of this session (gratitude, processing, planning, reflection)
+   - Time available
+   - Preferred journaling style (free write, prompted, structured)
+
+2. Guide the journaling process:
+   - Begin with grounding/breathing prompt
+   - Provide focused prompts based on intention
+   - Encourage specific, concrete details
+   - Include reflection questions
+   - End with intention-setting or gratitude
+
+3. For specific themes:
+   - Morning: Intention-setting, energy, priorities
+   - Evening: Reflection, gratitude, processing
+   - Stress: Processing, perspective, coping
+   - Growth: Challenges, learning, progress
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Mindfulness Journal Session: [Theme]
+
+**Date:** [Date]
+**Duration:** [X minutes]
+**Intention:** [Purpose of this session]
+
+---
+
+### Opening Grounding (2 minutes):
+
+Take a moment to arrive here. Close your eyes if comfortable. Take three deep breaths.
+
+[Breathing prompt specific to theme]
+
+When ready, open your eyes and begin writing.
+
+---
+
+### Journal Prompts:
+
+**Prompt 1: Warm-up**
+[Accessible starting question to open the mind]
+_Write for 2-3 minutes without stopping._
+
+**Prompt 2: Core Reflection**
+[Deeper question related to the theme]
+_Take your time with this one. Be specific._
+
+**Prompt 3: Exploration**
+[Question that invites new perspective]
+_What comes up when you consider this?_
+
+**Prompt 4: Integration**
+[Question that connects insights to action]
+_What do you want to carry forward?_
+
+---
+
+### Sentence Starters:
+
+Choose any that resonate and complete them:
+- Right now, I am feeling...
+- What I need most today is...
+- I am grateful for...
+- Something I want to let go of is...
+- I notice that...
+- One small thing I can do for myself is...
+
+---
+
+### Closing Reflection:
+
+**What I'm noticing now:** [Space to write]
+**One intention I'm setting:** [Space to write]
+
+---
+
+### Session Notes:
+
+_After writing, consider:_
+- How do you feel compared to when you started?
+- What surprised you in your writing?
+- Is there anything that needs more attention?
+
+---
+
+### Additional Resources:
+- [Suggested meditation from Headspace library if applicable]
+- [Related journaling themes to explore]
+\`\`\`
+
+## Rules
+- Never rush the process—let the user set the pace
+- Prompts should invite exploration, not demand specific answers
+- Honor whatever emotions arise without judgment
+- Keep language gentle and non-prescriptive
+
+## Analogy
+Like having a meditation teacher who sits quietly beside you and gently offers the right question at the right moment.
+`
+  },
+  {
+    id: "coursera-assistant",
+    name: "Coursera Assistant",
+    icon: "coursera",
+    iconType: 'simpleicons',
+    brandColor: "#0056D2",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "2-4 hours",
+    tags: ["education", "study-notes", "concept-mapping", "learning"],
+    desc: "Study notes and concept mapping from course content. Use when summarizing lectures, creating study guides, or preparing for assessments.",
+    trigger: "Use when working with Coursera",
+    skills: [], tools: ["Coursera"],
+    source: 'official',
+    md: `---
+name: coursera-assistant
+description: Study notes and concept mapping from course content. Use when summarizing lectures, creating study guides, or preparing for assessments.
+tags: education, study-notes, concept-mapping, learning
+difficulty: intermediate
+time_to_master: 2-4 hours
+---
+
+# Coursera Assistant
+
+## When to Use
+Activate when the user:
+- "Summarize this lecture into study notes"
+- "Create a concept map for this course module"
+- "Help me prepare for my [subject] assessment"
+
+## Instructions
+1. Extract key concepts, definitions, and relationships from content
+2. Organize information hierarchically by importance
+3. Create visual concept maps showing connections
+4. Generate practice questions based on material
+5. Summarize each section in 3-5 key points
+6. Identify prerequisite knowledge gaps
+
+## Output Format
+Always produce this exact structure:
+## Module Summary
+**Course**: [name]
+**Module**: [number/title]
+**Duration**: [estimated review time]
+
+## Key Concepts
+1. **[Concept Name]**: [Definition + Example]
+2. **[Concept Name]**: [Definition + Example]
+
+## Concept Map
+\`\`\`
+[Main Topic]
+├── [Subtopic 1]
+│   ├── [Detail A]
+│   └── [Detail B]
+├── [Subtopic 2]
+│   └── [Detail C]
+└── [Subtopic 3]
+\`\`\`
+
+## Practice Questions
+1. [Question]? → Answer: [hidden for self-test]
+2. [Question]? → Answer: [hidden for self-test]
+
+## Connections
+- Prerequisites: [related concepts needed]
+- Applications: [real-world uses]
+- Next Topics: [what follows]
+
+## Rules
+- Keep summaries under 300 words per section
+- Use Bloom's taxonomy to create varied question types
+- Always cite timestamps if source is video
+- Maintain terminology consistent with course
+
+## Analogy
+A teaching assistant who attends every lecture and distills it into exam-ready notes.
+`
+  },
+  {
+    id: "instagram-assistant",
+    name: "Instagram Assistant",
+    icon: "instagram",
+    iconType: 'simpleicons',
+    brandColor: "#E4405F",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["instagram", "captions", "content-planning", "social-media", "reels"],
+    desc: "Instagram caption strategy, content planning, and engagement optimization. Use when users need to write captions, plan content, or improve their Instagram presence.",
+    trigger: "Use when working with Instagram",
+    skills: [], tools: ["Instagram"],
+    source: 'official',
+    md: `---
+name: instagram-assistant
+description: Instagram caption strategy, content planning, and engagement optimization. Use when users need to write captions, plan content, or improve their Instagram presence.
+tags: instagram, captions, content-planning, social-media, reels
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Instagram Assistant
+
+## When to Use
+Activate when the user:
+- "Write an Instagram caption for [photo/video]"
+- "Create a content calendar for my Instagram"
+- "Help me write engaging Instagram Reels captions"
+- "Craft Instagram Stories copy for [purpose]"
+- "Optimize my Instagram bio"
+
+## Instructions
+1. Understand the content:
+   - What is the post about? (image, Reel, Story, carousel)
+   - What is the goal? (engagement, sales, awareness)
+   - What is the brand voice? (casual, professional, playful)
+2. Write the caption:
+   - Strong opening hook (visible before "more")
+   - Body with value or entertainment
+   - Line breaks for readability
+   - CTA that drives specific action
+   - Relevant hashtags (mix of popular and niche)
+3. For content planning:
+   - Suggest content pillars
+   - Recommend posting frequency
+   - Provide content ideas by category
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Instagram Caption: [Content Type]
+
+### The Caption
+[Hook - first line that stops the scroll]
+
+[Body text with value
+Line breaks for readability
+Keep paragraphs short]
+
+[CTA: What should followers do?]
+
+.
+
+#Hashtag1 #Hashtag2 #Hashtag3 #Hashtag4 #Hashtag5
+#Hashtag6 #Hashtag7 #Hashtag8 #Hashtag9 #Hashtag10
+
+---
+**Caption Stats:**
+- Characters: [X]/2,200
+- Hook preview: "[First 125 characters]"
+- Hashtags: [X]
+
+**Hashtag Strategy:**
+- [X] Large reach (#1M+ posts)
+- [X] Medium reach (#100K-1M posts)
+- [X] Niche reach (#10K-100K posts)
+
+**Best Posting Time:**
+[Day] at [Time] [Timezone]
+\`\`\`
+
+## Rules
+- Hook appears in preview—make it count
+- Use periods on separate lines for "more" break
+- 5-15 hashtags optimal for reach
+- Mix CTA types (save, share, comment, link in bio)
+- Include accessibility (alt text suggestions)
+
+## Analogy
+Like having a social media manager who knows exactly what makes your audience tap that heart button.
+`
+  },
+  {
+    id: "perplexity-assistant",
+    name: "Perplexity Assistant",
+    icon: "perplexity",
+    iconType: 'simpleicons',
+    brandColor: "#20808D",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["research", "ai-search", "query-optimization", "information-retrieval"],
+    desc: "Refine research queries for Perplexity AI to get more accurate, comprehensive answers. Use when crafting search queries, improving question clarity, or structuring multi-part research requests.",
+    trigger: "Use when working with Perplexity",
+    skills: [], tools: ["Perplexity"],
+    source: 'official',
+    md: `---
+name: perplexity-assistant
+description: Refine research queries for Perplexity AI to get more accurate, comprehensive answers. Use when crafting search queries, improving question clarity, or structuring multi-part research requests.
+tags: research, ai-search, query-optimization, information-retrieval
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Perplexity AI Research Query Refinement
+
+## When to Use
+Activate when the user:
+- "Help me phrase this question for Perplexity"
+- "I need to research [topic] but don't know how to ask"
+- "My Perplexity search didn't give good results"
+- "How do I structure a complex research query?"
+
+## Instructions
+1. Analyze the user's research goal and identify the core information need
+2. Break down broad topics into specific, searchable components
+3. Apply query refinement techniques:
+   - Add context qualifiers (time period, geographic scope, industry)
+   - Use comparison frameworks when appropriate
+   - Include specific terminology the target domain uses
+4. Structure multi-part queries using Perplexity's preferred format:
+   - Lead with the primary question
+   - Add sub-questions as follow-ups
+   - Specify desired output format (list, comparison, summary)
+5. Suggest "Pro" query enhancements for deeper research:
+   - Add "with sources from [specific domains]"
+   - Request "including recent developments from [timeframe]"
+   - Ask for "contrasting perspectives on"
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Refined Query
+[Primary optimized question]
+
+## Context Additions
+- [Specific qualifier 1]
+- [Specific qualifier 2]
+
+## Follow-up Questions
+1. [Secondary question to dive deeper]
+2. [Tertiary question for broader context]
+
+## Pro Tips
+- [Perplexity-specific optimization]
+- [Source selection recommendation]
+\`\`\`
+
+## Rules
+- Never create queries longer than 3 sentences for the main question
+- Always suggest at least 2 follow-up questions for complex topics
+- Avoid yes/no questions—prefer open-ended inquiries
+- Include time-specific language when researching current events
+
+## Analogy
+Perplexity query refinement is like focusing a camera lens—the right adjustments transform a blurry snapshot into a sharp, detailed image.
+`
+  },
+  {
+    id: "canva-ai-assistant",
+    name: "Canva Ai Assistant",
+    icon: "canva",
+    iconType: 'simpleicons',
+    brandColor: "#00C4CC",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "30 minutes",
+    tags: ["design", "AI-prompts", "Canva", "graphics"],
+    desc: "Write effective prompts for Canva's AI design features. Use when creating prompts for Magic Media, AI image generation, or AI-powered design tools in Canva.",
+    trigger: "Use when working with Canva Ai",
+    skills: [], tools: ["Canva Ai"],
+    source: 'official',
+    md: `---
+name: canva-ai-assistant
+description: Write effective prompts for Canva's AI design features. Use when creating prompts for Magic Media, AI image generation, or AI-powered design tools in Canva.
+tags: design, AI-prompts, Canva, graphics
+difficulty: beginner
+time_to_master: 30 minutes
+---
+
+# Canva AI Design Prompt Engineering
+
+## When to Use
+Activate when the user:
+- "Write a prompt for Canva AI image generation"
+- "Create prompts for Canva Magic Media"
+- "Help me generate images in Canva"
+- "Write AI prompts for my Canva design"
+- "Create prompts for Canva's AI tools"
+
+## Instructions
+1. Identify design need:
+   - Asset type (image, background, element, pattern)
+   - Style and aesthetic
+   - Color palette preferences
+   - Use case (social media, presentation, print)
+   - Brand requirements
+
+2. Structure effective prompts:
+   - Subject matter (what to show)
+   - Style direction (how it should look)
+   - Mood and atmosphere
+   - Color and lighting
+   - Composition details
+
+3. Optimize for Canva AI:
+   - Keep prompts clear and specific
+   - Use style keywords Canva recognizes
+   - Include composition guidance
+   - Add quality modifiers
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Canva AI Prompt Set: [Design Purpose]
+
+### Design Context:
+**Project Type:** [Social media, presentation, print, etc.]
+**Brand Style:** [Professional, playful, minimalist, etc.]
+**Color Preferences:** [Colors or "match brand colors"]
+**Dimensions:** [If relevant]
+
+---
+
+### Prompt Options:
+
+**Option 1: [Style Description]**
+
+**Prompt:**
+\`\`\`
+[Full prompt text]
+\`\`\`
+
+**Style Notes:**
+- Mood: [Emotional tone]
+- Aesthetic: [Visual style]
+- Best for: [Where to use this result]
+
+**Variations to Try:**
+- [Alternative prompt variation]
+- [Alternative prompt variation]
+
+---
+
+**Option 2: [Style Description]**
+
+**Prompt:**
+\`\`\`
+[Full prompt text]
+\`\`\`
+
+**Style Notes:**
+- Mood: [Emotional tone]
+- Aesthetic: [Visual style]
+- Best for: [Where to use this result]
+
+**Variations to Try:**
+- [Alternative prompt variation]
+- [Alternative prompt variation]
+
+---
+
+**Option 3: [Style Description]**
+
+**Prompt:**
+\`\`\`
+[Full prompt text]
+\`\`\`
+
+**Style Notes:**
+- Mood: [Emotional tone]
+- Aesthetic: [Visual style]
+- Best for: [Where to use this result]
+
+---
+
+### Prompt Building Framework:
+
+**For Backgrounds:**
+"[Style] background, [color palette], [mood] atmosphere, [texture/pattern], high quality, seamless, [use case]"
+
+**Example:** "Minimalist gradient background, soft blue and white, calm professional atmosphere, subtle texture, high quality, seamless, corporate presentation"
+
+**For Illustrations:**
+"[Subject], [art style], [color scheme], [composition], [mood], clean design, [purpose]"
+
+**Example:** "Team collaboration scene, modern flat illustration style, brand colors blue and orange, wide composition, positive energetic mood, clean design, business presentation"
+
+**For Social Media Graphics:**
+"[Main subject], [style], [color direction], eye-catching, [platform] optimized, professional, [engagement goal]"
+
+**Example:** "Product showcase with floating elements, 3D render style, vibrant gradient background, eye-catching, Instagram optimized, professional, attention-grabbing"
+
+---
+
+### Style Keywords for Canva AI:
+
+**Artistic Styles:**
+- Photorealistic, digital art, illustration, watercolor, oil painting
+- Minimalist, maximalist, geometric, abstract, surreal
+
+**Mood Keywords:**
+- Professional, playful, elegant, bold, calm, energetic, sophisticated
+
+**Lighting Keywords:**
+- Soft lighting, dramatic lighting, natural light, studio lighting, golden hour
+
+**Composition Keywords:**
+- Centered, rule of thirds, wide angle, close-up, symmetric, dynamic
+
+### Common Issues & Solutions:
+
+| Issue | Prompt Adjustment |
+|-------|-------------------|
+| Too busy | Add "minimalist, clean, simple" |
+| Wrong colors | Specify exact color names |
+| Not professional enough | Add "corporate, professional, business" |
+| Too generic | Add specific details and style references |
+
+### Canva AI Tool Tips:
+1. **Magic Media:** Works best with descriptive style keywords
+2. **Magic Edit:** Be specific about what to change
+3. **Magic Grab:** Use for removing/adding elements
+4. **Background Remover:** Works best with clear subject contrast
+\`\`\`
+
+## Rules
+- Prompts should be specific but not overly complex
+- Include Canva-specific terminology where helpful
+- Provide alternatives for different results
+- Note that AI generation varies—iteration is normal
+
+## Analogy
+Like having a graphic designer who knows exactly how to describe what you're envisioning so the AI brings it to life.
+`
+  },
+  {
+    id: "youtube-assistant",
+    name: "Youtube Assistant",
+    icon: "youtube",
+    iconType: 'simpleicons',
+    brandColor: "#FF0000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["youtube", "video", "summarization", "research", "timestamps"],
+    desc: "YouTube video research, summarization, and content extraction. Use when users need to analyze videos, extract timestamps, research topics, or create summaries from YouTube content.",
+    trigger: "Use when working with Youtube",
+    skills: [], tools: ["Youtube"],
+    source: 'official',
+    md: `---
+name: youtube-assistant
+description: YouTube video research, summarization, and content extraction. Use when users need to analyze videos, extract timestamps, research topics, or create summaries from YouTube content.
+tags: youtube, video, summarization, research, timestamps
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# YouTube Assistant
+
+## When to Use
+Activate when the user:
+- "Summarize this YouTube video: [url]"
+- "What are the key points from this video?"
+- "Extract timestamps for the main topics in this video"
+- "Research this topic on YouTube and summarize findings"
+- "Create a blog post from this YouTube video"
+
+## Instructions
+1. Accept the YouTube URL or video topic from the user
+2. If URL provided:
+   - Extract video metadata (title, channel, duration, description)
+   - Analyze transcript if available
+   - Generate structured summary with key insights
+3. If topic provided:
+   - Search for relevant videos on the topic
+   - Compile research from multiple sources
+   - Present synthesized findings with source links
+4. Create actionable outputs:
+   - Executive summary (2-3 sentences)
+   - Key points with timestamps
+   - Notable quotes
+   - Action items or takeaways
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Video Summary: [Title]
+
+**Channel:** [Name] | **Duration:** [X:XX] | **URL:** [Link]
+
+### Executive Summary
+[2-3 sentence overview]
+
+### Key Points
+- **[MM:SS]** [Point 1]
+- **[MM:SS]** [Point 2]
+- **[MM:SS]** [Point 3]
+
+### Notable Quotes
+> "[Quote]" — [Speaker/Context]
+
+### Action Items
+- [ ] [Takeaway 1]
+- [ ] [Takeaway 2]
+
+### Related Topics to Explore
+- [Topic 1]
+- [Topic 2]
+\`\`\`
+
+## Rules
+- Always include timestamps when transcript is available
+- Credit the original creator and channel
+- Never reproduce full transcripts—summarize only
+- Distinguish between stated facts and opinions
+- Include video URL for reference
+
+## Analogy
+Like having a research assistant who watches videos for you and delivers the cliff notes with timestamps.
+`
+  },
+  {
+    id: "youtube-music-assistant",
+    name: "Youtube Music Assistant",
+    icon: "youtubemusic",
+    iconType: 'simpleicons',
+    brandColor: "#FF0000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["music", "discovery", "reviews", "playlists"],
+    desc: "Discover new music and write thoughtful album/song reviews. Use when looking for music recommendations, analyzing lyrics, or writing music reviews.",
+    trigger: "Use when working with Youtube Music",
+    skills: [], tools: ["Youtube Music"],
+    source: 'official',
+    md: `---
+name: youtube-music-assistant
+description: Discover new music and write thoughtful album/song reviews. Use when looking for music recommendations, analyzing lyrics, or writing music reviews.
+tags: music, discovery, reviews, playlists
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# YouTube Music Discovery & Review Writing
+
+## When to Use
+Activate when the user:
+- "Find me new music like [artist/song]"
+- "Write a review of this album"
+- "Create a playlist for [mood/activity]"
+- "What songs match this vibe?"
+- "Analyze the lyrics of [song]"
+
+## Instructions
+1. For music discovery:
+   - Identify the core elements the user enjoys (genre, tempo, mood, era)
+   - Recommend artists across discovery spectrum (similar, adjacent, exploration)
+   - Include YouTube Music-specific features (Music Premium benefits, offline downloads)
+
+2. For playlist curation:
+   - Establish a cohesive theme or journey
+   - Consider flow between tracks (tempo, key, energy)
+   - Suggest optimal playlist length for the use case
+
+3. For review writing:
+   - Cover production quality, lyrical content, artistic growth
+   - Place work in artist's discography context
+   - Highlight standout tracks and themes
+   - Provide a balanced critique
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Music Discovery Report
+
+**Based On:** [User's reference points]
+
+### Direct Recommendations:
+| Artist | Song/Album | Why It Fits |
+|--------|------------|-------------|
+| [Artist] | [Title] | [Connection] |
+
+### Exploration Picks:
+| Artist | Song/Album | What Makes It Different |
+|--------|------------|-------------------------|
+
+---
+
+## Album Review: [Title] by [Artist]
+
+**Rating:** [X]/10
+
+**The Vibe:** [2-3 sentence mood description]
+
+**Standout Tracks:**
+1. [Track] - [Why it stands out]
+2. [Track] - [Why it stands out]
+
+**Production:** [Assessment of sound quality, choices]
+
+**Lyrics & Themes:** [Content analysis]
+
+**Verdict:** [Who should listen, final thoughts]
+\`\`\`
+
+## Rules
+- Never judge users for their music taste—meet them where they are
+- Include a mix of popular and underrated recommendations
+- Reference specific musical elements (beats per minute, instruments, vocal style)
+- Acknowledge when unfamiliar with an artist honestly
+
+## Analogy
+Like a record store employee who actually listens to your preferences instead of just pushing what's popular.
+`
+  },
+  {
+    id: "mailchimp-assistant",
+    name: "Mailchimp Assistant",
+    icon: "mailchimp",
+    iconType: 'simpleicons',
+    brandColor: "#FFE01B",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "3-4 hours",
+    tags: ["email-marketing", "campaigns", "newsletters", "automation"],
+    desc: "Email campaign copy and sequencing for marketing automation. Use when drafting newsletters, designing email sequences, or optimizing campaign performance.",
+    trigger: "Use when working with Mailchimp",
+    skills: [], tools: ["Mailchimp"],
+    source: 'official',
+    md: `---
+name: mailchimp-assistant
+description: Email campaign copy and sequencing for marketing automation. Use when drafting newsletters, designing email sequences, or optimizing campaign performance.
+tags: email-marketing, campaigns, newsletters, automation
+difficulty: intermediate
+time_to_master: 3-4 hours
+---
+
+# Mailchimp Assistant
+
+## When to Use
+Activate when the user:
+- "Write a newsletter for [audience/topic]"
+- "Create an email sequence for [campaign]"
+- "Optimize my email subject lines"
+
+## Instructions
+1. Identify campaign goal, audience segment, and key message
+2. Structure email with attention-grabbing subject and preview text
+3. Write scannable body copy with clear hierarchy
+4. Design single focused call-to-action
+5. Plan sequence timing and content progression
+6. Optimize for deliverability and engagement
+
+## Output Format
+Always produce this exact structure:
+## Email Campaign
+**Campaign Name**: [Name]
+**Audience Segment**: [Segment]
+**Goal**: [Primary objective]
+
+### Email Details
+**Subject Line**: [Subject] (A/B test variations below)
+**Preview Text**: [First 40-90 characters visible in inbox]
+
+**Variations for A/B Test**:
+- A: [Subject variation 1]
+- B: [Subject variation 2]
+
+### Email Body
+\`\`\`
+[Preheader - hidden preview text]
+
+[Logo/Header]
+
+HEADLINE: [H1 - Clear value proposition]
+
+[Hero image placeholder]
+
+[Opening hook - 1-2 sentences]
+
+[Main content - 2-3 short paragraphs or bullet points]
+
+[CTA BUTTON: Clear action text]
+
+[Secondary content if needed]
+
+[Footer with unsubscribe, social links]
+\`\`\`
+
+### Content Blocks
+| Section | Content | Purpose |
+|---------|---------|---------|
+| Header | [Text] | Branding |
+| Hero | [Image + text] | Attention |
+| Body | [Content] | Value delivery |
+| CTA | [Button] | Action |
+
+## Email Sequence
+| Email | Timing | Subject | Purpose |
+|-------|--------|---------|---------|
+| 1 | Day 0 | [Subject] | Welcome |
+| 2 | Day 3 | [Subject] | Value delivery |
+| 3 | Day 7 | [Subject] | Engagement |
+| 4 | Day 14 | [Subject] | Conversion |
+
+## Performance Targets
+- **Open Rate**: [Industry benchmark]%
+- **Click Rate**: [Industry benchmark]%
+- **Unsubscribe Rate**: <[benchmark]%
+
+## Rules
+- One primary CTA per email
+- Subject lines under 50 characters
+- Preview text under 90 characters
+- Mobile-first design assumption
+- Alt text for all images
+- Clear unsubscribe link in footer
+
+## Analogy
+An email marketing specialist who writes campaigns people actually want to open.
+`
+  },
+  {
+    id: "turbotax-assistant",
+    name: "Turbotax Assistant",
+    icon: "turbotax",
+    iconType: 'simpleicons',
+    brandColor: "#355FB3",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "35 minutes",
+    tags: ["taxes", "documentation", "organization", "deductions"],
+    desc: "Organize tax documents and prepare information for tax filing. Use when gathering tax documents, understanding deductions, or preparing for tax season.",
+    trigger: "Use when working with Turbotax",
+    skills: [], tools: ["Turbotax"],
+    source: 'official',
+    md: `---
+name: turbotax-assistant
+description: Organize tax documents and prepare information for tax filing. Use when gathering tax documents, understanding deductions, or preparing for tax season.
+tags: taxes, documentation, organization, deductions
+difficulty: intermediate
+time_to_master: 35 minutes
+---
+
+# TurboTax Tax Document Organization
+
+## When to Use
+Activate when the user:
+- "Help me organize my tax documents"
+- "What documents do I need for taxes?"
+- "Check if I'm missing any tax forms"
+- "Prepare my tax information checklist"
+- "Organize my deductions for tax filing"
+
+## Instructions
+1. Identify taxpayer situation:
+   - Employment type (W-2, 1099, self-employed)
+   - Filing status
+   - Major life changes (marriage, home purchase, new child)
+   - Investment accounts
+   - Rental properties
+
+2. Create document checklist:
+   - Income documents (W-2s, 1099s, K-1s)
+   - Deduction documents (mortgage interest, charitable donations, medical expenses)
+   - Credit documents (education, energy efficiency, child care)
+   - Prior year tax return
+   - Identity documents
+
+3. Organize for efficiency:
+   - Group by category
+   - Flag potential issues or missing items
+   - Calculate estimated totals
+   - Identify documentation gaps
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Tax Document Checklist: [Tax Year]
+
+### Filing Status: [Status]
+
+---
+
+### Income Documents:
+
+| Form Type | Expected From | Received? | Amount |
+|-----------|---------------|-----------|--------|
+| W-2 | [Employer names] | ✅❌ | $[X] |
+| 1099-NEC | [Client names] | ✅❌ | $[X] |
+| 1099-INT | [Bank names] | ✅❌ | $[X] |
+| 1099-DIV | [Brokerage] | ✅❌ | $[X] |
+
+**Total Income Documented:** $[X]
+
+---
+
+### Deduction Documents:
+
+| Category | Documents | Status | Estimated Amount |
+|----------|-----------|--------|------------------|
+| Mortgage Interest | Form 1098 | ✅❌ | $[X] |
+| Property Taxes | [Statement] | ✅❌ | $[X] |
+| Charitable Donations | [Receipts] | ✅❌ | $[X] |
+| Medical Expenses | [Records] | ✅❌ | $[X] |
+| State/Local Taxes | [Forms] | ✅❌ | $[X] |
+
+**Total Deductions Documented:** $[X]
+
+---
+
+### Credit Documents:
+
+| Credit | Required Documents | Status |
+|--------|-------------------|--------|
+| [Credit name] | [Documents] | ✅❌⚠️ |
+
+---
+
+### Missing Items:
+- [ ] [Missing document 1] - Contact [Source]
+- [ ] [Missing document 2] - Expected by [Date]
+
+### Special Considerations:
+- [Any unique situations to note]
+
+### Preparation Notes:
+- [Information to have ready for filing]
+\`\`\`
+
+## Rules
+- Never provide actual tax advice—this is organization only
+- Recommend professional tax help for complex situations
+- Flag deadlines for document requests
+- Note that tax laws change annually—verify current rules
+
+## Analogy
+Like having a personal assistant who makes sure you have every receipt and form before you walk into your accountant's office.
+`
+  },
+  {
+    id: "shopify-assistant",
+    name: "Shopify Assistant",
+    icon: "shopify",
+    iconType: 'simpleicons',
+    brandColor: "#7AB55C",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["shopify", "ecommerce", "product-descriptions", "conversion", "copywriting"],
+    desc: "Shopify product descriptions, conversion copy, and e-commerce content. Use when users need to write product descriptions, optimize listings, or improve store copy.",
+    trigger: "Use when working with Shopify",
+    skills: [], tools: ["Shopify"],
+    source: 'official',
+    md: `---
+name: shopify-assistant
+description: Shopify product descriptions, conversion copy, and e-commerce content. Use when users need to write product descriptions, optimize listings, or improve store copy.
+tags: shopify, ecommerce, product-descriptions, conversion, copywriting
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Shopify Assistant
+
+## When to Use
+Activate when the user:
+- "Write a product description for [product]"
+- "Create Shopify collection descriptions for [category]"
+- "Optimize my product page for conversions"
+- "Write email copy for my Shopify store"
+- "Create homepage copy for my Shopify store"
+
+## Instructions
+1. Understand the product:
+   - What is it? (features and specifications)
+   - Who is it for? (target customer)
+   - What problem does it solve? (benefits)
+   - What makes it different? (unique value)
+2. Write the description:
+   - Hook with the main benefit
+   - Explain features through benefits
+   - Include social proof elements
+   - Address objections proactively
+   - Clear call-to-action
+3. Optimize for conversion:
+   - Scannable format (bullet points, headers)
+   - Sensory and emotional language
+   - Clear sizing/specs section
+   - FAQ for common questions
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Product Description: [Product Name]
+
+### Hero Copy
+[One compelling sentence that captures the main benefit]
+
+### Product Overview
+[2-3 sentences expanding on what the product is and who it's for]
+
+### Key Benefits
+• **[Benefit 1]**: [How it helps the customer]
+• **[Benefit 2]**: [How it helps the customer]
+• **[Benefit 3]**: [How it helps the customer]
+
+### Features
+- [Feature 1 with specific detail]
+- [Feature 2 with specific detail]
+- [Feature 3 with specific detail]
+
+### Specifications
+| Attribute | Details |
+|-----------|---------|
+| [Material/Size/etc.] | [Specification] |
+| [Dimension] | [Measurement] |
+
+### What's Included
+- [Item 1]
+- [Item 2]
+
+### Social Proof Snippet
+"[Customer quote or review excerpt]" — [Customer name]
+
+### FAQ
+**Q: [Common question 1]**
+A: [Answer that overcomes objection]
+
+**Q: [Common question 2]**
+A: [Answer that overcomes objection]
+
+---
+**Meta Description (SEO):**
+[155 characters max, includes product name and key benefit]
+\`\`\`
+
+## Rules
+- Lead with benefits, follow with features
+- Write for scannability (headers, bullets)
+- Include specific measurements and materials
+- Address the #1 objection in copy
+- Match tone to brand voice
+
+## Analogy
+Like having a conversion copywriter who turns browsers into buyers with every word.
+`
+  },
+  {
+    id: "telegram-assistant",
+    name: "Telegram Assistant",
+    icon: "telegram",
+    iconType: 'simpleicons',
+    brandColor: "#2AABEE",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["telegram", "channel-content", "broadcasting", "messenger-marketing"],
+    desc: "Write content for Telegram channels and manage broadcast communications. Use when creating channel posts, building engagement strategies, or planning content schedules for subscribers.",
+    trigger: "Use when working with Telegram",
+    skills: [], tools: ["Telegram"],
+    source: 'official',
+    md: `---
+name: telegram-assistant
+description: Write content for Telegram channels and manage broadcast communications. Use when creating channel posts, building engagement strategies, or planning content schedules for subscribers.
+tags: telegram, channel-content, broadcasting, messenger-marketing
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# Telegram Channel Content Writing
+
+## When to Use
+Activate when the user:
+- "Help me write posts for my Telegram channel"
+- "Create a content strategy for Telegram"
+- "How do I grow my Telegram channel?"
+- "Write engaging Telegram broadcasts"
+
+## Instructions
+1. Understand Telegram channel characteristics:
+   - One-way broadcast (subscribers receive, can't reply publicly)
+   - Unlimited subscribers
+   - Rich media support (files, polls, quizzes, voice)
+   - No algorithmic feed (chronological delivery)
+2. Define content categories:
+   - News/updates: Time-sensitive announcements
+   - Educational: Tips, tutorials, how-tos
+   - Curated content: Industry links with commentary
+   - Exclusive: Channel-only offers or content
+   - Interactive: Polls, quizzes, questions
+3. Write for Telegram format:
+   - Strong opening hook (visible in notification preview)
+   - Concise messaging (optimal 150-300 characters)
+   - Use formatting: **bold**, *italic*, \`monospace\`
+   - Include relevant hashtags for search
+   - Add reaction emoji for quick feedback
+4. Structure posts with engagement elements:
+   - Clear value proposition in first line
+   - Visual attachment when relevant
+   - Call-to-action or question
+   - Link with preview (or disable for cleaner look)
+5. Plan content schedule:
+   - Optimal posting frequency by niche
+   - Best times based on audience location
+   - Content mix ratios by type
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Telegram Channel Content Plan
+
+**Channel Name:** [Name]
+**Niche/Focus:** [Topic area]
+**Subscriber Count:** [Current]
+**Posting Frequency:** [X posts per day/week]
+
+---
+
+## Content Mix
+
+| Category | Percentage | Example Topic |
+|----------|------------|---------------|
+| News/Updates | [X%] | [Topic example] |
+| Educational | [X%] | [Topic example] |
+| Curated | [X%] | [Topic example] |
+| Exclusive | [X%] | [Topic example] |
+| Interactive | [X%] | [Topic example] |
+
+---
+
+## Post Templates
+
+### News Update Template
+\`\`\`
+⚡ **[Topic] Update**
+
+[Key news in 1-2 sentences]
+
+**What this means:**
+[Implication or context]
+
+[Link if applicable]
+
+#[hashtag] #[hashtag]
+\`\`\`
+
+### Educational Post Template
+\`\`\`
+💡 **[Tip/Trick Title]**
+
+[Problem or context]
+
+**Here's how:**
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+**Pro tip:** [Bonus insight]
+
+#[hashtag] #[hashtag]
+\`\`\`
+
+### Curated Content Template
+\`\`\`
+🔗 **[Article/Resource Title]**
+
+[Why this is worth your time - 1 sentence]
+
+[Link]
+
+> "[Notable quote or key insight from the content]"
+
+My take: [Brief commentary]
+
+#[hashtag] #[hashtag]
+\`\`\`
+
+### Interactive Post Template
+\`\`\`
+📊 **Quick [Topic] Poll**
+
+[Context or question]
+
+[Poll with 3-4 options]
+
+Results in 24 hours! 👀
+
+#[hashtag]
+\`\`\`
+
+---
+
+## Weekly Content Schedule
+
+| Day | Content Type | Topic | Best Time |
+|-----|--------------|-------|-----------|
+| Monday | Educational | [Topic] | [Time] |
+| Tuesday | News | [Topic] | [Time] |
+| Wednesday | Curated | [Topic] | [Time] |
+| Thursday | Interactive | [Topic] | [Time] |
+| Friday | Exclusive | [Topic] | [Time] |
+
+## Engagement Best Practices
+- Use polls weekly for engagement data
+- Vary post lengths (short updates + longer deep-dives)
+- Schedule posts during peak active hours
+- Include "Save for later" prompts for valuable content
+- Cross-promote channel in relevant groups
+
+## Growth Tactics
+- [Tactic 1: e.g., "Join our sister channel"]
+- [Tactic 2: e.g., "Share exclusive content weekly"]
+- [Tactic 3: e.g., "Run referral contests"]
+\`\`\`
+
+## Rules
+- Never post more than 5 times daily (avoid notification fatigue)
+- Always add value—no pure filler content
+- Include hashtags for discoverability
+- Use scheduling to maintain consistency
+- Credit sources when curating content
+
+## Analogy
+Telegram channel content is like a newsletter that lands instantly—every post should respect the subscriber's attention while delivering clear value.
+`
+  },
+  {
+    id: "notion-assistant",
+    name: "Notion Assistant",
+    icon: "notion",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["notion", "database", "workflow", "automation", "productivity"],
+    desc: "Notion database design, workflow automation, and workspace organization. Use when users need to create databases, set up systems, or optimize their Notion workspace.",
+    trigger: "Use when working with Notion",
+    skills: [], tools: ["Notion"],
+    source: 'official',
+    md: `---
+name: notion-assistant
+description: Notion database design, workflow automation, and workspace organization. Use when users need to create databases, set up systems, or optimize their Notion workspace.
+tags: notion, database, workflow, automation, productivity
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Notion Assistant
+
+## When to Use
+Activate when the user:
+- "Create a Notion database for [use case]"
+- "Design a [project tracking/CRM/content calendar] in Notion"
+- "Set up a workflow for [process]"
+- "Help me organize my Notion workspace"
+- "Create linked databases for [purpose]"
+
+## Instructions
+1. Understand the use case:
+   - What data needs to be tracked?
+   - Who will use this database?
+   - What views are needed? (table, board, calendar, list)
+   - What automations would help?
+2. Design the database structure:
+   - Define properties (text, select, multi-select, date, person, relation)
+   - Create relation and rollup fields for linked databases
+   - Set up formula fields for calculated data
+3. Suggest views and filters:
+   - Table view for data entry
+   - Board view for status tracking
+   - Calendar view for date-based items
+   - Gallery view for visual content
+4. Recommend templates and workflows:
+   - Linked templates for recurring use
+   - Buttons for quick actions
+   - Database automations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Notion Database: [Name]
+
+### Purpose
+[One sentence description of what this database tracks]
+
+### Properties
+| Property Name | Type | Purpose |
+|---------------|------|---------|
+| [Name] | [Text/Select/Date/etc.] | [What it tracks] |
+
+### Views to Create
+1. **[View Name]** - [View type] - [When to use]
+   - Filter: [Filter settings]
+   - Sort: [Sort settings]
+
+### Relations & Rollups
+- **Relation:** [Database A] ↔ [Database B]
+- **Rollup:** [What it calculates]
+
+### Automation Suggestions
+- [Automation 1: trigger → action]
+- [Automation 2: trigger → action]
+
+### Quick Start Steps
+1. [Step 1 to create in Notion]
+2. [Step 2 to create in Notion]
+3. [Step 3 to create in Notion]
+\`\`\`
+
+## Rules
+- Always include at least 3 properties in database designs
+- Suggest appropriate property types (don't overuse text fields)
+- Include both table and board views by default
+- Reference actual Notion feature names
+- Keep databases simple—avoid property overload
+
+## Analogy
+Like having a Notion expert architect who builds you a custom system instead of just giving you a blank page.
+`
+  },
+  {
+    id: "netflix-assistant",
+    name: "Netflix Assistant",
+    icon: "netflix",
+    iconType: 'simpleicons',
+    brandColor: "#E50914",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["streaming", "entertainment", "recommendations", "watchlist"],
+    desc: "Curate watch lists and analyze shows for personalized viewing recommendations. Use when asking for show recommendations, organizing watch lists, or analyzing plot themes.",
+    trigger: "Use when working with Netflix",
+    skills: [], tools: ["Netflix"],
+    source: 'official',
+    md: `---
+name: netflix-assistant
+description: Curate watch lists and analyze shows for personalized viewing recommendations. Use when asking for show recommendations, organizing watch lists, or analyzing plot themes.
+tags: streaming, entertainment, recommendations, watchlist
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Netflix Watch List Curation & Show Analysis
+
+## When to Use
+Activate when the user:
+- "What should I watch on Netflix tonight?"
+- "Add this show to my watch list and tell me why"
+- "Compare these two Netflix series for me"
+- "Find shows like [title] on Netflix"
+- "What are the hidden gems on Netflix right now?"
+
+## Instructions
+1. Ask about viewing preferences if not specified:
+   - Genre preferences (drama, comedy, thriller, documentary, etc.)
+   - Mood (light-hearted, intense, thought-provoking, escapist)
+   - Time commitment (movie, limited series, ongoing series)
+   - Content preferences (language, subtitles, mature content tolerance)
+
+2. Analyze and recommend with structured details:
+   - Brief synopsis without major spoilers
+   - Key selling points (acting, writing, cinematography, unique premise)
+   - Similar shows for context
+   - Viewer fit score (1-10 based on stated preferences)
+
+3. Help organize watch lists by:
+   - Priority ranking
+   - Mood-based categories
+   - Binge-worthiness rating
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Recommendation: [Title]
+
+**Quick Take:** [1-sentence hook]
+
+**Details:**
+- Genre: [genres]
+- Runtime: [episodes/seasons, length]
+- Mood: [viewing mood]
+- IMDb/RT Score: [if known]
+
+**Why You'll Like It:**
+- [Reason 1]
+- [Reason 2]
+- [Reason 3]
+
+**Similar To:** [2-3 comparable titles]
+
+**Viewer Fit Score:** [X]/10 based on your preferences
+
+**Watch List Priority:** High / Medium / Low
+\`\`\`
+
+## Rules
+- Never include spoilers beyond the premise setup
+- Always ask clarifying questions if preferences are vague
+- Recommend currently available Netflix content (not just popular titles)
+- Include international content when appropriate
+
+## Analogy
+Think of this as your personal Netflix concierge who knows your taste and never spoils the ending.
+`
+  },
+  {
+    id: "coinbase-assistant",
+    name: "Coinbase Assistant",
+    icon: "coinbase",
+    iconType: 'simpleicons',
+    brandColor: "#0052FF",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "4-6 hours",
+    tags: ["crypto", "blockchain", "portfolio", "investing"],
+    desc: "Crypto portfolio analysis and digital asset insights. Use when analyzing crypto holdings, understanding blockchain projects, or reviewing portfolio allocation.",
+    trigger: "Use when working with Coinbase",
+    skills: [], tools: ["Coinbase"],
+    source: 'official',
+    md: `---
+name: coinbase-assistant
+description: Crypto portfolio analysis and digital asset insights. Use when analyzing crypto holdings, understanding blockchain projects, or reviewing portfolio allocation.
+tags: crypto, blockchain, portfolio, investing
+difficulty: intermediate
+time_to_master: 4-6 hours
+---
+
+# Coinbase Assistant
+
+## When to Use
+Activate when the user:
+- "Analyze my crypto portfolio allocation"
+- "Explain what [cryptocurrency] does"
+- "Review my holdings and suggest rebalancing"
+
+## Instructions
+1. Understand portfolio composition and user's investment thesis
+2. Analyze allocation across asset types and risk levels
+3. Explain each project's fundamentals and use case
+4. Assess concentration risk and diversification
+5. Calculate performance metrics and risk exposure
+6. Provide educational context without financial advice
+
+## Output Format
+Always produce this exact structure:
+## Portfolio Overview
+**Total Value**: $[X]
+**Number of Assets**: [X]
+**Time Period**: [Analysis date range]
+
+## Asset Allocation
+**By Value**:
+| Asset | Value | % of Portfolio | 24h Change | 30d Change |
+|-------|-------|----------------|------------|------------|
+| BTC | $[X] | [X]% | [X]% | [X]% |
+| ETH | $[X] | [X]% | [X]% | [X]% |
+| [Other] | $[X] | [X]% | [X]% | [X]% |
+
+**By Category**:
+| Category | Allocation | Assets |
+|----------|------------|--------|
+| Layer 1 (BTC, ETH, SOL) | [X]% | [List] |
+| Layer 2 / Scaling | [X]% | [List] |
+| DeFi | [X]% | [List] |
+| Stablecoins | [X]% | [List] |
+
+## Asset Analysis
+
+### [Cryptocurrency Name] (SYMBOL)
+**Price**: $[X] | **Market Cap**: $[X]B | **Rank**: #[X]
+
+**What It Does**: [1-2 sentences on core use case]
+
+**Technology**: [Brief technical differentiator]
+
+**Token Utility**: [How the token is used]
+
+**Key Metrics**:
+- All-Time High: $[X] ([%] from current)
+- Circulating Supply: [X] [SYMBOL]
+- Max Supply: [X] [SYMBOL] or unlimited
+
+**Recent Developments**: [Any notable news or updates]
+
+## Portfolio Risk Analysis
+
+### Concentration Risk
+| Risk Factor | Assessment |
+|-------------|------------|
+| Top holding % | [X]% in [Asset] - [High/Medium/Low risk] |
+| Top 3 holdings % | [X]% - [Assessment] |
+| Stablecoin allocation | [X]% - [Assessment] |
+
+### Risk Profile
+\`\`\`
+Conservative ←─────────────────→ Aggressive
+        [X]           [X]           [X]
+\`\`\`
+Your portfolio leans [conservative/balanced/aggressive] because [reasoning].
+
+## Suggested Considerations
+**Diversification**:
+- [If applicable] Consider adding [category] exposure
+- [If applicable] Large cap allocation is [adequate/high/low]
+
+**Risk Management**:
+- [If stablecoins < 10%] Consider stablecoin allocation for liquidity
+- [If any asset > 50%] High concentration in [Asset]
+
+## Performance Summary
+| Timeframe | Return | vs BTC | vs ETH |
+|-----------|--------|--------|--------|
+| 7 days | [X]% | [X]% | [X]% |
+| 30 days | [X]% | [X]% | [X]% |
+| 1 year | [X]% | [X]% | [X]% |
+
+## Educational Resources
+- **[Topic 1]**: [Brief explanation relevant to portfolio]
+- **[Topic 2]**: [Brief explanation relevant to portfolio]
+
+---
+⚠️ **Disclaimer**: This is analysis only, not financial advice. Cryptocurrency investments carry significant risk. Never invest more than you can afford to lose.
+
+## Rules
+- Never provide buy/sell recommendations
+- Always explain risk factors prominently
+- Use accurate, current market data
+- Explain technical terms in plain language
+- Include stablecoin analysis for liquidity assessment
+
+## Analogy
+A crypto-savvy friend who breaks down your portfolio and explains what each coin actually does.
+`
+  },
+  {
+    id: "jira-assistant",
+    name: "Jira Assistant",
+    icon: "jira",
+    iconType: 'simpleicons',
+    brandColor: "#0052CC",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "25 minutes",
+    tags: ["jira", "user-stories", "agile", "tickets", "scrum"],
+    desc: "Jira user story writing, ticket creation, and agile project documentation. Use when users need to write Jira tickets, user stories, or plan sprints.",
+    trigger: "Use when working with Jira",
+    skills: [], tools: ["Jira"],
+    source: 'official',
+    md: `---
+name: jira-assistant
+description: Jira user story writing, ticket creation, and agile project documentation. Use when users need to write Jira tickets, user stories, or plan sprints.
+tags: jira, user-stories, agile, tickets, scrum
+difficulty: intermediate
+time_to_master: 25 minutes
+---
+
+# Jira Assistant
+
+## When to Use
+Activate when the user:
+- "Write a Jira user story for [feature]"
+- "Create a Jira ticket for [bug/task]"
+- "Help me write acceptance criteria for [story]"
+- "Structure my sprint in Jira"
+- "Write better Jira ticket descriptions"
+
+## Instructions
+1. Understand the requirement:
+   - Who is the user?
+   - What do they need?
+   - Why do they need it?
+   - What are the acceptance criteria?
+2. Write user stories:
+   - Use standard format: As a [user], I want [action], so that [benefit]
+   - Add detailed acceptance criteria
+   - Include technical notes for developers
+   - Estimate story points if applicable
+3. For bugs:
+   - Clear description of the bug
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Environment details
+   - Severity and priority assessment
+
+## Output Format
+Always produce this exact structure:
+
+**For User Stories:**
+\`\`\`
+## User Story: [Title]
+
+### Story
+**As a** [type of user]
+**I want** [action/feature]
+**So that** [benefit/value]
+
+### Acceptance Criteria
+- [ ] Given [context], when [action], then [outcome]
+- [ ] Given [context], when [action], then [outcome]
+- [ ] Given [context], when [action], then [outcome]
+
+### Technical Notes
+- [Technical consideration 1]
+- [Technical consideration 2]
+- [Technical consideration 3]
+
+### Definition of Done
+- [ ] Code complete and reviewed
+- [ ] Unit tests written
+- [ ] QA testing passed
+- [ ] Documentation updated
+
+### Story Points
+[Estimate: 1, 2, 3, 5, 8, 13, etc.]
+
+### Labels/Components
+**Labels:** [label1], [label2]
+**Component:** [Component name]
+**Epic:** [Epic link if applicable]
+\`\`\`
+
+**For Bugs:**
+\`\`\`
+## Bug: [Title]
+
+### Summary
+[One sentence description of the issue]
+
+### Environment
+- **Browser/Device:** [Browser version, device]
+- **OS:** [Operating system]
+- **Version:** [App/feature version]
+
+### Steps to Reproduce
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+### Expected Behavior
+[What should happen]
+
+### Actual Behavior
+[What actually happens]
+
+### Severity
+🔴 Critical / 🟠 High / 🟡 Medium / 🟢 Low
+
+### Screenshots/Logs
+[Description of relevant screenshots or log snippets]
+\`\`\`
+
+## Rules
+- User stories always include the "so that" (value)
+- Acceptance criteria use Given/When/Then format
+- Bugs include reproduction steps
+- Link to epics and related issues
+- Use consistent terminology from product
+
+## Analogy
+Like having a product manager who writes tickets developers actually understand and can implement.
+`
+  },
+  {
+    id: "jasper-copy-ai-assistant",
+    name: "Jasper Copy Ai Assistant",
+    icon: "jasper",
+    iconType: 'simpleicons',
+    brandColor: "#FF5100",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "intermediate",
+    timeToMaster: "45 minutes",
+    tags: ["marketing", "copywriting", "frameworks", "conversion"],
+    desc: "Apply proven marketing copy frameworks for high-converting content. Use when writing marketing copy, ads, emails, or landing pages using established frameworks.",
+    trigger: "Use when working with Jasper Copy Ai",
+    skills: [], tools: ["Jasper Copy Ai"],
+    source: 'official',
+    md: `---
+name: jasper-copy-ai-assistant
+description: Apply proven marketing copy frameworks for high-converting content. Use when writing marketing copy, ads, emails, or landing pages using established frameworks.
+tags: marketing, copywriting, frameworks, conversion
+difficulty: intermediate
+time_to_master: 45 minutes
+---
+
+# Jasper / Copy.ai Marketing Copy Frameworks
+
+## When to Use
+Activate when the user:
+- "Write copy using the AIDA framework"
+- "Create a PAS framework email"
+- "Help me write a Facebook ad"
+- "I need landing page copy that converts"
+- "Apply the 4 Ps to this product description"
+
+## Instructions
+1. Identify the appropriate framework:
+   - AIDA (Attention, Interest, Desire, Action) - Classic sales
+   - PAS (Problem, Agitation, Solution) - Pain-point focused
+   - 4 Ps (Promise, Picture, Proof, Push) - Benefit-driven
+   - FAB (Features, Advantages, Benefits) - Product-focused
+   - QUEST (Qualify, Understand, Educate, Stimulate, Transition) - Email sequences
+
+2. Gather essential information:
+   - Product/service details and USP
+   - Target audience and their pain points
+   - Desired action (CTA)
+   - Brand voice and tone
+
+3. Apply framework with precision:
+   - Each element should build on the previous
+   - Use power words and emotional triggers
+   - Include specific, concrete details
+   - End with clear, compelling CTA
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## [Framework Name] Copy: [Product/Service]
+
+### Framework Breakdown:
+
+**[Element 1]:** [Section label]
+[Copy that fulfills this element]
+
+**[Element 2]:** [Section label]
+[Copy that fulfills this element]
+
+**[Element 3]:** [Section label]
+[Copy that fulfills this element]
+
+**[Element 4]:** [Section label]
+[Copy that fulfills this element]
+
+---
+
+### Full Copy:
+
+[Complete assembled copy ready for use]
+
+---
+
+### Optimization Notes:
+- **Headline strength:** [Assessment]
+- **Emotional hooks:** [List of triggers used]
+- **CTA clarity:** [Assessment]
+- **Suggested A/B test variations:** [If applicable]
+\`\`\`
+
+## Rules
+- Never produce generic, templated-sounding copy—every word must earn its place
+- Always ask for missing essential information before writing
+- Framework elements must flow naturally, not feel disjointed
+- Include power words but avoid hyperbole that damages credibility
+
+## Analogy
+Like having a copywriting mentor who hands you proven blueprints and helps you fill them with your unique message.
+`
+  },
+  {
+    id: "otter-assistant",
+    name: "Otter Assistant",
+    icon: "otter",
+    iconType: 'simpleicons',
+    brandColor: "#1EB0F5",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["otter", "transcript", "meetings", "summary", "analysis"],
+    desc: "Otter.ai meeting transcript analysis, summary extraction, and action item identification. Use when users need to analyze transcripts, extract insights, or create summaries.",
+    trigger: "Use when working with Otter",
+    skills: [], tools: ["Otter"],
+    source: 'official',
+    md: `---
+name: otter-assistant
+description: Otter.ai meeting transcript analysis, summary extraction, and action item identification. Use when users need to analyze transcripts, extract insights, or create summaries.
+tags: otter, transcript, meetings, summary, analysis
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# Otter Assistant
+
+## When to Use
+Activate when the user:
+- "Summarize this Otter transcript"
+- "Extract action items from my meeting transcript"
+- "Analyze this meeting transcript for key insights"
+- "Create meeting notes from this Otter recording"
+- "Find decisions made in this transcript"
+
+## Instructions
+1. Analyze the transcript:
+   - What type of meeting? (standup, planning, interview, client)
+   - Who were the participants?
+   - What was the purpose?
+   - How long was the meeting?
+2. Extract key information:
+   - Main topics discussed
+   - Decisions made
+   - Action items with owners
+   - Open questions or blockers
+   - Important quotes or points
+3. Structure the output:
+   - Executive summary first
+   - Key topics with highlights
+   - Action items table
+   - Open questions
+   - Follow-up suggestions
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Meeting Summary: [Meeting Title]
+
+### Meeting Details
+**Date:** [Date]
+**Duration:** [X] minutes
+**Participants:** [Names]
+**Meeting Type:** [Type]
+
+### Executive Summary
+[2-3 sentences capturing the main purpose and outcomes of the meeting]
+
+### Key Topics Discussed
+
+#### [Topic 1]
+- [Key point or discussion summary]
+- [Decision or outcome]
+- **Quote:** "[Relevant quote if important]"
+
+#### [Topic 2]
+- [Key point or discussion summary]
+- [Decision or outcome]
+
+#### [Topic 3]
+- [Key point or discussion summary]
+- [Decision or outcome]
+
+### Decisions Made
+1. **[Decision 1]** - [Context and who decided]
+2. **[Decision 2]** - [Context and who decided]
+
+### Action Items
+| Action Item | Owner | Due Date | Status |
+|-------------|-------|----------|--------|
+| [Task description] | @[Name] | [Date] | Pending |
+| [Task description] | @[Name] | [Date] | Pending |
+| [Task description] | @[Name] | [Date] | Pending |
+
+### Open Questions
+- [Question 1] - [Context, who needs to answer]
+- [Question 2] - [Context, who needs to answer]
+
+### Blockers/Risks Identified
+- [Blocker 1] - [Impact and suggested resolution]
+- [Blocker 2] - [Impact and suggested resolution]
+
+### Follow-Up Suggested
+- [Follow-up meeting needed for: topic]
+- [Person to follow up with: name, topic]
+- [Document to create: type, purpose]
+
+### Key Quotes
+> "[Important quote]" — [Speaker]
+> "[Important quote]" — [Speaker]
+\`\`\`
+
+## Rules
+- Identify speakers by name, not just voice
+- Distinguish between discussion points and decisions
+- Action items always have owners
+- Include timestamps for key moments
+- Note when topics were not resolved
+
+## Analogy
+Like having an executive assistant who reads every meeting transcript and gives you the CliffsNotes with action items.
+`
+  },
+  {
+    id: "slack-assistant",
+    name: "Slack Assistant",
+    icon: "slack",
+    iconType: 'simpleicons',
+    brandColor: "#4A154B",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "10 minutes",
+    tags: ["slack", "communication", "async", "team", "messaging"],
+    desc: "Slack async communication, message clarity, and team collaboration writing. Use when users need to write clear Slack messages, announcements, or improve team communication.",
+    trigger: "Use when working with Slack",
+    skills: [], tools: ["Slack"],
+    source: 'official',
+    md: `---
+name: slack-assistant
+description: Slack async communication, message clarity, and team collaboration writing. Use when users need to write clear Slack messages, announcements, or improve team communication.
+tags: slack, communication, async, team, messaging
+difficulty: beginner
+time_to_master: 10 minutes
+---
+
+# Slack Assistant
+
+## When to Use
+Activate when the user:
+- "Write a Slack message to [team/person] about [topic]"
+- "Help me communicate [difficult topic] on Slack"
+- "Draft a Slack announcement for [news]"
+- "Create a clear async update for my team"
+- "Write a Slack thread response for [situation]"
+
+## Instructions
+1. Identify the communication context:
+   - Who is the audience? (team, manager, entire company)
+   - What is the purpose? (update, request, announcement, feedback)
+   - What is the urgency? (immediate response needed vs. async)
+2. Structure the message:
+   - Clear subject/context in first line
+   - Key information upfront (BLUF: Bottom Line Up Front)
+   - Details in bullet points for scannability
+   - Clear ask or next steps
+   - Appropriate emoji for tone (but don't overuse)
+3. Apply Slack best practices:
+   - Use threads for discussions
+   - @mention only those who need to see it
+   - Use formatting (bold, lists, code blocks)
+   - Include TL;DR for long messages
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Slack Message: [Purpose]
+
+### The Message
+**[Context/Subject]**
+
+[Key information - what they need to know]
+
+**Details:**
+• [Point 1]
+• [Point 2]
+• [Point 3]
+
+**Next Steps:**
+[What needs to happen] by [when]
+
+**TL;DR:** [One sentence summary]
+
+---
+**Channel:** #[suggested-channel]
+**Mentions:** @[who to tag if needed]
+**Thread:** Start thread for discussion ✓
+**Emoji:** [Suggested reaction emojis]
+\`\`\`
+
+## Rules
+- Always include context in first line
+- Keep messages under 10 lines for quick reading
+- Use bullet points, never paragraphs
+- Be explicit about deadlines and asks
+- Avoid Slack-isms that confuse newcomers
+
+## Analogy
+Like having a communication coach who makes sure your Slack messages actually get read and understood.
+`
+  },
+  {
+    id: "midjourney-assistant",
+    name: "Midjourney Assistant",
+    icon: "midjourney",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["midjourney", "ai-art", "prompts", "image-generation", "creative"],
+    desc: "Midjourney image prompt engineering and creative direction. Use when users need to create detailed prompts for image generation or refine their visual ideas.",
+    trigger: "Use when working with Midjourney",
+    skills: [], tools: ["Midjourney"],
+    source: 'official',
+    md: `---
+name: midjourney-assistant
+description: Midjourney image prompt engineering and creative direction. Use when users need to create detailed prompts for image generation or refine their visual ideas.
+tags: midjourney, ai-art, prompts, image-generation, creative
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Midjourney Assistant
+
+## When to Use
+Activate when the user:
+- "Create a Midjourney prompt for [image concept]"
+- "Help me write better Midjourney prompts"
+- "Generate variations of this Midjourney prompt"
+- "Create a series of prompts for [project]"
+- "Improve my Midjourney prompt for [result]"
+
+## Instructions
+1. Understand the vision:
+   - What is the subject?
+   - What is the style/mood? (realistic, artistic, abstract)
+   - What is the purpose? (concept art, illustration, design reference)
+   - What aspect ratio? (--ar parameter)
+2. Build the prompt:
+   - Subject (clear, specific description)
+   - Style descriptors (artistic style, medium, technique)
+   - Mood/atmosphere (lighting, color, emotion)
+   - Technical parameters (--ar, --v, --style, --q)
+   - Negative prompts if needed (--no)
+3. Iterate effectively:
+   - Start specific, refine based on results
+   - Use image prompts for style reference
+   - Test variations systematically
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Midjourney Prompt: [Concept Name]
+
+### Primary Prompt
+\`\`\`
+[Subject description], [style descriptors], [mood/atmosphere], [technical details] --ar [ratio] --v 6 --style raw
+\`\`\`
+
+### Prompt Breakdown
+**Subject:** [What's the main focus]
+**Style:** [Artistic approach]
+**Mood:** [Atmosphere and feeling]
+**Parameters:**
+- \`--ar [X:X]\`: [Why this aspect ratio]
+- \`--v 6\`: [Using latest version]
+- \`--style raw\`: [For photorealism]
+
+### Alternative Variations
+
+**Variation 1 - [Style Focus]:**
+\`\`\`
+[Prompt with style emphasis]
+\`\`\`
+
+**Variation 2 - [Mood Focus]:**
+\`\`\`
+[Prompt with mood emphasis]
+\`\`\`
+
+**Variation 3 - [Composition Focus]:**
+\`\`\`
+[Prompt with composition emphasis]
+\`\`\`
+
+### Tips for Best Results
+- [Specific tip for this prompt type]
+- [Parameter suggestion]
+- [What to iterate on]
+
+### Negative Prompt (if needed)
+\`\`\`
+--no [elements to exclude]
+\`\`\`
+\`\`\`
+
+## Rules
+- Be specific but not overly long (under 60 words ideal)
+- Use commas to separate concepts
+- Place important elements first
+- Test --style raw for photorealism
+- Version matters (recommend --v 6)
+
+## Analogy
+Like having a prompt engineer who speaks Midjourney's language and translates your ideas into stunning images.
+`
+  },
+  {
+    id: "elevenlabs-assistant",
+    name: "Elevenlabs Assistant",
+    icon: "elevenlabs",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["voice-synthesis", "narration", "audio-content", "script-writing"],
+    desc: "Write voice scripts optimized for ElevenLabs text-to-speech synthesis. Use when creating narration scripts, voiceover content, or audio-first content for AI voice generation.",
+    trigger: "Use when working with Elevenlabs",
+    skills: [], tools: ["Elevenlabs"],
+    source: 'official',
+    md: `---
+name: elevenlabs-assistant
+description: Write voice scripts optimized for ElevenLabs text-to-speech synthesis. Use when creating narration scripts, voiceover content, or audio-first content for AI voice generation.
+tags: voice-synthesis, narration, audio-content, script-writing
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# ElevenLabs Voice Script Writing
+
+## When to Use
+Activate when the user:
+- "Write a script for ElevenLabs voice generation"
+- "I need narration for my video"
+- "Help me format text for text-to-speech"
+- "Create an audiobook-style script"
+
+## Instructions
+1. Analyze the intended use case:
+   - Audiobook narration (long-form, measured pace)
+   - Video voiceover (timed to visual cues)
+   - Podcast intro/outro (energetic, concise)
+   - Educational content (clear, instructional)
+2. Write for natural speech patterns:
+   - Use contractions naturally (it's, you're, don't)
+   - Break long sentences into shorter, speakable units
+   - Add natural pauses with punctuation (commas, periods, em dashes)
+   - Include phonetic guides for difficult words: [pronunciation]
+3. Apply ElevenLabs-specific formatting:
+   - Use ellipses (...) for dramatic pauses
+   - Add line breaks between paragraphs for natural pacing
+   - Indicate emphasis with ALL CAPS sparingly
+   - Use question marks and exclamation points for intonation
+4. Structure for voice cloning consistency:
+   - Maintain consistent tone throughout
+   - Avoid jargon unless contextually appropriate
+   - Write for the target voice's natural range
+5. Add timing markers if syncing to visuals:
+   - [PAUSE 2s] for extended silences
+   - [SLOW] for deliberate sections
+   - [ENERGETIC] for dynamic portions
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Voice Script
+[Title or section header]
+
+**Tone Direction:** [Descriptive tone guidance]
+**Estimated Duration:** [X minutes at normal pace]
+
+---
+
+[Script body with natural paragraph breaks]
+
+[Include pronunciation guides in brackets where needed]
+
+---
+
+## Voice Settings Recommendations
+- Stability: [0-100] - [rationale]
+- Clarity + Similarity: [0-100] - [rationale]
+- Style Exaggeration: [0-100] - [rationale]
+\`\`\`
+
+## Rules
+- Never use SSML tags—ElevenLabs processes natural text
+- Keep sentences under 25 words when possible
+- Avoid consecutive complex sentences
+- Spell out numbers for correct pronunciation (twenty-five, not 25)
+
+## Analogy
+ElevenLabs script writing is like composing sheet music for a vocalist—the notation must be clear enough for natural interpretation.
+`
+  },
+  {
+    id: "whatsapp-business-assistant",
+    name: "Whatsapp Business Assistant",
+    icon: "whatsapp",
+    iconType: 'simpleicons',
+    brandColor: "#25D366",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["whatsapp", "customer-service", "business-messaging", "templates"],
+    desc: "Create customer message templates for WhatsApp Business communication. Use when crafting professional responses, building template libraries, or automating common customer interactions.",
+    trigger: "Use when working with Whatsapp Business",
+    skills: [], tools: ["Whatsapp Business"],
+    source: 'official',
+    md: `---
+name: whatsapp-business-assistant
+description: Create customer message templates for WhatsApp Business communication. Use when crafting professional responses, building template libraries, or automating common customer interactions.
+tags: whatsapp, customer-service, business-messaging, templates
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# WhatsApp Business Customer Message Templates
+
+## When to Use
+Activate when the user:
+- "Write WhatsApp responses for customer inquiries"
+- "Create message templates for my business"
+- "Help me respond to this customer on WhatsApp"
+- "I need automated messages for WhatsApp Business"
+
+## Instructions
+1. Identify the conversation type:
+   - Inquiry response: Product/service questions
+   - Order confirmation: Purchase acknowledgment
+   - Support request: Problem resolution
+   - Follow-up: Post-purchase or service check-in
+   - Marketing: Promotional broadcasts (opt-in required)
+2. Write with WhatsApp conventions:
+   - Keep messages under 1000 characters
+   - Use emojis appropriately (1-2 per message max)
+   - Include clear calls-to-action
+   - Personalize with customer name variables
+3. Structure for quick comprehension:
+   - Lead with the most important information
+   - Use line breaks for readability
+   - Number or bullet list for multiple items
+   - End with next steps or question
+4. Follow WhatsApp Business policy:
+   - Message templates must be pre-approved for broadcasts
+   - 24-hour window for free-form messages after customer reply
+   - Include opt-out language for marketing messages
+5. Create template categories:
+   - Away/out-of-office messages
+   - FAQ responses
+   - Order status updates
+   - Appointment reminders
+   - Payment confirmations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## WhatsApp Business Template Library
+
+**Business Name:** [Name]
+**Industry:** [Type]
+**Tone:** [Professional/Friendly/Formal/Casual]
+
+---
+
+## Template Category: [Category Name]
+
+### Template 1: [Template Name]
+
+**Trigger:** [When to use]
+**Variables:** {{1}} = [Customer name], {{2}} = [Product/Order], {{3}} = [Date/Time]
+
+**Message:**
+\`\`\`
+Hi {{1}}! 👋
+
+[Main message content - clear and concise]
+
+[Secondary details if needed]
+
+[Call-to-action or question]
+
+[Signature or business name]
+\`\`\`
+
+**Approved for Broadcast:** [Yes/No/Pending]
+
+---
+
+### Template 2: [Template Name]
+[Same structure as Template 1]
+
+---
+
+## Quick Reply Library
+
+| Shortcut | Full Message |
+|----------|--------------|
+| /hours | "Our business hours are Monday-Friday, 9 AM - 6 PM. How can we help you?" |
+| /thanks | "Thank you for reaching out! We'll get back to you within [X] hours. 😊" |
+| /shipping | "Your order ships within [X] business days. You'll receive tracking via email." |
+
+---
+
+## Response Templates by Scenario
+
+### Product Inquiry
+\`\`\`
+Hi {{1}}! Thanks for your interest in {{2}}. 🛍️
+
+Here are the details:
+• [Key feature 1]
+• [Key feature 2]
+• Price: [Price]
+
+Would you like me to share more info or help you place an order?
+\`\`\`
+
+### Order Confirmation
+\`\`\`
+Great news, {{1}}! ✅
+
+Your order #{{2}} is confirmed.
+📦 Estimated delivery: {{3}}
+
+Track your order here: [Link]
+
+Questions? Just reply to this message!
+\`\`\`
+
+### Support Acknowledgment
+\`\`\`
+Hi {{1}}, thanks for reaching out. We're sorry to hear about {{2}}. 🙁
+
+I've escalated this to our support team. Expect a response within {{3}} hours.
+
+Reference #: {{4}}
+
+Is there anything else I can help with?
+\`\`\`
+
+### Appointment Reminder
+\`\`\`
+Hi {{1}}! 👋
+
+Friendly reminder about your appointment:
+📅 Date: {{2}}
+⏰ Time: {{3}}
+📍 Location: {{4}}
+
+Need to reschedule? Reply here or call [number].
+\`\`\`
+
+## Broadcast Message Guidelines
+- Always include opt-out: "Reply STOP to unsubscribe"
+- Keep value-focused, not sales-focused
+- Maximum 1-2 broadcasts per week
+- Personalize when possible
+\`\`\`
+
+## Rules
+- Never send marketing messages without opt-in consent
+- Respect the 24-hour messaging window
+- Include business identification in every message
+- Test templates with variables before deploying
+- Keep broadcast messages under 160 characters when possible
+
+## Analogy
+WhatsApp Business templates are like pre-written recipe cards—they ensure consistent quality while saving time on routine preparation.
+`
+  },
+  {
+    id: "hubspot-assistant",
+    name: "Hubspot Assistant",
+    icon: "hubspot",
+    iconType: 'simpleicons',
+    brandColor: "#FF7A59",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "2-3 hours",
+    tags: ["crm", "sales", "email", "deal-notes"],
+    desc: "CRM email and deal note writing for sales and marketing. Use when drafting prospect emails, logging deal notes, or creating follow-up sequences.",
+    trigger: "Use when working with Hubspot",
+    skills: [], tools: ["Hubspot"],
+    source: 'official',
+    md: `---
+name: hubspot-assistant
+description: CRM email and deal note writing for sales and marketing. Use when drafting prospect emails, logging deal notes, or creating follow-up sequences.
+tags: crm, sales, email, deal-notes
+difficulty: intermediate
+time_to_master: 2-3 hours
+---
+
+# HubSpot Assistant
+
+## When to Use
+Activate when the user:
+- "Write a follow-up email to [prospect context]"
+- "Log this meeting as a deal note"
+- "Create an email sequence for [scenario]"
+
+## Instructions
+1. Understand prospect stage, previous interactions, and next steps
+2. Draft personalized emails referencing specific touchpoints
+3. Structure deal notes with clear outcomes and action items
+4. Create sequences with appropriate timing and messaging
+5. Ensure all communications are CRM-ready with proper tagging
+
+## Output Format
+Always produce this exact structure:
+## Prospect Email
+**To**: [Name]
+**Subject**: [Subject line]
+
+**Body**:
+Hi [First name],
+
+[Personalized opening referencing previous interaction]
+
+[Main message - 2-3 sentences max]
+
+[Clear call-to-action]
+
+[Signature]
+
+---
+**CRM Tags**: [lifecycle stage, campaign, etc.]
+**Follow-up**: Schedule for [X days]
+
+## Deal Note Template
+**Meeting Date**: [Date]
+**Attendees**: [Names and titles]
+**Deal Stage**: [Current stage → Next stage]
+
+### Discussion Summary
+- [Key point 1]
+- [Key point 2]
+- [Key point 3]
+
+### Outcomes
+- [Decision made / Next step agreed]
+
+### Action Items
+| Action | Owner | Due Date |
+|--------|-------|----------|
+| [Task] | [Person] | [Date] |
+
+### Next Steps
+[What happens next in the sales process]
+
+## Email Sequence
+| Step | Type | Timing | Subject/Topic |
+|------|------|--------|---------------|
+| 1 | Email | Day 0 | [Initial outreach] |
+| 2 | Email | Day 3 | [Follow-up] |
+| 3 | Call | Day 7 | [Touch base] |
+| 4 | Email | Day 14 | [Value-add content] |
+
+## Rules
+- Always reference previous interactions specifically
+- Keep emails under 150 words
+- Include clear, single call-to-action
+- Log all activities within 24 hours
+- Use prospect's preferred name and title
+
+## Analogy
+A sales assistant who remembers every conversation and drafts perfect follow-ups.
+`
+  },
+  {
+    id: "zoom-assistant",
+    name: "Zoom Assistant",
+    icon: "zoom",
+    iconType: 'simpleicons',
+    brandColor: "#2D8CFF",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "10 minutes",
+    tags: ["zoom", "meetings", "agenda", "follow-up", "documentation"],
+    desc: "Zoom meeting agenda creation, follow-up emails, and meeting documentation. Use when users need to prepare for meetings, create agendas, or write follow-ups.",
+    trigger: "Use when working with Zoom",
+    skills: [], tools: ["Zoom"],
+    source: 'official',
+    md: `---
+name: zoom-assistant
+description: Zoom meeting agenda creation, follow-up emails, and meeting documentation. Use when users need to prepare for meetings, create agendas, or write follow-ups.
+tags: zoom, meetings, agenda, follow-up, documentation
+difficulty: beginner
+time_to_master: 10 minutes
+---
+
+# Zoom Assistant
+
+## When to Use
+Activate when the user:
+- "Create a Zoom meeting agenda for [meeting type]"
+- "Write a follow-up email for my Zoom meeting"
+- "Help me prepare for my [type] meeting"
+- "Draft meeting notes from my Zoom call"
+- "Create a meeting invitation for [purpose]"
+
+## Instructions
+1. Understand the meeting:
+   - What is the purpose? (decision, update, brainstorm, interview)
+   - Who is attending?
+   - How long is the meeting?
+   - What decisions or outcomes are expected?
+2. Create the agenda:
+   - Clear objective stated upfront
+   - Time-boxed sections
+   - Pre-work or preparation needed
+   - Expected outcomes for each section
+3. Write follow-ups:
+   - Key decisions made
+   - Action items with owners and deadlines
+   - Open questions
+   - Next meeting date if applicable
+
+## Output Format
+Always produce this exact structure:
+
+**For Agendas:**
+\`\`\`
+## Meeting Agenda: [Meeting Title]
+
+### Meeting Details
+**Date:** [Date]
+**Time:** [Start time] - [End time] ([Timezone])
+**Duration:** [X] minutes
+**Host:** [Name]
+**Attendees:** [Names or groups]
+**Zoom Link:** [Link]
+
+### Objective
+[One sentence: What we need to accomplish]
+
+### Agenda
+| Time | Topic | Owner | Outcome |
+|------|-------|-------|---------|
+| [X:XX] | Welcome & intros | [Name] | [What we need] |
+| [X:XX] | [Topic 1] | [Name] | [Decision/Discussion] |
+| [X:XX] | [Topic 2] | [Name] | [Decision/Discussion] |
+| [X:XX] | Action items & wrap | [Name] | Clear next steps |
+
+### Pre-Meeting Preparation
+- [ ] [Preparation item 1]
+- [ ] [Preparation item 2]
+
+### Materials
+- [Document/Doc link]
+- [Presentation link]
+\`\`\`
+
+**For Follow-Up Emails:**
+\`\`\`
+Subject: Follow-up: [Meeting Title] - [Date]
+
+Hi [Team/Names],
+
+Thanks for joining today's meeting on [topic].
+
+### Key Decisions
+1. [Decision 1]
+2. [Decision 2]
+
+### Action Items
+| Action | Owner | Due Date |
+|--------|-------|----------|
+| [Task] | @[Name] | [Date] |
+| [Task] | @[Name] | [Date] |
+
+### Open Questions
+- [Question 1]
+- [Question 2]
+
+### Next Steps
+[Next meeting date or next milestone]
+
+Let me know if I missed anything.
+
+[Your name]
+\`\`\`
+
+## Rules
+- Every agenda has a stated objective
+- Time-box every agenda item
+- Follow-ups sent within 24 hours
+- Action items always have owners and dates
+- Include Zoom link in agenda
+
+## Analogy
+Like having an executive assistant who makes sure your meetings actually accomplish something.
+`
+  },
+  {
+    id: "vsco-assistant",
+    name: "Vsco Assistant",
+    icon: "vsco",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["photo-aesthetics", "visual-style", "filters", "branding"],
+    desc: "Create visual style guides using VSCO's editing language. Use when developing consistent photo aesthetics, documenting filter combinations, or building brand visual guidelines.",
+    trigger: "Use when working with Vsco",
+    skills: [], tools: ["Vsco"],
+    source: 'official',
+    md: `---
+name: vsco-assistant
+description: Create visual style guides using VSCO's editing language. Use when developing consistent photo aesthetics, documenting filter combinations, or building brand visual guidelines.
+tags: photo-aesthetics, visual-style, filters, branding
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# VSCO Visual Style Guide Creation
+
+## When to Use
+Activate when the user:
+- "Create a VSCO style guide for my brand"
+- "Document my VSCO editing formula"
+- "Help me develop a consistent photo aesthetic"
+- "I need VSCO filter recommendations for a cohesive look"
+
+## Instructions
+1. Analyze the desired aesthetic direction:
+   - Warm/golden (summer, lifestyle, travel)
+   - Cool/moody (editorial, urban, melancholic)
+   - Clean/minimal (product, lifestyle, professional)
+   - Vintage/film (nostalgic, documentary, artistic)
+2. Identify primary VSCO filter bases:
+   - A series (Analog)
+   - C series (Chrome)
+   - E series (Essence)
+   - M series (Mono)
+   - S series (Bright)
+   - Custom recipe blends
+3. Document the complete editing formula:
+   - Base filter and intensity (%)
+   - Secondary adjustments (Exposure, Contrast, etc.)
+   - Grain amount and size
+   - Vignette strength
+   - Fade percentage
+4. Create usage guidelines:
+   - Best lighting conditions for this style
+   - Subject types that work well
+   - Adjustments for different scenarios
+5. Develop a cohesive grid narrative:
+   - Color palette consistency
+   - Image flow and rhythm
+   - Light/dark balance across posts
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Style Guide: [Name]
+
+**Aesthetic Direction:** [3-5 adjectives]
+**VSCO Filter Base:** [Filter code] @ [XX]%
+
+---
+
+## Base Recipe
+
+| Adjustment | Setting | Notes |
+|------------|---------|-------|
+| Filter | [Code] @ [XX]% | Primary look foundation |
+| Exposure | [+/- X.X] | [When to adjust] |
+| Contrast | [+/- X.X] | [Effect on mood] |
+| Grain | [+/- X.X] | [Size setting if applicable] |
+| Vignette | [+/- X.X] | [Subtle or dramatic] |
+| Fade | [+/- X.X] | [Lifted blacks effect] |
+
+## Color Adjustments (if used)
+- White Balance: [Warm/Cool shift amount]
+- Skin Tone: [+/- X]
+- [Specific color shifts]
+
+---
+
+## Application Guidelines
+
+**Best For:**
+- [Lighting condition 1]
+- [Subject type 1]
+- [Setting/environment 1]
+
+**Adjust When:**
+- [Scenario requiring +exposure]
+- [Scenario requiring -contrast]
+- [Scenario requiring filter intensity change]
+
+---
+
+## Grid Cohesion Tips
+- [Color palette guidance]
+- [Lighting consistency note]
+- [Alternate between close-ups and wide shots]
+\`\`\`
+
+## Rules
+- Never prescribe more than 2 filter blends in a single recipe
+- Always note the filter intensity percentage
+- Include the "why" behind each adjustment
+- Document edge cases where the style breaks down
+
+## Analogy
+A VSCO style guide is like a signature perfume—the same essential notes create a recognizable presence across different contexts.
+`
+  },
+  {
+    id: "writesonic-assistant",
+    name: "Writesonic Assistant",
+    icon: "writesonicai",
+    iconType: 'simpleicons',
+    brandColor: "#7B68EE",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "intermediate",
+    timeToMaster: "40 minutes",
+    tags: ["advertising", "landing-pages", "copywriting", "PPC"],
+    desc: "Create compelling ad copy and landing page content optimized for conversions. Use when writing Google/Facebook ads, landing pages, or marketing campaigns.",
+    trigger: "Use when working with Writesonic",
+    skills: [], tools: ["Writesonic"],
+    source: 'official',
+    md: `---
+name: writesonic-assistant
+description: Create compelling ad copy and landing page content optimized for conversions. Use when writing Google/Facebook ads, landing pages, or marketing campaigns.
+tags: advertising, landing-pages, copywriting, PPC
+difficulty: intermediate
+time_to_master: 40 minutes
+---
+
+# Writesonic Ad & Landing Page Copy
+
+## When to Use
+Activate when the user:
+- "Write Google Ads copy for my business"
+- "Create a landing page for this product"
+- "Help me write Facebook ad copy"
+- "I need ad variations for A/B testing"
+- "Optimize my landing page headline"
+
+## Instructions
+1. For ad copy:
+   - Understand platform constraints (character limits, format requirements)
+   - Identify the unique selling proposition (USP)
+   - Research target audience pain points and desires
+   - Create multiple variations for testing
+   - Include compelling CTAs
+
+2. For landing pages:
+   - Map the customer journey from ad to page
+   - Structure with clear hierarchy (H1, H2, H3)
+   - Include social proof and trust signals
+   - Optimize above-the-fold content
+   - Create scannable, benefit-focused copy
+
+3. Platform-specific optimization:
+   - Google Ads: Keyword relevance, quality score factors
+   - Facebook/Meta: Visual-first, scroll-stopping hooks
+   - Landing pages: Conversion-focused layout
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Ad Copy Set: [Campaign Name]
+
+### Google Ads (RSA Format):
+**Headlines (30 chars each):**
+1. [Headline with keyword]
+2. [Benefit-focused headline]
+3. [Question or curiosity headline]
+
+**Descriptions (90 chars each):**
+1. [Primary benefit + CTA]
+2. [Social proof + offer]
+
+---
+
+### Facebook Ad Variations:
+
+**Variation A - Problem/Solution:**
+**Primary Text:** [125-150 words]
+**Headline:** [40 chars]
+**CTA Button:** [Action]
+
+**Variation B - Social Proof:**
+**Primary Text:** [125-150 words]
+**Headline:** [40 chars]
+**CTA Button:** [Action]
+
+---
+
+## Landing Page Copy: [Page Name]
+
+**H1:** [Benefit-driven headline]
+**Subheadline:** [Supporting value prop]
+
+**Above the Fold:**
+[Hero copy with primary CTA]
+
+**Benefit Section:**
+| Feature | Benefit | Proof Point |
+|---------|---------|-------------|
+| [Feature] | [Benefit] | [Metric/testimonial] |
+
+**Social Proof:**
+[Testimonial block]
+
+**FAQ Section:**
+[3-5 common objections addressed]
+
+**Final CTA:**
+[Compelling close with urgency]
+\`\`\`
+
+## Rules
+- Character counts must be accurate for platform requirements
+- Never make false claims—honesty builds long-term conversions
+- Each variation must have a distinct testing hypothesis
+- CTA must match the actual offer/destination
+
+## Analogy
+Like having a performance marketing expert who knows exactly what makes people click and convert.
+`
+  },
+  {
+    id: "runway-pika-assistant",
+    name: "Runway Pika Assistant",
+    icon: "runway",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "ai",
+    d: 9, i: 9, f: 10,
+    difficulty: "intermediate",
+    timeToMaster: "45 minutes",
+    tags: ["AI-video", "prompts", "video-generation", "motion"],
+    desc: "Engineer effective prompts for AI video generation tools. Use when creating video prompts for AI video generators, motion effects, or video transformations.",
+    trigger: "Use when working with Runway Pika",
+    skills: [], tools: ["Runway Pika"],
+    source: 'official',
+    md: `---
+name: runway-pika-assistant
+description: Engineer effective prompts for AI video generation tools. Use when creating video prompts for AI video generators, motion effects, or video transformations.
+tags: AI-video, prompts, video-generation, motion
+difficulty: intermediate
+time_to_master: 45 minutes
+---
+
+# Runway / Pika AI Video Prompt Engineering
+
+## When to Use
+Activate when the user:
+- "Write a prompt for Runway video generation"
+- "Create a Pika AI video prompt"
+- "Help me generate AI video from this image"
+- "Write prompts for text-to-video"
+- "Create motion effects prompts for AI video"
+
+## Instructions
+1. Define video concept:
+   - Source material (text, image, video)
+   - Desired motion and movement
+   - Duration and pacing
+   - Style and aesthetic
+   - Camera movements
+
+2. Structure effective prompts:
+   - Subject and action (what's happening)
+   - Style and aesthetic (how it looks)
+   - Camera and motion (how it moves)
+   - Technical details (duration, quality)
+   - Mood and atmosphere
+
+3. Platform-specific optimization:
+   - Runway Gen-2/Gen-3: Emphasize motion descriptors
+   - Pika: Focus on action and transformation
+   - Include camera movement specifications
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## AI Video Prompt: [Concept Name]
+
+### Platform: [Runway Gen-3 / Pika / Other]
+### Source: [Text-to-video / Image-to-video / Video-to-video]
+
+---
+
+### Prompt Options:
+
+**Option 1: [Descriptive Name]**
+\`\`\`
+[Full prompt text with all elements]
+\`\`\`
+
+**Prompt Breakdown:**
+| Element | Text | Purpose |
+|---------|------|---------|
+| Subject | [Text] | [What it specifies] |
+| Action | [Text] | [What it specifies] |
+| Style | [Text] | [What it specifies] |
+| Camera | [Text] | [What it specifies] |
+| Quality | [Text] | [What it specifies] |
+
+**Settings Recommendations:**
+- Motion Strength: [Low/Medium/High]
+- Duration: [Seconds]
+- Aspect Ratio: [16:9 / 9:16 / 1:1]
+
+---
+
+**Option 2: [Descriptive Name]**
+\`\`\`
+[Full prompt text with all elements]
+\`\`\`
+
+[Same breakdown structure]
+
+---
+
+**Option 3: [Descriptive Name]**
+\`\`\`
+[Full prompt text with all elements]
+\`\`\`
+
+[Same breakdown structure]
+
+---
+
+### Camera Movement Vocabulary:
+
+| Movement | Effect | Prompt Phrasing |
+|----------|--------|-----------------|
+| Pan | Horizontal sweep | "Slow pan left/right" |
+| Tilt | Vertical sweep | "Tilt up/down" |
+| Zoom | In/out movement | "Slow zoom in/out" |
+| Dolly | Forward/back | "Dolly shot moving forward" |
+| Orbit | Circular around subject | "Orbital camera movement" |
+| Static | Still camera | "Static shot, minimal motion" |
+
+### Motion Intensity Guide:
+- **Subtle:** Gentle movements, natural feel
+- **Moderate:** Clear action, balanced motion
+- **Dynamic:** Strong movement, dramatic effect
+- **Intense:** High energy, rapid motion
+
+### Style Keywords by Aesthetic:
+- **Cinematic:** Film look, anamorphic, cinematic lighting, movie still
+- **Realistic:** Photorealistic, natural, documentary style
+- **Stylized:** Artistic, illustrated, animated, stylized
+- **Dramatic:** High contrast, moody, dramatic lighting, atmospheric
+
+### Common Issues & Solutions:
+| Issue | Prompt Adjustment |
+|-------|-------------------|
+| Too static | Add "slow continuous motion" |
+| Too chaotic | Reduce motion strength, specify "gentle" |
+| Unnatural movement | Add "smooth, natural motion" |
+| Wrong aesthetic | Add specific style keywords |
+
+### Iteration Tips:
+1. Start with simpler prompts, add detail based on results
+2. Test motion strength settings separately
+3. Use reference styles from successful generations
+4. Combine static + motion elements carefully
+\`\`\`
+
+## Rules
+- Always include camera movement specification
+- Balance subject description with motion description
+- Note that longer prompts aren't always better
+- Include iteration suggestions for refinement
+
+## Analogy
+Like having a cinematographer who translates your vision into the technical directions AI video tools need.
+`
+  },
+  {
+    id: "strava-assistant",
+    name: "Strava Assistant",
+    icon: "strava",
+    iconType: 'simpleicons',
+    brandColor: "#FC4C02",
+    cat: "education",
+    d: 6, i: 6, f: 7,
+    difficulty: "intermediate",
+    timeToMaster: "3-4 hours",
+    tags: ["fitness", "training", "running", "cycling"],
+    desc: "Training plan creation for running and cycling goals. Use when building workout schedules, preparing for races, or tracking fitness progress.",
+    trigger: "Use when working with Strava",
+    skills: [], tools: ["Strava"],
+    source: 'official',
+    md: `---
+name: strava-assistant
+description: Training plan creation for running and cycling goals. Use when building workout schedules, preparing for races, or tracking fitness progress.
+tags: fitness, training, running, cycling
+difficulty: intermediate
+time_to_master: 3-4 hours
+---
+
+# Strava Assistant
+
+## When to Use
+Activate when the user:
+- "Create a training plan for [race distance]"
+- "Build a [X]-week running program"
+- "Schedule workouts for [goal]"
+
+## Instructions
+1. Understand current fitness level, goal race/event, and timeline
+2. Apply periodization principles (base, build, peak, taper)
+3. Create progressive overload with recovery weeks
+4. Include varied workout types (easy, tempo, intervals, long)
+5. Account for cross-training and rest days
+6. Provide specific pace/effort guidance
+
+## Output Format
+Always produce this exact structure:
+## Training Plan Overview
+**Goal**: [Race/Event]
+**Distance**: [5K/10K/Half/Marathon/Cycling distance]
+**Duration**: [X] weeks
+**Current Fitness**: [Current weekly volume/PRs]
+**Goal Pace/Time**: [Target]
+
+## Training Zones
+| Zone | Name | Effort | HR Range | Use |
+|------|------|--------|----------|-----|
+| 1 | Recovery | Very easy | [HR] | Recovery runs |
+| 2 | Aerobic | Comfortable | [HR] | Easy runs |
+| 3 | Tempo | Comfortably hard | [HR] | Tempo runs |
+| 4 | Threshold | Hard | [HR] | Intervals |
+| 5 | VO2 Max | Very hard | [HR] | Short intervals |
+
+## Weekly Structure Template
+| Day | Workout Type | Duration | Effort |
+|-----|--------------|----------|--------|
+| Mon | Rest/Cross-train | - | - |
+| Tue | Speed/Intervals | [Time] | [Zone] |
+| Wed | Easy run | [Time] | Zone 2 |
+| Thu | Tempo/Threshold | [Time] | Zone 3-4 |
+| Fri | Rest or Easy | [Time] | Zone 2 |
+| Sat | Long run | [Time] | Zone 2-3 |
+| Sun | Rest or Active Recovery | - | - |
+
+## Weekly Schedule
+
+### Week 1: [Phase Name]
+**Weekly Volume**: [Total distance/time]
+
+| Day | Workout | Details |
+|-----|---------|---------|
+| Mon | Rest | Full rest day |
+| Tue | Intervals | [Specific workout: X x Y distance/time at Z pace] |
+| Wed | Easy | [Distance] at [pace] |
+| Thu | Tempo | [Distance] with [specific tempo segment] |
+| Fri | Rest/Stretch | Active recovery |
+| Sat | Long Run | [Distance] easy pace |
+| Sun | Rest | Full rest day |
+
+[Continue for all weeks in plan]
+
+## Key Sessions Explained
+**[Workout Type]**:
+- **What**: [Description]
+- **Why**: [Training benefit]
+- **Pace**: [Specific guidance]
+
+## Progression Overview
+| Week | Phase | Long Run | Weekly Volume | Focus |
+|------|-------|----------|---------------|-------|
+| 1-4 | Base | [Distance] | [Total] | Aerobic base |
+| 5-8 | Build | [Distance] | [Total] | Threshold |
+| 9-12 | Peak | [Distance] | [Total] | Race-specific |
+| 13-14 | Taper | [Distance] | [Total] | Recovery |
+
+## Race Week Schedule
+| Day | Workout |
+|-----|---------|
+| Mon | Rest |
+| Tue | Easy [X] miles with 2x100m strides |
+| Wed | Easy [X] miles |
+| Thu | Rest |
+| Fri | Easy [X] miles or Rest |
+| Sat | Shakeout: Easy 2-3 miles |
+| Sun | **RACE DAY** 🏃
+
+## Rules
+- Include recovery week every 3-4 weeks
+- Long run should not exceed 30% of weekly volume
+- Never increase weekly volume more than 10%
+- Respect rest days - they're when adaptation happens
+- Adjust for life events, illness, or fatigue signals
+
+## Analogy
+A running coach who builds your training calendar from couch to finish line.
+`
+  },
+  {
+    id: "capcut-assistant",
+    name: "Capcut Assistant",
+    icon: "capcut",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "20 minutes",
+    tags: ["capcut", "video-editing", "scripts", "captions", "short-video"],
+    desc: "CapCut video script writing, caption creation, and editing planning. Use when users need to write scripts, plan edits, or create captions for CapCut videos.",
+    trigger: "Use when working with Capcut",
+    skills: [], tools: ["Capcut"],
+    source: 'official',
+    md: `---
+name: capcut-assistant
+description: CapCut video script writing, caption creation, and editing planning. Use when users need to write scripts, plan edits, or create captions for CapCut videos.
+tags: capcut, video-editing, scripts, captions, short-video
+difficulty: beginner
+time_to_master: 20 minutes
+---
+
+# CapCut Assistant
+
+## When to Use
+Activate when the user:
+- "Write a CapCut video script for [topic]"
+- "Create captions for my CapCut video"
+- "Help me plan my CapCut edit"
+- "Write a hook for my CapCut video"
+- "Structure my short-form video for CapCut"
+
+## Instructions
+1. Understand the video:
+   - What platform? (TikTok, Reels, YouTube Shorts)
+   - What is the purpose? (education, entertainment, promotion)
+   - What is the target length?
+   - What is the hook?
+2. Create the script:
+   - Opening hook (0-3 seconds)
+   - Core content with clear beats
+   - Engagement element (question, reveal)
+   - Call to action
+3. Plan captions and text:
+   - On-screen text timing
+   - Caption style consistency
+   - Auto-captions vs. custom
+   - Text placement for each platform
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## CapCut Video: [Title/Topic]
+
+### Video Overview
+- **Platform:** [TikTok/Reels/Shorts]
+- **Duration:** [X] seconds
+- **Format:** [Talking head/B-roll/Text overlay/Mix]
+- **Goal:** [Engagement/Education/Promotion]
+
+### Script with Timing
+
+**[0:00-0:03] HOOK**
+[Script text]
+*Visual: [What's on screen]*
+*Text overlay: [What text appears]*
+
+**[0:03-0:10] CONTEXT**
+[Script text]
+*Visual: [What's on screen]*
+
+**[0:10-0:30] MAIN CONTENT**
+[Script text]
+*Visual: [What's on screen]*
+*Text overlay: [Key points as text]*
+
+**[0:30-0:45] ENGAGEMENT**
+[Script text - question or reveal]
+*Visual: [What's on screen]*
+
+**[0:45-0:60] CTA**
+[Script text]
+*Visual: [What's on screen]*
+*Text overlay: [Follow/Like/Comment]*
+
+### Caption Style Guide
+**Font:** [Suggested font style]
+**Color:** [Text color]
+**Position:** [Bottom third/Center/etc.]
+**Animation:** [Fade in/Pop/etc.]
+
+### Editing Notes
+**Transitions:**
+- [Time code]: [Transition type]
+- [Time code]: [Transition type]
+
+**Effects:**
+- [Effect suggestion 1]
+- [Effect suggestion 2]
+
+**Music/Sound:**
+- [Suggested sound type or trending sound]
+- [Volume levels: voice vs. music]
+
+### Export Settings
+- Resolution: 1080x1920 (9:16)
+- Frame rate: 30fps or 60fps
+- Platform-specific export
+\`\`\`
+
+## Rules
+- Hook must grab in first 3 seconds
+- Captions should be readable (test on mobile)
+- Match energy of audio with visual pacing
+- One main idea per short video
+- Always include CTA
+
+## Analogy
+Like having a video editor who plans your edit before you even open CapCut.
+`
+  },
+  {
+    id: "nordvpn-assistant",
+    name: "Nordvpn Assistant",
+    icon: "nordvpn",
+    iconType: 'simpleicons',
+    brandColor: "#4687FF",
+    cat: "security",
+    d: 9, i: 9, f: 9,
+    difficulty: "beginner",
+    timeToMaster: "25 minutes",
+    tags: ["privacy", "security", "VPN", "protection"],
+    desc: "Guide privacy and security setup for VPN and online protection. Use when setting up VPN, understanding privacy features, or improving online security.",
+    trigger: "Use when working with Nordvpn",
+    skills: [], tools: ["Nordvpn"],
+    source: 'official',
+    md: `---
+name: nordvpn-assistant
+description: Guide privacy and security setup for VPN and online protection. Use when setting up VPN, understanding privacy features, or improving online security.
+tags: privacy, security, VPN, protection
+difficulty: beginner
+time_to_master: 25 minutes
+---
+
+# NordVPN Privacy & Security Setup Guide
+
+## When to Use
+Activate when the user:
+- "Help me set up my VPN"
+- "How do I use NordVPN features?"
+- "Explain VPN privacy settings"
+- "Set up VPN on my devices"
+- "What security settings should I enable?"
+
+## Instructions
+1. Assess security needs:
+   - Devices needing protection
+   - Primary use cases (streaming, privacy, torrenting, work)
+   - Threat model (basic privacy vs. high security)
+   - Location and jurisdiction concerns
+
+2. Guide setup process:
+   - Account creation and subscription
+   - App installation on devices
+   - Server selection strategies
+   - Feature configuration
+   - Kill switch and split tunneling
+
+3. Recommend security practices:
+   - Optimal server selection
+   - Protocol choices (NordLynx, OpenVPN, IKEv2)
+   - Additional features (Threat Protection, Meshnet)
+   - Best practices for different scenarios
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## NordVPN Setup Guide: [Use Case Focus]
+
+### Your Security Profile:
+**Threat Level:** [Basic / Moderate / High]
+**Primary Use:** [Privacy / Streaming / Torrenting / Work]
+**Devices:** [List of devices to protect]
+
+---
+
+### Initial Setup Checklist:
+
+**Step 1: Account Setup**
+- [ ] Create account at nordvpn.com
+- [ ] Choose subscription plan
+- [ ] Complete payment
+- [ ] Verify email address
+
+**Step 2: App Installation**
+- [ ] Download app for [device list]
+- [ ] Install and log in
+- [ ] Allow necessary permissions
+- [ ] Test connection
+
+**Step 3: Basic Configuration**
+- [ ] Enable Kill Switch
+- [ ] Select preferred protocol
+- [ ] Choose startup behavior
+- [ ] Configure auto-connect rules
+
+---
+
+### Recommended Settings:
+
+| Setting | Recommendation | Why |
+|---------|----------------|-----|
+| Protocol | NordLynx | Fastest, most secure |
+| Kill Switch | Enabled | Prevents data leaks |
+| Auto-connect | On (untrusted networks) | Automatic protection |
+| Split Tunneling | As needed | App-specific routing |
+| Threat Protection | Enabled | Blocks ads/malware |
+
+---
+
+### Server Selection Guide:
+
+**For Privacy:**
+- Connect to countries with strong privacy laws
+- Avoid Five Eyes countries if highly concerned
+- Use specialty servers (Double VPN for extra security)
+
+**For Streaming:**
+- Use streaming-optimized servers
+- Connect to country of content library
+- Test multiple servers if blocked
+
+**For Speed:**
+- Choose nearest server geographically
+- Use NordLynx protocol
+- Avoid overloaded servers (check load percentage)
+
+---
+
+### Feature Setup:
+
+**Threat Protection:**
+\`\`\`
+Settings → Threat Protection → Enable
+- Block ads: ON
+- Block trackers: ON
+- Block malware: ON
+\`\`\`
+
+**Split Tunneling:**
+\`\`\`
+Settings → Split Tunneling → Configure
+- Add apps to bypass VPN
+- Useful for: Banking apps, local services
+\`\`\`
+
+**Meshnet:**
+\`\`\`
+Settings → Meshnet → Enable
+- Access devices remotely
+- Secure file sharing
+- Route traffic through your devices
+\`\`\`
+
+---
+
+### Security Best Practices:
+
+1. **Always On:** Enable auto-connect for open networks
+2. **Public WiFi:** Never connect without VPN active
+3. **Kill Switch:** Keep enabled at all times
+4. **Updates:** Keep the app updated automatically
+5. **Password:** Use strong, unique password for account
+
+### Troubleshooting Quick Fixes:
+| Issue | Solution |
+|-------|----------|
+| Can't connect | Try different server/protocol |
+| Slow speeds | Switch to closer server, use NordLynx |
+| Streaming blocked | Use specialty streaming server |
+| Kill switch triggered | Reconnect to VPN |
+
+### Additional Security Recommendations:
+- [ ] Use password manager for NordVPN account
+- [ ] Enable 2FA on NordVPN account
+- [ ] Review connected devices periodically
+- [ ] Check for IP/DNS leaks at dnsleaktest.com
+\`\`\`
+
+## Rules
+- Never recommend illegal activities (bypassing licensing for piracy, etc.)
+- Acknowledge VPN limitations (doesn't protect against all threats)
+- Recommend legal streaming and content access
+- Note that VPN use may be restricted in some countries
+
+## Analogy
+Like having a security consultant who walks you through locking all your doors and windows without making it complicated.
+`
+  },
+  {
+    id: "twitter-assistant",
+    name: "Twitter Assistant",
+    icon: "x",
+    iconType: 'simpleicons',
+    brandColor: "#000000",
+    cat: "creative",
+    d: 7, i: 7, f: 8,
+    difficulty: "intermediate",
+    timeToMaster: "20 minutes",
+    tags: ["twitter", "x", "threads", "viral", "social-media"],
+    desc: "Twitter/X thread writing, viral hook crafting, and engagement optimization. Use when users need to write threads, craft tweets, or grow their Twitter presence.",
+    trigger: "Use when working with Twitter",
+    skills: [], tools: ["Twitter"],
+    source: 'official',
+    md: `---
+name: twitter-assistant
+description: Twitter/X thread writing, viral hook crafting, and engagement optimization. Use when users need to write threads, craft tweets, or grow their Twitter presence.
+tags: twitter, x, threads, viral, social-media
+difficulty: intermediate
+time_to_master: 20 minutes
+---
+
+# Twitter/X Assistant
+
+## When to Use
+Activate when the user:
+- "Write a Twitter thread about [topic]"
+- "Craft a viral hook for [content]"
+- "Help me write a tweet about [topic]"
+- "Turn this [article/idea] into a Twitter thread"
+- "Optimize this tweet for more engagement"
+
+## Instructions
+1. Determine content type:
+   - Single tweet vs. thread
+   - Educational, inspirational, controversial, or storytelling
+   - Target audience and their interests
+2. For threads:
+   - Write compelling hook tweet (the most important)
+   - Structure 5-10 tweets with clear progression
+   - Each tweet should be complete thought
+   - Number tweets for easy following
+   - End with CTA (follow, reply, retweet)
+3. Optimize for engagement:
+   - Use line breaks for readability
+   - Include relevant hashtags sparingly (1-2)
+   - Add visual elements suggestions (images, GIFs)
+   - Time recommendations for posting
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Twitter Thread: [Topic]
+
+### Tweet 1 (Hook)
+[Compelling opening line]
+
+[Supporting line that creates curiosity]
+
+[Third line if needed]
+
+### Tweet 2
+[First point/step]
+
+[Elaboration]
+
+### Tweet 3
+[Second point/step]
+
+[Elaboration]
+
+### Tweet 4
+[Third point/step]
+
+[Elaboration]
+
+### Tweet 5
+[Final insight or summary]
+
+[CTA: What should readers do?]
+
+---
+**Thread Stats:**
+- Tweets: [X]
+- Characters per tweet: [range]
+- Estimated read time: [X] seconds
+
+**Hook Analysis:**
+- Opens with: [technique used]
+- Creates curiosity by: [method]
+\`\`\`
+
+## Rules
+- Hook tweet is sacred—spend 50% of effort here
+- Maximum 280 characters per tweet
+- Use line breaks but don't over-space
+- No more than 2 hashtags per thread
+- Always include a CTA in the final tweet
+
+## Analogy
+Like having a ghostwriter who studied viral tweets and knows exactly what makes people stop scrolling.
+`
+  },
+  {
+    id: "google-analytics-assistant",
+    name: "Google Analytics Assistant",
+    icon: "googleanalytics",
+    iconType: 'simpleicons',
+    brandColor: "#E37400",
+    cat: "data",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "30 minutes",
+    tags: ["analytics", "metrics", "reporting", "data-interpretation"],
+    desc: "Interpret Google Analytics metrics and generate actionable reports. Use when analyzing traffic data, explaining metric relationships, or creating performance dashboards.",
+    trigger: "Use when working with Google Analytics",
+    skills: [], tools: ["Google Analytics"],
+    source: 'official',
+    md: `---
+name: google-analytics-assistant
+description: Interpret Google Analytics metrics and generate actionable reports. Use when analyzing traffic data, explaining metric relationships, or creating performance dashboards.
+tags: analytics, metrics, reporting, data-interpretation
+difficulty: intermediate
+time_to_master: 30 minutes
+---
+
+# Google Analytics Metrics Interpretation & Reporting
+
+## When to Use
+Activate when the user:
+- "Explain what these Analytics numbers mean"
+- "Help me create a performance report from GA4"
+- "Why did my traffic drop?"
+- "What metrics should I focus on?"
+
+## Instructions
+1. Identify the reporting context:
+   - Time period comparison (WoW, MoM, YoY)
+   - Traffic source or channel analysis
+   - Content or page performance
+   - Conversion and goal tracking
+2. Analyze core metric relationships:
+   - Users + Sessions → Engagement depth
+   - Pageviews + Avg. Time on Page → Content quality
+   - Bounce Rate + Exit Rate → User intent match
+   - Sessions + Conversions → Funnel efficiency
+3. Identify anomalies and patterns:
+   - Traffic spikes and their sources
+   - Declining metric root causes
+   - Seasonal vs. structural changes
+4. Generate insights with business context:
+   - Connect metrics to business outcomes
+   - Explain technical metrics in plain language
+   - Prioritize actionable findings
+5. Create visualization recommendations:
+   - Best chart types for the data
+   - Dashboard layout suggestions
+   - Alert threshold recommendations
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Analytics Report: [Time Period]
+
+**Date Range:** [Start] to [End]
+**Comparison Period:** [Previous period]
+**Primary Focus:** [Channel/Content/Conversion]
+
+---
+
+## Executive Summary
+[2-3 sentences on overall performance trajectory]
+
+---
+
+## Key Metrics Dashboard
+
+| Metric | Current Period | Previous Period | Change | Insight |
+|--------|----------------|-----------------|--------|---------|
+| Users | [X] | [X] | [+/-X%] | [Brief note] |
+| Sessions | [X] | [X] | [+/-X%] | [Brief note] |
+| Pageviews | [X] | [X] | [+/-X%] | [Brief note] |
+| Avg. Session Duration | [X:XX] | [X:XX] | [+/-X%] | [Brief note] |
+| Bounce Rate | [X%] | [X%] | [+/-X%] | [Brief note] |
+| Conversion Rate | [X%] | [X%] | [+/-X%] | [Brief note] |
+
+---
+
+## Performance Analysis
+
+### What's Working
+- [Success point 1 with data]
+- [Success point 2 with data]
+
+### What Needs Attention
+- [Concern 1 with data]
+- [Concern 2 with data]
+
+### Traffic Source Breakdown
+| Source | Sessions | % of Total | Conversion Rate |
+|--------|----------|------------|-----------------|
+| [Source 1] | [X] | [X%] | [X%] |
+
+---
+
+## Recommended Actions
+1. [Specific action based on data]
+2. [Specific action based on data]
+3. [Specific action based on data]
+
+## Questions to Investigate
+- [Follow-up question from data pattern]
+- [Anomaly to explore further]
+\`\`\`
+
+## Rules
+- Always include comparison periods for context
+- Never present a metric in isolation—show relationships
+- Define technical terms when first used
+- Prioritize insights by business impact, not just magnitude of change
+
+## Analogy
+Google Analytics reporting is like a car dashboard—you need to understand what each gauge means and when to take action on warnings.
+`
+  },
+  {
+    id: "gmail-assistant",
+    name: "Gmail Assistant",
+    icon: "gmail",
+    iconType: 'simpleicons',
+    brandColor: "#EA4335",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "10 minutes",
+    tags: ["gmail", "email", "drafting", "triage", "communication"],
+    desc: "Gmail email drafting, smart triage, and inbox management. Use when users need to compose professional emails, organize their inbox, or craft responses to specific situations.",
+    trigger: "Use when working with Gmail",
+    skills: [], tools: ["Gmail"],
+    source: 'official',
+    md: `---
+name: gmail-assistant
+description: Gmail email drafting, smart triage, and inbox management. Use when users need to compose professional emails, organize their inbox, or craft responses to specific situations.
+tags: gmail, email, drafting, triage, communication
+difficulty: beginner
+time_to_master: 10 minutes
+---
+
+# Gmail Assistant
+
+## When to Use
+Activate when the user:
+- "Draft an email to [person] about [topic]"
+- "Help me respond to this email professionally"
+- "Write a follow-up email for [situation]"
+- "Create an email template for [use case]"
+- "Organize my inbox with labels and filters"
+
+## Instructions
+1. Gather context:
+   - Who is the recipient? (relationship, role)
+   - What is the purpose? (request, update, apology, etc.)
+   - What tone is appropriate? (formal, casual, urgent)
+2. Structure the email:
+   - Clear, specific subject line
+   - Appropriate greeting
+   - Concise opening stating purpose
+   - Body with necessary details
+   - Clear call-to-action or next steps
+   - Professional closing
+3. Apply Gmail-specific features when relevant:
+   - Suggest labels for organization
+   - Recommend filter rules
+   - Note when to use CC/BCC
+   - Suggest scheduling for optimal send times
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+**Subject:** [Specific, actionable subject line]
+
+---
+
+[Appropriate greeting],
+
+[Opening sentence stating purpose clearly]
+
+[Body paragraph(s) with details]
+
+[Call-to-action or next steps]
+
+[Closing],
+
+[Your signature placeholder]
+
+---
+
+**Gmail Tips:**
+- Label: [Suggested label if applicable]
+- Schedule: [Optimal send time if relevant]
+- Follow-up: [Suggested follow-up timing]
+\`\`\`
+
+## Rules
+- Always write a subject line (never leave blank)
+- Match tone to recipient relationship
+- Keep emails under 200 words when possible
+- Include clear next steps or deadlines
+- Never include sensitive information placeholders
+
+## Analogy
+Like having a professional ghostwriter who knows email etiquette and helps you sound like your best self.
+`
+  },
+  {
+    id: "tripadvisor-yelp-assistant",
+    name: "Tripadvisor Yelp Assistant",
+    icon: "tripadvisor",
+    iconType: 'simpleicons',
+    brandColor: "#34E0A1",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "15 minutes",
+    tags: ["reviews", "reputation-management", "local-business", "customer-feedback"],
+    desc: "Write reviews and craft business responses for TripAdvisor and Yelp. Use when creating detailed reviews, responding to customer feedback, or managing online reputation.",
+    trigger: "Use when working with Tripadvisor Yelp",
+    skills: [], tools: ["Tripadvisor Yelp"],
+    source: 'official',
+    md: `---
+name: tripadvisor-yelp-assistant
+description: Write reviews and craft business responses for TripAdvisor and Yelp. Use when creating detailed reviews, responding to customer feedback, or managing online reputation.
+tags: reviews, reputation-management, local-business, customer-feedback
+difficulty: beginner
+time_to_master: 15 minutes
+---
+
+# TripAdvisor / Yelp Review Writing & Response
+
+## When to Use
+Activate when the user:
+- "Help me write a review for [business]"
+- "How do I respond to this negative review?"
+- "Write a TripAdvisor review for my recent trip"
+- "Draft a professional response to a customer complaint"
+
+## Instructions
+1. Identify the task type:
+   - Writing a review: Sharing customer experience
+   - Responding to reviews: Business owner reply
+   - Review analysis: Understanding feedback patterns
+2. For review writing:
+   - Lead with overall impression (star-worthy)
+   - Describe specific experiences with details
+   - Mention staff interactions by name if positive
+   - Note any issues with fairness and context
+   - Conclude with recommendation level
+3. For review responses:
+   - Thank the reviewer (even for negative reviews)
+   - Acknowledge specific points raised
+   - Address concerns with action steps
+   - Take conversations offline when appropriate
+   - Invite them back (if appropriate)
+4. Follow platform conventions:
+   - TripAdvisor: Travel-focused, detailed, photo-rich
+   - Yelp: Local business, service quality, atmosphere
+5. Maintain authenticity:
+   - Avoid generic phrases ("hidden gem," "must-visit")
+   - Include specific details that verify experience
+   - Balance positives and negatives fairly
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Review Writing Template
+
+**Platform:** [TripAdvisor/Yelp]
+**Business Type:** [Restaurant/Hotel/Service/Attraction]
+**Overall Rating:** [1-5 stars]
+
+---
+
+### Review Draft
+
+**Title:** [Attention-grabbing summary of experience]
+
+**Rating Breakdown:**
+- Service: [X/5]
+- Quality/Value: [X/5]
+- Atmosphere: [X/5]
+- Overall: [X/5]
+
+**Review Body:**
+
+[Opening: Overall impression and context of visit]
+
+[Experience details: Specific interactions, standout moments, or issues]
+
+[Specific mentions: Staff names, dishes ordered, unique features]
+
+[Constructive feedback if any: Fair, specific, and actionable]
+
+[Closing: Recommendation and target audience]
+
+**Photos to include:**
+- [Photo suggestion 1]
+- [Photo suggestion 2]
+
+**Tags/Categories:** [Relevant tags for the platform]
+
+---
+
+## Response Templates
+
+### Positive Review Response
+\`\`\`
+Thank you so much for your wonderful review, [Name]! 🌟
+
+We're thrilled to hear that [specific compliment from review]. [Staff name] will be delighted to know their service made your visit memorable.
+
+We hope to welcome you back soon! In the meantime, follow us on [social] for updates.
+
+Warm regards,
+[Your name]
+[Business name]
+\`\`\`
+
+### Negative Review Response
+\`\`\`
+Dear [Name],
+
+Thank you for taking the time to share your feedback. We sincerely apologize that your experience didn't meet expectations, particularly regarding [specific issue mentioned].
+
+We take all feedback seriously, and I'd like to make this right. Please reach out to me directly at [email/phone] so we can discuss how to improve your next visit.
+
+We value your patronage and hope to have the opportunity to restore your faith in us.
+
+Best regards,
+[Your name]
+[Title]
+[Business name]
+\`\`\`
+
+### Mixed Review Response
+\`\`\`
+Hi [Name],
+
+Thank you for your honest feedback! We're glad you enjoyed [positive aspect mentioned], but we're sorry to hear [issue mentioned] affected your experience.
+
+We've noted your feedback about [issue] and are working to [action being taken]. Your insights help us improve, and we'd love the chance to show you the changes on your next visit.
+
+Thanks again for dining with us!
+
+Best,
+[Your name]
+[Business name]
+\`\`\`
+
+---
+
+## Response Best Practices
+- Respond within 24-48 hours
+- Never argue or be defensive
+- Take detailed complaints offline
+- Report fake or malicious reviews to platform
+- Thank every reviewer, positive or negative
+\`\`\`
+
+## Rules
+- Never write fake reviews for yourself or competitors
+- Include specific details that prove genuine experience
+- Respond to all negative reviews within 48 hours
+- Never offer incentives for positive reviews
+- Keep responses under 200 words
+
+## Analogy
+Review writing is like being a helpful guide for future travelers—you're providing the context you wish you'd had before your visit.
+`
+  },
+  {
+    id: "n8n-make-assistant",
+    name: "N8N Make Assistant",
+    icon: "n8n",
+    iconType: 'simpleicons',
+    brandColor: "#EA4B71",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "intermediate",
+    timeToMaster: "45 minutes",
+    tags: ["automation", "workflow", "no-code", "integration"],
+    desc: "Design automation workflows for no-code automation platforms. Use when planning automations, creating workflow logic, or connecting apps through automation.",
+    trigger: "Use when working with N8N Make",
+    skills: [], tools: ["N8N Make"],
+    source: 'official',
+    md: `---
+name: n8n-make-assistant
+description: Design automation workflows for no-code automation platforms. Use when planning automations, creating workflow logic, or connecting apps through automation.
+tags: automation, workflow, no-code, integration
+difficulty: intermediate
+time_to_master: 45 minutes
+---
+
+# n8n / Make Automation Workflow Design
+
+## When to Use
+Activate when the user:
+- "Help me design an automation workflow"
+- "Create an n8n workflow for [purpose]"
+- "Design a Make automation"
+- "Connect these apps with automation"
+- "Build an automated workflow between [apps]"
+
+## Instructions
+1. Understand automation need:
+   - Trigger event (what starts the automation)
+   - Source app and data
+   - Desired actions and destinations
+   - Data transformations needed
+   - Error handling requirements
+
+2. Design workflow structure:
+   - Node/module sequence
+   - Data mapping between steps
+   - Conditional logic branches
+   - Error handling paths
+   - Testing checkpoints
+
+3. Provide implementation details:
+   - Node/module configuration
+   - API requirements
+   - Data transformation formulas
+   - Scheduling options
+   - Monitoring suggestions
+
+## Output Format
+Always produce this exact structure:
+\`\`\`
+## Automation Workflow: [Workflow Name]
+
+### Overview:
+**Purpose:** [What this automation accomplishes]
+**Platform:** [n8n / Make]
+**Complexity:** [Simple / Moderate / Complex]
+**Estimated Setup Time:** [Time]
+
+---
+
+### Workflow Diagram:
+
+\`\`\`
+[Trigger] → [Action 1] → [Condition] → [Action 2] → [Action 3]
+                                ↓
+                            [Alternative Action]
+\`\`\`
+
+---
+
+### Node/Module Configuration:
+
+**1. Trigger: [Node Name]**
+\`\`\`
+Platform: [n8n / Make]
+Node Type: [Webhook/Schedule/App Trigger]
+App: [Source app]
+
+Configuration:
+- [Setting 1]: [Value]
+- [Setting 2]: [Value]
+
+Output Data:
+- {{variable_name}}: [Description]
+\`\`\`
+
+**2. Action: [Node Name]**
+\`\`\`
+Platform: [n8n / Make]
+Node Type: [Action type]
+App: [Target app]
+
+Configuration:
+- [Setting 1]: [Value]
+- [Setting 2]: {{mapped_variable}}
+
+Data Mapping:
+| Source Field | Target Field | Transformation |
+|--------------|--------------|----------------|
+| {{source}} | [target] | [Any transformation] |
+\`\`\`
+
+**3. Condition: [Node Name]**
+\`\`\`
+Platform: [n8n / Make]
+Node Type: [IF/Switch/Router]
+
+Conditions:
+- IF {{variable}} [condition] THEN [Branch A]
+- ELSE [Branch B]
+\`\`\`
+
+**4. Action: [Node Name]**
+\`\`\`
+Platform: [n8n / Make]
+Node Type: [Action type]
+App: [Target app]
+
+Configuration:
+- [Settings]
+\`\`\`
+
+---
+
+### Data Flow Map:
+
+| Step | Input | Processing | Output |
+|------|-------|------------|--------|
+| Trigger | [Event/data] | [What happens] | {{output_vars}} |
+| Action 1 | {{vars}} | [Processing] | {{output_vars}} |
+| Action 2 | {{vars}} | [Processing] | {{output_vars}} |
+
+---
+
+### Error Handling:
+
+**Error Scenarios:**
+| Scenario | Detection | Response |
+|----------|-----------|----------|
+| [Error type] | [How to detect] | [What to do] |
+
+**Error Node Configuration:**
+\`\`\`
+Error Trigger: [Settings]
+Error Actions:
+1. [Action 1]
+2. [Action 2]
+\`\`\`
+
+---
+
+### Setup Instructions:
+
+**Prerequisites:**
+- [ ] Account on [App 1] with API access
+- [ ] Account on [App 2]
+- [ ] n8n/Make account
+- [ ] Required API keys/tokens
+
+**Step-by-Step Setup:**
+
+**Step 1: Create Trigger**
+1. [Specific instruction]
+2. [Specific instruction]
+
+**Step 2: Add Action Nodes**
+1. [Specific instruction]
+2. [Specific instruction]
+
+**Step 3: Configure Data Mapping**
+1. [Specific instruction]
+2. [Specific instruction]
+
+**Step 4: Add Error Handling**
+1. [Specific instruction]
+
+**Step 5: Test Workflow**
+1. [Test scenario 1]
+2. [Test scenario 2]
+
+---
+
+### Testing Checklist:
+
+- [ ] Trigger fires correctly
+- [ ] Data passes between nodes correctly
+- [ ] Conditions evaluate as expected
+- [ ] Actions complete successfully
+- [ ] Error handling works
+- [ ] Execution time is acceptable
+- [ ] Results match expectations
+
+---
+
+### Maintenance Notes:
+
+**Monitoring:**
+- Check execution history: [How often]
+- Key metrics to watch: [Metrics]
+
+**Common Issues:**
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| [Problem] | [Cause] | [Fix] |
+
+**Updates Needed When:**
+- [Trigger for review]
+
+---
+
+### Cost Considerations:
+
+| Platform | Pricing Model | Estimated Usage |
+|----------|---------------|-----------------|
+| [App 1] | [Pricing] | [Expected calls] |
+| [App 2] | [Pricing] | [Expected calls] |
+| n8n/Make | [Pricing] | [Expected operations] |
+
+**Estimated Monthly Cost:** $[X]
+\`\`\`
+
+## Rules
+- Workflows should handle errors gracefully
+- Data transformations should be documented clearly
+- API rate limits must be considered
+- Test thoroughly before production use
+
+## Analogy
+Like having an automation architect who designs the blueprint so you can build it without the trial and error.
+`
+  },
+  {
+    id: "stripe-assistant",
+    name: "Stripe Assistant",
+    icon: "stripe",
+    iconType: 'simpleicons',
+    brandColor: "#635BFF",
+    cat: "dev",
+    d: 9, i: 9, f: 9,
+    difficulty: "advanced",
+    timeToMaster: "4-6 hours",
+    tags: ["payments", "api", "integration", "documentation"],
+    desc: "API integration documentation and implementation guidance. Use when integrating Stripe payments, building checkout flows, or handling webhooks.",
+    trigger: "Use when working with Stripe",
+    skills: [], tools: ["Stripe"],
+    source: 'official',
+    md: `---
+name: stripe-assistant
+description: API integration documentation and implementation guidance. Use when integrating Stripe payments, building checkout flows, or handling webhooks.
+tags: payments, api, integration, documentation
+difficulty: advanced
+time_to_master: 4-6 hours
+---
+
+# Stripe Assistant
+
+## When to Use
+Activate when the user:
+- "Help me integrate Stripe payments into [platform]"
+- "Write API documentation for [Stripe feature]"
+- "Debug this Stripe webhook issue"
+
+## Instructions
+1. Understand integration requirements and platform stack
+2. Recommend appropriate Stripe products for use case
+3. Provide code samples with error handling
+4. Document webhook handling and security requirements
+5. Include testing guidance with test card numbers
+6. Ensure PCI compliance considerations are addressed
+
+## Output Format
+Always produce this exact structure:
+## Integration Overview
+**Use Case**: [Description]
+**Stripe Products**: [Products list]
+**Stack**: [Languages/frameworks]
+
+## API Implementation
+
+### Setup
+\`\`\`javascript
+const stripe = require('stripe')('sk_test_...');
+
+// Configuration
+const config = {
+  apiVersion: '2023-10-16',
+  timeout: 30000,
+};
+\`\`\`
+
+### Core Integration
+\`\`\`javascript
+// [Feature description]
+async function functionName(params) {
+  try {
+    const result = await stripe.[resource].[method]({
+      // parameters
+    });
+    return result;
+  } catch (error) {
+    // error handling
+  }
+}
+\`\`\`
+
+## Webhook Handler
+\`\`\`javascript
+app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+  } catch (err) {
+    return res.status(400).send(\`Webhook Error: \${err.message}\`);
+  }
+
+  // Handle event types
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      // Handle successful payment
+      break;
+    case 'payment_intent.payment_failed':
+      // Handle failed payment
+      break;
+  }
+
+  res.json({received: true});
+});
+\`\`\`
+
+## Events to Handle
+| Event | When It Fires | Action Required |
+|-------|---------------|-----------------|
+| payment_intent.succeeded | Payment complete | Fulfill order |
+| payment_intent.payment_failed | Payment declined | Notify customer |
+| invoice.paid | Subscription renewed | Extend access |
+| customer.subscription.deleted | Subscription cancelled | Revoke access |
+
+## Testing
+| Card Number | Scenario | Expected Result |
+|-------------|----------|-----------------|
+| 4242 4242 4242 4242 | Success | Payment succeeds |
+| 4000 0000 0000 0002 | Decline | Card declined |
+| 4000 0000 0000 9995 | Insufficient funds | Payment fails |
+
+## Security Checklist
+- [ ] Use HTTPS for all endpoints
+- [ ] Verify webhook signatures
+- [ ] Store only tokenized data
+- [ ] Use environment variables for keys
+- [ ] Implement idempotency keys
+
+## Rules
+- Never log full card numbers
+- Always use test mode during development
+- Implement webhook signature verification
+- Use idempotency keys for retries
+- Handle all relevant error codes
+
+## Analogy
+A payments engineer who hands you working code and documentation for secure transactions.
+`
+  },
+  {
+    id: "etsy-assistant",
+    name: "Etsy Assistant",
+    icon: "etsy",
+    iconType: 'simpleicons',
+    brandColor: "#F16521",
+    cat: "business",
+    d: 8, i: 8, f: 8,
+    difficulty: "beginner",
+    timeToMaster: "2-3 hours",
+    tags: ["ecommerce", "handmade", "branding", "copywriting"],
+    desc: "Product copy and shop branding for handmade businesses. Use when writing product descriptions, developing shop identity, or creating listing content.",
+    trigger: "Use when working with Etsy",
+    skills: [], tools: ["Etsy"],
+    source: 'official',
+    md: `---
+name: etsy-assistant
+description: Product copy and shop branding for handmade businesses. Use when writing product descriptions, developing shop identity, or creating listing content.
+tags: ecommerce, handmade, branding, copywriting
+difficulty: beginner
+time_to_master: 2-3 hours
+---
+
+# Etsy Assistant
+
+## When to Use
+Activate when the user:
+- "Write an Etsy product description for [item]"
+- "Help me brand my Etsy shop"
+- "Create listing titles that rank in search"
+
+## Instructions
+1. Understand the product, materials, and creation process
+2. Identify target customer and emotional appeal
+3. Write SEO-optimized titles and descriptions
+4. Highlight unique selling points and craftsmanship
+5. Include care instructions and specifications
+6. Develop consistent shop voice and branding
+
+## Output Format
+Always produce this exact structure:
+## Listing Content
+
+### Title (140 characters max)
+[Descriptive title with keywords: Material + Product + Style + Use]
+
+**Alternative Titles**:
+1. [Title variation 1]
+2. [Title variation 2]
+
+### Description
+
+**Opening Hook**
+[Emotional opening that speaks to target buyer]
+
+**Product Details**
+- **Materials**: [Complete list of materials]
+- **Dimensions**: [Exact measurements]
+- **Colors**: [Available options]
+- **Processing Time**: [How long to make]
+- **Shipping**: [Estimated delivery]
+
+**The Story**
+[2-3 sentences about the making process, inspiration, or artisan background]
+
+**Care Instructions**
+[How to care for the item]
+
+**Customization**
+[What can be personalized, how to request]
+
+**Shipping & Policies**
+- Ready to ship in [X] business days
+- Returns accepted within [X] days
+- [Any special policies]
+
+### Tags (13 max)
+1. [keyword phrase]
+2. [keyword phrase]
+3. [keyword phrase]
+[...continue to 13]
+
+### Categories
+**Primary**: [Category]
+**Secondary**: [Subcategory]
+
+## Shop Branding
+
+### Shop Title
+[Memorable shop name]
+
+### Shop Announcement
+"Welcome to [Shop Name]! [One sentence about what you offer]. [One sentence about what makes you special]. [Call to action]."
+
+### Shop Sections
+1. [Section name] - [Brief description]
+2. [Section name] - [Brief description]
+3. [Section name] - [Brief description]
+
+### About Section
+**Shop Owner**: [Your name/story]
+**Origin Story**: [How you started]
+**Process**: [Brief making description]
+**Philosophy**: [What drives your work]
+
+## SEO Checklist
+- [ ] Keywords in first 20 words of description
+- [ ] All 13 tags used
+- [ ] Attributes filled out completely
+- [ ] Categories selected accurately
+- [ ] Materials listed in attributes
+
+## Rules
+- Be specific about dimensions and materials
+- Never overpromise on shipping times
+- Include care instructions for longevity
+- Use conversational, authentic tone
+- Mention gift-wrapping if available
+
+## Analogy
+A craft fair marketer who turns your handmade work into stories that sell.
+`
+  },
 ];
 
 
@@ -3109,5 +15410,7 @@ function saveCommunitySkill(skill) {
 }
 
 function getAllSkills() {
-  return [...getCommunitySkills(), ...SKILLS_DB];
+  // SKILLS_DB first so official skills always render even if community fetch fails
+  const community = getCommunitySkills();
+  return [...SKILLS_DB, ...community];
 }

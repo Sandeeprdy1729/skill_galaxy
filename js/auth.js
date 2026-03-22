@@ -12,6 +12,18 @@ const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 let currentUser = null;
 let currentSession = null;
 
+/* Safe toast — works even if app.js hasn't loaded yet */
+function safeToast(msg, isError = false) {
+  if (typeof toast === 'function') {
+    toast(msg, isError);
+  } else {
+    // fallback: wait for app.js then call toast
+    setTimeout(() => {
+      if (typeof toast === 'function') toast(msg, isError);
+    }, 500);
+  }
+}
+
 /* Called on every page load and auth state change */
 sb.auth.onAuthStateChange(async (event, session) => {
   currentSession = session;
@@ -20,13 +32,13 @@ sb.auth.onAuthStateChange(async (event, session) => {
 
   if (event === 'SIGNED_IN') {
     closeAuthModal();
-    showToast(`Welcome back, ${getUserName(currentUser)} 👋`);
+    safeToast(`Welcome back, ${getUserName(currentUser)} 👋`);
     if (window.__afterLogin) { window.__afterLogin(); window.__afterLogin = null; }
     await refreshCommunitySkills();
   }
 
   if (event === 'SIGNED_OUT') {
-    showToast('Signed out successfully');
+    safeToast('Signed out successfully');
     await refreshCommunitySkills();
   }
 
@@ -160,7 +172,7 @@ async function handleAuthSubmit() {
     });
     setAuthLoading(false);
     if (error) { setAuthError(error.message); return; }
-    showToast('Reset link sent — check your email 📧');
+    safeToast('Reset link sent — check your email 📧');
     closeAuthModal();
     return;
   }
@@ -175,7 +187,7 @@ async function handleAuthSubmit() {
     });
     setAuthLoading(false);
     if (error) { setAuthError(error.message); return; }
-    showToast('Account created! Check your email to confirm 📧');
+    safeToast('Account created! Check your email to confirm 📧');
     closeAuthModal();
   } else {
     const { error } = await sb.auth.signInWithPassword({ email, password: pw });
@@ -209,7 +221,7 @@ async function handlePasswordReset() {
   if (!newPw || newPw.length < 6) { setResetError('Password must be at least 6 characters'); return; }
   const { error } = await sb.auth.updateUser({ password: newPw });
   if (error) { setResetError(error.message); return; }
-  showToast('Password updated! You are now signed in.');
+  safeToast('Password updated! You are now signed in.');
   document.getElementById('resetOverlay')?.classList.remove('open');
 }
 
