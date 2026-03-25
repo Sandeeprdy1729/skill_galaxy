@@ -1,0 +1,52 @@
+{
+  "name": "skillgalaxy",
+  "version": "1.0.0",
+  "description": "SkillGalaxy — Claude Skills Marketplace. Browse, download, and use 9,872+ expert skill files for Claude Projects.",
+  "homepage": "https://skill-galaxy.vercel.app",
+  "repository": "https://github.com/Sandeeprdy1729/skill_galaxy",
+  "license": "Apache-2.0",
+  "mcp_server": {
+    "command": "node",
+    "args": ["mcp-server/index.js"],
+    "description": "MCP server giving Claude access to all 9,872+ skills in the SkillGalaxy library",
+    "tools": [
+      {
+        "name": "search_skills",
+        "description": "Search SkillGalaxy for skills matching a query. Returns matching skill names, descriptions, categories, and IDs."
+      },
+      {
+        "name": "get_skill",
+        "description": "Retrieve the full .md skill file for a specific skill by its ID."
+      },
+      {
+        "name": "get_skill_summary",
+        "description": "Get a brief summary of a skill without the full content."
+      },
+      {
+        "name": "list_categories",
+        "description": "List all available skill categories with counts."
+      }
+    ]
+  },
+  "commands": [
+    {
+      "name": "add-skill",
+      "description": "Scaffold a new SkillGalaxy skill file from a description",
+      "file": ".claude/commands/add-skill.md"
+    },
+    {
+      "name": "review-skill",
+      "description": "Review a skill file for quality and suggest improvements",
+      "file": ".claude/commands/review-skill.md"
+    },
+    {
+      "name": "bundle-skills",
+      "description": "Create a curated skill bundle from a list of skill IDs",
+      "file": ".claude/commands/bundle-skills.md"
+    }
+  ],
+  "claude_code": {
+    "install": "cd mcp-server && npm install && npm run build-skills",
+    "readme": "mcp-server/README.md"
+  }
+}

@@ -553,3 +553,60 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   .pg-info { display: none; }
   .pg-btn  { min-width: 30px; height: 30px; font-size: .72rem; }
 }
+
+/* ── AI SEARCH BUTTON ── */
+.btn-ai-search{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--copper);background:var(--copper-lt);color:var(--copper);border-radius:var(--r-sm);font-size:.72rem;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn-ai-search:hover{background:var(--copper);color:#fff}
+
+/* ── AI SUGGESTION CHIPS ── */
+.ai-chip{display:inline-flex;align-items:center;padding:5px 12px;border:1px solid var(--copper);border-radius:20px;background:var(--copper-lt);color:var(--copper);font-size:.72rem;cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.ai-chip:hover{background:var(--copper);color:#fff}
+.ai-rec-card{background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-md);padding:10px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.ai-rec-card:hover{border-color:var(--copper)}
+.ai-rec-name{font-size:.82rem;font-weight:600;color:var(--text-pri);margin-bottom:3px}
+.ai-rec-reason{font-size:.74rem;color:var(--text-sec);line-height:1.5}
+
+/* ── SKILL BUNDLES ── */
+.bundles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.bundle-card{background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-md);padding:16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:10px}
+.bundle-card:hover{border-color:var(--copper);box-shadow:var(--sh-md)}
+.bundle-card.bundle-featured{border-color:var(--copper-lt)}
+.bundle-icon{font-size:1.8rem;line-height:1}
+.bundle-name{font-size:.9rem;font-weight:600;color:var(--text-pri);margin-bottom:3px}
+.bundle-tagline{font-size:.75rem;color:var(--text-sec);line-height:1.5}
+.bundle-meta{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.bundle-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;border-top:1px solid var(--border-lt)}
+.bundle-count{font-size:.7rem;color:var(--text-ter)}
+
+.bundle-skills-list{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.bundle-skill-row{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-sm);cursor:default;transition:border-color .15s}
+.bundle-skill-row.has-match{cursor:pointer}
+.bundle-skill-row.has-match:hover{border-color:var(--copper)}
+.bundle-skill-num{font-family:'Newsreader',serif;font-size:1rem;color:var(--text-ter);min-width:20px;margin-top:1px}
+.bundle-skill-info{flex:1}
+.bundle-skill-name{font-size:.8rem;font-weight:600;color:var(--text-pri);margin-bottom:2px}
+.bundle-skill-desc{font-size:.7rem;color:var(--text-sec);line-height:1.4}
+
+/* ── EXPORT FORMATS ── */
+.export-formats{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.export-fmt{display:flex;align-items:center;gap:12px;padding:10px 13px;border:1px solid var(--border-lt);border-radius:var(--r-md);cursor:pointer;transition:all .15s}
+.export-fmt:hover{border-color:var(--border);background:var(--cream-dark)}
+.export-fmt.active{border-color:var(--copper);background:var(--copper-lt)}
+.export-fmt-icon{font-size:1.2rem;min-width:24px}
+.export-fmt-name{font-size:.82rem;font-weight:600;color:var(--text-pri)}
+.export-fmt-desc{font-size:.7rem;color:var(--text-ter)}
+
+/* ── SKILLFORGE ── */
+.sm-head{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 22px 16px;border-bottom:1px solid var(--border-lt)}
+.sm-title{font-family:'Newsreader',Georgia,serif;font-size:1.1rem;font-weight:400;color:var(--text-pri)}
+.sm-body{padding:16px 22px 20px;overflow-y:auto;max-height:calc(90vh - 80px)}
+
+/* ── SECURITY BADGE ── */
+.security-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:.62rem;font-weight:600;letter-spacing:.3px}
+.security-badge.safe{background:var(--teal-lt);color:var(--teal);border:1px solid rgba(58,125,110,.2)}
+.security-badge.unsafe{background:var(--red-lt);color:var(--red);border:1px solid rgba(138,58,78,.2)}
+
+@media(max-width:768px){
+  .bundles-grid{grid-template-columns:1fr}
+  .btn-ai-search{display:none}
+}

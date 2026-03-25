@@ -191,3 +191,44 @@ CREATE POLICY "Anyone can insert download log"
 CREATE POLICY "Anyone can view download stats"
   ON public.skill_downloads FOR SELECT
   USING (true);
+
+
+-- ── 6. SECURITY SCORE + AI SCAN COLUMNS ─────────────────────────
+
+ALTER TABLE public.community_skills
+  ADD COLUMN IF NOT EXISTS security_score   INT DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS security_badge   TEXT DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS security_scanned BOOLEAN DEFAULT FALSE;
+
+
+-- ── 7. SKILL BUNDLES TABLE ───────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.skill_bundles (
+  id          TEXT         PRIMARY KEY,           -- kebab-case slug
+  name        TEXT         NOT NULL,
+  icon        TEXT         DEFAULT '📦',
+  tagline     TEXT         DEFAULT '',
+  description TEXT         DEFAULT '',
+  skill_ids   TEXT[]       DEFAULT '{}',          -- array of skill IDs
+  cat         TEXT         DEFAULT 'ai',
+  difficulty  TEXT         DEFAULT 'intermediate',
+  featured    BOOLEAN      DEFAULT FALSE,
+  download_count INT       DEFAULT 0,
+  created_by  UUID         REFERENCES auth.users(id) ON DELETE SET NULL,
+  created_at  TIMESTAMPTZ  DEFAULT NOW(),
+  updated_at  TIMESTAMPTZ  DEFAULT NOW()
+);
+
+ALTER TABLE public.skill_bundles ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can view bundles"
+  ON public.skill_bundles FOR SELECT
+  USING (true);
+
+CREATE POLICY "Authenticated users can create bundles"
+  ON public.skill_bundles FOR INSERT
+  WITH CHECK (auth.uid() IS NOT NULL);
+
+CREATE INDEX IF NOT EXISTS idx_skill_bundles_cat
+  ON public.skill_bundles (cat);
+

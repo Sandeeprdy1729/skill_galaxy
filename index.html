@@ -88,6 +88,22 @@
   </div>
 
   <div class="sidebar-hr"></div>
+  <div class="s-label">Community</div>
+  <div class="nav-item" onclick="showBundlesView()">
+    <span style="font-size:11px;opacity:.6">📦</span>
+    Skill Bundles
+    <span class="nav-count">4</span>
+  </div>
+  <div class="nav-item" onclick="openSkillForge()">
+    <span style="font-size:11px;opacity:.6">✨</span>
+    SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
+  </div>
+  <a class="nav-item" href="dashboard.html" style="text-decoration:none">
+    <span style="font-size:11px;opacity:.6">📊</span>
+    Creator Dashboard
+  </a>
+
+  <div class="sidebar-hr"></div>
   <div class="s-label">Help</div>
   <a class="nav-item" href="guide.html" style="text-decoration:none">
     <span style="font-size:11px;opacity:.6">📖</span>
@@ -118,6 +134,7 @@
       <span class="search-ic">⌕</span>
       <input type="text" id="searchInput" placeholder="Search skills, tools, categories… (⌘K)" autocomplete="off">
     </div>
+    <button class="btn-ai-search" id="aiSearchBtn" onclick="openAiSearch()" title="AI Suggest: find the best skills for your task">✨ AI Suggest</button>
     <div class="tb-right">
       <a href="guide.html" class="btn-guide">📖 Guide</a>
       <div class="tb-pill"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
@@ -167,8 +184,29 @@
       <button class="btn-ghost" style="padding:5px 12px;font-size:.72rem" onclick="exitMySkills()">← All Skills</button>
     </div>
 
+    <!-- AI SEARCH RESULTS (shown when AI Suggest is used) -->
+    <div id="aiSuggestResults" style="display:none;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text-ter)">✨ AI Suggestions</span>
+        <button onclick="dismissAiSuggest()" style="background:none;border:none;color:var(--text-ter);cursor:pointer;font-size:.7rem;margin-left:auto">✕ Dismiss</button>
+      </div>
+      <div id="aiSuggestChips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+
+    <!-- BUNDLES SECTION (shown when Bundles nav is active) -->
+    <div id="bundlesSection" style="display:none;margin-bottom:28px">
+      <div class="sec-row" style="margin-bottom:14px">
+        <div class="sec-label">📦 Skill Bundles <span class="sec-count">4</span></div>
+        <button onclick="hideBundlesView()" style="background:none;border:none;color:var(--text-ter);cursor:pointer;font-size:.72rem">← Back to all skills</button>
+      </div>
+      <div style="font-size:.8rem;color:var(--text-sec);margin-bottom:16px;line-height:1.6">
+        Curated collections of complementary skills. One download = a <code>.zip</code> with all skill files + a master activator that routes Claude to the right skill automatically.
+      </div>
+      <div id="bundlesGrid" class="bundles-grid"></div>
+    </div>
+
     <!-- DIFFICULTY PILLS -->
-    <div class="filter-row">
+    <div class="filter-row" id="diffPills">
       <span style="font-size:.68rem;color:var(--text-ter);margin-right:3px">Difficulty:</span>
       <button class="f-pill active" onclick="setDiff('all',this)">All</button>
       <button class="f-pill" onclick="setDiff('beginner',this)">Beginner</button>
@@ -477,6 +515,144 @@ npm run build-skills</div>
 </div>
 
 
+<!-- BUNDLE DETAIL MODAL -->
+<div class="auth-overlay" id="bundleOverlay">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-head">
+      <div class="modal-head-t">
+        <div class="modal-title" id="bundleModalTitle"></div>
+        <div class="modal-meta" style="font-size:.78rem;color:var(--text-ter)" id="bundleModalTagline"></div>
+      </div>
+      <button class="modal-close" onclick="closeBundleModal()">✕</button>
+    </div>
+    <div class="modal-body" id="bundleModalBody"></div>
+  </div>
+</div>
+
+
+<!-- AI SEARCH MODAL -->
+<div class="auth-overlay" id="aiSearchOverlay">
+  <div class="auth-modal" style="max-width:520px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="auth-logo-text">✨ AI Skill Suggestions</span>
+        <button class="modal-close" onclick="closeAiSearch()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.95rem">Describe your task — AI picks the best skills</div>
+      <div class="auth-subtitle">Paste a prompt or describe what you're working on. Claude finds the 3 most relevant skills.</div>
+    </div>
+    <div class="auth-body" style="padding-top:12px">
+      <div class="form-group">
+        <label class="form-label" for="aiSearchInput">What are you trying to do?</label>
+        <textarea class="form-textarea" id="aiSearchInput" rows="3"
+          placeholder="e.g. I need help writing a technical specification for a microservices architecture with Kubernetes…"
+          style="min-height:70px"></textarea>
+      </div>
+      <div id="aiSearchError" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="aiSearchResultsModal" style="display:none;margin-bottom:12px"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-main" id="aiSearchSubmitBtn" onclick="runAiSearch()">✨ Find Skills</button>
+        <button class="btn-ghost" onclick="closeAiSearch()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SKILLFORGE MODAL -->
+<div class="auth-overlay" id="skillForgeOverlay">
+  <div class="submit-modal" style="max-width:560px">
+    <div class="sm-head">
+      <div>
+        <div class="sm-title">✨ SkillForge — AI Skill Generator</div>
+        <div style="font-size:.74rem;color:var(--text-ter);margin-top:2px">Describe a skill → Claude generates a production-quality .md file</div>
+      </div>
+      <button class="modal-close" onclick="closeSkillForge()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="form-group">
+        <label class="form-label" for="sf-desc">What should this skill do?</label>
+        <textarea class="form-textarea" id="sf-desc" rows="4"
+          placeholder="e.g. A skill that makes Claude an expert at writing STAR-format interview answers. Should help with behavioral questions, structure responses properly, and give specific examples…"
+          style="min-height:90px"></textarea>
+        <div class="form-hint">Be specific: who Claude becomes, when it activates, what output it produces.</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="sf-cat">Category</label>
+          <select class="form-select" id="sf-cat">
+            <option value="ai">AI & ML</option>
+            <option value="dev">Development</option>
+            <option value="writing">Writing</option>
+            <option value="business">Business</option>
+            <option value="security">Cybersecurity</option>
+            <option value="data">Data Engineering</option>
+            <option value="cloud">Cloud & Infra</option>
+            <option value="product">Product & Strategy</option>
+            <option value="creative">Creative Technology</option>
+            <option value="education">Design & Education</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sf-diff">Difficulty</label>
+          <select class="form-select" id="sf-diff">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+      </div>
+      <div id="sf-result" style="display:none;margin-bottom:14px">
+        <div class="m-lbl">Generated Skill Preview</div>
+        <div class="code-block" id="sf-preview" style="max-height:220px;font-size:.7rem"></div>
+        <div id="sf-badge" style="margin-top:8px;font-size:.72rem"></div>
+      </div>
+      <div id="sf-error" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="sf-not-configured" style="display:none;background:var(--copper-lt);border:1px solid rgba(192,123,74,.3);border-radius:var(--r-sm);padding:10px 13px;font-size:.74rem;color:var(--copper);margin-bottom:12px">
+        ⚙️ SkillForge requires <strong>ANTHROPIC_API_KEY</strong> to be set in your Vercel environment. <a href="README.md" target="_blank" style="color:var(--copper)">Setup guide →</a>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-main" id="sf-generate-btn" onclick="runSkillForge()">✨ Generate Skill</button>
+        <button class="btn-ghost" id="sf-submit-btn" style="display:none" onclick="skillForgeSubmit()">↑ Submit to SkillGalaxy</button>
+        <button class="btn-ghost" id="sf-download-btn" style="display:none" onclick="skillForgeDownload()">↓ Download .md</button>
+        <button class="btn-ghost" onclick="closeSkillForge()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- EXPORT MODAL -->
+<div class="auth-overlay" id="exportOverlay">
+  <div class="auth-modal" style="max-width:520px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="auth-logo-text">📤 Export Skill</span>
+        <button class="modal-close" onclick="closeExportModal()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.95rem" id="exportModalTitle">Export</div>
+      <div class="auth-subtitle">Download in any format for your preferred AI tool.</div>
+    </div>
+    <div class="auth-body" style="padding-top:12px">
+      <div class="m-lbl">Choose Format</div>
+      <div class="export-formats" id="exportFormats"></div>
+      <div id="exportPreview" style="margin-top:14px;display:none">
+        <div class="m-lbl" id="exportPreviewLabel">Preview</div>
+        <div class="code-block" id="exportPreviewCode" style="max-height:200px;font-size:.7rem"></div>
+        <div style="display:flex;gap:7px;margin-top:8px">
+          <button class="btn-main" style="flex:none;padding:7px 14px;font-size:.74rem" onclick="downloadExport()">↓ Download</button>
+          <button class="btn-ghost" style="padding:7px 12px;font-size:.74rem" onclick="copyExport()">📋 Copy</button>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn-ghost" onclick="closeExportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- TOAST -->
 <div class="toast" id="toast">
   <span style="opacity:.7">✓</span>
@@ -485,9 +661,11 @@ npm run build-skills</div>
 
 
 <!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMh7g4y4Mj6N2ojJLnuzAfjOWFEbEH26yyAnAu7W7GjEH7I2qTUPJEMaWCT7R7oTMuRqzv7T5VnDlGhVLNXtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/skills-api.js"></script>
+<script src="js/bundles.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
 
