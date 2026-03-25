@@ -1,7 +1,7 @@
 {
   "name": "skillgalaxy-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for SkillGalaxy — connect Claude to 109+ skill files with one toggle",
+  "description": "MCP server for SkillGalaxy — connect Claude to 200+ skill files with one toggle",
   "main": "index.js",
   "type": "module",
   "bin": {
