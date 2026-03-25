@@ -11,16 +11,16 @@ let realtimeChannel = null;
 /* ── FETCH ───────────────────────────────────────── */
 /**
  * Fetch ALL approved community skills from Supabase.
- * PostgREST caps a single request at ~1 000 rows, so we paginate
+ * PostgREST caps a single request at ~1000 rows, so we paginate
  * in chunks until every approved skill has been retrieved.
  */
 async function fetchCommunitySkills() {
   const PAGE = 1000;          // Supabase default max per request
   let allRows = [];
   let from    = 0;
+  let hasMore = true;
 
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (hasMore) {
     const { data, error } = await sb
       .from('community_skills')
       .select('*')
@@ -29,11 +29,11 @@ async function fetchCommunitySkills() {
       .range(from, from + PAGE - 1);
 
     if (error) { console.error('Fetch error:', error); break; }
-    if (!data || data.length === 0) break;
+    if (!data || data.length === 0) { hasMore = false; break; }
 
     allRows = allRows.concat(data);
-    if (data.length < PAGE) break;   // last page
     from += PAGE;
+    if (data.length < PAGE) hasMore = false;   // last page
   }
 
   communitySkillsCache = allRows.map(mapDbSkill);
