@@ -53,6 +53,33 @@ No account needed to download. No friction.
 
 ---
 
+## 🔌 MCP Server — One-Toggle Claude Connection
+
+**NEW:** Connect Claude directly to the entire SkillGalaxy library via [Model Context Protocol](https://modelcontextprotocol.io/). No manual downloads needed.
+
+```bash
+cd mcp-server && npm install && npm run build-skills
+```
+
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "skillgalaxy": {
+      "command": "node",
+      "args": ["/path/to/skill_galaxy/mcp-server/index.js"]
+    }
+  }
+}
+```
+
+Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 200+ skills on demand.
+
+👉 **[Full MCP setup guide →](mcp-server/README.md)**
+
+---
+
 ## Project Structure
 
 ```
@@ -64,6 +91,10 @@ skill_galaxy/
 ├── js/
 │   ├── db.js               # Skills database + Supabase community layer
 │   └── app.js              # Frontend logic: render, filter, modals, download
+├── mcp-server/             # MCP server for Claude Desktop integration
+│   ├── index.js            # MCP server (4 tools: search, get, summary, categories)
+│   ├── skills-data.js      # Auto-generated skills module
+│   └── README.md           # MCP setup instructions
 ├── SUPABASE_SETUP.sql      # Database schema for community skills
 ├── supabase-setup.sql      # Alternate setup script
 ├── SETUP_GUIDE.md          # Full local setup instructions

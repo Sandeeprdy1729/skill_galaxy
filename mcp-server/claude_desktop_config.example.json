@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "skillgalaxy": {
+      "command": "node",
+      "args": ["/FULL/PATH/TO/skill_galaxy/mcp-server/index.js"]
+    }
+  }
+}
