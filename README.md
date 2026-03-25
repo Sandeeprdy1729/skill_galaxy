@@ -6,7 +6,7 @@
 [![Live Site](https://img.shields.io/badge/Live-skill--galaxy.vercel.app-black?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Launch%20Day-orange?style=flat-square)](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-109%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
+[![Skills](https://img.shields.io/badge/Skills-208%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Built by Timps](https://img.shields.io/badge/Built%20by-Timps-purple?style=flat-square)](https://timps-website.vercel.app/)
 
 ---
@@ -40,7 +40,7 @@ No account needed to download. No friction.
 
 | | |
 |---|---|
-| 🧠 Skills | 109+ and growing |
+| 🧠 Skills | 208+ and growing |
 | 🌐 Domains | 16 |
 | 💰 Price | Free. Always. |
 | 👥 Model | Community-built, reviewed within 24hrs |
@@ -74,7 +74,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 200+ skills on demand.
+Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 208+ skills on demand.
 
 👉 **[Full MCP setup guide →](mcp-server/README.md)**
 
@@ -89,8 +89,12 @@ skill_galaxy/
 ├── css/
 │   └── styles.css          # All styles — Claude-inspired theme
 ├── js/
-│   ├── db.js               # Skills database + Supabase community layer
-│   └── app.js              # Frontend logic: render, filter, modals, download
+│   ├── config.js           # Supabase client config + environment setup
+│   ├── db.js               # Skills database (208+ hardcoded skills)
+│   ├── skills-api.js       # Supabase CRUD for community skills
+│   ├── auth.js             # Supabase Auth (login, signup, session)
+│   ├── app.js              # Frontend logic: render, filter, modals, download
+│   └── icon_renderer.js    # Simple Icons + emoji icon rendering
 ├── mcp-server/             # MCP server for Claude Desktop integration
 │   ├── index.js            # MCP server (4 tools: search, get, summary, categories)
 │   ├── skills-data.js      # Auto-generated skills module
