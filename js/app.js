@@ -50,6 +50,8 @@ const appState = {
   query:  '',
   submitTab: 'form',
   view:   'all', // 'all' | 'mine'
+  page:   1,     // current page (1-based)
+  perPage: 48,   // skills per page
 };
 
 // /* ── INIT ────────────────────────────────────────── */
@@ -122,6 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Search
   document.getElementById('searchInput')?.addEventListener('input', e => {
     appState.query = e.target.value;
+    appState.page  = 1;
     renderGrid();
   });
 
@@ -190,13 +193,24 @@ function getFiltered() {
 
 /* ── RENDER GRID ─────────────────────────────────── */
 function renderGrid() {
-  const list = getFiltered();
+  const allFiltered = getFiltered();
   const grid = document.getElementById('skillsGrid');
   if (!grid) return;
 
-  document.getElementById('sectionCount').textContent = list.length;
+  /* ── Pagination math ───────────────────── */
+  const total      = allFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / appState.perPage));
 
-  if (!list.length) {
+  // Clamp page to valid range whenever filters change
+  if (appState.page > totalPages) appState.page = totalPages;
+  if (appState.page < 1) appState.page = 1;
+
+  const start = (appState.page - 1) * appState.perPage;
+  const list  = allFiltered.slice(start, start + appState.perPage);
+
+  document.getElementById('sectionCount').textContent = total;
+
+  if (!total) {
     grid.innerHTML = `
       <div class="empty-state">
         <div style="font-size:2rem;margin-bottom:12px">◌</div>
@@ -208,6 +222,7 @@ function renderGrid() {
           </button>
         </p>
       </div>`;
+    removePagination();
     return;
   }
 
@@ -260,6 +275,58 @@ function renderGrid() {
       </div>
     </div>`;
   }).join('');
+
+  /* ── Pagination controls ───────────────── */
+  renderPagination(totalPages);
+}
+
+/* ── PAGINATION UI ───────────────────────────────── */
+function renderPagination(totalPages) {
+  let wrap = document.getElementById('paginationWrap');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'paginationWrap';
+    wrap.className = 'pagination-wrap';
+    const grid = document.getElementById('skillsGrid');
+    if (grid && grid.parentNode) grid.parentNode.insertBefore(wrap, grid.nextSibling);
+  }
+
+  if (totalPages <= 1) { wrap.innerHTML = ''; return; }
+
+  const cur = appState.page;
+
+  // Build page buttons: show first, last, current ± 2, and ellipses
+  const pages = [];
+  for (let p = 1; p <= totalPages; p++) {
+    if (p === 1 || p === totalPages || (p >= cur - 2 && p <= cur + 2)) {
+      pages.push(p);
+    } else if (pages[pages.length - 1] !== '…') {
+      pages.push('…');
+    }
+  }
+
+  wrap.innerHTML = `
+    <button class="pg-btn" ${cur <= 1 ? 'disabled' : ''} onclick="goPage(${cur - 1})">‹ Prev</button>
+    ${pages.map(p =>
+      p === '…'
+        ? `<span class="pg-ellipsis">…</span>`
+        : `<button class="pg-btn${p === cur ? ' pg-active' : ''}" onclick="goPage(${p})">${p}</button>`
+    ).join('')}
+    <button class="pg-btn" ${cur >= totalPages ? 'disabled' : ''} onclick="goPage(${cur + 1})">Next ›</button>
+    <span class="pg-info">Page ${cur} of ${totalPages}</span>
+  `;
+}
+
+function removePagination() {
+  const wrap = document.getElementById('paginationWrap');
+  if (wrap) wrap.innerHTML = '';
+}
+
+function goPage(n) {
+  appState.page = n;
+  renderGrid();
+  // Scroll to top of grid
+  document.getElementById('skillsGrid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ── SIDEBAR ─────────────────────────────────────── */
@@ -285,6 +352,7 @@ function buildSidebar() {
 
 function setFilter(cat, el) {
   appState.filter = cat;
+  appState.page   = 1;
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
   document.getElementById('navAll-item')?.classList.remove('active');
   if (el) el.classList.add('active');
@@ -293,6 +361,7 @@ function setFilter(cat, el) {
 
 function setFilterAll() {
   appState.filter = 'all';
+  appState.page   = 1;
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
   document.getElementById('navAll-item')?.classList.add('active');
   renderGrid();
@@ -300,6 +369,7 @@ function setFilterAll() {
 
 function setDiff(d, el) {
   appState.diff = d;
+  appState.page = 1;
   document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('active'));
   el?.classList.add('active');
   renderGrid();

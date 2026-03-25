@@ -9,15 +9,34 @@ let communitySkillsCache = [];
 let realtimeChannel = null;
 
 /* ── FETCH ───────────────────────────────────────── */
+/**
+ * Fetch ALL approved community skills from Supabase.
+ * PostgREST caps a single request at ~1 000 rows, so we paginate
+ * in chunks until every approved skill has been retrieved.
+ */
 async function fetchCommunitySkills() {
-  const { data, error } = await sb
-    .from('community_skills')
-    .select('*')
-    .eq('status', 'approved')
-    .order('created_at', { ascending: false });
+  const PAGE = 1000;          // Supabase default max per request
+  let allRows = [];
+  let from    = 0;
 
-  if (error) { console.error('Fetch error:', error); return []; }
-  communitySkillsCache = (data || []).map(mapDbSkill);
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { data, error } = await sb
+      .from('community_skills')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .range(from, from + PAGE - 1);
+
+    if (error) { console.error('Fetch error:', error); break; }
+    if (!data || data.length === 0) break;
+
+    allRows = allRows.concat(data);
+    if (data.length < PAGE) break;   // last page
+    from += PAGE;
+  }
+
+  communitySkillsCache = allRows.map(mapDbSkill);
   return communitySkillsCache;
 }
 
@@ -34,28 +53,32 @@ async function fetchMySkills() {
   return (data || []).map(mapDbSkill);
 }
 
-/* Map DB row → app skill object */
+/* Map DB row → app skill object.
+ * Handles both schema variants:
+ *   supabase-setup.sql uses: slug, desc, score_d/i/f
+ *   SUPABASE_SETUP.sql uses: skill_id, description, demand_score/income_score/future_score
+ */
 function mapDbSkill(row) {
   return {
-    id:           (row.slug || row.id) + '-community-' + row.id.slice(0,8),
+    id:           (row.slug || row.skill_id || row.id) + '-community-' + row.id.slice(0,8),
     _dbId:        row.id,
     name:         row.name,
     icon:         row.icon || '◈',
     cat:          row.cat,
-    d:            row.score_d || 7,
-    i:            row.score_i || 7,
-    f:            row.score_f || 7,
+    d:            row.score_d   || row.demand_score || 7,
+    i:            row.score_i   || row.income_score || 7,
+    f:            row.score_f   || row.future_score || 7,
     difficulty:   row.difficulty,
     timeToMaster: row.time_to_master || '',
     tags:         row.tags || [],
-    desc:         row.description,
+    desc:         row.description || row.desc || '',
     trigger:      row.trigger_text || '',
     skills:       row.skills_list || [],
     tools:        row.tools_list || [],
     md:           row.md_content,
     source:       'community',
     submittedBy:  row.user_email?.split('@')[0] || 'Community',
-    upvotes:      0,
+    upvotes:      row.upvotes || 0,
     downloads:    row.downloads || 0,
     status:       row.status,
     createdAt:    row.created_at,
@@ -89,7 +112,7 @@ async function refreshCommunitySkills() {
 
 function updateTotalCount() {
   const total = getAllSkills().length;
-  const els = ['countDisplay','navAll','sectionCount'];
+  const els = ['countDisplay','navAll','sectionCount','heroCount'];
   els.forEach(id => { const el = document.getElementById(id); if (el) el.textContent = total; });
 }
 
