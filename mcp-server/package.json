@@ -1,0 +1,20 @@
+{
+  "name": "skillgalaxy-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for SkillGalaxy — connect Claude to 200+ skill files with one toggle",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "skillgalaxy-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build-skills": "node scripts/convert-skills.js"
+  },
+  "keywords": ["mcp", "claude", "skills", "model-context-protocol"],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.28.0"
+  }
+}
