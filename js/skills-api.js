@@ -125,8 +125,11 @@ function mapSkillsRow(row) {
     submittedBy:  row.submitted_by || 'SkillGalaxy',
     upvotes:      row.upvotes || 0,
     downloads:    row.downloads || 0,
+    version:      row.version || '1.0.0',
+    changelog:    row.changelog || '',
     status:       row.status,
     createdAt:    row.created_at,
+    updatedAt:    row.updated_at || row.created_at,
   };
 }
 
@@ -157,8 +160,11 @@ function mapDbSkill(row) {
     submittedBy:  row.user_email?.split('@')[0] || 'Community',
     upvotes:      row.upvotes || 0,
     downloads:    row.downloads || 0,
+    version:      row.version || '1.0.0',
+    changelog:    row.changelog || '',
     status:       row.status,
     createdAt:    row.created_at,
+    updatedAt:    row.updated_at || row.created_at,
   };
 }
 
@@ -294,6 +300,8 @@ async function submitSkill(formData) {
     skills_list:    formData.skillsList || [],
     tools_list:     formData.toolsList || [],
     md_content:     formData.md_content.trim(),
+    version:        formData.version || '1.0.0',
+    changelog:      formData.changelog || '',
     status:         'pending',
   };
 
@@ -339,6 +347,70 @@ async function logDownload(dbId) {
     skill_id: dbId,
     user_id:  currentUser?.id || null
   });
+}
+
+/* ── RATINGS & REVIEWS ───────────────────────────── */
+
+/**
+ * Fetch avg rating + review count for a skill.
+ * Returns { avg_rating, review_count } or null on error.
+ */
+async function fetchSkillRating(skillId) {
+  const { data, error } = await sb.rpc('get_skill_rating', { p_skill_id: String(skillId) });
+  if (error) { console.warn('fetchSkillRating error:', error); return null; }
+  return data;
+}
+
+/**
+ * Fetch paginated reviews for a skill.
+ * Returns array of { id, user_email, rating, review_text, created_at }.
+ */
+async function fetchReviews(skillId, limit = 5, offset = 0) {
+  const { data, error } = await sb.rpc('get_skill_reviews', {
+    p_skill_id: String(skillId),
+    p_limit:    limit,
+    p_offset:   offset,
+  });
+  if (error) { console.warn('fetchReviews error:', error); return []; }
+  return data || [];
+}
+
+/**
+ * Submit or update a review for a skill.
+ * Returns { avg_rating, review_count } or throws on error.
+ */
+async function submitReview(skillId, skillTable, rating, reviewText) {
+  if (!currentUser) throw new Error('Sign in to leave a review');
+  const { data, error } = await sb.rpc('upsert_skill_review', {
+    p_skill_id:    String(skillId),
+    p_skill_table: skillTable,
+    p_rating:      rating,
+    p_review_text: reviewText || '',
+  });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/* ── AI SKILL VALIDATOR ──────────────────────────── */
+
+/**
+ * Call the Vercel serverless AI validator.
+ * Returns { score, feedback, approved, configured } or null on network error.
+ * Works gracefully when ANTHROPIC_API_KEY is not configured.
+ */
+async function validateSkillWithAI(name, description, md_content) {
+  try {
+    const res = await fetch('/api/validate-skill', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, description, md_content }),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    console.warn('AI validation unavailable:', err.message);
+    return null;
+  }
 }
 
 /* ── GET ALL SKILLS (skills table + community + hardcoded) ── */

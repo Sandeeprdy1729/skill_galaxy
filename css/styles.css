@@ -298,6 +298,39 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   filter: invert(1) brightness(0.85);
 }
 
+/* ── VERSIONING ── */
+.version-badge{display:inline-flex;align-items:center;padding:1px 7px;border-radius:4px;font-size:.6rem;font-weight:600;letter-spacing:.3px;background:rgba(58,95,138,.08);color:#3a5f8a;border:1px solid rgba(58,95,138,.2)}
+
+/* ── STAR RATINGS ── */
+.star-display{display:inline-flex;align-items:center;gap:4px;font-size:.75rem}
+.star-display .stars{color:#c07b4a;letter-spacing:1px}
+.star-display .star-avg{font-weight:600;color:var(--text-pri)}
+.star-display .star-count{color:var(--text-ter)}
+
+.star-picker{display:flex;gap:3px;margin-top:6px}
+.star-pick{font-size:1.4rem;cursor:pointer;color:var(--border);transition:color .1s,transform .1s;user-select:none}
+.star-pick:hover,.star-pick.sel{color:#c07b4a;transform:scale(1.15)}
+
+.rating-widget{margin-top:7px}
+
+/* ── REVIEW CARDS ── */
+.review-card{background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px 13px;margin-bottom:7px}
+.review-header{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.review-stars{color:#c07b4a;font-size:.9rem;letter-spacing:1px}
+.review-author{font-size:.7rem;font-weight:600;color:var(--text-sec)}
+.review-date{font-size:.66rem;color:var(--text-ter);margin-left:auto}
+.review-text{font-size:.75rem;color:var(--text-sec);line-height:1.6}
+.review-msg{padding:6px 10px;border-radius:var(--r-sm);border:1px solid var(--border-lt);font-size:.72rem}
+
+/* ── PAGINATION ── */
+.pagination-wrap{display:flex;align-items:center;gap:5px;margin-top:18px;flex-wrap:wrap}
+.pg-btn{padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:var(--warm-white);color:var(--text-sec);font-size:.73rem;cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif}
+.pg-btn:hover:not(:disabled){background:var(--cream-dark);color:var(--text-pri)}
+.pg-btn:disabled{opacity:.4;cursor:default}
+.pg-btn.pg-active{background:var(--text-pri);color:var(--cream);border-color:var(--text-pri);font-weight:600}
+.pg-ellipsis{color:var(--text-ter);font-size:.76rem;padding:0 3px}
+.pg-info{font-size:.68rem;color:var(--text-ter);margin-left:6px}
+
 /* ── Emoji fallback ── */
 .skill-icon-emoji,
 .skill-icon-fallback {

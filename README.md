@@ -6,7 +6,7 @@
 [![Live Site](https://img.shields.io/badge/Live-skill--galaxy.vercel.app-black?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Launch%20Day-orange?style=flat-square)](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-208%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
+[![Skills](https://img.shields.io/badge/Skills-9%2C872%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Built by Timps](https://img.shields.io/badge/Built%20by-Timps-purple?style=flat-square)](https://timps-website.vercel.app/)
 
 ---
@@ -40,7 +40,7 @@ No account needed to download. No friction.
 
 | | |
 |---|---|
-| 🧠 Skills | 208+ and growing |
+| 🧠 Skills | 9,872+ and growing |
 | 🌐 Domains | 16 |
 | 💰 Price | Free. Always. |
 | 👥 Model | Community-built, reviewed within 24hrs |
@@ -50,6 +50,22 @@ No account needed to download. No friction.
 ## Domains Covered
 
 `AI & ML` · `Cybersecurity` · `Data Engineering` · `Cloud & Infra` · `Quantum Computing` · `Computational Biology` · `Spatial Computing` · `Blockchain & Web3` · `Robotics & Automation` · `Climate Tech` · `Product & Strategy` · `Creative Technology` · `Development` · `Writing` · `Business` · `Design & Education`
+
+---
+
+## ✨ What's New
+
+### ⭐ Skill Ratings & Reviews
+Every skill now has a 1–5 star rating widget. Open any skill → scroll to **Rate this Skill** → leave a rating and optional review. Average scores and recent reviews load dynamically from Supabase.
+
+### 🤖 AI-Powered Skill Validator
+Community submissions are automatically scored by Claude (claude-haiku) on submit. Skills receive a quality score (1–10) with actionable feedback. Requires `ANTHROPIC_API_KEY` in your Vercel environment — see [AI Validator Setup](#ai-validator-setup).
+
+### 🔌 One-Click "Connect Claude Desktop" Button
+Click **🔌 Connect Claude Desktop** in the hero to get a ready-to-copy `claude_desktop_config.json` snippet that wires the SkillGalaxy MCP server directly into Claude Desktop.
+
+### 📌 Skill Versioning
+Skills now carry a `version` (semver) and `changelog` field. Contributors can bump the version when they update a skill — users see **"Updated X days ago"** and the version in the skill detail modal.
 
 ---
 
@@ -74,9 +90,40 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 208+ skills on demand.
+Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 9,872+ skills on demand.
 
 👉 **[Full MCP setup guide →](mcp-server/README.md)**
+
+---
+
+## AI Validator Setup
+
+The AI validator scores submitted skills automatically using Claude Haiku.
+
+1. Get an [Anthropic API key](https://console.anthropic.com/)
+2. In your Vercel project → Settings → Environment Variables → add:
+   ```
+   ANTHROPIC_API_KEY = sk-ant-...
+   ```
+3. Redeploy. Done. The `/api/validate-skill` endpoint becomes active.
+
+Without the key the validator is silently skipped — submissions still work normally.
+
+---
+
+## Database Migrations
+
+After cloning and running `supabase-setup.sql`, run the migration to enable ratings, reviews, and versioning:
+
+```sql
+-- In Supabase Dashboard → SQL Editor:
+-- Run: supabase-migrations.sql
+```
+
+This adds:
+- `skill_reviews` table (1 review per user per skill, star rating + text)
+- `version` + `changelog` columns on both `skills` and `community_skills`
+- `upsert_skill_review()`, `get_skill_reviews()`, `get_skill_rating()` RPC functions
 
 ---
 
@@ -90,17 +137,19 @@ skill_galaxy/
 │   └── styles.css          # All styles — Claude-inspired theme
 ├── js/
 │   ├── config.js           # Supabase client config + environment setup
-│   ├── db.js               # Skills database (208+ hardcoded skills)
-│   ├── skills-api.js       # Supabase CRUD for community skills
+│   ├── db.js               # Skills database (208 hardcoded + 9,872 from Supabase)
+│   ├── skills-api.js       # Supabase CRUD: community skills, ratings, reviews
 │   ├── auth.js             # Supabase Auth (login, signup, session)
-│   ├── app.js              # Frontend logic: render, filter, modals, download
+│   ├── app.js              # Frontend logic: render, filter, modals, download, ratings
 │   └── icon_renderer.js    # Simple Icons + emoji icon rendering
+├── api/
+│   └── validate-skill.js   # Vercel serverless AI validator (Anthropic API)
 ├── mcp-server/             # MCP server for Claude Desktop integration
 │   ├── index.js            # MCP server (4 tools: search, get, summary, categories)
 │   ├── skills-data.js      # Auto-generated skills module
 │   └── README.md           # MCP setup instructions
-├── SUPABASE_SETUP.sql      # Database schema for community skills
-├── supabase-setup.sql      # Alternate setup script
+├── supabase-setup.sql      # Base database schema
+├── supabase-migrations.sql # Ratings, reviews, versioning migration
 ├── SETUP_GUIDE.md          # Full local setup instructions
 └── README.md
 ```
@@ -120,6 +169,7 @@ skill_galaxy/
 ---
 name: my-skill-name
 description: What this skill does and when Claude should apply it.
+version: 1.0.0
 ---
 
 ## Skill Content
@@ -131,39 +181,13 @@ Your instructions for Claude go here.
 
 ---
 
-## Adding Official Skills (via code)
-
-Open `js/db.js` and push a new object into `SKILLS_DB`:
-
-```js
-{
-  id: 'my-skill-name',           // kebab-case, unique
-  name: 'My Skill Name',
-  icon: '◎',                     // single character or emoji
-  cat: 'ai',                     // must match a key in CATEGORIES
-  d: 8,                          // demand score 1–10
-  i: 8,                          // income score 1–10
-  f: 9,                          // future score 1–10
-  difficulty: 'intermediate',    // beginner | intermediate | advanced | expert
-  timeToMaster: '3–6 months',
-  tags: ['ai', 'my-tag'],
-  desc: 'Short description shown on the card.',
-  trigger: 'Use when…',
-  skills: ['Skill 1', 'Skill 2'],
-  tools: ['Tool A', 'Tool B'],
-  source: 'official',
-  md: `---\nname: my-skill-name\n---\n\nSkill content here.`
-}
-```
-
----
-
 ## Tech Stack
 
 - **Frontend:** Pure HTML, CSS, JavaScript — no frameworks, no build tools
-- **Backend:** [Supabase](https://supabase.com) (Postgres + REST API)
-- **Hosting:** [Vercel](https://vercel.com)
+- **Backend:** [Supabase](https://supabase.com) (Postgres + REST API + RLS)
+- **Hosting:** [Vercel](https://vercel.com) (static files + serverless API routes)
 - **Auth:** Supabase Auth (email + password)
+- **AI:** Anthropic claude-haiku (optional skill validator)
 
 ---
 
@@ -177,5 +201,7 @@ All skill files are free to use, share, and adapt.
 ## Built by Timps
 
 [timps-website.vercel.app](https://timps-website.vercel.app/) · [Product Hunt](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
+
+If SkillGalaxy is useful to you, consider ⭐ starring the repo and upvoting on Product Hunt — it genuinely helps.
 
 If SkillGalaxy is useful to you, consider ⭐ starring the repo and upvoting on Product Hunt — it genuinely helps.

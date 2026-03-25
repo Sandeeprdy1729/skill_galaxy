@@ -391,6 +391,55 @@ function showAllSkills() {
   document.getElementById('mySkillsBtn')?.classList.remove('active');
 }
 
+/* ── STAR RATINGS ────────────────────────────────── */
+
+/**
+ * Render a read-only star display (e.g. ★★★★☆ 4.2 · 18 reviews)
+ */
+function renderStarDisplay(avg, count) {
+  if (!avg || !count) return '';
+  const full  = Math.floor(avg);
+  const half  = avg - full >= 0.4 ? 1 : 0;
+  const empty = 5 - full - half;
+  const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+  return `<span class="star-display" title="${avg} out of 5 (${count} review${count !== 1 ? 's' : ''})">
+    <span class="stars">${stars}</span>
+    <span class="star-avg">${avg}</span>
+    <span class="star-count">· ${count} review${count !== 1 ? 's' : ''}</span>
+  </span>`;
+}
+
+/**
+ * Render interactive star picker (1–5).
+ * starRatingValue tracks the current selection.
+ */
+let starRatingValue = 0;
+
+function renderStarPicker(currentVal) {
+  return `<div class="star-picker" id="starPicker">
+    ${[1,2,3,4,5].map(n => `
+      <span class="star-pick${n <= (currentVal || 0) ? ' sel' : ''}"
+            data-val="${n}"
+            onmouseover="highlightStars(${n})"
+            onmouseout="highlightStars(starRatingValue)"
+            onclick="selectStar(${n})">★</span>`
+    ).join('')}
+  </div>`;
+}
+
+function highlightStars(n) {
+  document.querySelectorAll('.star-pick').forEach((s, i) => {
+    s.classList.toggle('sel', i < n);
+  });
+}
+
+function selectStar(n) {
+  starRatingValue = n;
+  highlightStars(n);
+  const hidden = document.getElementById('ratingInput');
+  if (hidden) hidden.value = n;
+}
+
 /* ── DETAIL MODAL ────────────────────────────────── */
 function openDetail(id) {
   const s = getAllSkills().find(x => x.id === id);
@@ -413,6 +462,15 @@ function openDetail(id) {
     mIcon.innerHTML = iconHtml;
   }
 
+  // Version + last-updated badge
+  const updatedAgo = s.updatedAt ? timeAgo(s.updatedAt) : '';
+  const versionMeta = s.version && s.version !== '1.0.0'
+    ? `<span class="version-badge">v${esc(s.version)}</span>`
+    : '';
+  const updatedMeta = updatedAgo
+    ? `<span style="color:var(--text-ter);font-size:.68rem">Updated ${updatedAgo}</span>`
+    : '';
+
   document.getElementById('mTitle').textContent = s.name;
   document.getElementById('mMeta').innerHTML = `
     <span class="card-tag" style="background:${c.tag};color:${c.tagText}">${esc(c.label)}</span>
@@ -422,7 +480,13 @@ function openDetail(id) {
       : ''}
     ${s.source === 'community'
       ? `<span class="source-badge community">by ${esc(s.submittedBy || 'Community')}</span>`
-      : ''}`;
+      : ''}
+    ${versionMeta}
+    ${updatedMeta}`;
+
+  // Determine skill identifier for ratings (use _dbId when available, else id)
+  const ratingId    = s._dbId ? String(s._dbId) : s.id;
+  const ratingTable = s._table === 'skills' ? 'skills' : 'community_skills';
 
   document.getElementById('mBody').innerHTML = `
     <p class="modal-desc">${esc(s.desc)}</p>
@@ -451,6 +515,11 @@ function openDetail(id) {
       ${s.tools.map(t => `<span class="tool-chip">${esc(t)}</span>`).join('')}
     </div>` : ''}
 
+    ${s.changelog ? `
+    <div class="m-lbl">Changelog</div>
+    <div style="font-size:.74rem;color:var(--text-sec);line-height:1.6;background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px 13px;margin-top:7px">${esc(s.changelog)}</div>
+    ` : ''}
+
     <div class="m-lbl">Skill File Preview</div>
     <div class="code-block">${esc((s.md || '').slice(0, 600))}${(s.md || '').length > 600 ? '\n…' : ''}</div>
 
@@ -462,25 +531,171 @@ function openDetail(id) {
       <div class="ht-step"><div class="step-n">4</div><div>Claude uses this skill automatically in all project conversations</div></div>
     </div>
 
+    <!-- Analytics: downloads + upvotes -->
     ${s._dbId ? `
     <div class="m-lbl">Community Stats</div>
-    <div style="display:flex;gap:10px;margin-bottom:4px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
       <button class="btn-upvote" id="upvoteBtn-${s._dbId}"
               onclick="handleUpvote('${s._dbId}')">
         ▲ Upvote <span id="uv-${s._dbId}">${s.upvotes || 0}</span>
       </button>
-      <span style="color:var(--text-ter);font-size:.72rem;align-self:center">
-        ↓ ${s.downloads || 0} downloads
+      <span style="color:var(--text-ter);font-size:.72rem">
+        ↓ <strong style="color:var(--text-sec)">${s.downloads || 0}</strong> downloads
       </span>
-    </div>` : ''}
+      <span id="ratingDisplay-${esc(ratingId)}" style="font-size:.72rem;color:var(--text-ter)">
+        Loading rating…
+      </span>
+    </div>` : `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;margin-bottom:4px">
+      <span style="color:var(--text-ter);font-size:.72rem">
+        ↓ <strong style="color:var(--text-sec)">${s.downloads || 0}</strong> downloads
+      </span>
+      <span id="ratingDisplay-${esc(ratingId)}" style="font-size:.72rem;color:var(--text-ter)">
+        Loading rating…
+      </span>
+    </div>`}
+
+    <!-- Star rating widget -->
+    <div class="m-lbl" style="margin-top:14px">Rate this Skill</div>
+    <div class="rating-widget" id="ratingWidget-${esc(ratingId)}">
+      ${renderStarPicker(0)}
+      <div id="reviewInputWrap-${esc(ratingId)}" style="display:none;margin-top:8px">
+        <textarea class="form-textarea" id="reviewText-${esc(ratingId)}"
+                  rows="2" placeholder="Optional: share a quick review…"
+                  style="font-size:.76rem;min-height:52px"></textarea>
+        <input type="hidden" id="ratingInput" value="0">
+        <div style="display:flex;gap:7px;margin-top:6px">
+          <button class="btn-main" style="flex:none;padding:7px 14px;font-size:.74rem"
+                  onclick="handleSubmitReview('${esc(ratingId)}','${ratingTable}')">Submit Review</button>
+          <button class="btn-ghost" style="padding:7px 12px;font-size:.74rem"
+                  onclick="cancelReview('${esc(ratingId)}')">Cancel</button>
+        </div>
+        <div class="review-msg" id="reviewMsg-${esc(ratingId)}" style="display:none;margin-top:6px;font-size:.72rem"></div>
+      </div>
+    </div>
+
+    <!-- Existing reviews -->
+    <div id="reviewsList-${esc(ratingId)}" style="margin-top:10px"></div>
 
     <div class="modal-actions">
       <button class="btn-main" onclick="handleDownload('${esc(s.id)}')">↓ Download .md file</button>
+      <button class="btn-ghost" onclick="openClaudeDesktopModal()">🔌 Add to Claude Desktop</button>
       <button class="btn-ghost" onclick="closeDetail()">Close</button>
     </div>`;
 
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Reset star picker state
+  starRatingValue = 0;
+
+  // Wire star picker to show review form on selection
+  document.querySelectorAll('.star-pick').forEach(el => {
+    el.addEventListener('click', () => {
+      const wrap = document.getElementById(`reviewInputWrap-${ratingId}`);
+      if (wrap) wrap.style.display = 'block';
+    });
+  });
+
+  // Load rating + reviews asynchronously
+  loadSkillRatingAndReviews(ratingId);
+}
+
+/* Load rating summary + recent reviews into the modal */
+async function loadSkillRatingAndReviews(ratingId) {
+  const [ratingData, reviews] = await Promise.all([
+    fetchSkillRating(ratingId),
+    fetchReviews(ratingId, 3, 0),
+  ]);
+
+  const displayEl = document.getElementById(`ratingDisplay-${ratingId}`);
+  if (displayEl) {
+    if (ratingData && ratingData.review_count > 0) {
+      displayEl.innerHTML = renderStarDisplay(ratingData.avg_rating, ratingData.review_count);
+    } else {
+      displayEl.textContent = 'No ratings yet — be first!';
+    }
+  }
+
+  const listEl = document.getElementById(`reviewsList-${ratingId}`);
+  if (listEl && reviews.length > 0) {
+    listEl.innerHTML = `
+      <div class="m-lbl">Recent Reviews</div>
+      ${reviews.map(r => `
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+            <span class="review-author">${esc(r.user_email?.split('@')[0] || 'User')}</span>
+            <span class="review-date">${timeAgo(r.created_at)}</span>
+          </div>
+          ${r.review_text ? `<div class="review-text">${esc(r.review_text)}</div>` : ''}
+        </div>`).join('')}`;
+  }
+}
+
+async function handleSubmitReview(ratingId, ratingTable) {
+  const rating = starRatingValue;
+  if (!rating) { toast('Select a star rating first', true); return; }
+  const reviewText = document.getElementById(`reviewText-${ratingId}`)?.value || '';
+  const msgEl = document.getElementById(`reviewMsg-${ratingId}`);
+  try {
+    const result = await submitReview(ratingId, ratingTable, rating, reviewText);
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.style.color = 'var(--teal)';
+      msgEl.textContent = `✓ Review saved! Average: ${result?.avg_rating ?? '–'}/5`;
+    }
+    // Refresh rating display
+    await loadSkillRatingAndReviews(ratingId);
+  } catch (err) {
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.style.color = 'var(--red)';
+      msgEl.textContent = err.message;
+    }
+    if (!isLoggedIn()) openAuthModal('login');
+  }
+}
+
+function cancelReview(ratingId) {
+  const wrap = document.getElementById(`reviewInputWrap-${ratingId}`);
+  if (wrap) wrap.style.display = 'none';
+  starRatingValue = 0;
+  highlightStars(0);
+}
+
+/* ── TIME AGO HELPER ─────────────────────────────── */
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins  = Math.floor(diff / 60000);
+  const hours = Math.floor(mins / 60);
+  const days  = Math.floor(hours / 24);
+  if (days > 30) return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: days > 365 ? 'numeric' : undefined });
+  if (days > 0)  return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (mins > 0)  return `${mins}m ago`;
+  return 'just now';
+}
+
+/* ── CLAUDE DESKTOP MODAL ────────────────────────── */
+function openClaudeDesktopModal() {
+  document.getElementById('claudeDesktopOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeClaudeDesktopModal() {
+  document.getElementById('claudeDesktopOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function copyDesktopConfig() {
+  const cfg = document.getElementById('desktopConfigBlock')?.textContent || '';
+  navigator.clipboard.writeText(cfg).then(() => {
+    toast('Config copied to clipboard!');
+  }).catch(() => {
+    toast('Copy failed — select and copy manually', true);
+  });
 }
 
 function closeDetail() {
@@ -564,15 +779,17 @@ async function handleFormSubmit() {
 
   const get = id => document.getElementById(id)?.value?.trim() || '';
 
-  const name    = get('f-name');
-  const cat     = get('f-cat');
-  const diff    = get('f-diff');
-  const time    = get('f-time');
-  const desc    = get('f-desc');
-  const trigger = get('f-trigger');
-  const demand  = get('f-demand');
-  const income  = get('f-income');
-  const future  = get('f-future');
+  const name      = get('f-name');
+  const cat       = get('f-cat');
+  const diff      = get('f-diff');
+  const time      = get('f-time');
+  const desc      = get('f-desc');
+  const trigger   = get('f-trigger');
+  const demand    = get('f-demand');
+  const income    = get('f-income');
+  const future    = get('f-future');
+  const version   = get('f-version') || '1.0.0';
+  const changelog = get('f-changelog');
 
   const skillsList = get('f-skills').split(',').map(s => s.trim()).filter(Boolean);
   const toolsList  = get('f-tools').split(',').map(s => s.trim()).filter(Boolean);
@@ -589,9 +806,33 @@ async function handleFormSubmit() {
     tags: tagsList, skillsList, toolsList,
     md_content: md,
     icon: '◈',
+    version, changelog,
   };
 
   setSubmitLoading(true);
+
+  // AI validation step (non-blocking — runs in parallel with submit)
+  const aiScoreEl = document.getElementById('aiScoreResult');
+  if (aiScoreEl) aiScoreEl.style.display = 'none';
+  let aiResult = null;
+
+  try {
+    // Run AI validation; falls back gracefully if endpoint not configured
+    aiResult = await validateSkillWithAI(name, desc, md);
+  } catch (_) { /* swallow — validation is optional */ }
+
+  // Show AI score if configured
+  if (aiResult?.configured && aiResult.score != null && aiScoreEl) {
+    const scoreColor = aiResult.score >= 8 ? 'var(--teal)' : aiResult.score >= 6 ? '#8a6a1a' : 'var(--red)';
+    aiScoreEl.innerHTML = `
+      <div style="background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px 13px;font-size:.76rem;margin-bottom:10px">
+        <strong style="color:${scoreColor}">AI Score: ${aiResult.score}/10</strong>
+        ${aiResult.feedback ? `<span style="color:var(--text-sec);margin-left:8px">${esc(aiResult.feedback)}</span>` : ''}
+        ${!aiResult.approved ? `<div style="color:var(--red);margin-top:4px;font-size:.72rem">⚠️ Score below threshold. Consider improving the skill before submitting.</div>` : ''}
+      </div>`;
+    aiScoreEl.style.display = 'block';
+  }
+
   try {
     await submitSkill(formData);
     setSubmitLoading(false);
@@ -605,6 +846,7 @@ async function handleFormSubmit() {
           <div style="font-weight:600;color:var(--text-pri);margin-bottom:4px">Skill submitted!</div>
           <div style="font-size:.78rem;color:var(--text-sec)">
             Under review — usually live within 24hrs.
+            ${aiResult?.score ? `<br>AI quality score: <strong>${aiResult.score}/10</strong>` : ''}
           </div>
         </div>`;
     }

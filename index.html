@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillGalaxy — Claude Skills Marketplace</title>
-  <meta name="description" content="109+ free skill files for Claude Projects. Download expert .md skills for AI, coding, security, writing and more — or share your own with the community.">
+  <meta name="description" content="9,872+ free skill files for Claude Projects. Download expert .md skills for AI, coding, security, writing and more — or share your own with the community.">
   <meta property="og:title" content="SkillGalaxy — Claude Skills Marketplace">
-  <meta property="og:description" content="Free skill files that make Claude an expert at anything. 109+ skills ready to download.">
+  <meta property="og:description" content="Free skill files that make Claude an expert at anything. 9,872+ skills ready to download.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -71,7 +71,7 @@
   <div class="nav-item active" id="navAll-item" onclick="setFilterAll()">
     <span class="nav-dot" style="background:var(--text-ter)"></span>
     All Skills
-    <span class="nav-count" id="navAll">109</span>
+    <span class="nav-count" id="navAll">9872</span>
   </div>
   <div id="catNav"></div>
 
@@ -120,7 +120,7 @@
     </div>
     <div class="tb-right">
       <a href="guide.html" class="btn-guide">📖 Guide</a>
-      <div class="tb-pill"><strong id="countDisplay">109</strong>&nbsp;skills</div>
+      <div class="tb-pill"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
       <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')">Sign In</button>
       <div class="user-chip hidden" id="userChip">
         <div class="user-dot" id="userInitial">U</div>
@@ -141,13 +141,14 @@
         <div class="hero-title">The Claude Skills Marketplace</div>
         <div class="hero-sub">Download expert <code>.md</code> skill files for Claude Projects. Upload once — Claude applies it automatically in every conversation. No repeated instructions. No copy-paste. Just results.</div>
         <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-num" id="heroCount">109</span><span class="hero-stat-lbl">Skills</span></div>
+          <div class="hero-stat"><span class="hero-stat-num" id="heroCount">9872</span><span class="hero-stat-lbl">Skills</span></div>
           <div class="hero-stat"><span class="hero-stat-num">16</span><span class="hero-stat-lbl">Domains</span></div>
           <div class="hero-stat"><span class="hero-stat-num">Free</span><span class="hero-stat-lbl">Always</span></div>
         </div>
       </div>
       <div class="hero-right">
         <button class="btn-hero-primary" onclick="requireLogin(openSubmit)">↑ Submit a Skill</button>
+        <button class="btn-hero-secondary" onclick="openClaudeDesktopModal()">🔌 Connect Claude Desktop</button>
         <a href="guide.html" class="btn-hero-secondary">📖 How it works</a>
       </div>
     </div>
@@ -177,7 +178,7 @@
     </div>
 
     <div class="sec-row">
-      <div class="sec-label">Skills <span class="sec-count" id="sectionCount">109</span></div>
+      <div class="sec-label">Skills <span class="sec-count" id="sectionCount">9872</span></div>
     </div>
 
     <div id="skillsGrid"></div>
@@ -367,8 +368,21 @@
               <input class="form-input" id="f-future" type="number" min="1" max="10" value="7">
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-version">Version</label>
+              <input class="form-input" id="f-version" type="text" placeholder="1.0.0" value="1.0.0">
+              <div class="form-hint">Semver — increment when you update the skill</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-changelog">Changelog</label>
+              <input class="form-input" id="f-changelog" type="text" placeholder="What changed in this version?">
+            </div>
+          </div>
+          <div id="aiScoreResult" style="display:none"></div>
           <div style="padding:10px 13px;background:var(--cream-dark);border-radius:var(--r-sm);font-size:.72rem;color:var(--text-ter);margin-bottom:14px;line-height:1.6">
             💡 Your skill will be reviewed before going live (usually within 24 hours). Track status in <strong>My Submissions</strong>. Skills without specific trigger phrases are the most common reason for rejection.
+            <br>✨ <strong>AI Validator</strong> automatically scores your skill quality on submit (requires ANTHROPIC_API_KEY to be configured).
           </div>
           <div style="display:flex;gap:8px;align-items:center">
             <button type="submit" class="btn-main" id="submitFormBtn">Submit Skill</button>
@@ -401,6 +415,63 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</div>
+
+
+<!-- CLAUDE DESKTOP MODAL -->
+<div class="auth-overlay" id="claudeDesktopOverlay">
+  <div class="auth-modal" style="max-width:560px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="auth-logo-mark"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="#f9f7f4"/></svg></div>
+          <span class="auth-logo-text">🔌 Connect Claude Desktop</span>
+        </div>
+        <button class="modal-close" onclick="closeClaudeDesktopModal()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:1rem">Add SkillGalaxy MCP to Claude Desktop</div>
+      <div class="auth-subtitle">One config change gives Claude direct access to all 9,872+ skills — no manual downloads.</div>
+    </div>
+    <div class="auth-body" style="padding-top:16px">
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">1. Install the MCP server</div>
+      <div class="code-block" style="font-size:.72rem;margin-bottom:14px">cd /path/to/skill_galaxy/mcp-server
+npm install
+npm run build-skills</div>
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">2. Add to your Claude Desktop config</div>
+      <div style="font-size:.7rem;color:var(--text-ter);margin-bottom:5px">
+        📁 Config file location:
+        <span style="font-family:monospace;font-size:.68rem">
+          macOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>
+          &nbsp;·&nbsp; Windows: <code>%APPDATA%\Claude\claude_desktop_config.json</code>
+        </span>
+      </div>
+      <div class="code-block" id="desktopConfigBlock" style="font-size:.72rem;margin-bottom:8px">{
+  "mcpServers": {
+    "skillgalaxy": {
+      "command": "node",
+      "args": ["/FULL/PATH/TO/skill_galaxy/mcp-server/index.js"]
+    }
+  }
+}</div>
+      <button class="btn-ghost" style="width:100%;margin-bottom:14px;font-size:.76rem" onclick="copyDesktopConfig()">📋 Copy config JSON</button>
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">3. Restart Claude Desktop</div>
+      <div style="font-size:.74rem;color:var(--text-ter);line-height:1.6;margin-bottom:14px">
+        Claude can now <strong>search_skills</strong>, <strong>get_skill</strong>, <strong>list_categories</strong>, and retrieve any of the 9,872+ skills on demand — without manual downloads.
+      </div>
+
+      <div style="background:var(--teal-lt);border:1px solid rgba(58,125,110,.2);border-radius:var(--r-sm);padding:10px 13px;font-size:.72rem;color:var(--teal);margin-bottom:14px">
+        💡 <strong>Tip:</strong> Replace <code>/FULL/PATH/TO/skill_galaxy</code> with the actual absolute path where you cloned this repo.
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <a class="btn-main" href="mcp-server/README.md" target="_blank" style="text-decoration:none;font-size:.76rem">📖 Full MCP Guide</a>
+        <button class="btn-ghost" onclick="closeClaudeDesktopModal()">Close</button>
+      </div>
     </div>
   </div>
 </div>
