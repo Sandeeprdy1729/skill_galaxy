@@ -137,7 +137,7 @@ function mapSkillsRow(row) {
  */
 function mapDbSkill(row) {
   return {
-    id:           (row.slug || row.skill_id || row.id) + '-community-' + row.id.slice(0,8),
+    id:           (row.slug || row.skill_id || row.id) + '-community-' + String(row.id).slice(0,8),
     _dbId:        row.id,
     name:         row.name,
     icon:         row.icon || '◈',
