@@ -391,6 +391,55 @@ function showAllSkills() {
   document.getElementById('mySkillsBtn')?.classList.remove('active');
 }
 
+/* ── STAR RATINGS ────────────────────────────────── */
+
+/**
+ * Render a read-only star display (e.g. ★★★★☆ 4.2 · 18 reviews)
+ */
+function renderStarDisplay(avg, count) {
+  if (!avg || !count) return '';
+  const full  = Math.floor(avg);
+  const half  = avg - full >= 0.4 ? 1 : 0;
+  const empty = 5 - full - half;
+  const stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+  return `<span class="star-display" title="${avg} out of 5 (${count} review${count !== 1 ? 's' : ''})">
+    <span class="stars">${stars}</span>
+    <span class="star-avg">${avg}</span>
+    <span class="star-count">· ${count} review${count !== 1 ? 's' : ''}</span>
+  </span>`;
+}
+
+/**
+ * Render interactive star picker (1–5).
+ * starRatingValue tracks the current selection.
+ */
+let starRatingValue = 0;
+
+function renderStarPicker(currentVal) {
+  return `<div class="star-picker" id="starPicker">
+    ${[1,2,3,4,5].map(n => `
+      <span class="star-pick${n <= (currentVal || 0) ? ' sel' : ''}"
+            data-val="${n}"
+            onmouseover="highlightStars(${n})"
+            onmouseout="highlightStars(starRatingValue)"
+            onclick="selectStar(${n})">★</span>`
+    ).join('')}
+  </div>`;
+}
+
+function highlightStars(n) {
+  document.querySelectorAll('.star-pick').forEach((s, i) => {
+    s.classList.toggle('sel', i < n);
+  });
+}
+
+function selectStar(n) {
+  starRatingValue = n;
+  highlightStars(n);
+  const hidden = document.getElementById('ratingInput');
+  if (hidden) hidden.value = n;
+}
+
 /* ── DETAIL MODAL ────────────────────────────────── */
 function openDetail(id) {
   const s = getAllSkills().find(x => x.id === id);
@@ -413,6 +462,15 @@ function openDetail(id) {
     mIcon.innerHTML = iconHtml;
   }
 
+  // Version + last-updated badge
+  const updatedAgo = s.updatedAt ? timeAgo(s.updatedAt) : '';
+  const versionMeta = s.version && s.version !== '1.0.0'
+    ? `<span class="version-badge">v${esc(s.version)}</span>`
+    : '';
+  const updatedMeta = updatedAgo
+    ? `<span style="color:var(--text-ter);font-size:.68rem">Updated ${updatedAgo}</span>`
+    : '';
+
   document.getElementById('mTitle').textContent = s.name;
   document.getElementById('mMeta').innerHTML = `
     <span class="card-tag" style="background:${c.tag};color:${c.tagText}">${esc(c.label)}</span>
@@ -422,7 +480,13 @@ function openDetail(id) {
       : ''}
     ${s.source === 'community'
       ? `<span class="source-badge community">by ${esc(s.submittedBy || 'Community')}</span>`
-      : ''}`;
+      : ''}
+    ${versionMeta}
+    ${updatedMeta}`;
+
+  // Determine skill identifier for ratings (use _dbId when available, else id)
+  const ratingId    = s._dbId ? String(s._dbId) : s.id;
+  const ratingTable = s._table === 'skills' ? 'skills' : 'community_skills';
 
   document.getElementById('mBody').innerHTML = `
     <p class="modal-desc">${esc(s.desc)}</p>
@@ -451,6 +515,11 @@ function openDetail(id) {
       ${s.tools.map(t => `<span class="tool-chip">${esc(t)}</span>`).join('')}
     </div>` : ''}
 
+    ${s.changelog ? `
+    <div class="m-lbl">Changelog</div>
+    <div style="font-size:.74rem;color:var(--text-sec);line-height:1.6;background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px 13px;margin-top:7px">${esc(s.changelog)}</div>
+    ` : ''}
+
     <div class="m-lbl">Skill File Preview</div>
     <div class="code-block">${esc((s.md || '').slice(0, 600))}${(s.md || '').length > 600 ? '\n…' : ''}</div>
 
@@ -462,25 +531,172 @@ function openDetail(id) {
       <div class="ht-step"><div class="step-n">4</div><div>Claude uses this skill automatically in all project conversations</div></div>
     </div>
 
+    <!-- Analytics: downloads + upvotes -->
     ${s._dbId ? `
     <div class="m-lbl">Community Stats</div>
-    <div style="display:flex;gap:10px;margin-bottom:4px">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
       <button class="btn-upvote" id="upvoteBtn-${s._dbId}"
               onclick="handleUpvote('${s._dbId}')">
         ▲ Upvote <span id="uv-${s._dbId}">${s.upvotes || 0}</span>
       </button>
-      <span style="color:var(--text-ter);font-size:.72rem;align-self:center">
-        ↓ ${s.downloads || 0} downloads
+      <span style="color:var(--text-ter);font-size:.72rem">
+        ↓ <strong style="color:var(--text-sec)">${s.downloads || 0}</strong> downloads
       </span>
-    </div>` : ''}
+      <span id="ratingDisplay-${esc(ratingId)}" style="font-size:.72rem;color:var(--text-ter)">
+        Loading rating…
+      </span>
+    </div>` : `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px;margin-bottom:4px">
+      <span style="color:var(--text-ter);font-size:.72rem">
+        ↓ <strong style="color:var(--text-sec)">${s.downloads || 0}</strong> downloads
+      </span>
+      <span id="ratingDisplay-${esc(ratingId)}" style="font-size:.72rem;color:var(--text-ter)">
+        Loading rating…
+      </span>
+    </div>`}
+
+    <!-- Star rating widget -->
+    <div class="m-lbl" style="margin-top:14px">Rate this Skill</div>
+    <div class="rating-widget" id="ratingWidget-${esc(ratingId)}">
+      ${renderStarPicker(0)}
+      <div id="reviewInputWrap-${esc(ratingId)}" style="display:none;margin-top:8px">
+        <textarea class="form-textarea" id="reviewText-${esc(ratingId)}"
+                  rows="2" placeholder="Optional: share a quick review…"
+                  style="font-size:.76rem;min-height:52px"></textarea>
+        <input type="hidden" id="ratingInput" value="0">
+        <div style="display:flex;gap:7px;margin-top:6px">
+          <button class="btn-main" style="flex:none;padding:7px 14px;font-size:.74rem"
+                  onclick="handleSubmitReview('${esc(ratingId)}','${ratingTable}')">Submit Review</button>
+          <button class="btn-ghost" style="padding:7px 12px;font-size:.74rem"
+                  onclick="cancelReview('${esc(ratingId)}')">Cancel</button>
+        </div>
+        <div class="review-msg" id="reviewMsg-${esc(ratingId)}" style="display:none;margin-top:6px;font-size:.72rem"></div>
+      </div>
+    </div>
+
+    <!-- Existing reviews -->
+    <div id="reviewsList-${esc(ratingId)}" style="margin-top:10px"></div>
 
     <div class="modal-actions">
       <button class="btn-main" onclick="handleDownload('${esc(s.id)}')">↓ Download .md file</button>
+      <button class="btn-ghost" onclick="openExportModal('${esc(s.id)}')">📤 Export for…</button>
+      <button class="btn-ghost" onclick="openClaudeDesktopModal()">🔌 Add to Claude Desktop</button>
       <button class="btn-ghost" onclick="closeDetail()">Close</button>
     </div>`;
 
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Reset star picker state
+  starRatingValue = 0;
+
+  // Wire star picker to show review form on selection
+  document.querySelectorAll('.star-pick').forEach(el => {
+    el.addEventListener('click', () => {
+      const wrap = document.getElementById(`reviewInputWrap-${ratingId}`);
+      if (wrap) wrap.style.display = 'block';
+    });
+  });
+
+  // Load rating + reviews asynchronously
+  loadSkillRatingAndReviews(ratingId);
+}
+
+/* Load rating summary + recent reviews into the modal */
+async function loadSkillRatingAndReviews(ratingId) {
+  const [ratingData, reviews] = await Promise.all([
+    fetchSkillRating(ratingId),
+    fetchReviews(ratingId, 3, 0),
+  ]);
+
+  const displayEl = document.getElementById(`ratingDisplay-${ratingId}`);
+  if (displayEl) {
+    if (ratingData && ratingData.review_count > 0) {
+      displayEl.innerHTML = renderStarDisplay(ratingData.avg_rating, ratingData.review_count);
+    } else {
+      displayEl.textContent = 'No ratings yet — be first!';
+    }
+  }
+
+  const listEl = document.getElementById(`reviewsList-${ratingId}`);
+  if (listEl && reviews.length > 0) {
+    listEl.innerHTML = `
+      <div class="m-lbl">Recent Reviews</div>
+      ${reviews.map(r => `
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+            <span class="review-author">${esc(r.user_email?.split('@')[0] || 'User')}</span>
+            <span class="review-date">${timeAgo(r.created_at)}</span>
+          </div>
+          ${r.review_text ? `<div class="review-text">${esc(r.review_text)}</div>` : ''}
+        </div>`).join('')}`;
+  }
+}
+
+async function handleSubmitReview(ratingId, ratingTable) {
+  const rating = starRatingValue;
+  if (!rating) { toast('Select a star rating first', true); return; }
+  const reviewText = document.getElementById(`reviewText-${ratingId}`)?.value || '';
+  const msgEl = document.getElementById(`reviewMsg-${ratingId}`);
+  try {
+    const result = await submitReview(ratingId, ratingTable, rating, reviewText);
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.style.color = 'var(--teal)';
+      msgEl.textContent = `✓ Review saved! Average: ${result?.avg_rating ?? '–'}/5`;
+    }
+    // Refresh rating display
+    await loadSkillRatingAndReviews(ratingId);
+  } catch (err) {
+    if (msgEl) {
+      msgEl.style.display = 'block';
+      msgEl.style.color = 'var(--red)';
+      msgEl.textContent = err.message;
+    }
+    if (!isLoggedIn()) openAuthModal('login');
+  }
+}
+
+function cancelReview(ratingId) {
+  const wrap = document.getElementById(`reviewInputWrap-${ratingId}`);
+  if (wrap) wrap.style.display = 'none';
+  starRatingValue = 0;
+  highlightStars(0);
+}
+
+/* ── TIME AGO HELPER ─────────────────────────────── */
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins  = Math.floor(diff / 60000);
+  const hours = Math.floor(mins / 60);
+  const days  = Math.floor(hours / 24);
+  if (days > 30) return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: days > 365 ? 'numeric' : undefined });
+  if (days > 0)  return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (mins > 0)  return `${mins}m ago`;
+  return 'just now';
+}
+
+/* ── CLAUDE DESKTOP MODAL ────────────────────────── */
+function openClaudeDesktopModal() {
+  document.getElementById('claudeDesktopOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeClaudeDesktopModal() {
+  document.getElementById('claudeDesktopOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function copyDesktopConfig() {
+  const cfg = document.getElementById('desktopConfigBlock')?.textContent || '';
+  navigator.clipboard.writeText(cfg).then(() => {
+    toast('Config copied to clipboard!');
+  }).catch(() => {
+    toast('Copy failed — select and copy manually', true);
+  });
 }
 
 function closeDetail() {
@@ -564,15 +780,17 @@ async function handleFormSubmit() {
 
   const get = id => document.getElementById(id)?.value?.trim() || '';
 
-  const name    = get('f-name');
-  const cat     = get('f-cat');
-  const diff    = get('f-diff');
-  const time    = get('f-time');
-  const desc    = get('f-desc');
-  const trigger = get('f-trigger');
-  const demand  = get('f-demand');
-  const income  = get('f-income');
-  const future  = get('f-future');
+  const name      = get('f-name');
+  const cat       = get('f-cat');
+  const diff      = get('f-diff');
+  const time      = get('f-time');
+  const desc      = get('f-desc');
+  const trigger   = get('f-trigger');
+  const demand    = get('f-demand');
+  const income    = get('f-income');
+  const future    = get('f-future');
+  const version   = get('f-version') || '1.0.0';
+  const changelog = get('f-changelog');
 
   const skillsList = get('f-skills').split(',').map(s => s.trim()).filter(Boolean);
   const toolsList  = get('f-tools').split(',').map(s => s.trim()).filter(Boolean);
@@ -589,9 +807,50 @@ async function handleFormSubmit() {
     tags: tagsList, skillsList, toolsList,
     md_content: md,
     icon: '◈',
+    version, changelog,
   };
 
   setSubmitLoading(true);
+
+  // AI validation + Security scan — run in parallel, non-blocking
+  const aiScoreEl = document.getElementById('aiScoreResult');
+  if (aiScoreEl) aiScoreEl.style.display = 'none';
+  let aiResult  = null;
+  let scanResult = null;
+
+  try {
+    [aiResult, scanResult] = await Promise.all([
+      validateSkillWithAI(name, desc, md).catch(() => null),
+      runSecurityScan(md, name).catch(() => null),
+    ]);
+  } catch (_) { /* swallow — validation is optional */ }
+
+  // Block on security issues (rule-based patterns only, not AI scan)
+  if (scanResult && !scanResult.safe && scanResult.issues?.length > 0) {
+    setSubmitLoading(false);
+    setSubmitError('🛡️ Security scan failed:\n' + scanResult.issues.slice(0, 3).join('\n') + '\n\nPlease fix these issues before submitting.');
+    return;
+  }
+
+  // Show AI score + security badge if configured
+  if (aiScoreEl) {
+    const parts = [];
+    if (aiResult?.configured && aiResult.score != null) {
+      const scoreColor = aiResult.score >= 8 ? 'var(--teal)' : aiResult.score >= 6 ? '#8a6a1a' : 'var(--red)';
+      parts.push(`<strong style="color:${scoreColor}">AI Score: ${aiResult.score}/10</strong>
+        ${aiResult.feedback ? `<span style="color:var(--text-sec);margin-left:8px">${esc(aiResult.feedback)}</span>` : ''}
+        ${!aiResult.approved ? `<div style="color:var(--red);margin-top:4px;font-size:.72rem">⚠️ Score below threshold. Consider improving before submitting.</div>` : ''}`);
+    }
+    if (scanResult?.badge) {
+      const badgeColor = scanResult.safe ? 'var(--teal)' : 'var(--red)';
+      parts.push(`<span style="color:${badgeColor}">🛡️ ${esc(scanResult.badge)}</span>`);
+    }
+    if (parts.length) {
+      aiScoreEl.innerHTML = `<div style="background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px 13px;font-size:.76rem;margin-bottom:10px">${parts.join('<span style="color:var(--border);margin:0 8px">·</span>')}</div>`;
+      aiScoreEl.style.display = 'block';
+    }
+  }
+
   try {
     await submitSkill(formData);
     setSubmitLoading(false);
@@ -605,6 +864,8 @@ async function handleFormSubmit() {
           <div style="font-weight:600;color:var(--text-pri);margin-bottom:4px">Skill submitted!</div>
           <div style="font-size:.78rem;color:var(--text-sec)">
             Under review — usually live within 24hrs.
+            ${aiResult?.score ? `<br>AI quality score: <strong>${aiResult.score}/10</strong>` : ''}
+            ${scanResult?.safe ? `<br><span style="color:var(--teal)">🛡️ ${esc(scanResult.badge)}</span>` : ''}
           </div>
         </div>`;
     }
@@ -729,4 +990,375 @@ function esc(str) {
     .replace(/</g,  '&lt;')
     .replace(/>/g,  '&gt;')
     .replace(/"/g,  '&quot;');
+}
+
+/* ── BUNDLES VIEW ────────────────────────────────── */
+function showBundlesView() {
+  document.getElementById('bundlesSection').style.display  = 'block';
+  document.getElementById('diffPills').style.display       = 'none';
+  document.getElementById('skillsGrid').style.display      = 'none';
+  const pw = document.getElementById('paginationWrap');
+  if (pw) pw.style.display = 'none';
+  if (typeof renderBundles === 'function') renderBundles('bundlesGrid');
+}
+
+function hideBundlesView() {
+  document.getElementById('bundlesSection').style.display  = 'none';
+  document.getElementById('diffPills').style.display       = 'flex';
+  document.getElementById('skillsGrid').style.display      = 'grid';
+  const pw = document.getElementById('paginationWrap');
+  if (pw) pw.style.display = 'flex';
+  renderGrid();
+}
+
+/* ── AI SEMANTIC SEARCH ──────────────────────────── */
+function openAiSearch() {
+  document.getElementById('aiSearchOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('aiSearchInput')?.focus(), 100);
+}
+
+function closeAiSearch() {
+  document.getElementById('aiSearchOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function runAiSearch() {
+  const query = document.getElementById('aiSearchInput')?.value?.trim();
+  if (!query) return;
+
+  const btn = document.getElementById('aiSearchSubmitBtn');
+  const errEl = document.getElementById('aiSearchError');
+  const resultEl = document.getElementById('aiSearchResultsModal');
+
+  if (btn) { btn.disabled = true; btn.textContent = '✨ Finding…'; }
+  if (errEl) errEl.style.display = 'none';
+  if (resultEl) resultEl.style.display = 'none';
+
+  // Build skill summaries (sample first 150 for prompt efficiency)
+  const summaries = getAllSkills().slice(0, 150).map(s => ({
+    id:   s.id,
+    name: s.name,
+    cat:  s.cat,
+    desc: (s.desc || '').slice(0, 120),
+    tags: (s.tags || []).slice(0, 5).join(', '),
+  }));
+
+  try {
+    const res = await fetch('/api/recommend-skills', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, skillSummaries: summaries }),
+    });
+    const data = await res.json();
+
+    if (data?.configured === false) {
+      if (errEl) {
+        errEl.textContent = '⚙️ AI Search requires ANTHROPIC_API_KEY. Falling back to text search.';
+        errEl.style.display = 'block';
+      }
+      // Fall back to regular search
+      document.getElementById('searchInput').value = query;
+      appState.query = query;
+      appState.page  = 1;
+      renderGrid();
+      closeAiSearch();
+      return;
+    }
+
+    const recs = data?.recommendations || [];
+    if (!recs.length) {
+      if (errEl) { errEl.textContent = 'No matching skills found. Try different keywords.'; errEl.style.display = 'block'; }
+      if (btn) { btn.disabled = false; btn.textContent = '✨ Find Skills'; }
+      return;
+    }
+
+    // Show results in modal
+    if (resultEl) {
+      resultEl.style.display = 'block';
+      resultEl.innerHTML = `
+        <div class="m-lbl" style="margin-bottom:8px">Best Matches</div>
+        ${recs.map(r => {
+          const s = getAllSkills().find(x => x.id === r.id || x.name.toLowerCase() === r.name.toLowerCase());
+          return `
+          <div class="ai-rec-card" onclick="${s ? `closeAiSearch();openDetail('${esc(s.id)}')` : ''}">
+            <div class="ai-rec-name">${esc(r.name)}</div>
+            <div class="ai-rec-reason">${esc(r.reason)}</div>
+            ${s ? `<div style="font-size:.66rem;color:var(--teal);margin-top:2px">✓ Found in library → click to open</div>` : '<div style="font-size:.66rem;color:var(--text-ter)">Not in library yet</div>'}
+          </div>`;
+        }).join('')}`;
+    }
+
+    // Also show as dismissable chips on the main page
+    const chips = document.getElementById('aiSuggestChips');
+    if (chips) {
+      chips.innerHTML = recs.map(r => {
+        const s = getAllSkills().find(x => x.id === r.id || x.name.toLowerCase() === r.name.toLowerCase());
+        return `<button class="ai-chip" onclick="${s ? `openDetail('${esc(s.id)}')` : ''}" title="${esc(r.reason)}">${esc(r.name)}</button>`;
+      }).join('');
+    }
+    document.getElementById('aiSuggestResults').style.display = 'block';
+
+  } catch (err) {
+    if (errEl) { errEl.textContent = 'Search failed: ' + err.message; errEl.style.display = 'block'; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '✨ Find Skills'; }
+  }
+}
+
+function dismissAiSuggest() {
+  document.getElementById('aiSuggestResults').style.display = 'none';
+}
+
+/* ── SKILLFORGE ──────────────────────────────────── */
+let skillForgeGeneratedMd = '';
+
+function openSkillForge() {
+  document.getElementById('skillForgeOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  skillForgeGeneratedMd = '';
+  document.getElementById('sf-result').style.display    = 'none';
+  document.getElementById('sf-error').style.display     = 'none';
+  document.getElementById('sf-submit-btn').style.display = 'none';
+  document.getElementById('sf-download-btn').style.display = 'none';
+  document.getElementById('sf-not-configured').style.display = 'none';
+}
+
+function closeSkillForge() {
+  document.getElementById('skillForgeOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function runSkillForge() {
+  const desc   = document.getElementById('sf-desc')?.value?.trim();
+  const cat    = document.getElementById('sf-cat')?.value || 'ai';
+  const diff   = document.getElementById('sf-diff')?.value || 'intermediate';
+  const errEl  = document.getElementById('sf-error');
+  const btn    = document.getElementById('sf-generate-btn');
+
+  if (!desc || desc.length < 20) {
+    if (errEl) { errEl.textContent = 'Please describe the skill in at least 20 characters.'; errEl.style.display = 'block'; }
+    return;
+  }
+
+  if (errEl) errEl.style.display = 'none';
+  if (btn) { btn.disabled = true; btn.textContent = '✨ Generating…'; }
+  document.getElementById('sf-result').style.display = 'none';
+
+  try {
+    const res  = await fetch('/api/skillforge', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ description: desc, category: cat, difficulty: diff }),
+    });
+    const data = await res.json();
+
+    if (data?.configured === false) {
+      document.getElementById('sf-not-configured').style.display = 'block';
+      return;
+    }
+
+    if (!data?.md) {
+      if (errEl) { errEl.textContent = data?.error || 'Generation failed. Try again.'; errEl.style.display = 'block'; }
+      return;
+    }
+
+    skillForgeGeneratedMd = data.md;
+
+    const preview = document.getElementById('sf-preview');
+    const badge   = document.getElementById('sf-badge');
+    if (preview) preview.textContent = data.md.slice(0, 800) + (data.md.length > 800 ? '\n…' : '');
+
+    // Run security scan on the generated file
+    let secBadge = '';
+    try {
+      const scanRes  = await fetch('/api/scan-skill', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ md_content: data.md, name: data.name }),
+      });
+      const scanData = await scanRes.json();
+      secBadge = scanData.safe
+        ? `<span style="color:var(--teal);font-weight:500">🛡️ ${esc(scanData.badge)}</span>`
+        : `<span style="color:var(--red)">⚠️ Security: ${esc(scanData.issues[0] || 'Issues found')}</span>`;
+    } catch (_) { secBadge = ''; }
+
+    if (badge) badge.innerHTML = secBadge;
+    document.getElementById('sf-result').style.display = 'block';
+    document.getElementById('sf-submit-btn').style.display = 'inline-flex';
+    document.getElementById('sf-download-btn').style.display = 'inline-flex';
+
+  } catch (err) {
+    if (errEl) { errEl.textContent = 'Error: ' + err.message; errEl.style.display = 'block'; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '✨ Generate Skill'; }
+  }
+}
+
+function skillForgeDownload() {
+  if (!skillForgeGeneratedMd) return;
+  const nameMatch = skillForgeGeneratedMd.match(/^name:\s*(.+)$/m);
+  const name = nameMatch ? nameMatch[1].trim() : 'generated-skill';
+  const blob = new Blob([skillForgeGeneratedMd], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${name}.md`;
+  a.click();
+  toast(`Downloaded ${name}.md`);
+}
+
+function skillForgeSubmit() {
+  if (!skillForgeGeneratedMd) return;
+  closeSkillForge();
+  openSubmit();
+
+  // Pre-fill the submit form from the generated skill
+  setTimeout(() => {
+    const hiddenMd = document.getElementById('generatedMd') || (() => {
+      const inp = document.createElement('input');
+      inp.type = 'hidden'; inp.id = 'generatedMd';
+      document.getElementById('submitForm')?.appendChild(inp);
+      return inp;
+    })();
+    hiddenMd.value = skillForgeGeneratedMd;
+
+    const fm = parseFrontmatter ? parseFrontmatter(skillForgeGeneratedMd) : {};
+    const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+    setVal('f-name', (fm.name || '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()));
+    setVal('f-desc', fm.description);
+    setVal('f-diff', fm.difficulty);
+    setVal('f-time', fm.time_to_master);
+    setVal('f-tags', fm.tags || '');
+
+    // Show preview
+    const preview = document.getElementById('uploadPreview');
+    if (preview) preview.textContent = skillForgeGeneratedMd.slice(0, 500);
+
+    switchTab('form');
+    toast('SkillForge output loaded into submit form!');
+  }, 350);
+}
+
+/* ── SECURITY SCAN ───────────────────────────────── */
+async function runSecurityScan(md_content, name) {
+  try {
+    const res  = await fetch('/api/scan-skill', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ md_content, name }),
+    });
+    return await res.json();
+  } catch (_) {
+    return { safe: null, score: null, issues: [], badge: null };
+  }
+}
+
+/* ── CROSS-PLATFORM EXPORT ───────────────────────── */
+let exportSkillData = null;
+
+const EXPORT_FORMATS = [
+  {
+    id:   'claude',
+    name: 'Claude Projects',
+    ext:  '.md',
+    icon: '🤖',
+    desc: 'Original format for Claude Projects',
+    transform: (s) => s.md || `---\nname: ${s.id}\ndescription: ${s.desc}\n---\n\n${s.desc}`,
+  },
+  {
+    id:   'cursor',
+    name: 'Cursor Rules',
+    ext:  '.cursorrules',
+    icon: '⚡',
+    desc: 'Cursor AI .cursorrules format',
+    transform: (s) => `# ${s.name}\n\n${s.desc}\n\n${s.trigger ? `## When to Activate\n${s.trigger}\n\n` : ''}## Instructions\n\n${(s.md || '').replace(/^---[\s\S]*?---\n/m, '').trim()}`,
+  },
+  {
+    id:   'codex',
+    name: 'Codex CLI',
+    ext:  '.prompt.md',
+    icon: '🔷',
+    desc: 'OpenAI Codex CLI prompt format',
+    transform: (s) => `# ${s.name}\n\n**Category**: ${s.cat} | **Difficulty**: ${s.difficulty || 'intermediate'}\n\n${s.desc}\n\n${s.trigger ? `> Activate when: ${s.trigger}\n\n` : ''}${(s.md || '').replace(/^---[\s\S]*?---\n/m, '').trim()}`,
+  },
+  {
+    id:   'gemini',
+    name: 'Gemini CLI',
+    ext:  '.gemini.md',
+    icon: '💎',
+    desc: 'Google Gemini CLI system prompt format',
+    transform: (s) => `## System: ${s.name}\n\n${s.desc}\n\n${s.trigger ? `**Use when**: ${s.trigger}\n\n` : ''}### Instructions\n\n${(s.md || '').replace(/^---[\s\S]*?---\n/m, '').trim()}`,
+  },
+];
+
+let exportCurrentFormat = 'claude';
+
+function openExportModal(skillId) {
+  const s = getAllSkills().find(x => x.id === skillId);
+  if (!s) return;
+  exportSkillData = s;
+  exportCurrentFormat = 'claude';
+
+  document.getElementById('exportModalTitle').textContent = `Export: ${s.name}`;
+  document.getElementById('exportOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Render format buttons
+  const fmtsEl = document.getElementById('exportFormats');
+  if (fmtsEl) {
+    fmtsEl.innerHTML = EXPORT_FORMATS.map(f => `
+      <div class="export-fmt${f.id === 'claude' ? ' active' : ''}"
+           id="efmt-${f.id}"
+           onclick="selectExportFormat('${f.id}')">
+        <span class="export-fmt-icon">${f.icon}</span>
+        <div>
+          <div class="export-fmt-name">${esc(f.name)}</div>
+          <div class="export-fmt-desc">${esc(f.desc)}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  selectExportFormat('claude');
+}
+
+function selectExportFormat(fmtId) {
+  exportCurrentFormat = fmtId;
+  document.querySelectorAll('.export-fmt').forEach(el => el.classList.remove('active'));
+  document.getElementById(`efmt-${fmtId}`)?.classList.add('active');
+
+  const fmt = EXPORT_FORMATS.find(f => f.id === fmtId);
+  if (!fmt || !exportSkillData) return;
+
+  const content = fmt.transform(exportSkillData);
+  const prev = document.getElementById('exportPreviewCode');
+  const lbl  = document.getElementById('exportPreviewLabel');
+  if (prev) prev.textContent = content.slice(0, 600) + (content.length > 600 ? '\n…' : '');
+  if (lbl)  lbl.textContent  = `Preview (${fmt.name} · ${fmt.ext})`;
+  document.getElementById('exportPreview').style.display = 'block';
+}
+
+function downloadExport() {
+  const fmt = EXPORT_FORMATS.find(f => f.id === exportCurrentFormat);
+  if (!fmt || !exportSkillData) return;
+  const content = fmt.transform(exportSkillData);
+  const blob = new Blob([content], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${exportSkillData.id.replace(/-community-\w+$/, '')}${fmt.ext}`;
+  a.click();
+  toast(`Exported for ${fmt.name}`);
+}
+
+function copyExport() {
+  const fmt = EXPORT_FORMATS.find(f => f.id === exportCurrentFormat);
+  if (!fmt || !exportSkillData) return;
+  const content = fmt.transform(exportSkillData);
+  navigator.clipboard.writeText(content)
+    .then(() => toast('Copied!'))
+    .catch(() => toast('Copy failed', true));
+}
+
+function closeExportModal() {
+  document.getElementById('exportOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
 }

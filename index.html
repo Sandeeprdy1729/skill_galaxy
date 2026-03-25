@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkillGalaxy — Claude Skills Marketplace</title>
-  <meta name="description" content="109+ free skill files for Claude Projects. Download expert .md skills for AI, coding, security, writing and more — or share your own with the community.">
+  <meta name="description" content="9,872+ free skill files for Claude Projects. Download expert .md skills for AI, coding, security, writing and more — or share your own with the community.">
   <meta property="og:title" content="SkillGalaxy — Claude Skills Marketplace">
-  <meta property="og:description" content="Free skill files that make Claude an expert at anything. 109+ skills ready to download.">
+  <meta property="og:description" content="Free skill files that make Claude an expert at anything. 9,872+ skills ready to download.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -71,7 +71,7 @@
   <div class="nav-item active" id="navAll-item" onclick="setFilterAll()">
     <span class="nav-dot" style="background:var(--text-ter)"></span>
     All Skills
-    <span class="nav-count" id="navAll">109</span>
+    <span class="nav-count" id="navAll">9872</span>
   </div>
   <div id="catNav"></div>
 
@@ -86,6 +86,22 @@
     <span style="font-size:11px;opacity:.6">↑</span>
     Submit a Skill
   </div>
+
+  <div class="sidebar-hr"></div>
+  <div class="s-label">Community</div>
+  <div class="nav-item" onclick="showBundlesView()">
+    <span style="font-size:11px;opacity:.6">📦</span>
+    Skill Bundles
+    <span class="nav-count">4</span>
+  </div>
+  <div class="nav-item" onclick="openSkillForge()">
+    <span style="font-size:11px;opacity:.6">✨</span>
+    SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
+  </div>
+  <a class="nav-item" href="dashboard.html" style="text-decoration:none">
+    <span style="font-size:11px;opacity:.6">📊</span>
+    Creator Dashboard
+  </a>
 
   <div class="sidebar-hr"></div>
   <div class="s-label">Help</div>
@@ -118,9 +134,10 @@
       <span class="search-ic">⌕</span>
       <input type="text" id="searchInput" placeholder="Search skills, tools, categories… (⌘K)" autocomplete="off">
     </div>
+    <button class="btn-ai-search" id="aiSearchBtn" onclick="openAiSearch()" title="AI Suggest: find the best skills for your task">✨ AI Suggest</button>
     <div class="tb-right">
       <a href="guide.html" class="btn-guide">📖 Guide</a>
-      <div class="tb-pill"><strong id="countDisplay">109</strong>&nbsp;skills</div>
+      <div class="tb-pill"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
       <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')">Sign In</button>
       <div class="user-chip hidden" id="userChip">
         <div class="user-dot" id="userInitial">U</div>
@@ -141,13 +158,14 @@
         <div class="hero-title">The Claude Skills Marketplace</div>
         <div class="hero-sub">Download expert <code>.md</code> skill files for Claude Projects. Upload once — Claude applies it automatically in every conversation. No repeated instructions. No copy-paste. Just results.</div>
         <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-num" id="heroCount">109</span><span class="hero-stat-lbl">Skills</span></div>
+          <div class="hero-stat"><span class="hero-stat-num" id="heroCount">9872</span><span class="hero-stat-lbl">Skills</span></div>
           <div class="hero-stat"><span class="hero-stat-num">16</span><span class="hero-stat-lbl">Domains</span></div>
           <div class="hero-stat"><span class="hero-stat-num">Free</span><span class="hero-stat-lbl">Always</span></div>
         </div>
       </div>
       <div class="hero-right">
         <button class="btn-hero-primary" onclick="requireLogin(openSubmit)">↑ Submit a Skill</button>
+        <button class="btn-hero-secondary" onclick="openClaudeDesktopModal()">🔌 Connect Claude Desktop</button>
         <a href="guide.html" class="btn-hero-secondary">📖 How it works</a>
       </div>
     </div>
@@ -166,8 +184,29 @@
       <button class="btn-ghost" style="padding:5px 12px;font-size:.72rem" onclick="exitMySkills()">← All Skills</button>
     </div>
 
+    <!-- AI SEARCH RESULTS (shown when AI Suggest is used) -->
+    <div id="aiSuggestResults" style="display:none;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text-ter)">✨ AI Suggestions</span>
+        <button onclick="dismissAiSuggest()" style="background:none;border:none;color:var(--text-ter);cursor:pointer;font-size:.7rem;margin-left:auto">✕ Dismiss</button>
+      </div>
+      <div id="aiSuggestChips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    </div>
+
+    <!-- BUNDLES SECTION (shown when Bundles nav is active) -->
+    <div id="bundlesSection" style="display:none;margin-bottom:28px">
+      <div class="sec-row" style="margin-bottom:14px">
+        <div class="sec-label">📦 Skill Bundles <span class="sec-count">4</span></div>
+        <button onclick="hideBundlesView()" style="background:none;border:none;color:var(--text-ter);cursor:pointer;font-size:.72rem">← Back to all skills</button>
+      </div>
+      <div style="font-size:.8rem;color:var(--text-sec);margin-bottom:16px;line-height:1.6">
+        Curated collections of complementary skills. One download = a <code>.zip</code> with all skill files + a master activator that routes Claude to the right skill automatically.
+      </div>
+      <div id="bundlesGrid" class="bundles-grid"></div>
+    </div>
+
     <!-- DIFFICULTY PILLS -->
-    <div class="filter-row">
+    <div class="filter-row" id="diffPills">
       <span style="font-size:.68rem;color:var(--text-ter);margin-right:3px">Difficulty:</span>
       <button class="f-pill active" onclick="setDiff('all',this)">All</button>
       <button class="f-pill" onclick="setDiff('beginner',this)">Beginner</button>
@@ -177,7 +216,7 @@
     </div>
 
     <div class="sec-row">
-      <div class="sec-label">Skills <span class="sec-count" id="sectionCount">109</span></div>
+      <div class="sec-label">Skills <span class="sec-count" id="sectionCount">9872</span></div>
     </div>
 
     <div id="skillsGrid"></div>
@@ -367,8 +406,21 @@
               <input class="form-input" id="f-future" type="number" min="1" max="10" value="7">
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-version">Version</label>
+              <input class="form-input" id="f-version" type="text" placeholder="1.0.0" value="1.0.0">
+              <div class="form-hint">Semver — increment when you update the skill</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-changelog">Changelog</label>
+              <input class="form-input" id="f-changelog" type="text" placeholder="What changed in this version?">
+            </div>
+          </div>
+          <div id="aiScoreResult" style="display:none"></div>
           <div style="padding:10px 13px;background:var(--cream-dark);border-radius:var(--r-sm);font-size:.72rem;color:var(--text-ter);margin-bottom:14px;line-height:1.6">
             💡 Your skill will be reviewed before going live (usually within 24 hours). Track status in <strong>My Submissions</strong>. Skills without specific trigger phrases are the most common reason for rejection.
+            <br>✨ <strong>AI Validator</strong> automatically scores your skill quality on submit (requires ANTHROPIC_API_KEY to be configured).
           </div>
           <div style="display:flex;gap:8px;align-items:center">
             <button type="submit" class="btn-main" id="submitFormBtn">Submit Skill</button>
@@ -406,6 +458,201 @@
 </div>
 
 
+<!-- CLAUDE DESKTOP MODAL -->
+<div class="auth-overlay" id="claudeDesktopOverlay">
+  <div class="auth-modal" style="max-width:560px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="auth-logo-mark"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="#f9f7f4"/></svg></div>
+          <span class="auth-logo-text">🔌 Connect Claude Desktop</span>
+        </div>
+        <button class="modal-close" onclick="closeClaudeDesktopModal()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:1rem">Add SkillGalaxy MCP to Claude Desktop</div>
+      <div class="auth-subtitle">One config change gives Claude direct access to all 9,872+ skills — no manual downloads.</div>
+    </div>
+    <div class="auth-body" style="padding-top:16px">
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">1. Install the MCP server</div>
+      <div class="code-block" style="font-size:.72rem;margin-bottom:14px">cd /path/to/skill_galaxy/mcp-server
+npm install
+npm run build-skills</div>
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">2. Add to your Claude Desktop config</div>
+      <div style="font-size:.7rem;color:var(--text-ter);margin-bottom:5px">
+        📁 Config file location:
+        <span style="font-family:monospace;font-size:.68rem">
+          macOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>
+          &nbsp;·&nbsp; Windows: <code>%APPDATA%\Claude\claude_desktop_config.json</code>
+        </span>
+      </div>
+      <div class="code-block" id="desktopConfigBlock" style="font-size:.72rem;margin-bottom:8px">{
+  "mcpServers": {
+    "skillgalaxy": {
+      "command": "node",
+      "args": ["/FULL/PATH/TO/skill_galaxy/mcp-server/index.js"]
+    }
+  }
+}</div>
+      <button class="btn-ghost" style="width:100%;margin-bottom:14px;font-size:.76rem" onclick="copyDesktopConfig()">📋 Copy config JSON</button>
+
+      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">3. Restart Claude Desktop</div>
+      <div style="font-size:.74rem;color:var(--text-ter);line-height:1.6;margin-bottom:14px">
+        Claude can now <strong>search_skills</strong>, <strong>get_skill</strong>, <strong>list_categories</strong>, and retrieve any of the 9,872+ skills on demand — without manual downloads.
+      </div>
+
+      <div style="background:var(--teal-lt);border:1px solid rgba(58,125,110,.2);border-radius:var(--r-sm);padding:10px 13px;font-size:.72rem;color:var(--teal);margin-bottom:14px">
+        💡 <strong>Tip:</strong> Replace <code>/FULL/PATH/TO/skill_galaxy</code> with the actual absolute path where you cloned this repo.
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <a class="btn-main" href="mcp-server/README.md" target="_blank" style="text-decoration:none;font-size:.76rem">📖 Full MCP Guide</a>
+        <button class="btn-ghost" onclick="closeClaudeDesktopModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BUNDLE DETAIL MODAL -->
+<div class="auth-overlay" id="bundleOverlay">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-head">
+      <div class="modal-head-t">
+        <div class="modal-title" id="bundleModalTitle"></div>
+        <div class="modal-meta" style="font-size:.78rem;color:var(--text-ter)" id="bundleModalTagline"></div>
+      </div>
+      <button class="modal-close" onclick="closeBundleModal()">✕</button>
+    </div>
+    <div class="modal-body" id="bundleModalBody"></div>
+  </div>
+</div>
+
+
+<!-- AI SEARCH MODAL -->
+<div class="auth-overlay" id="aiSearchOverlay">
+  <div class="auth-modal" style="max-width:520px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="auth-logo-text">✨ AI Skill Suggestions</span>
+        <button class="modal-close" onclick="closeAiSearch()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.95rem">Describe your task — AI picks the best skills</div>
+      <div class="auth-subtitle">Paste a prompt or describe what you're working on. Claude finds the 3 most relevant skills.</div>
+    </div>
+    <div class="auth-body" style="padding-top:12px">
+      <div class="form-group">
+        <label class="form-label" for="aiSearchInput">What are you trying to do?</label>
+        <textarea class="form-textarea" id="aiSearchInput" rows="3"
+          placeholder="e.g. I need help writing a technical specification for a microservices architecture with Kubernetes…"
+          style="min-height:70px"></textarea>
+      </div>
+      <div id="aiSearchError" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="aiSearchResultsModal" style="display:none;margin-bottom:12px"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-main" id="aiSearchSubmitBtn" onclick="runAiSearch()">✨ Find Skills</button>
+        <button class="btn-ghost" onclick="closeAiSearch()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SKILLFORGE MODAL -->
+<div class="auth-overlay" id="skillForgeOverlay">
+  <div class="submit-modal" style="max-width:560px">
+    <div class="sm-head">
+      <div>
+        <div class="sm-title">✨ SkillForge — AI Skill Generator</div>
+        <div style="font-size:.74rem;color:var(--text-ter);margin-top:2px">Describe a skill → Claude generates a production-quality .md file</div>
+      </div>
+      <button class="modal-close" onclick="closeSkillForge()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="form-group">
+        <label class="form-label" for="sf-desc">What should this skill do?</label>
+        <textarea class="form-textarea" id="sf-desc" rows="4"
+          placeholder="e.g. A skill that makes Claude an expert at writing STAR-format interview answers. Should help with behavioral questions, structure responses properly, and give specific examples…"
+          style="min-height:90px"></textarea>
+        <div class="form-hint">Be specific: who Claude becomes, when it activates, what output it produces.</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="sf-cat">Category</label>
+          <select class="form-select" id="sf-cat">
+            <option value="ai">AI & ML</option>
+            <option value="dev">Development</option>
+            <option value="writing">Writing</option>
+            <option value="business">Business</option>
+            <option value="security">Cybersecurity</option>
+            <option value="data">Data Engineering</option>
+            <option value="cloud">Cloud & Infra</option>
+            <option value="product">Product & Strategy</option>
+            <option value="creative">Creative Technology</option>
+            <option value="education">Design & Education</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sf-diff">Difficulty</label>
+          <select class="form-select" id="sf-diff">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate" selected>Intermediate</option>
+            <option value="advanced">Advanced</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+      </div>
+      <div id="sf-result" style="display:none;margin-bottom:14px">
+        <div class="m-lbl">Generated Skill Preview</div>
+        <div class="code-block" id="sf-preview" style="max-height:220px;font-size:.7rem"></div>
+        <div id="sf-badge" style="margin-top:8px;font-size:.72rem"></div>
+      </div>
+      <div id="sf-error" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="sf-not-configured" style="display:none;background:var(--copper-lt);border:1px solid rgba(192,123,74,.3);border-radius:var(--r-sm);padding:10px 13px;font-size:.74rem;color:var(--copper);margin-bottom:12px">
+        ⚙️ SkillForge requires <strong>ANTHROPIC_API_KEY</strong> to be set in your Vercel environment. <a href="README.md" target="_blank" style="color:var(--copper)">Setup guide →</a>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-main" id="sf-generate-btn" onclick="runSkillForge()">✨ Generate Skill</button>
+        <button class="btn-ghost" id="sf-submit-btn" style="display:none" onclick="skillForgeSubmit()">↑ Submit to SkillGalaxy</button>
+        <button class="btn-ghost" id="sf-download-btn" style="display:none" onclick="skillForgeDownload()">↓ Download .md</button>
+        <button class="btn-ghost" onclick="closeSkillForge()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- EXPORT MODAL -->
+<div class="auth-overlay" id="exportOverlay">
+  <div class="auth-modal" style="max-width:520px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="auth-logo-text">📤 Export Skill</span>
+        <button class="modal-close" onclick="closeExportModal()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.95rem" id="exportModalTitle">Export</div>
+      <div class="auth-subtitle">Download in any format for your preferred AI tool.</div>
+    </div>
+    <div class="auth-body" style="padding-top:12px">
+      <div class="m-lbl">Choose Format</div>
+      <div class="export-formats" id="exportFormats"></div>
+      <div id="exportPreview" style="margin-top:14px;display:none">
+        <div class="m-lbl" id="exportPreviewLabel">Preview</div>
+        <div class="code-block" id="exportPreviewCode" style="max-height:200px;font-size:.7rem"></div>
+        <div style="display:flex;gap:7px;margin-top:8px">
+          <button class="btn-main" style="flex:none;padding:7px 14px;font-size:.74rem" onclick="downloadExport()">↓ Download</button>
+          <button class="btn-ghost" style="padding:7px 12px;font-size:.74rem" onclick="copyExport()">📋 Copy</button>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn-ghost" onclick="closeExportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- TOAST -->
 <div class="toast" id="toast">
   <span style="opacity:.7">✓</span>
@@ -414,9 +661,11 @@
 
 
 <!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMh7g4y4Mj6N2ojJLnuzAfjOWFEbEH26yyAnAu7W7GjEH7I2qTUPJEMaWCT7R7oTMuRqzv7T5VnDlGhVLNXtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/skills-api.js"></script>
+<script src="js/bundles.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
 
