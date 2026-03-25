@@ -6,6 +6,7 @@
 
 /* ── IN-MEMORY CACHE ─────────────────────────────── */
 let communitySkillsCache = [];
+let skillsTableCache     = [];   // skills loaded from the "skills" Supabase table
 let realtimeChannel = null;
 
 /* ── FETCH ───────────────────────────────────────── */
@@ -53,7 +54,83 @@ async function fetchMySkills() {
   return (data || []).map(mapDbSkill);
 }
 
-/* Map DB row → app skill object.
+/* ── SKILLS TABLE (bulk-loaded skills) ───────────── */
+/**
+ * Fetch ALL approved skills from the "skills" table.
+ * This table holds bulk-imported skills (10 000+) with a simpler
+ * schema (TEXT id, TEXT tags, direct d/i/f columns).
+ */
+async function fetchSkillsTable() {
+  const PAGE = 1000;
+  let allRows = [];
+  let from    = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const { data, error } = await sb
+      .from('skills')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .range(from, from + PAGE - 1);
+
+    if (error) { console.error('Skills table fetch error:', error); break; }
+    if (!data || data.length === 0) { hasMore = false; break; }
+
+    allRows = allRows.concat(data);
+    from += PAGE;
+    if (data.length < PAGE) hasMore = false;
+  }
+
+  skillsTableCache = allRows.map(mapSkillsRow);
+  return skillsTableCache;
+}
+
+/**
+ * Map a row from the "skills" table → app skill object.
+ * Schema differences vs community_skills:
+ *   - id is TEXT (not UUID)
+ *   - tags is TEXT (comma-separated, not TEXT[])
+ *   - d/i/f directly (not score_d/score_i/score_f)
+ *   - "trigger" column (not trigger_text)
+ *   - "description" column (not desc)
+ *   - "submitted_by" (not user_email)
+ */
+function mapSkillsRow(row) {
+  // Parse tags: could be comma-separated string or already an array
+  let tags = row.tags || [];
+  if (typeof tags === 'string') {
+    tags = tags.split(',').map(t => t.trim()).filter(Boolean);
+  }
+
+  return {
+    id:           row.id,
+    _dbId:        row.id,
+    _table:       'skills',             // track which table this came from
+    name:         row.name,
+    icon:         row.icon || '◈',
+    cat:          row.cat || 'ai',
+    d:            row.d || 7,
+    i:            row.i || 7,
+    f:            row.f || 7,
+    difficulty:   row.difficulty || 'intermediate',
+    timeToMaster: row.time_to_master || '',
+    tags:         tags,
+    desc:         row.description || '',
+    trigger:      row.trigger || '',
+    skills:       [],
+    tools:        [],
+    md:           row.md_content || '',
+    source:       row.source || 'official',
+    submittedBy:  row.submitted_by || 'SkillGalaxy',
+    upvotes:      row.upvotes || 0,
+    downloads:    row.downloads || 0,
+    status:       row.status,
+    createdAt:    row.created_at,
+  };
+}
+
+/* Map community_skills DB row → app skill object.
  * Handles both schema variants:
  *   supabase-setup.sql uses: slug, desc, score_d/i/f
  *   SUPABASE_SETUP.sql uses: skill_id, description, demand_score/income_score/future_score
@@ -248,6 +325,15 @@ async function upvoteSkill(dbId) {
 /* ── DOWNLOAD LOG ────────────────────────────────── */
 async function logDownload(dbId) {
   if (!dbId) return;
+
+  // Check if this skill came from the "skills" table (TEXT id)
+  const fromSkillsTable = skillsTableCache.some(s => s._dbId === dbId);
+  if (fromSkillsTable) {
+    await sb.rpc('increment_skill_downloads', { p_skill_id: dbId });
+    return;
+  }
+
+  // Otherwise it's a community_skills row (UUID id)
   await sb.rpc('increment_downloads', { p_skill_id: dbId });
   await sb.from('skill_downloads').insert({
     skill_id: dbId,
@@ -255,7 +341,21 @@ async function logDownload(dbId) {
   });
 }
 
-/* ── GET ALL SKILLS (DB + Community) ─────────────── */
+/* ── GET ALL SKILLS (skills table + community + hardcoded) ── */
 function getAllSkills() {
-  return [...communitySkillsCache, ...SKILLS_DB];
+  // Merge all sources; skills table first (bulk-loaded), then community, then local DB.
+  // Deduplicate by skill id — later sources yield to earlier ones.
+  const seen = new Set();
+  const merged = [];
+
+  for (const list of [skillsTableCache, communitySkillsCache, SKILLS_DB]) {
+    for (const s of list) {
+      if (!seen.has(s.id)) {
+        seen.add(s.id);
+        merged.push(s);
+      }
+    }
+  }
+
+  return merged;
 }

@@ -107,13 +107,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderGrid();
   updateTotalCount();
 
-  // Then fetch community skills in background and re-render
+  // Then fetch community skills + bulk skills table in background and re-render
   showGridSkeleton();
   try {
-    await fetchCommunitySkills();
+    await Promise.all([
+      fetchCommunitySkills(),
+      fetchSkillsTable(),
+    ]);
     subscribeToSkillUpdates();
   } catch (err) {
-    console.warn('Community skills fetch failed, showing official skills only:', err);
+    console.warn('Remote skills fetch failed, showing official skills only:', err);
   }
 
   // Re-render after community skills load (or fail gracefully)

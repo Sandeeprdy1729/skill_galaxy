@@ -131,3 +131,55 @@ $$ language plpgsql security definer;
 
 -- 5. SAMPLE QUERY — verify setup works
 select count(*) as total_skills from public.community_skills;
+
+
+-- ════════════════════════════════════════════════
+-- 6. SKILLS TABLE (bulk-loaded skills, 10 000+)
+-- Simpler schema for batch-imported skill files.
+-- Run AFTER the community_skills table above.
+-- ════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS public.skills (
+  id              TEXT PRIMARY KEY,
+  name            TEXT NOT NULL,
+  cat             TEXT NOT NULL DEFAULT 'ai',
+  description     TEXT,
+  trigger         TEXT,
+  difficulty      TEXT DEFAULT 'intermediate',
+  time_to_master  TEXT,
+  d               INTEGER DEFAULT 7,
+  i               INTEGER DEFAULT 7,
+  f               INTEGER DEFAULT 7,
+  icon            TEXT DEFAULT '◈',
+  tags            TEXT,
+  source          TEXT DEFAULT 'official',
+  status          TEXT DEFAULT 'approved',
+  md_content      TEXT,
+  submitted_by    TEXT,
+  upvotes         INTEGER DEFAULT 0,
+  downloads       INTEGER DEFAULT 0,
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  updated_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for fast queries
+CREATE INDEX IF NOT EXISTS idx_skills_cat    ON public.skills(cat);
+CREATE INDEX IF NOT EXISTS idx_skills_status ON public.skills(status);
+CREATE INDEX IF NOT EXISTS idx_skills_source ON public.skills(source);
+
+-- RLS: anyone can read approved skills (same pattern as community_skills)
+ALTER TABLE public.skills ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can view approved skills from skills table"
+  ON public.skills FOR SELECT
+  USING (status = 'approved');
+
+-- Increment download count for skills table
+CREATE OR REPLACE FUNCTION public.increment_skill_downloads(p_skill_id TEXT)
+RETURNS void AS $$
+BEGIN
+  UPDATE public.skills
+  SET downloads = downloads + 1
+  WHERE id = p_skill_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
