@@ -102,7 +102,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await initAuth();
   checkResetFlow();
 
-  // Render immediately with local SKILLS_DB — don't wait for Supabase
+  initTheme();
+  updateBookmarkCount();
   buildSidebar();
   renderGrid();
   updateTotalCount();
@@ -130,6 +131,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     appState.page  = 1;
     renderGrid();
   });
+
+  // Search history dropdown
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('focus', () => {
+      const history = getSearchHistory();
+      if (history.length > 0) {
+        let dh = document.getElementById('searchHistoryDropdown');
+        if (!dh) {
+          dh = document.createElement('div');
+          dh.id = 'searchHistoryDropdown';
+          dh.className = 'search-history-dropdown';
+          searchInput.parentNode.appendChild(dh);
+        }
+        renderSearchHistory();
+        dh.style.display = 'block';
+      }
+    });
+    searchInput.addEventListener('blur', () => {
+      setTimeout(() => {
+        const dh = document.getElementById('searchHistoryDropdown');
+        if (dh) dh.style.display = 'none';
+      }, 150);
+    });
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && appState.query.trim()) {
+        addToSearchHistory(appState.query);
+      }
+    });
+  }
 
   // Close modals on overlay click
   document.getElementById('overlay')?.addEventListener('click', e => {
@@ -183,7 +214,8 @@ function getFiltered() {
     const catOk  = appState.filter === 'all' || s.cat === appState.filter;
     const diffOk = appState.diff   === 'all' || s.difficulty === appState.diff;
     const viewOk = appState.view   === 'all' ||
-      (appState.view === 'mine' && s.source === 'community' && s.submittedBy === getUserName(currentUser));
+      (appState.view === 'mine' && s.source === 'community' && s.submittedBy === getUserName(currentUser)) ||
+      (appState.view === 'bookmarked' && isBookmarked(s.id));
     if (!catOk || !diffOk || !viewOk) return false;
     if (!q) return true;
     const hay = [
@@ -274,6 +306,11 @@ function renderGrid() {
         <button class="btn-dl"
                 onclick="event.stopPropagation();handleDownload('${esc(s.id)}')">
           ↓ .md
+        </button>
+        <button class="btn-bookmark ${isBookmarked(s.id) ? 'active' : ''}"
+                onclick="toggleBookmark('${esc(s.id)}', event)"
+                title="${isBookmarked(s.id) ? 'Remove from saved' : 'Save skill'}">
+          ${isBookmarked(s.id) ? '★' : '☆'}
         </button>
       </div>
     </div>`;
@@ -990,6 +1027,100 @@ function esc(str) {
     .replace(/</g,  '&lt;')
     .replace(/>/g,  '&gt;')
     .replace(/"/g,  '&quot;');
+}
+
+/* ── THEME TOGGLE ─────────────────────────────────── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  btn.textContent = next === 'dark' ? '☀️' : '🌙';
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const theme = saved || prefers;
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+/* ── BOOKMARKS ─────────────────────────────────────── */
+function getBookmarkedIds() {
+  return JSON.parse(localStorage.getItem('bookmarkedSkills') || '[]');
+}
+
+function isBookmarked(skillId) {
+  return getBookmarkedIds().includes(skillId);
+}
+
+function toggleBookmark(skillId, event) {
+  event.stopPropagation();
+  let bookmarks = getBookmarkedIds();
+  if (bookmarks.includes(skillId)) {
+    bookmarks = bookmarks.filter(id => id !== skillId);
+  } else {
+    bookmarks.push(skillId);
+  }
+  localStorage.setItem('bookmarkedSkills', JSON.stringify(bookmarks));
+  renderGrid();
+  updateBookmarkCount();
+}
+
+function showBookmarkedSkills() {
+  appState.filter = 'bookmarked';
+  appState.view = 'bookmarked';
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  renderGrid();
+}
+
+function getBookmarkCount() {
+  return getBookmarkedIds().length;
+}
+
+function updateBookmarkCount() {
+  const el = document.getElementById('bookmarkCount');
+  if (el) el.textContent = getBookmarkCount();
+}
+
+/* ── SEARCH HISTORY ─────────────────────────────────── */
+function getSearchHistory() {
+  return JSON.parse(localStorage.getItem('searchHistory') || '[]');
+}
+
+function addToSearchHistory(query) {
+  if (!query.trim()) return;
+  let history = getSearchHistory();
+  history = history.filter(q => q !== query);
+  history.unshift(query);
+  history = history.slice(0, 10);
+  localStorage.setItem('searchHistory', JSON.stringify(history));
+}
+
+function clearSearchHistory() {
+  localStorage.removeItem('searchHistory');
+  renderSearchHistory();
+}
+
+function renderSearchHistory() {
+  const el = document.getElementById('searchHistoryList');
+  if (!el) return;
+  const history = getSearchHistory();
+  if (history.length === 0) {
+    el.innerHTML = '<div style="padding:12px;color:var(--text-ter);font-size:.75rem">No recent searches</div>';
+    return;
+  }
+  el.innerHTML = history.map(q => `<div class="search-history-item" onclick="document.getElementById('searchInput').value='${esc(q)}';appState.query='${esc(q)}';renderGrid();closeSearchHistory()">${esc(q)}</div>`).join('');
+  el.innerHTML += '<div onclick="clearSearchHistory()" style="padding:8px 12px;color:var(--copper);cursor:pointer;font-size:.7rem">Clear history</div>';
+}
+
+function closeSearchHistory() {
+  const el = document.getElementById('searchHistoryDropdown');
+  if (el) el.style.display = 'none';
 }
 
 /* ── BUNDLES VIEW ────────────────────────────────── */
