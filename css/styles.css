@@ -675,10 +675,10 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 }
 
 /* ── ACCESSIBILITY: Focus visible styles ── */
-:focus-visible{outline:2px solid var(--copper);outline-offset:2px;border-radius:var(--r-sm)}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
 .nav-item:focus-visible{background:var(--cream-darker);color:var(--text-pri)}
 .skill-card:focus-visible{border-color:var(--copper);box-shadow:var(--sh-md)}
-.btn-dl:focus-visible,.btn-main:focus-visible,.btn-ghost:focus-visible,.btn-login:focus-visible,.btn-logout:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.btn-dl:focus-visible,.btn-main:focus-visible,.btn-ghost:focus-visible,.btn-login:focus-visible,.btn-logout:focus-visible,.btn-bookmark:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
 .f-pill:focus-visible{border-color:var(--copper);color:var(--copper)}
 /* Skip to content link for screen readers */
 .skip-link{position:absolute;top:-100px;left:16px;background:var(--text-pri);color:var(--cream);padding:8px 16px;border-radius:var(--r-sm);font-size:.8rem;z-index:200;transition:top .2s}

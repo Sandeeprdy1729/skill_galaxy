@@ -155,10 +155,10 @@ function renderSearchHistory() {
     ${hist.map((q, i) => `
       <div class="search-history-item" role="option" tabindex="0"
            onclick="applySearchHistory('${esc(q)}')"
-           onkeydown="if(event.key==='Enter')applySearchHistory('${esc(q)}')">
+           onkeydown="if(event.key==='Enter')applySearchHistory('${esc(q)}');if(event.key==='Delete'||event.key==='Backspace'){event.preventDefault();removeSearchHistoryItem('${esc(q)}')}">
         <span class="sh-icon" aria-hidden="true">⌕</span>
         <span class="sh-text">${esc(q)}</span>
-        <button class="sh-remove" onclick="event.stopPropagation();removeSearchHistoryItem('${esc(q)}')" aria-label="Remove ${esc(q)} from history">✕</button>
+        <button class="sh-remove" tabindex="0" onclick="event.stopPropagation();removeSearchHistoryItem('${esc(q)}')" onkeydown="if(event.key==='Enter'){event.stopPropagation();removeSearchHistoryItem('${esc(q)}')}" aria-label="Remove ${esc(q)} from history">✕</button>
       </div>`).join('')}`;
   dropdown.classList.add('open');
   if (input) input.setAttribute('aria-expanded', 'true');
