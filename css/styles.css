@@ -89,6 +89,39 @@
 .search-history-head span{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-ter)}
 .search-history-head button{background:none;border:none;color:var(--text-ter);font-size:.65rem;cursor:pointer}
 .search-history-head button:hover{color:var(--copper)}
+/* Dark mode */
+[data-theme="dark"] {
+  --cream:        #1a1814;
+  --cream-dark:   #252220;
+  --cream-darker: #33302d;
+  --warm-white:   #2a2622;
+  --sidebar-bg:   #211e1b;
+  --text-pri:     #f2ede6;
+  --text-sec:     #a8a095;
+  --text-ter:     #706a60;
+  --border:       #3a3632;
+  --border-lt:    #454038;
+  --copper:       #d4926a;
+  --copper-lt:    #3a2e26;
+  --teal:         #5aab9e;
+  --teal-lt:      #253a36;
+  --green:        #4a9a58;
+  --green-lt:     #253525;
+  --red:          #b05868;
+  --red-lt:       #3a252c;
+  --sh-sm: 0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
+  --sh-md: 0 4px 12px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.2);
+  --sh-lg: 0 12px 32px rgba(0,0,0,.3),0 4px 8px rgba(0,0,0,.2);
+}
+
+[data-theme="dark"] body {
+  background: var(--cream);
+}
+
+[data-theme="dark"] .sidebar {
+  background: var(--sidebar-bg);
+  border-color: var(--border);
+}
 
 html,body{height:100%}
 body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta Sans',-apple-system,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex}
@@ -182,6 +215,9 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 .btn-dl{display:flex;align-items:center;gap:4px;padding:5px 11px;background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--text-sec);font-family:'Plus Jakarta Sans',sans-serif;font-size:.7rem;font-weight:500;cursor:pointer;transition:all .15s}
 .btn-dl:hover{background:var(--text-pri);border-color:var(--text-pri);color:var(--cream)}
 .btn-dl:active{transform:scale(.97)}
+.btn-bookmark{display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--text-ter);font-size:1rem;cursor:pointer;transition:all .15s}
+.btn-bookmark:hover{background:var(--cream-darker);color:var(--copper)}
+.btn-bookmark.active{color:var(--copper);border-color:var(--copper-lt);background:var(--copper-lt)}
 
 /* Upvote button */
 .btn-upvote{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:var(--cream-dark);border:1px solid var(--border);border-radius:6px;color:var(--text-sec);font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;cursor:pointer;transition:all .15s}
@@ -668,6 +704,67 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 .security-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:.62rem;font-weight:600;letter-spacing:.3px}
 .security-badge.safe{background:var(--teal-lt);color:var(--teal);border:1px solid rgba(58,125,110,.2)}
 .security-badge.unsafe{background:var(--red-lt);color:var(--red);border:1px solid rgba(138,58,78,.2)}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+  background: var(--cream-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background: var(--cream-darker);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: var(--cream-darker);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: var(--cream-dark);
+}
+
+/* ── SEARCH HISTORY DROPDOWN ── */
+.search-history-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  box-shadow: var(--sh-md);
+  margin-top: 4px;
+  z-index: 100;
+  display: none;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-history-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: .82rem;
+  color: var(--text-sec);
+  border-bottom: 1px solid var(--border-lt);
+  transition: background .15s;
+}
+
+.search-history-item:hover {
+  background: var(--cream-dark);
+  color: var(--text-pri);
+}
+
+.search-history-dropdown .search-history-item:last-of-type {
+  border-bottom: none;
+}
 
 @media(max-width:768px){
   .bundles-grid{grid-template-columns:1fr}

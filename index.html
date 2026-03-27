@@ -73,6 +73,9 @@
   <div class="s-label" id="browseLabel">Browse</div>
   <div class="nav-item active" id="navAll-item" onclick="setFilterAll()" role="button" tabindex="0" aria-label="Show all skills" onkeydown="if(event.key==='Enter')setFilterAll()">
     <span class="nav-dot" style="background:var(--text-ter)" aria-hidden="true"></span>
+  <div class="s-label" id="navAll-label">Browse</div>
+  <div class="nav-item active" id="navAll-item" onclick="setFilterAll()" role="button" tabindex="0" aria-label="Show all skills">
+    <span class="nav-dot" style="background:var(--text-ter)"></span>
     All Skills
     <span class="nav-count" id="navAll">9872</span>
   </div>
@@ -82,6 +85,13 @@
   <div class="s-label">My Account</div>
   <div class="nav-item" id="mySkillsBtn" onclick="requireLogin(loadMySkills)" role="button" tabindex="0" aria-label="View my submissions" onkeydown="if(event.key==='Enter')requireLogin(loadMySkills)">
     <span style="font-size:11px;opacity:.6" aria-hidden="true">◈</span>
+  <div class="nav-item" onclick="showBookmarkedSkills()" role="button" tabindex="0" aria-label="View saved bookmarks">
+    <span style="font-size:11px;opacity:.6">★</span>
+    Saved Skills
+    <span class="nav-count" id="bookmarkCount" style="display:none">0</span>
+  </div>
+  <div class="nav-item" id="mySkillsBtn" onclick="requireLogin(loadMySkills)">
+    <span style="font-size:11px;opacity:.6">◈</span>
     My Submissions
     <span class="nav-count" id="myCount" style="display:none">0</span>
   </div>
@@ -150,6 +160,11 @@
       <div class="tb-pill" aria-label="Total skill count"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
       <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')" aria-label="Sign in">Sign In</button>
       <div class="user-chip hidden" id="userChip" aria-label="Current user">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+      <a href="guide.html" class="btn-guide">📖 Guide</a>
+      <div class="tb-pill"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
+      <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')">Sign In</button>
+      <div class="user-chip hidden" id="userChip">
         <div class="user-dot" id="userInitial">U</div>
         <span id="userName"></span>
       </div>

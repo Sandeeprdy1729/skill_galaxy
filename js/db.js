@@ -15410,7 +15410,6 @@ function saveCommunitySkill(skill) {
 }
 
 function getAllSkills() {
-  // SKILLS_DB first so official skills always render even if community fetch fails
   const community = getCommunitySkills();
   return [...SKILLS_DB, ...community];
 }
