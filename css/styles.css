@@ -27,6 +27,68 @@
   --sidebar:244px; --topbar-h:56px;
 }
 
+/* ── DARK MODE ── */
+[data-theme="dark"] {
+  --cream:        #1a1a1a;
+  --cream-dark:   #222222;
+  --cream-darker: #2a2a2a;
+  --warm-white:   #1e1e1e;
+  --sidebar-bg:   #161616;
+  --text-pri:     #e8e4de;
+  --text-sec:     #b0a898;
+  --text-ter:     #7a7268;
+  --border:       #3a3632;
+  --border-lt:    #2e2c28;
+  --copper:       #d49260;
+  --copper-lt:    #2e241c;
+  --teal:         #5aad9a;
+  --teal-lt:      #1c2e2a;
+  --green:        #4aad5a;
+  --green-lt:     #1c2e1e;
+  --red:          #c06078;
+  --red-lt:       #2e1c22;
+  --sh-sm: 0 1px 3px rgba(0,0,0,.2),0 1px 2px rgba(0,0,0,.15);
+  --sh-md: 0 4px 12px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.2);
+  --sh-lg: 0 12px 32px rgba(0,0,0,.4),0 4px 8px rgba(0,0,0,.25);
+}
+[data-theme="dark"] .topbar{background:rgba(26,26,26,.92)}
+[data-theme="dark"] .logo-mark{background:var(--copper)}
+[data-theme="dark"] #searchInput{background:var(--cream-dark);color:var(--text-pri)}
+[data-theme="dark"] #searchInput:focus{background:var(--cream-darker)}
+[data-theme="dark"] .modal{background:var(--cream-dark);border-color:var(--border)}
+[data-theme="dark"] .auth-modal{background:var(--cream-dark);border-color:var(--border)}
+[data-theme="dark"] .submit-modal{background:var(--cream-dark);border-color:var(--border)}
+[data-theme="dark"] .modal-head{background:var(--cream-dark)}
+[data-theme="dark"] .sm-head{background:var(--cream-dark)}
+[data-theme="dark"] .code-block{background:var(--cream-darker);border-color:var(--border);color:var(--text-sec)}
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea{background:var(--cream-darker);border-color:var(--border);color:var(--text-pri)}
+[data-theme="dark"] .hero-banner{background:linear-gradient(135deg,var(--cream-dark) 0%,var(--cream) 100%)}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle{display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--cream-dark);border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;font-size:.9rem;transition:all .15s;flex-shrink:0}
+.theme-toggle:hover{background:var(--cream-darker);border-color:var(--copper)}
+.theme-toggle:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+
+/* ── BOOKMARK BUTTON ── */
+.btn-bookmark{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px 4px;opacity:.5;transition:all .15s}
+.btn-bookmark:hover,.btn-bookmark.bookmarked{opacity:1}
+.btn-bookmark.bookmarked{color:var(--copper)}
+
+/* ── SEARCH HISTORY DROPDOWN ── */
+.search-history{position:absolute;top:100%;left:0;right:0;background:var(--warm-white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);box-shadow:var(--sh-md);z-index:50;display:none;max-height:220px;overflow-y:auto}
+.search-history.open{display:block}
+.search-history-item{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:.78rem;color:var(--text-sec);cursor:pointer;transition:background .1s}
+.search-history-item:hover,.search-history-item:focus{background:var(--cream-dark);color:var(--text-pri);outline:none}
+.search-history-item .sh-icon{color:var(--text-ter);font-size:.7rem;flex-shrink:0}
+.search-history-item .sh-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.search-history-item .sh-remove{color:var(--text-ter);font-size:.65rem;opacity:0;transition:opacity .1s;background:none;border:none;cursor:pointer;padding:2px 4px}
+.search-history-item:hover .sh-remove{opacity:1}
+.search-history-head{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;border-bottom:1px solid var(--border-lt)}
+.search-history-head span{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-ter)}
+.search-history-head button{background:none;border:none;color:var(--text-ter);font-size:.65rem;cursor:pointer}
+.search-history-head button:hover{color:var(--copper)}
 /* Dark mode */
 [data-theme="dark"] {
   --cream:        #1a1814;
@@ -708,3 +770,13 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   .bundles-grid{grid-template-columns:1fr}
   .btn-ai-search{display:none}
 }
+
+/* ── ACCESSIBILITY: Focus visible styles ── */
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.nav-item:focus-visible{background:var(--cream-darker);color:var(--text-pri)}
+.skill-card:focus-visible{border-color:var(--copper);box-shadow:var(--sh-md)}
+.btn-dl:focus-visible,.btn-main:focus-visible,.btn-ghost:focus-visible,.btn-login:focus-visible,.btn-logout:focus-visible,.btn-bookmark:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.f-pill:focus-visible{border-color:var(--copper);color:var(--copper)}
+/* Skip to content link for screen readers */
+.skip-link{position:absolute;top:-100px;left:16px;background:var(--text-pri);color:var(--cream);padding:8px 16px;border-radius:var(--r-sm);font-size:.8rem;z-index:200;transition:top .2s}
+.skip-link:focus{top:8px}
