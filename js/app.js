@@ -49,10 +49,134 @@ const appState = {
   diff:   'all',
   query:  '',
   submitTab: 'form',
-  view:   'all', // 'all' | 'mine'
+  view:   'all', // 'all' | 'mine' | 'saved'
   page:   1,     // current page (1-based)
   perPage: 48,   // skills per page
 };
+
+/* ── DARK MODE ───────────────────────────────────── */
+function initTheme() {
+  const saved = localStorage.getItem('sg-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    updateThemeIcon('dark');
+  }
+}
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  if (next === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  localStorage.setItem('sg-theme', next);
+  updateThemeIcon(next);
+}
+function updateThemeIcon(theme) {
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+// Apply theme immediately to avoid flash
+initTheme();
+
+/* ── BOOKMARKS / SAVED SKILLS ────────────────────── */
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem('sg-bookmarks') || '[]'); }
+  catch { return []; }
+}
+function setBookmarks(ids) {
+  localStorage.setItem('sg-bookmarks', JSON.stringify(ids));
+  updateSavedCount();
+}
+function isBookmarked(id) { return getBookmarks().includes(id); }
+function toggleBookmark(id) {
+  const bk = getBookmarks();
+  const idx = bk.indexOf(id);
+  if (idx >= 0) bk.splice(idx, 1); else bk.push(id);
+  setBookmarks(bk);
+  // Update UI in card grid
+  const btn = document.querySelector(`.btn-bookmark[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.toggle('bookmarked', bk.includes(id));
+    btn.textContent = bk.includes(id) ? '♥' : '♡';
+    btn.setAttribute('aria-label', bk.includes(id) ? 'Remove from saved' : 'Save skill');
+  }
+  showToast(bk.includes(id) ? 'Skill saved!' : 'Skill removed from saved');
+}
+function updateSavedCount() {
+  const el = document.getElementById('savedCount');
+  if (el) el.textContent = getBookmarks().length;
+}
+function showSavedSkills() {
+  appState.view = 'saved';
+  appState.page = 1;
+  document.getElementById('savedSkillsBtn')?.classList.add('active');
+  document.getElementById('mySkillsBtn')?.classList.remove('active');
+  document.getElementById('navAll-item')?.classList.remove('active');
+  document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
+  renderGrid();
+}
+
+/* ── SEARCH HISTORY ──────────────────────────────── */
+const MAX_SEARCH_HISTORY = 10;
+function getSearchHistory() {
+  try { return JSON.parse(localStorage.getItem('sg-search-history') || '[]'); }
+  catch { return []; }
+}
+function addToSearchHistory(query) {
+  const q = query.trim();
+  if (!q || q.length < 2) return;
+  let hist = getSearchHistory().filter(h => h !== q);
+  hist.unshift(q);
+  if (hist.length > MAX_SEARCH_HISTORY) hist = hist.slice(0, MAX_SEARCH_HISTORY);
+  localStorage.setItem('sg-search-history', JSON.stringify(hist));
+}
+function clearSearchHistory() {
+  localStorage.removeItem('sg-search-history');
+  renderSearchHistory();
+}
+function removeSearchHistoryItem(query) {
+  const hist = getSearchHistory().filter(h => h !== query);
+  localStorage.setItem('sg-search-history', JSON.stringify(hist));
+  renderSearchHistory();
+}
+function renderSearchHistory() {
+  const dropdown = document.getElementById('searchHistory');
+  const input    = document.getElementById('searchInput');
+  if (!dropdown) return;
+  const hist = getSearchHistory();
+  if (!hist.length) { dropdown.classList.remove('open'); return; }
+  dropdown.innerHTML = `
+    <div class="search-history-head">
+      <span>Recent searches</span>
+      <button onclick="clearSearchHistory()" aria-label="Clear search history">Clear all</button>
+    </div>
+    ${hist.map((q, i) => `
+      <div class="search-history-item" role="option" tabindex="0"
+           onclick="applySearchHistory('${esc(q)}')"
+           onkeydown="if(event.key==='Enter')applySearchHistory('${esc(q)}')">
+        <span class="sh-icon" aria-hidden="true">⌕</span>
+        <span class="sh-text">${esc(q)}</span>
+        <button class="sh-remove" onclick="event.stopPropagation();removeSearchHistoryItem('${esc(q)}')" aria-label="Remove ${esc(q)} from history">✕</button>
+      </div>`).join('')}`;
+  dropdown.classList.add('open');
+  if (input) input.setAttribute('aria-expanded', 'true');
+}
+function hideSearchHistory() {
+  const dropdown = document.getElementById('searchHistory');
+  const input    = document.getElementById('searchInput');
+  if (dropdown) dropdown.classList.remove('open');
+  if (input) input.setAttribute('aria-expanded', 'false');
+}
+function applySearchHistory(q) {
+  const input = document.getElementById('searchInput');
+  if (input) input.value = q;
+  appState.query = q;
+  appState.page  = 1;
+  hideSearchHistory();
+  renderGrid();
+}
 
 // /* ── INIT ────────────────────────────────────────── */
 // document.addEventListener('DOMContentLoaded', async () => {
@@ -106,6 +230,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildSidebar();
   renderGrid();
   updateTotalCount();
+  updateSavedCount();
 
   // Then fetch community skills + bulk skills table in background and re-render
   showGridSkeleton();
@@ -124,11 +249,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderGrid();
   updateTotalCount();
 
-  // Search
-  document.getElementById('searchInput')?.addEventListener('input', e => {
+  // Search with history
+  const searchInput = document.getElementById('searchInput');
+  let searchDebounce;
+  searchInput?.addEventListener('input', e => {
     appState.query = e.target.value;
     appState.page  = 1;
     renderGrid();
+    // Debounce adding to history
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      if (e.target.value.trim().length >= 2) addToSearchHistory(e.target.value.trim());
+    }, 1200);
+  });
+  searchInput?.addEventListener('focus', () => {
+    if (!appState.query) renderSearchHistory();
+  });
+  // Close search history when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) hideSearchHistory();
   });
 
   // Close modals on overlay click
@@ -183,7 +322,8 @@ function getFiltered() {
     const catOk  = appState.filter === 'all' || s.cat === appState.filter;
     const diffOk = appState.diff   === 'all' || s.difficulty === appState.diff;
     const viewOk = appState.view   === 'all' ||
-      (appState.view === 'mine' && s.source === 'community' && s.submittedBy === getUserName(currentUser));
+      (appState.view === 'mine' && s.source === 'community' && s.submittedBy === getUserName(currentUser)) ||
+      (appState.view === 'saved' && isBookmarked(s.id));
     if (!catOk || !diffOk || !viewOk) return false;
     if (!q) return true;
     const hay = [
@@ -247,10 +387,13 @@ function renderGrid() {
     return `
     <div class="skill-card${isCommunity ? ' community-card' : ''}"
          onclick="openDetail('${esc(s.id)}')"
-         ${brand ? `style="--brand:${brand}"` : ''}>
+         ${brand ? `style="--brand:${brand}"` : ''}
+         role="listitem" tabindex="0" aria-label="${esc(s.name)}"
+         onkeydown="if(event.key==='Enter')openDetail('${esc(s.id)}')">
       <div class="card-head">
         <div class="card-icon"
-             style="background:${iconBg};border:1px solid ${iconBorder};display:flex;align-items:center;justify-content:center;">
+             style="background:${iconBg};border:1px solid ${iconBorder};display:flex;align-items:center;justify-content:center;"
+             aria-hidden="true">
           ${iconHtml}
         </div>
         <div class="card-head-r">
@@ -261,6 +404,10 @@ function renderGrid() {
             ${isCommunity ? `<span class="source-badge community">community</span>` : ''}
           </div>
         </div>
+        <button class="btn-bookmark${isBookmarked(s.id) ? ' bookmarked' : ''}" data-id="${esc(s.id)}"
+                onclick="event.stopPropagation();toggleBookmark('${esc(s.id)}')"
+                aria-label="${isBookmarked(s.id) ? 'Remove from saved' : 'Save skill'}"
+                title="${isBookmarked(s.id) ? 'Remove from saved' : 'Save skill'}">${isBookmarked(s.id) ? '♥' : '♡'}</button>
       </div>
       <div class="card-desc">${esc(s.desc)}</div>
       <div class="card-foot">
@@ -272,7 +419,8 @@ function renderGrid() {
             : ''}
         </div>
         <button class="btn-dl"
-                onclick="event.stopPropagation();handleDownload('${esc(s.id)}')">
+                onclick="event.stopPropagation();handleDownload('${esc(s.id)}')"
+                aria-label="Download ${esc(s.name)} skill file">
           ↓ .md
         </button>
       </div>
@@ -355,18 +503,22 @@ function buildSidebar() {
 
 function setFilter(cat, el) {
   appState.filter = cat;
+  appState.view   = 'all';
   appState.page   = 1;
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
   document.getElementById('navAll-item')?.classList.remove('active');
+  document.getElementById('savedSkillsBtn')?.classList.remove('active');
   if (el) el.classList.add('active');
   renderGrid();
 }
 
 function setFilterAll() {
   appState.filter = 'all';
+  appState.view   = 'all';
   appState.page   = 1;
   document.querySelectorAll('.nav-item[data-cat]').forEach(n => n.classList.remove('active'));
   document.getElementById('navAll-item')?.classList.add('active');
+  document.getElementById('savedSkillsBtn')?.classList.remove('active');
   renderGrid();
 }
 
@@ -375,6 +527,9 @@ function setDiff(d, el) {
   appState.page = 1;
   document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('active'));
   el?.classList.add('active');
+  // Update aria-pressed for accessibility
+  document.querySelectorAll('.f-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+  el?.setAttribute('aria-pressed', 'true');
   renderGrid();
 }
 
@@ -382,6 +537,7 @@ async function showMySkills() {
   await fetchMySkills();
   appState.view = 'mine';
   document.getElementById('mySkillsBtn')?.classList.add('active');
+  document.getElementById('savedSkillsBtn')?.classList.remove('active');
   renderGrid();
 }
 
@@ -389,6 +545,7 @@ function showAllSkills() {
   appState.view = 'all';
   renderGrid();
   document.getElementById('mySkillsBtn')?.classList.remove('active');
+  document.getElementById('savedSkillsBtn')?.classList.remove('active');
 }
 
 /* ── STAR RATINGS ────────────────────────────────── */

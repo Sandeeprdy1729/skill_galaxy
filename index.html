@@ -55,11 +55,14 @@
 </head>
 <body>
 
+<!-- SKIP LINK (Accessibility) -->
+<a href="#skillsGrid" class="skip-link">Skip to skills</a>
+
 <!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sidebar" role="navigation" aria-label="Main navigation">
   <div class="logo-wrap">
     <div class="logo-mark">
-      <svg viewBox="0 0 16 16" fill="none">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
         <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
       </svg>
@@ -67,84 +70,91 @@
     <span class="logo-text">Skill<em>Galaxy</em></span>
   </div>
 
-  <div class="s-label">Browse</div>
-  <div class="nav-item active" id="navAll-item" onclick="setFilterAll()">
-    <span class="nav-dot" style="background:var(--text-ter)"></span>
+  <div class="s-label" id="browseLabel">Browse</div>
+  <div class="nav-item active" id="navAll-item" onclick="setFilterAll()" role="button" tabindex="0" aria-label="Show all skills" onkeydown="if(event.key==='Enter')setFilterAll()">
+    <span class="nav-dot" style="background:var(--text-ter)" aria-hidden="true"></span>
     All Skills
     <span class="nav-count" id="navAll">9872</span>
   </div>
-  <div id="catNav"></div>
+  <div id="catNav" role="list" aria-label="Skill categories"></div>
 
-  <div class="sidebar-hr"></div>
+  <div class="sidebar-hr" role="separator"></div>
   <div class="s-label">My Account</div>
-  <div class="nav-item" id="mySkillsBtn" onclick="requireLogin(loadMySkills)">
-    <span style="font-size:11px;opacity:.6">◈</span>
+  <div class="nav-item" id="mySkillsBtn" onclick="requireLogin(loadMySkills)" role="button" tabindex="0" aria-label="View my submissions" onkeydown="if(event.key==='Enter')requireLogin(loadMySkills)">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">◈</span>
     My Submissions
     <span class="nav-count" id="myCount" style="display:none">0</span>
   </div>
-  <div class="nav-item" onclick="requireLogin(openSubmit)">
-    <span style="font-size:11px;opacity:.6">↑</span>
+  <div class="nav-item" id="savedSkillsBtn" onclick="showSavedSkills()" role="button" tabindex="0" aria-label="View saved skills" onkeydown="if(event.key==='Enter')showSavedSkills()">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">♡</span>
+    Saved Skills
+    <span class="nav-count" id="savedCount">0</span>
+  </div>
+  <div class="nav-item" onclick="requireLogin(openSubmit)" role="button" tabindex="0" aria-label="Submit a skill" onkeydown="if(event.key==='Enter')requireLogin(openSubmit)">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">↑</span>
     Submit a Skill
   </div>
 
-  <div class="sidebar-hr"></div>
+  <div class="sidebar-hr" role="separator"></div>
   <div class="s-label">Community</div>
-  <div class="nav-item" onclick="showBundlesView()">
-    <span style="font-size:11px;opacity:.6">📦</span>
+  <div class="nav-item" onclick="showBundlesView()" role="button" tabindex="0" aria-label="View skill bundles" onkeydown="if(event.key==='Enter')showBundlesView()">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">📦</span>
     Skill Bundles
     <span class="nav-count">4</span>
   </div>
-  <div class="nav-item" onclick="openSkillForge()">
-    <span style="font-size:11px;opacity:.6">✨</span>
+  <div class="nav-item" onclick="openSkillForge()" role="button" tabindex="0" aria-label="Open SkillForge AI" onkeydown="if(event.key==='Enter')openSkillForge()">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">✨</span>
     SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
   </div>
-  <a class="nav-item" href="dashboard.html" style="text-decoration:none">
-    <span style="font-size:11px;opacity:.6">📊</span>
+  <a class="nav-item" href="dashboard.html" style="text-decoration:none" aria-label="Creator Dashboard">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">📊</span>
     Creator Dashboard
   </a>
 
-  <div class="sidebar-hr"></div>
+  <div class="sidebar-hr" role="separator"></div>
   <div class="s-label">Help</div>
-  <a class="nav-item" href="guide.html" style="text-decoration:none">
-    <span style="font-size:11px;opacity:.6">📖</span>
+  <a class="nav-item" href="guide.html" style="text-decoration:none" aria-label="Skill Creation Guide">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">📖</span>
     Skill Creation Guide
   </a>
 
-  <div class="sidebar-hr"></div>
+  <div class="sidebar-hr" role="separator"></div>
   <div class="s-label">Contribute</div>
-  <div class="nav-item" onclick="requireLogin(()=>document.getElementById('quickFileInput').click())">
-    <span style="font-size:11px;opacity:.6">⌁</span>
+  <div class="nav-item" onclick="requireLogin(()=>document.getElementById('quickFileInput').click())" role="button" tabindex="0" aria-label="Quick upload a skill file" onkeydown="if(event.key==='Enter')requireLogin(()=>document.getElementById('quickFileInput').click())">
+    <span style="font-size:11px;opacity:.6" aria-hidden="true">⌁</span>
     Quick Upload
   </div>
 
   <div class="sidebar-bottom">
-    <div class="sidebar-hr"></div>
-    <a class="ph-btn" href="https://timps-website.vercel.app/" target="_blank" rel="noopener">
+    <div class="sidebar-hr" role="separator"></div>
+    <a class="ph-btn" href="https://timps-website.vercel.app/" target="_blank" rel="noopener" aria-label="Visit TIMPS website">
       BY TIMPS
     </a>
   </div>
 </aside>
 
 <!-- MAIN -->
-<div class="main">
+<div class="main" role="main">
 
   <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="search-wrap">
-      <span class="search-ic">⌕</span>
-      <input type="text" id="searchInput" placeholder="Search skills, tools, categories… (⌘K)" autocomplete="off">
+  <div class="topbar" role="banner">
+    <div class="search-wrap" role="search" aria-label="Search skills">
+      <span class="search-ic" aria-hidden="true">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search skills, tools, categories… (⌘K)" autocomplete="off" aria-label="Search skills, tools, categories" role="combobox" aria-expanded="false" aria-controls="searchHistory" aria-autocomplete="list">
+      <div class="search-history" id="searchHistory" role="listbox" aria-label="Search history"></div>
     </div>
-    <button class="btn-ai-search" id="aiSearchBtn" onclick="openAiSearch()" title="AI Suggest: find the best skills for your task">✨ AI Suggest</button>
+    <button class="btn-ai-search" id="aiSearchBtn" onclick="openAiSearch()" title="AI Suggest: find the best skills for your task" aria-label="AI Suggest">✨ AI Suggest</button>
     <div class="tb-right">
-      <a href="guide.html" class="btn-guide">📖 Guide</a>
-      <div class="tb-pill"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
-      <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')">Sign In</button>
-      <div class="user-chip hidden" id="userChip">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+      <a href="guide.html" class="btn-guide" aria-label="Skill creation guide">📖 Guide</a>
+      <div class="tb-pill" aria-label="Total skill count"><strong id="countDisplay">9872</strong>&nbsp;skills</div>
+      <button class="btn-login" id="btnLogin" onclick="openAuthModal('login')" aria-label="Sign in">Sign In</button>
+      <div class="user-chip hidden" id="userChip" aria-label="Current user">
         <div class="user-dot" id="userInitial">U</div>
         <span id="userName"></span>
       </div>
-      <button class="btn-submit-top hidden" id="btnSubmitNav" onclick="openSubmit()">+ Submit Skill</button>
-      <button class="btn-logout hidden" id="btnLogout" onclick="handleSignOut()">Sign Out</button>
+      <button class="btn-submit-top hidden" id="btnSubmitNav" onclick="openSubmit()" aria-label="Submit a new skill">+ Submit Skill</button>
+      <button class="btn-logout hidden" id="btnLogout" onclick="handleSignOut()" aria-label="Sign out">Sign Out</button>
     </div>
   </div>
 
@@ -206,20 +216,20 @@
     </div>
 
     <!-- DIFFICULTY PILLS -->
-    <div class="filter-row" id="diffPills">
-      <span style="font-size:.68rem;color:var(--text-ter);margin-right:3px">Difficulty:</span>
-      <button class="f-pill active" onclick="setDiff('all',this)">All</button>
-      <button class="f-pill" onclick="setDiff('beginner',this)">Beginner</button>
-      <button class="f-pill" onclick="setDiff('intermediate',this)">Intermediate</button>
-      <button class="f-pill" onclick="setDiff('advanced',this)">Advanced</button>
-      <button class="f-pill" onclick="setDiff('expert',this)">Expert</button>
+    <div class="filter-row" id="diffPills" role="toolbar" aria-label="Filter by difficulty">
+      <span style="font-size:.68rem;color:var(--text-ter);margin-right:3px" id="diffLabel">Difficulty:</span>
+      <button class="f-pill active" onclick="setDiff('all',this)" aria-pressed="true" aria-label="Show all difficulties">All</button>
+      <button class="f-pill" onclick="setDiff('beginner',this)" aria-pressed="false" aria-label="Filter beginner skills">Beginner</button>
+      <button class="f-pill" onclick="setDiff('intermediate',this)" aria-pressed="false" aria-label="Filter intermediate skills">Intermediate</button>
+      <button class="f-pill" onclick="setDiff('advanced',this)" aria-pressed="false" aria-label="Filter advanced skills">Advanced</button>
+      <button class="f-pill" onclick="setDiff('expert',this)" aria-pressed="false" aria-label="Filter expert skills">Expert</button>
     </div>
 
     <div class="sec-row">
       <div class="sec-label">Skills <span class="sec-count" id="sectionCount">9872</span></div>
     </div>
 
-    <div id="skillsGrid"></div>
+    <div id="skillsGrid" role="list" aria-label="Skills grid"></div>
 
     <!-- QUICK UPLOAD -->
     <div style="margin-top:32px" id="uploadSection">
@@ -238,15 +248,15 @@
 
 
 <!-- DETAIL MODAL -->
-<div class="overlay" id="overlay">
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="modal">
     <div class="modal-head">
-      <div class="modal-icon" id="mIcon"></div>
+      <div class="modal-icon" id="mIcon" aria-hidden="true"></div>
       <div class="modal-head-t">
         <div class="modal-title" id="mTitle"></div>
         <div class="modal-meta"  id="mMeta"></div>
       </div>
-      <button class="modal-close" onclick="closeDetail()">✕</button>
+      <button class="modal-close" onclick="closeDetail()" aria-label="Close detail">✕</button>
     </div>
     <div class="modal-body" id="mBody"></div>
   </div>
@@ -254,7 +264,7 @@
 
 
 <!-- AUTH MODAL -->
-<div class="auth-overlay" id="authOverlay">
+<div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-modal">
     <div class="auth-head">
       <div class="auth-logo">
@@ -305,14 +315,14 @@
 
 
 <!-- SUBMIT MODAL -->
-<div class="submit-overlay" id="submitOverlay">
+<div class="submit-overlay" id="submitOverlay" role="dialog" aria-modal="true" aria-label="Submit a skill">
   <div class="submit-modal">
     <div class="sm-head">
       <div>
         <span class="sm-title">Submit a Skill</span>
         <div style="font-size:.72rem;color:var(--text-ter);margin-top:2px">Reviewed within 24hrs · appears live once approved</div>
       </div>
-      <button class="modal-close" onclick="closeSubmit()">✕</button>
+      <button class="modal-close" onclick="closeSubmit()" aria-label="Close submit modal">✕</button>
     </div>
     <div class="sm-body">
       <div class="tabs-row">
