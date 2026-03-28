@@ -5,7 +5,7 @@
 // ════════════════════════════════════════════════════════════
 
 // Simple Icons CDN base
-const SI_CDN = 'https://cdn.simpleicons.org/';
+// SI_CDN is declared in app.js — do not redeclare here
 
 // Brand color map for Simple Icons (hex without #)
 const SI_COLORS = {
