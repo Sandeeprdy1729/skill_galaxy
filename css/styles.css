@@ -708,3 +708,8 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   .bundles-grid{grid-template-columns:1fr}
   .btn-ai-search{display:none}
 }
+
+/* ─── GitHub Star CTA ─── */
+.github-star-cta{transition:all .15s}
+.github-star-cta:hover{background:rgba(255,193,7,.08)}
+[data-theme="dark"] .github-star-cta:hover{background:rgba(255,193,7,.12)}
