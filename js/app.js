@@ -602,7 +602,7 @@ function openDetail(id) {
 
     <div class="modal-actions">
       <button class="btn-main" onclick="handleDownload('${esc(s.id)}')">↓ Download .md file</button>
-      <button class="btn-playground" onclick="closeDetail();openPlayground('${esc(s.id)}')">⚡ Try Live</button>
+      <button class="btn-playground" onclick="trySkillLive('${esc(s.id)}')">⚡ Try Live</button>
       <button class="btn-ghost" onclick="openExportModal('${esc(s.id)}')">📤 Export for…</button>
       <button class="btn-ghost" onclick="openClaudeDesktopModal()">⚡ Connect Claude</button>
       <button class="btn-ghost" onclick="closeDetail()">Close</button>
@@ -765,6 +765,12 @@ let pgMsgCount     = 0;
 const PG_MAX_MSGS  = 5;
 const PG_STORAGE   = 'sg-playground-count';
 const PG_STORAGE_TS = 'sg-playground-ts';
+const PG_DAY_MS    = 86400000; /* 24 hours in milliseconds */
+
+function trySkillLive(skillId) {
+  closeDetail();
+  openPlayground(skillId);
+}
 
 function openPlayground(skillId) {
   const s = getAllSkills().find(x => x.id === skillId);
@@ -774,7 +780,7 @@ function openPlayground(skillId) {
 
   // Reset daily limit (reset every 24h)
   const storedTs = localStorage.getItem(PG_STORAGE_TS);
-  if (!storedTs || Date.now() - parseInt(storedTs, 10) > 86400000) {
+  if (!storedTs || Date.now() - parseInt(storedTs, 10) > PG_DAY_MS) {
     localStorage.setItem(PG_STORAGE, '0');
     localStorage.setItem(PG_STORAGE_TS, String(Date.now()));
   }
@@ -819,7 +825,12 @@ function getSuggestions(skill) {
     `What are best practices for this area?`,
   ];
   if (skill.trigger) {
-    base.unshift(skill.trigger.replace(/^use when\s*/i, '').replace(/^user (says|asks)\s*/i, '').slice(0, 80));
+    // Clean up trigger text to make a natural suggestion
+    let triggerText = skill.trigger;
+    triggerText = triggerText.replace(/^use when\s*/i, '');
+    triggerText = triggerText.replace(/^user (says|asks)\s*/i, '');
+    triggerText = triggerText.slice(0, 80);
+    base.unshift(triggerText);
   }
   return base.slice(0, 3);
 }
