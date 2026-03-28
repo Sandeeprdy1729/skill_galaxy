@@ -413,21 +413,9 @@ async function validateSkillWithAI(name, description, md_content) {
   }
 }
 
-/* ── GET ALL SKILLS (skills table + community + hardcoded) ── */
+/* ── GET ALL SKILLS (official skills from skills/ folder only) ── */
 function getAllSkills() {
-  // Merge all sources; skills table first (bulk-loaded), then community, then local DB.
-  // Deduplicate by skill id — later sources yield to earlier ones.
-  const seen = new Set();
-  const merged = [];
-
-  for (const list of [skillsTableCache, communitySkillsCache, SKILLS_DB]) {
-    for (const s of list) {
-      if (!seen.has(s.id)) {
-        seen.add(s.id);
-        merged.push(s);
-      }
-    }
-  }
-
-  return merged;
+  // Use only the official skills imported from the skills/ folder (SKILLS_DB).
+  // Old Supabase-hosted skills are excluded.
+  return SKILLS_DB;
 }

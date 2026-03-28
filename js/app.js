@@ -108,22 +108,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderGrid();
   updateTotalCount();
 
-  // Then fetch community skills + bulk skills table in background and re-render
-  showGridSkeleton();
-  try {
-    await Promise.all([
-      fetchCommunitySkills(),
-      fetchSkillsTable(),
-    ]);
-    subscribeToSkillUpdates();
-  } catch (err) {
-    console.warn('Remote skills fetch failed, showing official skills only:', err);
-  }
-
-  // Re-render after community skills load (or fail gracefully)
-  buildSidebar();
-  renderGrid();
-  updateTotalCount();
+  // Skills are loaded exclusively from SKILLS_DB (skills/ folder).
+  // No remote Supabase fetch for old skills.
 
   // Search
   document.getElementById('searchInput')?.addEventListener('input', e => {
