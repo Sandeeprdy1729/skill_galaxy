@@ -108,6 +108,10 @@
     <span style="font-size:11px;opacity:.6">✨</span>
     SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
   </div>
+  <div class="nav-item cp-nav-highlight" onclick="openCareerPathfinder()">
+    <span style="font-size:11px;opacity:.6">🚀</span>
+    Career Pathfinder <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
+  </div>
   <div class="nav-item" onclick="showGalaxyView()">
     <span style="font-size:11px;opacity:.6">🌌</span>
     Galaxy View
@@ -811,6 +815,57 @@
 </div>
 
 
+<!-- CAREER PATHFINDER OVERLAY -->
+<div class="auth-overlay" id="careerPathfinderOverlay">
+  <div class="cp-modal">
+    <canvas id="cpParticleCanvas" class="cp-particle-canvas"></canvas>
+
+    <!-- INPUT VIEW -->
+    <div id="cpInputView">
+      <div class="cp-header">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="cp-logo">🚀 AI Career Pathfinder</span>
+          <button class="modal-close" onclick="closeCareerPathfinder()">✕</button>
+        </div>
+        <h2 class="cp-headline">Map Your Dream Career Journey</h2>
+        <p class="cp-subline">Tell us where you are and where you want to be. Our AI will generate a personalized roadmap with real skills from SkillGalaxy's 10,000+ library.</p>
+      </div>
+
+      <div class="cp-form">
+        <div class="cp-input-group">
+          <label class="cp-label">🧑‍💻 I am currently a…</label>
+          <input type="text" id="cpCurrentRole" class="cp-input" placeholder="e.g. Junior Frontend Developer" maxlength="200">
+        </div>
+        <div class="cp-arrow-divider">
+          <div class="cp-arrow-line"></div>
+          <span class="cp-arrow-icon">⬇</span>
+          <div class="cp-arrow-line"></div>
+        </div>
+        <div class="cp-input-group">
+          <label class="cp-label">🌟 I want to become a…</label>
+          <input type="text" id="cpDreamRole" class="cp-input" placeholder="e.g. AI/ML Engineer at a top company" maxlength="200">
+        </div>
+
+        <button class="btn-main cp-generate-btn" id="cpGenerateBtn" onclick="generateCareerPath()">
+          🚀 Generate My Path
+        </button>
+
+        <div class="cp-quick-paths">
+          <span class="cp-quick-label">Popular journeys:</span>
+          <button class="cp-quick-btn" onclick="cpQuickFill('Frontend Developer','Full-Stack AI Engineer')">Frontend → AI Engineer</button>
+          <button class="cp-quick-btn" onclick="cpQuickFill('Student','DevOps Engineer')">Student → DevOps</button>
+          <button class="cp-quick-btn" onclick="cpQuickFill('Data Analyst','ML Engineer')">Analyst → ML Engineer</button>
+          <button class="cp-quick-btn" onclick="cpQuickFill('Backend Developer','Cloud Architect')">Backend → Cloud Architect</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="cpResultView" style="display:none" class="cp-result-view">
+    </div>
+  </div>
+</div>
+
 <!-- SCRIPTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMh7g4y4Mj6N2ojJLnuzAfjOWFEbEH26yyAnAu7W7GjEH7I2qTUPJEMaWCT7R7oTMuRqzv7T5VnDlGhVLNXtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -819,6 +874,7 @@
 <script src="js/skills-api.js"></script>
 <script src="js/bundles.js"></script>
 <script src="js/learning-paths.js"></script>
+<script src="js/career-pathfinder.js"></script>
 <script src="js/galaxy-viz.js"></script>
 <script src="js/github-scan.js"></script>
 <script src="js/app.js"></script>
