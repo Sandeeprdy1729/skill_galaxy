@@ -602,8 +602,9 @@ function openDetail(id) {
 
     <div class="modal-actions">
       <button class="btn-main" onclick="handleDownload('${esc(s.id)}')">↓ Download .md file</button>
+      <button class="btn-playground" onclick="closeDetail();openPlayground('${esc(s.id)}')">⚡ Try Live</button>
       <button class="btn-ghost" onclick="openExportModal('${esc(s.id)}')">📤 Export for…</button>
-      <button class="btn-ghost" onclick="openClaudeDesktopModal()">🔌 Add to Claude Desktop</button>
+      <button class="btn-ghost" onclick="openClaudeDesktopModal()">⚡ Connect Claude</button>
       <button class="btn-ghost" onclick="closeDetail()">Close</button>
     </div>`;
 
@@ -702,15 +703,50 @@ function timeAgo(iso) {
   return 'just now';
 }
 
-/* ── CLAUDE DESKTOP MODAL ────────────────────────── */
+/* ── CLAUDE DESKTOP MODAL — ONE-CLICK CONNECT ────── */
 function openClaudeDesktopModal() {
   document.getElementById('claudeDesktopOverlay')?.classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Auto-detect platform
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('win')) switchPlatform('win');
+  else if (ua.includes('linux') && !ua.includes('mac')) switchPlatform('linux');
+  else switchPlatform('mac');
 }
 
 function closeClaudeDesktopModal() {
   document.getElementById('claudeDesktopOverlay')?.classList.remove('open');
   document.body.style.overflow = '';
+}
+
+function switchPlatform(os) {
+  document.querySelectorAll('.connect-platform-chip').forEach(el => {
+    el.classList.toggle('active', el.dataset.os === os);
+  });
+  const paths = {
+    mac:   '~/Library/Application Support/Claude/claude_desktop_config.json',
+    win:   '%APPDATA%\\Claude\\claude_desktop_config.json',
+    linux: '~/.config/Claude/claude_desktop_config.json',
+  };
+  const el = document.getElementById('configPathDisplay');
+  if (el) el.textContent = paths[os] || paths.mac;
+}
+
+function copyOneClickCmd() {
+  const cmd = document.getElementById('oneClickCmd')?.textContent || '';
+  navigator.clipboard.writeText(cmd).then(() => {
+    const btn = document.getElementById('copyBtnText');
+    if (btn) { btn.textContent = '✅ Copied!'; setTimeout(() => { btn.textContent = '📋 Copy One-Click Command'; }, 2000); }
+    const box = document.getElementById('connectSuccess');
+    if (box) { box.style.display = 'block'; setTimeout(() => { box.style.display = 'none'; }, 4000); }
+    toast('One-click command copied!');
+  }).catch(() => toast('Copy failed — select and copy manually', true));
+}
+
+function copyLocalSetup() {
+  const cmd = document.getElementById('localSetupCmd')?.textContent || '';
+  navigator.clipboard.writeText(cmd).then(() => toast('Local setup command copied!'))
+    .catch(() => toast('Copy failed', true));
 }
 
 function copyDesktopConfig() {
@@ -721,6 +757,194 @@ function copyDesktopConfig() {
     toast('Copy failed — select and copy manually', true);
   });
 }
+
+/* ── LIVE SKILL PLAYGROUND ───────────────────────── */
+let pgSkillData    = null;
+let pgHistory      = [];
+let pgMsgCount     = 0;
+const PG_MAX_MSGS  = 5;
+const PG_STORAGE   = 'sg-playground-count';
+const PG_STORAGE_TS = 'sg-playground-ts';
+
+function openPlayground(skillId) {
+  const s = getAllSkills().find(x => x.id === skillId);
+  if (!s) { toast('Skill not found', true); return; }
+  pgSkillData = s;
+  pgHistory   = [];
+
+  // Reset daily limit (reset every 24h)
+  const storedTs = localStorage.getItem(PG_STORAGE_TS);
+  if (!storedTs || Date.now() - parseInt(storedTs, 10) > 86400000) {
+    localStorage.setItem(PG_STORAGE, '0');
+    localStorage.setItem(PG_STORAGE_TS, String(Date.now()));
+  }
+  pgMsgCount = parseInt(localStorage.getItem(PG_STORAGE) || '0', 10);
+
+  document.getElementById('playgroundTitle').textContent = `Try: ${s.name}`;
+  document.getElementById('playgroundDesc').textContent = s.desc || 'Chat with Claude using this skill applied.';
+
+  // Reset chat
+  const chat = document.getElementById('pgChat');
+  if (chat) {
+    const suggestions = getSuggestions(s);
+    chat.innerHTML = `
+      <div class="pg-welcome">
+        <div style="font-size:1.6rem;margin-bottom:6px">🎯</div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--text-pri)">${esc(s.name)} — loaded & ready</div>
+        <div style="font-size:.73rem;color:var(--text-ter);margin-top:4px;max-width:400px">Send a message to see Claude respond with this skill applied. Try one of these:</div>
+        <div class="pg-suggestions">${suggestions.map(q => `<button class="pg-suggestion" onclick="pgSendSuggestion(this)">${esc(q)}</button>`).join('')}</div>
+      </div>`;
+  }
+
+  updatePgLimit();
+  document.getElementById('pgInput').value = '';
+  document.getElementById('playgroundOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('pgInput')?.focus(), 300);
+}
+
+function closePlayground() {
+  document.getElementById('playgroundOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+  pgSkillData = null;
+  pgHistory   = [];
+}
+
+function getSuggestions(skill) {
+  const cat = skill.cat || '';
+  const name = skill.name || '';
+  const base = [
+    `How would you approach a ${cat} project?`,
+    `Give me a quick example using ${name}`,
+    `What are best practices for this area?`,
+  ];
+  if (skill.trigger) {
+    base.unshift(skill.trigger.replace(/^use when\s*/i, '').replace(/^user (says|asks)\s*/i, '').slice(0, 80));
+  }
+  return base.slice(0, 3);
+}
+
+function updatePgLimit() {
+  const remaining = Math.max(0, PG_MAX_MSGS - pgMsgCount);
+  const el = document.getElementById('pgLimit');
+  if (el) el.textContent = `${remaining} message${remaining !== 1 ? 's' : ''} remaining today`;
+  const sendBtn = document.getElementById('pgSendBtn');
+  if (sendBtn) sendBtn.disabled = remaining <= 0;
+  const input = document.getElementById('pgInput');
+  if (input && remaining <= 0) input.placeholder = 'Daily limit reached — download the skill to use it!';
+}
+
+function pgKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); pgSend(); }
+}
+
+function pgSendSuggestion(btn) {
+  const text = btn.textContent;
+  document.getElementById('pgInput').value = text;
+  pgSend();
+}
+
+async function pgSend() {
+  if (!pgSkillData) return;
+  const input = document.getElementById('pgInput');
+  const msg = (input?.value || '').trim();
+  if (!msg) return;
+  if (pgMsgCount >= PG_MAX_MSGS) { toast('Daily playground limit reached. Download the skill for unlimited use!', true); return; }
+
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Add user message to chat
+  const chat = document.getElementById('pgChat');
+  // Remove welcome message if present
+  const welcome = chat?.querySelector('.pg-welcome');
+  if (welcome) welcome.remove();
+
+  appendMessage('user', msg);
+  pgHistory.push({ role: 'user', content: msg });
+
+  // Show typing indicator
+  const typingId = 'pg-typing-' + Date.now();
+  appendTyping(typingId);
+  chat.scrollTop = chat.scrollHeight;
+
+  // Disable send button during request
+  const sendBtn = document.getElementById('pgSendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  try {
+    const resp = await fetch('/api/playground', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: msg,
+        skill_md: pgSkillData.md || pgSkillData.desc || '',
+        history: pgHistory.slice(-6),
+      }),
+    });
+
+    const data = await resp.json();
+    removeTyping(typingId);
+
+    if (!data.configured) {
+      appendMessage('system', '⚙️ Playground requires ANTHROPIC_API_KEY to be configured. Download the skill to use it directly in Claude.');
+    } else if (data.error) {
+      appendMessage('system', `⚠️ ${data.error}. Try again in a moment.`);
+    } else if (data.reply) {
+      appendMessage('assistant', data.reply);
+      pgHistory.push({ role: 'assistant', content: data.reply });
+      pgMsgCount++;
+      localStorage.setItem(PG_STORAGE, String(pgMsgCount));
+    }
+  } catch (err) {
+    removeTyping(typingId);
+    appendMessage('system', '⚠️ Network error. Please try again.');
+  }
+
+  updatePgLimit();
+  if (sendBtn) sendBtn.disabled = pgMsgCount >= PG_MAX_MSGS;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function appendMessage(role, content) {
+  const chat = document.getElementById('pgChat');
+  if (!chat) return;
+  const div = document.createElement('div');
+  div.className = `pg-msg pg-msg-${role}`;
+  if (role === 'user') {
+    div.innerHTML = `<div class="pg-msg-bubble pg-user-bubble">${esc(content)}</div>`;
+  } else if (role === 'assistant') {
+    div.innerHTML = `<div class="pg-msg-bubble pg-ai-bubble">${formatPgResponse(content)}</div>`;
+  } else {
+    div.innerHTML = `<div class="pg-msg-bubble pg-system-bubble">${content}</div>`;
+  }
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function formatPgResponse(text) {
+  // Simple markdown-like formatting
+  return esc(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+}
+
+function appendTyping(id) {
+  const chat = document.getElementById('pgChat');
+  if (!chat) return;
+  const div = document.createElement('div');
+  div.className = 'pg-msg pg-msg-assistant';
+  div.id = id;
+  div.innerHTML = `<div class="pg-msg-bubble pg-ai-bubble pg-typing"><span></span><span></span><span></span></div>`;
+  chat.appendChild(div);
+}
+
+function removeTyping(id) {
+  document.getElementById(id)?.remove();
+}
+
 
 function closeDetail() {
   document.getElementById('overlay').classList.remove('open');

@@ -193,7 +193,7 @@
       </div>
       <div class="hero-right">
         <button class="btn-hero-primary" onclick="requireLogin(openSubmit)">↑ Submit a Skill</button>
-        <button class="btn-hero-secondary" onclick="openClaudeDesktopModal()">🔌 Connect Claude Desktop</button>
+        <button class="btn-hero-secondary" onclick="openClaudeDesktopModal()" style="background:var(--teal-lt);border-color:var(--teal);color:var(--teal)">⚡ One-Click Connect to Claude</button>
         <a href="guide.html" class="btn-hero-secondary">📖 How it works</a>
       </div>
     </div>
@@ -486,36 +486,61 @@
 </div>
 
 
-<!-- CLAUDE DESKTOP MODAL -->
+<!-- CLAUDE DESKTOP MODAL — ONE-CLICK CONNECT -->
 <div class="auth-overlay" id="claudeDesktopOverlay">
-  <div class="auth-modal" style="max-width:560px">
+  <div class="auth-modal" style="max-width:580px">
     <div class="auth-head">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="auth-logo-mark"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="#f9f7f4"/></svg></div>
-          <span class="auth-logo-text">🔌 Connect Claude Desktop</span>
+          <span class="auth-logo-text">⚡ One-Click Connect to Claude</span>
         </div>
         <button class="modal-close" onclick="closeClaudeDesktopModal()">✕</button>
       </div>
-      <div class="auth-title" style="font-size:1rem">Add SkillGalaxy MCP to Claude Desktop</div>
-      <div class="auth-subtitle">One config change gives Claude direct access to all 9,872+ skills — no manual downloads.</div>
+      <div class="auth-title" style="font-size:1rem">Connect Claude Desktop in Seconds</div>
+      <div class="auth-subtitle">One command gives Claude direct access to all 10,000+ skills — no manual config editing.</div>
     </div>
     <div class="auth-body" style="padding-top:16px">
 
-      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">1. Install the MCP server</div>
-      <div class="code-block" style="font-size:.72rem;margin-bottom:14px">cd /path/to/skill_galaxy/mcp-server
-npm install
-npm run build-skills</div>
-
-      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">2. Add to your Claude Desktop config</div>
-      <div style="font-size:.7rem;color:var(--text-ter);margin-bottom:5px">
-        📁 Config file location:
-        <span style="font-family:monospace;font-size:.68rem">
-          macOS: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>
-          &nbsp;·&nbsp; Windows: <code>%APPDATA%\Claude\claude_desktop_config.json</code>
-        </span>
+      <!-- Platform detection -->
+      <div class="connect-platform-bar" id="platformBar">
+        <span class="connect-platform-chip active" data-os="mac" onclick="switchPlatform('mac')">🍎 macOS</span>
+        <span class="connect-platform-chip" data-os="win" onclick="switchPlatform('win')">🪟 Windows</span>
+        <span class="connect-platform-chip" data-os="linux" onclick="switchPlatform('linux')">🐧 Linux</span>
       </div>
-      <div class="code-block" id="desktopConfigBlock" style="font-size:.72rem;margin-bottom:8px">{
+
+      <!-- ONE-CLICK SECTION -->
+      <div class="connect-one-click-box">
+        <div style="font-size:.78rem;font-weight:600;color:var(--text-pri);margin-bottom:8px">⚡ One-Click Auto-Setup</div>
+        <div style="font-size:.73rem;color:var(--text-ter);margin-bottom:10px">Copy and run this single command — it clones, installs, and auto-configures everything:</div>
+        <div class="code-block connect-cmd" id="oneClickCmd" style="font-size:.72rem;margin-bottom:8px;cursor:pointer;position:relative" onclick="copyOneClickCmd()">git clone https://github.com/Sandeeprdy1729/skill_galaxy.git && cd skill_galaxy/mcp-server && npm install && npm run build-skills && node setup.js</div>
+        <button class="btn-main" style="width:100%;font-size:.8rem;padding:11px 16px;gap:8px" onclick="copyOneClickCmd()">
+          <span id="copyBtnText">📋 Copy One-Click Command</span>
+        </button>
+      </div>
+
+      <!-- Success animation target -->
+      <div class="connect-success" id="connectSuccess" style="display:none">
+        <div style="font-size:2rem;margin-bottom:6px">🎉</div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--green)">Command Copied!</div>
+        <div style="font-size:.72rem;color:var(--text-ter);margin-top:4px">Paste in your terminal → restart Claude Desktop → done!</div>
+      </div>
+
+      <!-- ALREADY CLONED? -->
+      <div class="connect-divider"><span>Already cloned the repo?</span></div>
+
+      <div style="font-size:.73rem;color:var(--text-ter);margin-bottom:6px">Just run the auto-setup from your existing clone:</div>
+      <div class="code-block" id="localSetupCmd" style="font-size:.72rem;margin-bottom:8px">cd /path/to/skill_galaxy/mcp-server && npm install && npm run build-skills && node setup.js</div>
+      <button class="btn-ghost" style="width:100%;font-size:.74rem;margin-bottom:14px" onclick="copyLocalSetup()">📋 Copy local setup command</button>
+
+      <!-- MANUAL FALLBACK -->
+      <details class="connect-manual-details">
+        <summary style="font-size:.72rem;color:var(--text-ter);cursor:pointer;user-select:none">🔧 Manual setup (advanced)</summary>
+        <div style="padding-top:10px">
+          <div style="font-size:.7rem;color:var(--text-ter);margin-bottom:5px">
+            📁 Config file: <code id="configPathDisplay">~/Library/Application Support/Claude/claude_desktop_config.json</code>
+          </div>
+          <div class="code-block" id="desktopConfigBlock" style="font-size:.72rem;margin-bottom:8px">{
   "mcpServers": {
     "skillgalaxy": {
       "command": "node",
@@ -523,20 +548,65 @@ npm run build-skills</div>
     }
   }
 }</div>
-      <button class="btn-ghost" style="width:100%;margin-bottom:14px;font-size:.76rem" onclick="copyDesktopConfig()">📋 Copy config JSON</button>
+          <button class="btn-ghost" style="width:100%;font-size:.74rem" onclick="copyDesktopConfig()">📋 Copy config JSON</button>
+        </div>
+      </details>
 
-      <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:6px">3. Restart Claude Desktop</div>
-      <div style="font-size:.74rem;color:var(--text-ter);line-height:1.6;margin-bottom:14px">
-        Claude can now <strong>search_skills</strong>, <strong>get_skill</strong>, <strong>list_categories</strong>, and retrieve any of the 9,872+ skills on demand — without manual downloads.
+      <!-- What you get -->
+      <div class="connect-features">
+        <div style="font-size:.75rem;font-weight:600;color:var(--text-sec);margin-bottom:8px">What Claude gets:</div>
+        <div class="connect-feature-list">
+          <div class="connect-feat"><span class="connect-feat-icon">🔍</span> <strong>search_skills</strong> — search 10,000+ skills by keyword</div>
+          <div class="connect-feat"><span class="connect-feat-icon">📄</span> <strong>get_skill</strong> — retrieve any full .md skill file</div>
+          <div class="connect-feat"><span class="connect-feat-icon">📊</span> <strong>list_categories</strong> — browse 16 skill domains</div>
+          <div class="connect-feat"><span class="connect-feat-icon">⚡</span> <strong>get_skill_summary</strong> — quick metadata overview</div>
+        </div>
       </div>
 
-      <div style="background:var(--teal-lt);border:1px solid rgba(58,125,110,.2);border-radius:var(--r-sm);padding:10px 13px;font-size:.72rem;color:var(--teal);margin-bottom:14px">
-        💡 <strong>Tip:</strong> Replace <code>/FULL/PATH/TO/skill_galaxy</code> with the actual absolute path where you cloned this repo.
-      </div>
-
-      <div style="display:flex;gap:8px">
-        <a class="btn-main" href="mcp-server/README.md" target="_blank" style="text-decoration:none;font-size:.76rem">📖 Full MCP Guide</a>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <a class="btn-main" href="mcp-server/README.md" target="_blank" style="text-decoration:none;font-size:.76rem;flex:none">📖 Full Guide</a>
         <button class="btn-ghost" onclick="closeClaudeDesktopModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE SKILL PLAYGROUND -->
+<div class="auth-overlay" id="playgroundOverlay">
+  <div class="auth-modal playground-modal" style="max-width:620px">
+    <div class="auth-head playground-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="playground-logo-mark">⚡</div>
+          <span class="auth-logo-text">Live Skill Playground</span>
+        </div>
+        <button class="modal-close" onclick="closePlayground()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.92rem" id="playgroundTitle">Try this skill</div>
+      <div class="auth-subtitle" id="playgroundDesc">Chat with Claude using this skill applied — see it in action before downloading.</div>
+    </div>
+    <div class="auth-body playground-body" style="padding:0">
+      <!-- Chat messages -->
+      <div class="pg-chat" id="pgChat">
+        <div class="pg-welcome">
+          <div style="font-size:1.6rem;margin-bottom:6px">🎯</div>
+          <div style="font-size:.82rem;font-weight:600;color:var(--text-pri)">Skill loaded & ready</div>
+          <div style="font-size:.73rem;color:var(--text-ter);margin-top:4px">Send a message to see Claude respond with this skill applied.</div>
+          <div class="pg-suggestions" id="pgSuggestions"></div>
+        </div>
+      </div>
+      <!-- Input area -->
+      <div class="pg-input-wrap">
+        <div class="pg-input-bar">
+          <textarea class="pg-input" id="pgInput" rows="1" placeholder="Try asking something…" onkeydown="pgKeyDown(event)"></textarea>
+          <button class="pg-send-btn" id="pgSendBtn" onclick="pgSend()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </button>
+        </div>
+        <div class="pg-footer">
+          <span class="pg-limit" id="pgLimit">3 messages remaining</span>
+          <span class="pg-powered">Powered by Claude Haiku</span>
+        </div>
       </div>
     </div>
   </div>

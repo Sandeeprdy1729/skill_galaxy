@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build-skills": "node scripts/convert-skills.js"
+    "build-skills": "node scripts/convert-skills.js",
+    "setup": "node setup.js"
   },
   "keywords": ["mcp", "claude", "skills", "model-context-protocol"],
   "author": "",
