@@ -713,3 +713,70 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 .github-star-cta{transition:all .15s}
 .github-star-cta:hover{background:rgba(255,193,7,.08)}
 [data-theme="dark"] .github-star-cta:hover{background:rgba(255,193,7,.12)}
+
+/* ─── Learning Paths ─── */
+.lp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.lp-card{background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-md);padding:18px;cursor:pointer;transition:all .15s}
+.lp-card:hover{border-color:var(--border);box-shadow:var(--sh-sm);transform:translateY(-1px)}
+.lp-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lp-icon{font-size:1.6rem}
+.lp-card-meta{display:flex;gap:6px;align-items:center}
+.lp-card-name{font-family:"Newsreader",Georgia,serif;font-size:1.05rem;color:var(--text-pri);margin-bottom:4px}
+.lp-card-tagline{font-size:.76rem;color:var(--text-sec);line-height:1.5;margin-bottom:10px}
+.lp-card-info{display:flex;gap:14px;font-size:.68rem;color:var(--text-ter)}
+.lp-progress-bar{height:6px;background:var(--cream-dark);border-radius:3px;margin-top:12px;overflow:hidden}
+.lp-progress-lg{height:10px;border-radius:5px}
+.lp-progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--copper));border-radius:inherit;transition:width .3s}
+.lp-progress-text{font-size:.65rem;color:var(--text-ter);margin-top:4px}
+
+/* Learning Path Detail */
+.lp-detail-header{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+.lp-detail-icon{font-size:2.4rem;flex-shrink:0}
+.lp-detail-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.lp-overall-progress{margin-bottom:20px;padding:14px;background:var(--cream-dark);border-radius:var(--r-md)}
+.lp-timeline{display:flex;flex-direction:column;gap:0}
+.lp-step{padding:16px;border-left:3px solid var(--border);margin-left:12px;position:relative}
+.lp-step.lp-step-done{border-left-color:var(--teal)}
+.lp-step-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.lp-step-marker{width:28px;height:28px;border-radius:50%;background:var(--cream-dark);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--text-sec);position:absolute;left:-16px;flex-shrink:0}
+.lp-step-done .lp-step-marker{background:var(--teal);border-color:var(--teal);color:white}
+.lp-step-title{font-size:.82rem;color:var(--text-pri);margin-left:20px}
+.lp-step-title strong{display:block;margin-bottom:1px}
+.lp-step-month{font-size:.65rem;color:var(--text-ter)}
+.lp-step-count{margin-left:auto;font-size:.68rem;color:var(--text-ter);white-space:nowrap}
+.lp-step-desc{font-size:.74rem;color:var(--text-sec);line-height:1.5;margin-left:20px;margin-bottom:10px}
+.lp-step-skills{display:flex;flex-direction:column;gap:3px;margin-left:20px}
+.lp-skill-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;font-size:.76rem;color:var(--text-pri);transition:background .1s}
+.lp-skill-row:hover{background:var(--cream-dark)}
+.lp-skill-done{opacity:.6;text-decoration:line-through}
+.lp-skill-done .lp-skill-name{text-decoration:line-through}
+.lp-check{cursor:pointer;display:flex;align-items:center}
+.lp-checkbox{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:white;transition:all .15s;flex-shrink:0}
+.lp-checkbox.checked{background:var(--teal);border-color:var(--teal)}
+.lp-skill-name{cursor:default}
+
+/* ─── Galaxy Visualization ─── */
+#galaxyContainer svg{width:100%;height:100%}
+.galaxy-tooltip{position:absolute;background:var(--warm-white);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:.74rem;pointer-events:none;box-shadow:var(--sh-md);z-index:10;max-width:240px}
+.galaxy-tooltip .gt-name{font-weight:600;color:var(--text-pri);margin-bottom:2px}
+.galaxy-tooltip .gt-cat{font-size:.65rem;color:var(--text-ter)}
+.galaxy-legend{position:absolute;bottom:12px;left:12px;background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-md);padding:10px 14px;font-size:.68rem;display:flex;flex-wrap:wrap;gap:8px;max-width:400px}
+.galaxy-legend-item{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.galaxy-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ─── GitHub Scan ─── */
+.gh-lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-bottom:14px}
+.gh-lang-item{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--cream-dark);border-radius:6px;font-size:.74rem;color:var(--text-pri)}
+.gh-lang-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gh-section{margin-bottom:16px}
+.gh-section .m-lbl{margin-bottom:8px}
+.gh-skill-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--teal-lt);color:var(--teal);border-radius:12px;font-size:.7rem;font-weight:500;cursor:pointer;transition:all .1s;margin:2px}
+.gh-skill-chip:hover{background:var(--teal);color:white}
+.gh-skill-chip.learn{background:var(--copper-lt);color:var(--copper)}
+.gh-skill-chip.learn:hover{background:var(--copper);color:white}
+
+@media(max-width:700px){
+  .lp-grid{grid-template-columns:1fr}
+  .lp-detail-header{flex-direction:column}
+  .galaxy-legend{max-width:90vw}
+}
