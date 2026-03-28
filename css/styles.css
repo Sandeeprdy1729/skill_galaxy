@@ -910,7 +910,9 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 /* Connector (left side) */
 .cp-phase-connector{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:48px}
 .cp-phase-node{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--teal-lt),var(--cream));border:2.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:1.1rem;box-shadow:0 0 0 4px rgba(58,125,110,.08);transition:all .3s;position:relative;z-index:1}
-.cp-phase:hover .cp-phase-node{box-shadow:0 0 0 8px rgba(58,125,110,.15);transform:scale(1.1)}
+.cp-phase-node::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(58,125,110,.12);opacity:0;transform:scale(.8);transition:all .4s cubic-bezier(.22,.61,.36,1)}
+.cp-phase:hover .cp-phase-node{box-shadow:0 0 0 8px rgba(58,125,110,.15),0 0 20px rgba(58,125,110,.1);transform:scale(1.1)}
+.cp-phase:hover .cp-phase-node::after{opacity:1;transform:scale(1.35)}
 .cp-phase-line{width:2.5px;flex:1;min-height:30px;background:linear-gradient(to bottom,var(--teal),rgba(58,125,110,.15));border-radius:2px}
 .cp-phase-icon{font-size:1.1rem;line-height:1}
 
@@ -923,11 +925,12 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 .cp-phase-name{font-family:'Newsreader',Georgia,serif;font-size:1.05rem;font-weight:700;color:var(--text-pri);margin:4px 0 6px}
 .cp-phase-desc{font-size:.78rem;color:var(--text-sec);line-height:1.6;margin-bottom:14px}
 
-/* Skill cards inside phases */
+/* Skill cards inside phases — glass morphism */
 .cp-skills-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px}
-.cp-skill-card{padding:10px 12px;background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-sm);transition:all .2s}
+.cp-skill-card{padding:10px 12px;background:rgba(255,255,255,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.45);border-radius:var(--r-md);transition:all .25s ease;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.cp-skill-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(58,125,110,.1);border-color:rgba(58,125,110,.25)}
 .cp-skill-linked{cursor:pointer}
-.cp-skill-linked:hover{border-color:var(--teal);background:var(--teal-lt);transform:translateX(4px)}
+.cp-skill-linked:hover{border-color:var(--teal);background:rgba(58,125,110,.08);transform:translateY(-3px);box-shadow:0 8px 24px rgba(58,125,110,.15)}
 .cp-skill-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
 .cp-skill-name{font-size:.78rem;font-weight:600;color:var(--text-pri)}
 .cp-skill-diff{font-size:.58rem;padding:2px 7px;border-radius:10px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;flex-shrink:0}
@@ -961,8 +964,11 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 /* Dark mode overrides */
 [data-theme="dark"] .cp-modal{background:var(--cream-dark)}
 [data-theme="dark"] .cp-phase-node{background:linear-gradient(135deg,var(--teal-lt),var(--cream-dark))}
+[data-theme="dark"] .cp-phase-node::after{border-color:rgba(58,125,110,.2)}
 [data-theme="dark"] .cp-phase-content{background:var(--cream)}
-[data-theme="dark"] .cp-skill-card{background:var(--cream-dark)}
+[data-theme="dark"] .cp-skill-card{background:rgba(30,30,30,.55);border-color:rgba(255,255,255,.08);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+[data-theme="dark"] .cp-skill-card:hover{border-color:rgba(58,125,110,.3);box-shadow:0 8px 24px rgba(58,125,110,.12)}
+[data-theme="dark"] .cp-skill-linked:hover{background:rgba(58,125,110,.12)}
 [data-theme="dark"] .cp-diff-beginner{background:#253525;color:#4a9a58}
 [data-theme="dark"] .cp-diff-intermediate{background:#252d3a;color:#5a8abc}
 [data-theme="dark"] .cp-diff-advanced{background:#3a2e26;color:#d4926a}
