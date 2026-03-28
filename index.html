@@ -99,9 +99,22 @@
     Skill Bundles
     <span class="nav-count">4</span>
   </div>
+  <div class="nav-item" onclick="showLearningPaths()">
+    <span style="font-size:11px;opacity:.6">📋</span>
+    Learning Paths
+    <span class="nav-count">6</span>
+  </div>
   <div class="nav-item" onclick="openSkillForge()">
     <span style="font-size:11px;opacity:.6">✨</span>
     SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
+  </div>
+  <div class="nav-item" onclick="showGalaxyView()">
+    <span style="font-size:11px;opacity:.6">🌌</span>
+    Galaxy View
+  </div>
+  <div class="nav-item" onclick="openGitHubScan()">
+    <span style="font-size:11px;opacity:.6">🔗</span>
+    Scan My GitHub
   </div>
   <a class="nav-item" href="dashboard.html" style="text-decoration:none">
     <span style="font-size:11px;opacity:.6">📊</span>
@@ -121,6 +134,14 @@
     <span style="font-size:11px;opacity:.6">⌁</span>
     Quick Upload
   </div>
+
+  <div class="sidebar-hr"></div>
+  <div class="s-label">Open Source</div>
+  <a class="nav-item github-star-cta" href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener" style="text-decoration:none">
+    <span style="font-size:11px;opacity:.6">⭐</span>
+    Star on GitHub
+    <span class="nav-count" id="sidebarStars">—</span>
+  </a>
 
   <div class="sidebar-bottom">
     <div class="sidebar-hr"></div>
@@ -167,6 +188,7 @@
           <div class="hero-stat"><span class="hero-stat-num" id="heroCount">10165</span><span class="hero-stat-lbl">Skills</span></div>
           <div class="hero-stat"><span class="hero-stat-num">16</span><span class="hero-stat-lbl">Domains</span></div>
           <div class="hero-stat"><span class="hero-stat-num">Free</span><span class="hero-stat-lbl">Always</span></div>
+          <div class="hero-stat"><a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener" style="text-decoration:none;color:inherit" title="Star us on GitHub"><span class="hero-stat-num" id="heroStars">—</span><span class="hero-stat-lbl">GitHub ★</span></a></div>
         </div>
       </div>
       <div class="hero-right">
@@ -665,13 +687,70 @@ npm run build-skills</div>
   <span id="toastMsg"></span>
 </div>
 
+<!-- LEARNING PATHS MODAL -->
+<div class="auth-overlay" id="lpOverlay">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-head">
+      <div class="modal-head-t">
+        <div class="modal-title" id="lpModalTitle"></div>
+        <div class="modal-meta" style="font-size:.78rem;color:var(--text-ter)" id="lpModalTagline"></div>
+      </div>
+      <button class="modal-close" onclick="closeLPModal()">✕</button>
+    </div>
+    <div class="modal-body" id="lpModalBody"></div>
+  </div>
+</div>
+
+<!-- GALAXY VISUALIZATION OVERLAY -->
+<div class="auth-overlay" id="galaxyOverlay">
+  <div class="auth-modal" style="max-width:95vw;width:95vw;height:85vh;padding:0;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-lt)">
+      <span style="font-family:'Newsreader',Georgia,serif;font-size:1rem;color:var(--text-pri)">🌌 Skill Galaxy</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:.68rem;color:var(--text-ter)">Click a star to view skill · Scroll to zoom · Drag to pan</span>
+        <button class="modal-close" onclick="closeGalaxyView()">✕</button>
+      </div>
+    </div>
+    <div id="galaxyContainer" style="width:100%;height:calc(100% - 45px);background:var(--cream-dark)"></div>
+  </div>
+</div>
+
+<!-- GITHUB SCAN OVERLAY -->
+<div class="auth-overlay" id="githubScanOverlay">
+  <div class="auth-modal" style="max-width:600px">
+    <div class="auth-head">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="auth-logo-text">🔗 Scan My GitHub</span>
+        <button class="modal-close" onclick="closeGitHubScan()">✕</button>
+      </div>
+      <div class="auth-title" style="font-size:.95rem">Discover skills from your GitHub profile</div>
+      <div class="auth-subtitle">We'll analyze your public repos to suggest skills you already have and skills you should learn next. <strong>100% free — no API key needed.</strong></div>
+    </div>
+    <div class="auth-body" style="padding-top:12px">
+      <div class="m-lbl">GitHub Username</div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <input type="text" id="ghUsername" class="auth-input" placeholder="e.g. octocat" style="flex:1">
+        <button class="btn-main" id="ghScanBtn" onclick="runGitHubScan()" style="flex:none;padding:8px 18px;font-size:.78rem">🔍 Scan</button>
+      </div>
+      <div id="ghScanResults" style="display:none"></div>
+      <div style="margin-top:12px">
+        <button class="btn-ghost" onclick="closeGitHubScan()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- SCRIPTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMh7g4y4Mj6N2ojJLnuzAfjOWFEbEH26yyAnAu7W7GjEH7I2qTUPJEMaWCT7R7oTMuRqzv7T5VnDlGhVLNXtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/skills-api.js"></script>
 <script src="js/bundles.js"></script>
+<script src="js/learning-paths.js"></script>
+<script src="js/galaxy-viz.js"></script>
+<script src="js/github-scan.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
 

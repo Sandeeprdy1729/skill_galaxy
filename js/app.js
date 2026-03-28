@@ -1493,3 +1493,29 @@ function closeExportModal() {
   document.getElementById('exportOverlay')?.classList.remove('open');
   document.body.style.overflow = '';
 }
+
+/* ─── GitHub Star Counter ────────────────── */
+(function loadGitHubStars() {
+  const REPO = 'Sandeeprdy1729/skill_galaxy';
+  const CACHE_KEY = 'sg-github-stars';
+  const CACHE_TTL = 3600000;
+  function updateStarUI(count) {
+    const fmt = count >= 1000 ? (count/1000).toFixed(1)+'k' : String(count);
+    ['heroStars','sidebarStars'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = fmt;
+    });
+  }
+  try {
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY)||'{}');
+    if (cached.count!=null && Date.now()-cached.ts<CACHE_TTL) { updateStarUI(cached.count); return; }
+  } catch(e){}
+  fetch('https://api.github.com/repos/'+REPO)
+    .then(r=>r.json())
+    .then(data=>{
+      if(data.stargazers_count!=null){
+        updateStarUI(data.stargazers_count);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({count:data.stargazers_count, ts:Date.now()}));
+      }
+    }).catch(()=>{});
+})();

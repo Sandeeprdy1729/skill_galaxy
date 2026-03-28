@@ -55,6 +55,8 @@
     .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: .76rem; color: var(--text-ter); text-decoration: none; padding: 6px 0; }
     .back-link:hover { color: var(--text-pri); }
 
+    #learningProgressSection,#portfolioSection { display: block; }
+
     @media(max-width:600px){
       .dash-header,.dash-stats,.dash-section{padding-left:16px;padding-right:16px}
       .dash-stats{grid-template-columns:1fr 1fr}
@@ -120,6 +122,22 @@
       </div>
     </div>
 
+    <!-- LEARNING PROGRESS -->
+    <div class="dash-section" id="learningProgressSection">
+      <div class="dash-sec-title">📋 My Learning Progress</div>
+      <div id="learningProgressList">
+        <div style="color:var(--text-ter);font-size:.8rem;text-align:center;padding:20px">Loading learning paths…</div>
+      </div>
+    </div>
+
+    <!-- SKILL PORTFOLIO -->
+    <div class="dash-section" id="portfolioSection">
+      <div class="dash-sec-title">📈 Skill Portfolio</div>
+      <div id="portfolioContent">
+        <div style="color:var(--text-ter);font-size:.8rem;text-align:center;padding:20px">Loading portfolio…</div>
+      </div>
+    </div>
+
     <!-- GLOBAL LEADERBOARD -->
     <div class="dash-section" style="padding-top:0">
       <div class="dash-sec-title">🏆 Most Downloaded Skills (All Time)</div>
@@ -144,6 +162,7 @@
 <script src="js/config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/skills-api.js"></script>
+<script src="js/learning-paths.js"></script>
 <script src="js/auth.js"></script>
 
 <script>
@@ -317,7 +336,98 @@ function openDashAuth() {
 document.addEventListener('DOMContentLoaded', async () => {
   await initAuth();
   await loadDashboard();
+  renderLearningProgressDash();
+  renderPortfolio();
 });
+
+/* ── LEARNING PROGRESS (works without login) ─────── */
+function renderLearningProgressDash() {
+  if (typeof LEARNING_PATHS === 'undefined') return;
+  const el = document.getElementById('learningProgressList');
+  if (!el) return;
+
+  const progress = typeof getLearningProgress === 'function' ? getLearningProgress() : {};
+  const activePaths = LEARNING_PATHS.filter(p => progress[p.id] && progress[p.id].completed.length > 0);
+
+  if (!activePaths.length) {
+    el.innerHTML = `<div style="color:var(--text-ter);font-size:.8rem;text-align:center;padding:20px">
+      No learning paths started yet. <a href="index.html" style="color:var(--copper)">Browse learning paths →</a>
+    </div>`;
+    return;
+  }
+
+  el.innerHTML = activePaths.map(p => {
+    const prog = getPathProgress(p.id);
+    return `
+    <div class="my-skill-row" style="flex-direction:column;align-items:stretch;gap:8px;padding:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.2rem">${p.icon}</span>
+        <div style="flex:1">
+          <div class="my-skill-name">${esc(p.name)}</div>
+          <div style="font-size:.68rem;color:var(--text-ter)">⏱ ${esc(p.timeline)} · ${prog.completed}/${prog.total} skills</div>
+        </div>
+        <span style="font-family:'Newsreader',serif;font-size:1.1rem;color:${prog.percent >= 100 ? 'var(--green)' : 'var(--copper)'}">${prog.percent}%</span>
+      </div>
+      <div style="height:6px;background:var(--cream-dark);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${prog.percent}%;background:linear-gradient(90deg,var(--teal),var(--copper));border-radius:3px;transition:width .3s"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── SKILL PORTFOLIO ─────────────────────────────── */
+function renderPortfolio() {
+  const el = document.getElementById('portfolioContent');
+  if (!el) return;
+
+  // Combine bookmarks + learning path completions
+  const bookmarks = getBookmarksFromStorage();
+  const progress = typeof getLearningProgress === 'function' ? getLearningProgress() : {};
+
+  // Count completed skills per category
+  const catSkillCount = {};
+  for (const [pathId, data] of Object.entries(progress)) {
+    const path = typeof LEARNING_PATHS !== 'undefined' ? LEARNING_PATHS.find(p => p.id === pathId) : null;
+    if (path && data.completed) {
+      catSkillCount[path.cat] = (catSkillCount[path.cat] || 0) + data.completed.length;
+    }
+  }
+
+  const totalCompleted = Object.values(catSkillCount).reduce((a, b) => a + b, 0);
+  const totalBookmarked = bookmarks.length;
+
+  if (totalCompleted === 0 && totalBookmarked === 0) {
+    el.innerHTML = `<div style="color:var(--text-ter);font-size:.8rem;text-align:center;padding:20px">
+      Start learning skills or bookmark skills to build your portfolio.
+    </div>`;
+    return;
+  }
+
+  const cats = typeof CATEGORIES !== 'undefined' ? CATEGORIES : {};
+  const catBars = Object.entries(catSkillCount).map(([cat, count]) => {
+    const c = cats[cat] || { label: cat, dot: '#999' };
+    return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+      <span style="font-size:.72rem;color:var(--text-sec);width:120px;text-align:right">${esc(c.label)}</span>
+      <div style="flex:1;height:8px;background:var(--cream-dark);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${Math.min(100, count * 10)}%;background:${c.dot};border-radius:4px"></div>
+      </div>
+      <span style="font-size:.68rem;color:var(--text-ter);min-width:24px">${count}</span>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div class="stat-card"><div class="stat-val">${totalCompleted}</div><div class="stat-lbl">Skills Completed</div></div>
+      <div class="stat-card"><div class="stat-val">${totalBookmarked}</div><div class="stat-lbl">Skills Bookmarked</div></div>
+    </div>
+    ${catBars ? `<div style="margin-bottom:4px;font-size:.68rem;font-weight:600;color:var(--text-ter);text-transform:uppercase;letter-spacing:.6px">Skills by Domain</div>${catBars}` : ''}
+  `;
+}
+
+function getBookmarksFromStorage() {
+  try { return JSON.parse(localStorage.getItem('sg-bookmarks') || '[]'); }
+  catch(e) { return []; }
+}
 </script>
 
 </body>
