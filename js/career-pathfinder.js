@@ -133,7 +133,7 @@ function renderCareerPath(path, isOffline) {
       // Try to find matching skill in database
       const matchedSkill = findMatchingSkill(skill.name, skill.category);
       const clickAction = matchedSkill
-        ? `onclick="closeCareerPathfinder();showSkillDetail('${esc(matchedSkill.id)}')"`
+        ? `data-skill-id="${esc(matchedSkill.id)}" onclick="closeCareerPathfinder();showSkillDetail(this.dataset.skillId)"`
         : '';
       const linkClass = matchedSkill ? 'cp-skill-linked' : '';
       const linkBadge = matchedSkill ? '<span class="cp-skill-in-db">● In Library</span>' : '';
@@ -213,13 +213,17 @@ function renderCareerPath(path, isOffline) {
 }
 
 /* ── SKILL MATCHING ──────────────────────────────── */
+function normalizeSkillName(name) {
+  return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 function findMatchingSkill(skillName, category) {
   const allSkills = getAllSkills();
-  const normalizedName = skillName.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const normalizedName = normalizeSkillName(skillName);
 
   // Try exact name match first
   let match = allSkills.find(s =>
-    s.name && s.name.toLowerCase().replace(/[^a-z0-9]/g, '') === normalizedName
+    s.name && normalizeSkillName(s.name) === normalizedName
   );
   if (match) return match;
 

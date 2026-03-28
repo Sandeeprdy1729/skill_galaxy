@@ -55,7 +55,7 @@ Generate a personalized career roadmap as a JSON object with this EXACT structur
       "skills": [
         {
           "name": "Skill Name",
-          "category": "ai-ml|dev|cloud|data|security|blockchain|product|creative|business|quantum|robotics|spatial|bio|climate|education|writing",
+          "category": "one of: ai-ml, dev, cloud, data, security, blockchain, product, creative, business, quantum, robotics, spatial, bio, climate, education, writing",
           "difficulty": "beginner|intermediate|advanced|expert",
           "reason": "Why this skill matters for the transition"
         }
