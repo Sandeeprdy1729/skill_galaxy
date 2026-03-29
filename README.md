@@ -40,10 +40,10 @@ No account needed to download. No friction.
 
 | | |
 |---|---|
-| 🧠 Skills | 10,165+ and growing |
-| 🌐 Domains | 16 |
-| 💰 Price | Free. Always. |
-| 👥 Model | Community-built, reviewed within 24hrs |
+|  Skills | 10,165+ and growing |
+|  Domains | 16 |
+|  Price | Free. Always. |
+|  Model | Community-built, reviewed within 24hrs |
 
 ---
 
@@ -53,7 +53,7 @@ No account needed to download. No friction.
 
 ---
 
-## ✨ What's New
+##  What's New
 
 ###  Skill Ratings & Reviews
 Every skill now has a 1–5 star rating widget. Open any skill → scroll to **Rate this Skill** → leave a rating and optional review. Average scores and recent reviews load dynamically from Supabase.
@@ -62,7 +62,7 @@ Every skill now has a 1–5 star rating widget. Open any skill → scroll to **R
 Community submissions are automatically scored by Claude (claude-haiku) on submit. Skills receive a quality score (1–10) with actionable feedback. Requires `ANTHROPIC_API_KEY` in your Vercel environment — see [AI Validator Setup](#ai-validator-setup).
 
 ###  One-Click "Connect Claude Desktop" Button
-Click **🔌 Connect Claude Desktop** in the hero to get a ready-to-copy `claude_desktop_config.json` snippet that wires the SkillGalaxy MCP server directly into Claude Desktop.
+Click ** Connect Claude Desktop** in the hero to get a ready-to-copy `claude_desktop_config.json` snippet that wires the SkillGalaxy MCP server directly into Claude Desktop.
 
 ###  Skill Versioning
 Skills now carry a `version` (semver) and `changelog` field. Contributors can bump the version when they update a skill — users see **"Updated X days ago"** and the version in the skill detail modal.
