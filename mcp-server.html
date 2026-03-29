@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Server — SkillGalaxy</title>
+  <meta name="description" content="Connect Claude to 200+ curated skill files instantly with the SkillGalaxy MCP Server.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #f9f7f4;
+      --cream-dark: #f2ede6;
+      --cream-darker:#e8e1d8;
+      --warm-white: #fefcfa;
+      --sidebar-bg: #f4f0ea;
+      --text-pri:   #1a1814;
+      --text-sec:   #5c564e;
+      --text-ter:   #9c9389;
+      --border:     #e0d9cf;
+      --border-lt:  #ece7e0;
+      --copper:     #c07b4a;
+      --copper-lt:  #f0e4d8;
+      --teal:       #3a7d6e;
+      --teal-lt:    #d8ede9;
+      --green:      #2d7a3a;
+      --green-lt:   #d8eedd;
+      --red:        #8a3a4e;
+      --red-lt:     #f4dce0;
+      --blue:       #3a5f8a;
+      --blue-lt:    #dce8f4;
+      --sh-sm: 0 1px 3px rgba(26,24,20,.06);
+      --sh-md: 0 4px 12px rgba(26,24,20,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text-pri);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(249,247,244,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lt);
+      padding: 0 40px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: var(--text-pri);
+    }
+
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--text-pri); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 14px; height: 14px; }
+
+    .logo-text {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: .95rem; color: var(--text-pri);
+    }
+    .logo-text em { font-style: normal; color: var(--copper); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-sec);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-back:hover { background: var(--cream-dark); color: var(--text-pri); }
+
+    .btn-github {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 16px;
+      background: var(--text-pri); color: var(--cream);
+      border: none; border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-github:hover { background: #2d2a25; transform: translateY(-1px); }
+
+    /* ── LAYOUT ── */
+    .page { display: flex; max-width: 1100px; margin: 0 auto; gap: 48px; padding: 40px 40px 80px; }
+
+    /* ── TOC SIDEBAR ── */
+    .toc {
+      width: 220px; flex-shrink: 0;
+      position: sticky; top: 76px;
+      height: fit-content;
+    }
+
+    .toc-title {
+      font-size: .65rem; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-ter); margin-bottom: 10px;
+    }
+
+    .toc a {
+      display: block;
+      font-size: .78rem; color: var(--text-sec);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-left: 2px solid var(--border-lt);
+      margin-bottom: 2px;
+      transition: all .15s;
+    }
+
+    .toc a:hover { color: var(--copper); border-color: var(--copper); }
+    .toc a.active { color: var(--copper); border-color: var(--copper); font-weight: 500; }
+    .toc a.sub { padding-left: 20px; font-size: .74rem; }
+
+    /* ── MAIN CONTENT ── */
+    .main { flex: 1; min-width: 0; }
+
+    /* ── HERO ── */
+    .guide-hero {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 36px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--copper-lt);
+      border: 1px solid rgba(192,123,74,.25);
+      color: var(--copper);
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .8px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .guide-hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 2rem;
+      color: var(--text-pri); letter-spacing: -.5px;
+      margin-bottom: 10px;
+    }
+
+    .guide-hero p {
+      color: var(--text-sec); font-size: .88rem;
+      line-height: 1.7; max-width: 580px;
+    }
+
+    .hero-steps {
+      display: flex; gap: 0;
+      margin-top: 24px; border-top: 1px solid var(--border-lt); padding-top: 20px;
+    }
+
+    .hero-step {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    .hero-step:not(:last-child)::after {
+      content: '→';
+      color: var(--text-ter); font-size: .8rem;
+      margin-right: 8px;
+    }
+
+    .hs-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--copper); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 600; flex-shrink: 0;
+    }
+
+    .hs-text { font-size: .78rem; color: var(--text-sec); line-height: 1.3; }
+    .hs-text strong { color: var(--text-pri); display: block; }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 40px; }
+
+    .section-anchor { position: relative; top: -80px; visibility: hidden; display: block; }
+
+    h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 1.35rem;
+      color: var(--text-pri); letter-spacing: -.3px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    h3 {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text-pri); margin: 20px 0 8px;
+    }
+
+    p { color: var(--text-sec); font-size: .84rem; line-height: 1.75; margin-bottom: 12px; }
+
+    ul, ol { color: var(--text-sec); font-size: .84rem; line-height: 1.75; padding-left: 20px; margin-bottom: 12px; }
+
+    li { margin-bottom: 4px; }
+
+    strong { color: var(--text-pri); font-weight: 600; }
+
+    a { color: var(--copper); }
+
+    /* ── CODE BLOCKS ── */
+    pre {
+      background: #1c1a18;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 20px 22px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      position: relative;
+    }
+
+    pre code {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: .78rem; line-height: 1.7;
+      color: #e8e4de; white-space: pre;
+    }
+
+    .copy-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.5);
+      font-size: .65rem; padding: 3px 10px; border-radius: 5px;
+      cursor: pointer; transition: all .15s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .copy-btn.copied { color: #7ecb9a; border-color: #7ecb9a; }
+
+    /* Code syntax colours */
+    .ky { color: #c97c52; }
+    .vl { color: #a5d6a7; }
+    .cm { color: #5c6e5a; }
+
+    /* Inline code */
+    code {
+      background: var(--cream-darker, #e8e1d8);
+      color: var(--red);
+      font-family: 'SF Mono', monospace;
+      font-size: .8em; padding: 1px 5px; border-radius: 4px;
+    }
+
+    pre code { background: none; color: inherit; padding: 0; border-radius: 0; }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      border-radius: 10px; padding: 14px 16px;
+      margin: 16px 0; font-size: .82rem; line-height: 1.65;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .callout.tip    { background: var(--teal-lt);   border: 1px solid rgba(58,125,110,.2); color: #2a5a50; }
+    .callout.warn   { background: var(--copper-lt); border: 1px solid rgba(192,123,74,.25); color: #7a4a22; }
+    .callout.info   { background: var(--blue-lt);   border: 1px solid rgba(58,95,138,.2);  color: #2a4a6a; }
+
+    /* ── TOOLS TABLE ── */
+    .tools-table { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: .8rem; }
+
+    .tools-table th {
+      background: var(--cream-dark); color: var(--text-sec);
+      font-weight: 600; font-size: .7rem; text-transform: uppercase; letter-spacing: .5px;
+      padding: 8px 12px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tools-table td {
+      padding: 9px 12px; border-bottom: 1px solid var(--border-lt);
+      color: var(--text-sec); vertical-align: top;
+    }
+
+    .tools-table tr:last-child td { border-bottom: none; }
+    .tools-table td:first-child { font-family: 'SF Mono', monospace; font-size: .75rem; color: var(--teal); font-weight: 500; }
+
+    /* ── CATEGORY LIST ── */
+    .cat-list {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin: 14px 0;
+    }
+
+    .cat-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 14px; border-radius: 10px;
+      background: var(--warm-white); border: 1px solid var(--border-lt);
+      font-size: .78rem; color: var(--text-sec); line-height: 1.4;
+    }
+
+    .cat-item strong { color: var(--text-pri); display: block; }
+
+    .cat-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── DIAGRAM ── */
+    .diagram-wrap {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 14px 0 20px;
+      overflow-x: auto;
+    }
+
+    .diagram {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: .72rem;
+      line-height: 1.6;
+      color: var(--text-sec);
+      white-space: pre;
+    }
+
+    .diagram .label { color: var(--copper); font-weight: 600; }
+    .diagram .arrow { color: var(--teal); }
+    .diagram .box   { color: var(--text-ter); }
+
+    /* ── CONVERSATION EXAMPLES ── */
+    .convo { margin: 14px 0 20px; }
+
+    .convo-row {
+      display: flex; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .convo-row:last-child { border-bottom: none; }
+
+    .convo-who {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; flex-shrink: 0;
+    }
+
+    .convo-who.user { background: var(--copper-lt); }
+    .convo-who.claude { background: var(--teal-lt); }
+
+    .convo-body { flex: 1; min-width: 0; }
+
+    .convo-name {
+      font-size: .68rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .5px; color: var(--text-ter); margin-bottom: 3px;
+    }
+
+    .convo-msg { font-size: .82rem; color: var(--text-sec); line-height: 1.6; }
+
+    .convo-action {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .72rem; color: var(--teal); font-style: italic;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page { padding: 24px 20px 60px; }
+      .cat-list { grid-template-columns: 1fr; }
+      .hero-steps { flex-direction: column; gap: 10px; }
+      .hero-step::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { padding: 0 16px; }
+      .guide-hero { padding: 22px 20px; }
+      .guide-hero h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
+        <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
+      </svg>
+    </div>
+    <span class="logo-text">Skill<em>Galaxy</em></span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="btn-back">← Back to Library</a>
+    <a href="https://github.com/Sandeeprdy1729/skill_galaxy" class="btn-github" target="_blank" rel="noopener">★ GitHub</a>
+  </div>
+</nav>
+
+<!-- PAGE LAYOUT -->
+<div class="page">
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#overview">Overview</a>
+    <a href="#setup">Quick Setup</a>
+    <a href="#install" class="sub">Install Dependencies</a>
+    <a href="#config" class="sub">Claude Desktop Config</a>
+    <a href="#tools">Available Tools</a>
+    <a href="#examples">Example Conversations</a>
+    <a href="#skills-library">Skills Library</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#development">Development</a>
+    <a href="#license">License</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="guide-hero">
+      <div class="hero-badge">⚡ MCP Server</div>
+      <h1>SkillGalaxy MCP Server</h1>
+      <p><strong>One toggle.</strong> Connect Claude to 200+ curated skill files instantly. Search, browse, and retrieve skills on demand — no manual downloads needed.</p>
+
+      <div class="hero-steps">
+        <div class="hero-step">
+          <div class="hs-num">1</div>
+          <div class="hs-text"><strong>Install</strong>npm install &amp; build</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">2</div>
+          <div class="hs-text"><strong>Configure</strong>Add to Claude Desktop</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">3</div>
+          <div class="hs-text"><strong>Restart</strong>Claude Desktop</div>
+        </div>
+        <div class="hero-step">
+          <div class="hs-num">4</div>
+          <div class="hs-text"><strong>Done!</strong>200+ skills ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="section">
+      <span class="section-anchor" id="overview"></span>
+      <h2>Overview</h2>
+      <p>This is a <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Model Context Protocol (MCP)</a> server that gives Claude direct access to the entire SkillGalaxy skills library. Instead of manually downloading <code>.md</code> files, Claude can search, browse, and retrieve skills on demand.</p>
+    </div>
+
+    <!-- QUICK SETUP -->
+    <div class="section">
+      <span class="section-anchor" id="setup"></span>
+      <h2>Quick Setup</h2>
+
+      <span class="section-anchor" id="install"></span>
+      <h3>1. Install Dependencies</h3>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="cm">cd</span> mcp-server
+<span class="cm">npm</span> install
+<span class="cm">npm run</span> build-skills   <span class="cm"># converts the skills database</span></code></pre>
+
+      <span class="section-anchor" id="config"></span>
+      <h3>2. Add to Claude Desktop</h3>
+      <p>Open your Claude Desktop config file:</p>
+      <ul>
+        <li><strong>macOS:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></li>
+        <li><strong>Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code></li>
+        <li><strong>Linux:</strong> <code>~/.config/Claude/claude_desktop_config.json</code></li>
+      </ul>
+      <p>Add the SkillGalaxy server entry:</p>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code>{
+  <span class="ky">"mcpServers"</span>: {
+    <span class="ky">"skillgalaxy"</span>: {
+      <span class="ky">"command"</span>: <span class="vl">"node"</span>,
+      <span class="ky">"args"</span>: [<span class="vl">"/FULL/PATH/TO/skill_galaxy/mcp-server/index.js"</span>]
+    }
+  }
+}</code></pre>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div>Replace <code>/FULL/PATH/TO/</code> with the actual absolute path to your cloned repo.</div>
+      </div>
+
+      <h3>3. Restart Claude Desktop</h3>
+      <p>That's it! Claude now has access to all 200+ skills.</p>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="section">
+      <span class="section-anchor" id="tools"></span>
+      <h2>What Claude Can Do</h2>
+      <p>Once connected, Claude has 4 tools available:</p>
+
+      <table class="tools-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>search_skills</td>
+            <td>Search skills by keyword, category, or difficulty</td>
+          </tr>
+          <tr>
+            <td>get_skill</td>
+            <td>Retrieve the full <code>.md</code> skill file for any skill</td>
+          </tr>
+          <tr>
+            <td>get_skill_summary</td>
+            <td>Get a quick overview of a skill's metadata</td>
+          </tr>
+          <tr>
+            <td>list_categories</td>
+            <td>Browse all 16 skill categories with counts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EXAMPLE CONVERSATIONS -->
+    <div class="section">
+      <span class="section-anchor" id="examples"></span>
+      <h2>Example Conversations</h2>
+
+      <div class="convo">
+        <div class="convo-row">
+          <div class="convo-who user">👤</div>
+          <div class="convo-body">
+            <div class="convo-name">You</div>
+            <div class="convo-msg">"Find me skills related to cloud security"</div>
+          </div>
+        </div>
+        <div class="convo-row">
+          <div class="convo-who claude">✦</div>
+          <div class="convo-body">
+            <div class="convo-name">Claude</div>
+            <div class="convo-msg">
+              <span class="convo-action">uses search_skills →</span> Shows matching skills with scores and descriptions
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="convo">
+        <div class="convo-row">
+          <div class="convo-who user">👤</div>
+          <div class="convo-body">
+            <div class="convo-name">You</div>
+            <div class="convo-msg">"I need the full LLM Engineering skill"</div>
+          </div>
+        </div>
+        <div class="convo-row">
+          <div class="convo-who claude">✦</div>
+          <div class="convo-body">
+            <div class="convo-name">Claude</div>
+            <div class="convo-msg">
+              <span class="convo-action">uses get_skill →</span> Returns the complete markdown skill file
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="convo">
+        <div class="convo-row">
+          <div class="convo-who user">👤</div>
+          <div class="convo-body">
+            <div class="convo-name">You</div>
+            <div class="convo-msg">"What skill categories are available?"</div>
+          </div>
+        </div>
+        <div class="convo-row">
+          <div class="convo-who claude">✦</div>
+          <div class="convo-body">
+            <div class="convo-name">Claude</div>
+            <div class="convo-msg">
+              <span class="convo-action">uses list_categories →</span> Lists all 16 domains with skill counts
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS LIBRARY -->
+    <div class="section">
+      <span class="section-anchor" id="skills-library"></span>
+      <h2>Skills Library</h2>
+      <p>208 skills across 16 domains:</p>
+
+      <div class="cat-list">
+        <div class="cat-item">
+          <span class="cat-icon">🤖</span>
+          <div><strong>AI &amp; ML</strong>LLM Engineering, MLOps, AI Safety, Computer Vision, NLP…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">🔒</span>
+          <div><strong>Cybersecurity</strong>Cloud Security, Penetration Testing, Threat Modeling…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">📊</span>
+          <div><strong>Data Engineering</strong>Pipeline Design, Data Modeling, Stream Processing…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">☁️</span>
+          <div><strong>Cloud &amp; Infra</strong>Kubernetes, Terraform, AWS/GCP Architecture…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">💻</span>
+          <div><strong>Development</strong>System Design, API Design, Performance Engineering…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">✍️</span>
+          <div><strong>Writing</strong>Technical Writing, Blog Writing, Documentation…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">📈</span>
+          <div><strong>Business</strong>Product Strategy, Growth Engineering, A/B Testing…</div>
+        </div>
+        <div class="cat-item">
+          <span class="cat-icon">➕</span>
+          <div><strong>And 9 more…</strong>Bio, Blockchain, Climate, Creative, Education, Product, Quantum, Robotics, Spatial</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <span class="section-anchor" id="how-it-works"></span>
+      <h2>How It Works</h2>
+
+      <div class="diagram-wrap">
+        <div class="diagram"><span class="box">┌──────────────────┐</span>       <span class="arrow">stdio (JSON-RPC)</span>       <span class="box">┌──────────────────┐</span>
+<span class="box">│</span>   <span class="label">Claude Desktop</span> <span class="box">│</span> <span class="arrow">◄──────────────────────────►</span> <span class="box">│</span>  <span class="label">SkillGalaxy MCP</span> <span class="box">│</span>
+<span class="box">│</span>                  <span class="box">│</span>                               <span class="box">│</span>     Server       <span class="box">│</span>
+<span class="box">│</span>  "Find AI skills"<span class="box">│</span>  <span class="arrow">──── tools/call ──────────►</span> <span class="box">│</span>                  <span class="box">│</span>
+<span class="box">│</span>                  <span class="box">│</span>  <span class="arrow">◄─── search results ──────</span>  <span class="box">│</span>  208 skills      <span class="box">│</span>
+<span class="box">│</span>                  <span class="box">│</span>                               <span class="box">│</span>  16 categories   <span class="box">│</span>
+<span class="box">│</span>  "Get that skill"<span class="box">│</span>  <span class="arrow">──── tools/call ──────────►</span> <span class="box">│</span>                  <span class="box">│</span>
+<span class="box">│</span>                  <span class="box">│</span>  <span class="arrow">◄─── full .md content ────</span>  <span class="box">│</span>                  <span class="box">│</span>
+<span class="box">└──────────────────┘</span>                               <span class="box">└──────────────────┘</span></div>
+      </div>
+
+      <p>The server communicates over <strong>stdio</strong> using the MCP JSON-RPC protocol. Claude Desktop launches it as a subprocess — no ports, no network, no auth needed.</p>
+    </div>
+
+    <!-- DEVELOPMENT -->
+    <div class="section">
+      <span class="section-anchor" id="development"></span>
+      <h2>Development</h2>
+
+      <h3>Test the server manually</h3>
+      <p>Pipe JSON-RPC messages to test the server:</p>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="cm"># Test the server manually (pipe JSON-RPC messages)</span>
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}' | node index.js</code></pre>
+
+      <h3>Rebuild skills data</h3>
+      <p>After editing <code>js/db.js</code>, rebuild the skills data:</p>
+      <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><code><span class="cm"># Rebuild skills data after editing js/db.js</span>
+npm run build-skills</code></pre>
+    </div>
+
+    <!-- LICENSE -->
+    <div class="section">
+      <span class="section-anchor" id="license"></span>
+      <h2>License</h2>
+      <p>Apache 2.0</p>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div>This project is open source. Contributions are welcome — check the <a href="https://github.com" target="_blank" rel="noopener">GitHub repository</a> for details.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('pre');
+  const text = pre.querySelector('code').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ── TOC ACTIVE STATE ── */
+const sections = document.querySelectorAll('.section-anchor');
+const tocLinks  = document.querySelectorAll('.toc a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-60px 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

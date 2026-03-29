@@ -40,7 +40,7 @@ No account needed to download. No friction.
 
 | | |
 |---|---|
-| 🧠 Skills | 9,872+ and growing |
+| 🧠 Skills | 10,165+ and growing |
 | 🌐 Domains | 16 |
 | 💰 Price | Free. Always. |
 | 👥 Model | Community-built, reviewed within 24hrs |
@@ -55,21 +55,21 @@ No account needed to download. No friction.
 
 ## ✨ What's New
 
-### ⭐ Skill Ratings & Reviews
+###  Skill Ratings & Reviews
 Every skill now has a 1–5 star rating widget. Open any skill → scroll to **Rate this Skill** → leave a rating and optional review. Average scores and recent reviews load dynamically from Supabase.
 
-### 🤖 AI-Powered Skill Validator
+###  AI-Powered Skill Validator
 Community submissions are automatically scored by Claude (claude-haiku) on submit. Skills receive a quality score (1–10) with actionable feedback. Requires `ANTHROPIC_API_KEY` in your Vercel environment — see [AI Validator Setup](#ai-validator-setup).
 
-### 🔌 One-Click "Connect Claude Desktop" Button
+###  One-Click "Connect Claude Desktop" Button
 Click **🔌 Connect Claude Desktop** in the hero to get a ready-to-copy `claude_desktop_config.json` snippet that wires the SkillGalaxy MCP server directly into Claude Desktop.
 
-### 📌 Skill Versioning
+###  Skill Versioning
 Skills now carry a `version` (semver) and `changelog` field. Contributors can bump the version when they update a skill — users see **"Updated X days ago"** and the version in the skill detail modal.
 
 ---
 
-## 🔌 MCP Server — One-Toggle Claude Connection
+##  MCP Server — One-Toggle Claude Connection
 
 **NEW:** Connect Claude directly to the entire SkillGalaxy library via [Model Context Protocol](https://modelcontextprotocol.io/). No manual downloads needed.
 
