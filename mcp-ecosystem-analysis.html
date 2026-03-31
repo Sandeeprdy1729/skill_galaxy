@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Ecosystem Strategic Analysis — SkillGalaxy</title>
+  <meta name="description" content="Strategic analysis of infrastructure voids in the Model Context Protocol ecosystem and a development roadmap for SkillGalaxy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #f9f7f4;
+      --cream-dark: #f2ede6;
+      --cream-darker:#e8e1d8;
+      --warm-white: #fefcfa;
+      --sidebar-bg: #f4f0ea;
+      --text-pri:   #1a1814;
+      --text-sec:   #5c564e;
+      --text-ter:   #9c9389;
+      --border:     #e0d9cf;
+      --border-lt:  #ece7e0;
+      --copper:     #c07b4a;
+      --copper-lt:  #f0e4d8;
+      --teal:       #3a7d6e;
+      --teal-lt:    #d8ede9;
+      --green:      #2d7a3a;
+      --green-lt:   #d8eedd;
+      --red:        #8a3a4e;
+      --red-lt:     #f4dce0;
+      --blue:       #3a5f8a;
+      --blue-lt:    #dce8f4;
+      --purple:     #5a3a8a;
+      --purple-lt:  #e8dcf4;
+      --amber:      #8a6a1a;
+      --amber-lt:   #f4ecd8;
+      --sh-sm: 0 1px 3px rgba(26,24,20,.06);
+      --sh-md: 0 4px 12px rgba(26,24,20,.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text-pri);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(249,247,244,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lt);
+      padding: 0 40px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; color: var(--text-pri);
+    }
+
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--text-pri); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 14px; height: 14px; }
+
+    .logo-text {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: .95rem; color: var(--text-pri);
+    }
+    .logo-text em { font-style: normal; color: var(--copper); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-sec);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-back:hover { background: var(--cream-dark); color: var(--text-pri); }
+
+    .btn-mcp {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 16px;
+      background: var(--text-pri); color: var(--cream);
+      border: none; border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .78rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: all .15s;
+    }
+    .btn-mcp:hover { background: #2d2a25; transform: translateY(-1px); }
+
+    /* ── LAYOUT ── */
+    .page { display: flex; max-width: 1200px; margin: 0 auto; gap: 48px; padding: 40px 40px 80px; }
+
+    /* ── TOC SIDEBAR ── */
+    .toc {
+      width: 240px; flex-shrink: 0;
+      position: sticky; top: 76px;
+      height: fit-content;
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+    }
+
+    .toc-title {
+      font-size: .65rem; font-weight: 600;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--text-ter); margin-bottom: 10px;
+    }
+
+    .toc a {
+      display: block;
+      font-size: .76rem; color: var(--text-sec);
+      text-decoration: none;
+      padding: 4px 10px;
+      border-left: 2px solid var(--border-lt);
+      margin-bottom: 1px;
+      transition: all .15s;
+    }
+
+    .toc a:hover { color: var(--copper); border-color: var(--copper); }
+    .toc a.active { color: var(--copper); border-color: var(--copper); font-weight: 500; }
+    .toc a.sub { padding-left: 20px; font-size: .72rem; }
+
+    /* ── MAIN CONTENT ── */
+    .main { flex: 1; min-width: 0; }
+
+    /* ── HERO ── */
+    .guide-hero {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 16px;
+      padding: 36px 40px;
+      margin-bottom: 36px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--copper-lt);
+      border: 1px solid rgba(192,123,74,.25);
+      color: var(--copper);
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .8px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .guide-hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 1.85rem;
+      color: var(--text-pri); letter-spacing: -.5px;
+      margin-bottom: 12px; line-height: 1.25;
+    }
+
+    .guide-hero > p {
+      color: var(--text-sec); font-size: .88rem;
+      line-height: 1.7; max-width: 620px;
+    }
+
+    .hero-stats {
+      display: flex; gap: 28px; margin-top: 24px;
+      border-top: 1px solid var(--border-lt); padding-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+
+    .hero-stat-num {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.4rem; color: var(--text-pri); font-weight: 400;
+    }
+
+    .hero-stat-lbl {
+      font-size: .62rem; color: var(--text-ter);
+      text-transform: uppercase; letter-spacing: .8px;
+    }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 44px; }
+
+    .section-anchor { position: relative; top: -80px; visibility: hidden; display: block; }
+
+    h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400; font-size: 1.35rem;
+      color: var(--text-pri); letter-spacing: -.3px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    h3 {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text-pri); margin: 22px 0 8px;
+    }
+
+    h4 {
+      font-size: .8rem; font-weight: 600;
+      color: var(--text-sec); margin: 16px 0 6px;
+    }
+
+    p { color: var(--text-sec); font-size: .84rem; line-height: 1.75; margin-bottom: 12px; }
+
+    ul, ol { color: var(--text-sec); font-size: .84rem; line-height: 1.75; padding-left: 20px; margin-bottom: 12px; }
+
+    li { margin-bottom: 4px; }
+
+    strong { color: var(--text-pri); font-weight: 600; }
+
+    a { color: var(--copper); }
+
+    /* Inline code */
+    code {
+      background: var(--cream-darker);
+      color: var(--red);
+      font-family: 'SF Mono', monospace;
+      font-size: .8em; padding: 1px 5px; border-radius: 4px;
+    }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      border-radius: 10px; padding: 14px 16px;
+      margin: 16px 0; font-size: .82rem; line-height: 1.65;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .callout.tip     { background: var(--teal-lt);   border: 1px solid rgba(58,125,110,.2);  color: #2a5a50; }
+    .callout.warn    { background: var(--copper-lt); border: 1px solid rgba(192,123,74,.25); color: #7a4a22; }
+    .callout.info    { background: var(--blue-lt);   border: 1px solid rgba(58,95,138,.2);   color: #2a4a6a; }
+    .callout.success { background: var(--green-lt);  border: 1px solid rgba(45,122,58,.2);   color: #1e5528; }
+    .callout.danger  { background: var(--red-lt);    border: 1px solid rgba(138,58,78,.2);   color: #6a1e2e; }
+    .callout.purple  { background: var(--purple-lt); border: 1px solid rgba(90,58,138,.2);   color: #3a2060; }
+
+    /* ── DATA TABLES ── */
+    .data-table {
+      width: 100%; border-collapse: collapse;
+      margin: 14px 0 20px; font-size: .8rem;
+      border: 1px solid var(--border-lt);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .data-table th {
+      background: var(--cream-dark); color: var(--text-sec);
+      font-weight: 600; font-size: .68rem; text-transform: uppercase; letter-spacing: .5px;
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border-lt);
+      color: var(--text-sec); vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .data-table tbody tr:hover { background: var(--cream-dark); }
+
+    /* ── STATUS BADGES ── */
+    .status {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .65rem; font-weight: 600; padding: 2px 8px;
+      border-radius: 4px; letter-spacing: .3px; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .status.high     { background: var(--teal-lt);  color: var(--teal);  border: 1px solid rgba(58,125,110,.2); }
+    .status.moderate { background: var(--blue-lt);  color: var(--blue);  border: 1px solid rgba(58,95,138,.2); }
+    .status.low      { background: var(--copper-lt);color: var(--copper);border: 1px solid rgba(192,123,74,.25);}
+    .status.emerging { background: var(--purple-lt);color: var(--purple);border: 1px solid rgba(90,58,138,.2); }
+    .status.none     { background: var(--red-lt);   color: var(--red);   border: 1px solid rgba(138,58,78,.2); }
+    .status.partial  { background: var(--amber-lt); color: var(--amber); border: 1px solid rgba(138,106,26,.2);}
+
+    /* ── PHASE CARDS ── */
+    .phase-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 16px 0;
+    }
+
+    .phase-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .phase-num {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1rem; font-weight: 400; flex-shrink: 0;
+    }
+
+    .phase-1 .phase-num { background: var(--copper-lt); color: var(--copper); }
+    .phase-2 .phase-num { background: var(--teal-lt);   color: var(--teal); }
+    .phase-3 .phase-num { background: var(--purple-lt); color: var(--purple); }
+
+    .phase-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.05rem; font-weight: 400; color: var(--text-pri);
+    }
+
+    .phase-subtitle { font-size: .75rem; color: var(--text-ter); }
+
+    .phase-items { list-style: none; padding: 0; }
+
+    .phase-items li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; font-size: .82rem; color: var(--text-sec);
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    .phase-items li:last-child { border-bottom: none; }
+
+    .phase-icon {
+      width: 22px; height: 22px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; flex-shrink: 0; margin-top: 1px;
+    }
+
+    .phase-1 .phase-icon { background: var(--copper-lt); color: var(--copper); }
+    .phase-2 .phase-icon { background: var(--teal-lt);   color: var(--teal); }
+    .phase-3 .phase-icon { background: var(--purple-lt); color: var(--purple); }
+
+    /* ── VOID CARDS ── */
+    .void-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin: 14px 0 20px;
+    }
+
+    .void-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .void-card-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .void-card-icon { font-size: 1.1rem; }
+
+    .void-card-title {
+      font-size: .82rem; font-weight: 600; color: var(--text-pri);
+    }
+
+    .void-card p {
+      font-size: .76rem; color: var(--text-sec); line-height: 1.6; margin-bottom: 0;
+    }
+
+    .void-card ul {
+      font-size: .76rem; padding-left: 16px; margin-bottom: 0;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      margin: 14px 0 20px; font-size: .8rem;
+      border: 1px solid var(--border-lt);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .compare-table th {
+      background: var(--cream-dark); color: var(--text-sec);
+      font-weight: 600; font-size: .68rem; text-transform: uppercase;
+      letter-spacing: .5px; padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border-lt);
+      color: var(--text-sec); vertical-align: top;
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .compare-table .feature-col { font-weight: 600; color: var(--text-pri); width: 160px; }
+
+    .claude-col { background: rgba(58,125,110,.04); }
+    .chatgpt-col { background: rgba(138,58,78,.04); }
+
+    /* ── KEY INSIGHT BOX ── */
+    .insight-box {
+      background: linear-gradient(135deg, var(--cream-dark), var(--warm-white));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 20px 0;
+    }
+
+    .insight-box .insight-label {
+      font-size: .62rem; font-weight: 700; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--copper); margin-bottom: 8px;
+    }
+
+    .insight-box p {
+      font-size: .88rem; line-height: 1.7; color: var(--text-pri);
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 300; margin-bottom: 0;
+    }
+
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      display: flex; gap: 0;
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: 12px;
+      margin: 14px 0 20px;
+      overflow: hidden;
+    }
+
+    .stat-item {
+      flex: 1; padding: 16px 18px;
+      border-right: 1px solid var(--border-lt);
+      text-align: center;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-item .stat-num {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.5rem; color: var(--text-pri); font-weight: 400;
+    }
+
+    .stat-item .stat-lbl {
+      font-size: .62rem; color: var(--text-ter);
+      text-transform: uppercase; letter-spacing: .8px; margin-top: 2px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .toc { display: none; }
+      .page { padding: 24px 20px 60px; }
+      .void-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 16px; }
+      .stat-strip { flex-wrap: wrap; }
+      .stat-item { min-width: 50%; border-bottom: 1px solid var(--border-lt); }
+    }
+
+    @media (max-width: 600px) {
+      .nav { padding: 0 16px; }
+      .guide-hero { padding: 22px 20px; }
+      .guide-hero h1 { font-size: 1.4rem; }
+      .data-table, .compare-table { font-size: .72rem; }
+      .data-table th, .data-table td,
+      .compare-table th, .compare-table td { padding: 7px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
+        <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
+      </svg>
+    </div>
+    <span class="logo-text">Skill<em>Galaxy</em></span>
+  </a>
+  <div class="nav-right">
+    <a href="index.html" class="btn-back">← Back to Library</a>
+    <a href="mcp-server.html" class="btn-mcp">⚡ MCP Server</a>
+  </div>
+</nav>
+
+<!-- PAGE LAYOUT -->
+<div class="page">
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#overview">Executive Overview</a>
+    <a href="#genesis">Architectural Genesis</a>
+    <a href="#distribution" class="sub">Server Distribution</a>
+    <a href="#saas-gap">The SaaS 100 Gap</a>
+    <a href="#enterprise-prod" class="sub">Enterprise Productivity</a>
+    <a href="#crm-gap" class="sub">CRM & Sales Ops</a>
+    <a href="#finance">Financial & E-commerce</a>
+    <a href="#accounting" class="sub">Accounting & ERP</a>
+    <a href="#ecommerce" class="sub">E-commerce Ops</a>
+    <a href="#martech">MarTech Gap</a>
+    <a href="#ad-platforms" class="sub">Advertising Platforms</a>
+    <a href="#technical-gaps">Technical Gaps</a>
+    <a href="#auth-gap" class="sub">Authentication</a>
+    <a href="#context-gap" class="sub">Context & Code Mode</a>
+    <a href="#verticals">Sector-Specific Voids</a>
+    <a href="#legal" class="sub">Legal & Compliance</a>
+    <a href="#healthcare" class="sub">Healthcare</a>
+    <a href="#competitive">Competitive Analysis</a>
+    <a href="#hitl">Human-in-the-Loop</a>
+    <a href="#roadmap">Strategic Roadmap</a>
+    <a href="#inventory">Missing App Inventory</a>
+    <a href="#conclusion">Conclusion</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="guide-hero">
+      <div class="hero-badge">📊 Strategic Analysis</div>
+      <h1>Infrastructure Voids in the Model Context Protocol Ecosystem</h1>
+      <p>A comprehensive roadmap for SkillGalaxy — identifying the missing connectors, technical gaps, and high-value opportunities in the MCP landscape to position SkillGalaxy as the middleware of the agentic era.</p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">36,000+</div>
+          <div class="hero-stat-lbl">MCP Servers (2025)</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">51%</div>
+          <div class="hero-stat-lbl">Zero GitHub Stars</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">88%</div>
+          <div class="hero-stat-lbl">Require Credentials</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">16</div>
+          <div class="hero-stat-lbl">Domains Covered</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE OVERVIEW -->
+    <div class="section">
+      <span class="section-anchor" id="overview"></span>
+      <h2>Executive Overview</h2>
+      <p>The launch of the Model Context Protocol in late 2024 by Anthropic fundamentally altered the trajectory of large language model integration by introducing a standardized, open-source framework for bidirectional communication between artificial intelligence and external data environments. While traditional integration methods relied on a fragmented landscape of custom-coded functions, MCP provides a universal "language" that allows a single implementation on the client side to unlock a vast ecosystem of server-side tools.</p>
+      <p>However, an exhaustive audit of the current landscape reveals a significant <strong>"maturity gap"</strong> between the thousands of experimental servers currently hosted on platforms like GitHub and the production-grade, highly authenticated connectors required for enterprise-level automation.</p>
+
+      <div class="insight-box">
+        <div class="insight-label">Key Thesis</div>
+        <p>The MCP has provided the standardized "USB port" for AI, but the ecosystem is still waiting for the "High-Performance Cables" that can handle the power requirements of modern business. By identifying and building these missing connectors, SkillGalaxy has the opportunity to transform Claude from a sophisticated chatbot into a truly autonomous workspace assistant.</p>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURAL GENESIS -->
+    <div class="section">
+      <span class="section-anchor" id="genesis"></span>
+      <h2>The Architectural Genesis &amp; Current Ecosystem Maturity</h2>
+      <p>The Model Context Protocol was architected to solve the <strong>N × M integration problem</strong>, where N diverse language models previously required M unique integrations for every external application they intended to control. By standardizing the transport layer — primarily through Standard Input/Output (stdio) for local resources and Server-Sent Events (SSE) or Streamable HTTP for remote services — the protocol enables a decoupled architecture where the AI "host" remains agnostic to the specific implementation details of the "server".</p>
+      <p>Despite the protocol's rapid adoption, with over 36,000 servers identified by late 2025, the ecosystem remains heavily concentrated in developer-centric utilities and experimental wrappers. A staggering <strong>51% of these servers have zero stars</strong> on GitHub, and <strong>77% have fewer than ten</strong>, suggesting a landscape dominated by personal tools and tutorials rather than robust infrastructure.</p>
+
+      <div class="callout info">
+        <span class="callout-icon">💡</span>
+        <div>For SkillGalaxy, the opportunity lies in identifying the <strong>"Missing Middle"</strong> — the sophisticated business and productivity tools that have yet to receive standardized, secure, and authenticated MCP implementations.</div>
+      </div>
+
+      <span class="section-anchor" id="distribution"></span>
+      <h3>Quantitative Overview of Current Server Distribution</h3>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Primary Language</th>
+            <th>Transport</th>
+            <th>Maturity</th>
+            <th>Primary Gap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Development Utilities</strong></td>
+            <td>TypeScript (43%)</td>
+            <td>Stdio (85%)</td>
+            <td><span class="status high">High</span></td>
+            <td>CI/CD Integration</td>
+          </tr>
+          <tr>
+            <td><strong>Data Persistence</strong></td>
+            <td>Python (20%)</td>
+            <td>Stdio</td>
+            <td><span class="status moderate">Moderate</span></td>
+            <td>Real-time Stream Processing</td>
+          </tr>
+          <tr>
+            <td><strong>Productivity Bridges</strong></td>
+            <td>JavaScript (16%)</td>
+            <td>SSE / HTTP (9%)</td>
+            <td><span class="status low">Low</span></td>
+            <td>Multi-tenant Auth</td>
+          </tr>
+          <tr>
+            <td><strong>Cloud Infrastructure</strong></td>
+            <td>Go (5%)</td>
+            <td>Stdio</td>
+            <td><span class="status moderate">Moderate</span></td>
+            <td>Automated Cost Management</td>
+          </tr>
+          <tr>
+            <td><strong>Financial Services</strong></td>
+            <td>TypeScript</td>
+            <td>HTTP / OAuth</td>
+            <td><span class="status emerging">Emerging</span></td>
+            <td>Cross-platform Composability</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div>The dominance of local stdio-based servers highlights a significant technical void: the lack of <strong>remote, multi-user, and enterprise-ready connectors</strong> that can handle sensitive data through robust authentication protocols like OAuth 2.1.</div>
+      </div>
+    </div>
+
+    <!-- THE SAAS 100 GAP -->
+    <div class="section">
+      <span class="section-anchor" id="saas-gap"></span>
+      <h2>The "SaaS 100" Gap: Bridging the Productivity Divide</h2>
+      <p>The most glaring omissions in the current MCP registry are found in the mainstream Software-as-a-Service (SaaS) tools that form the backbone of modern business operations. While automation platforms like Zapier and Make have built libraries of over 8,000 and 1,800 apps respectively, the MCP ecosystem currently lacks official or stable community connectors for a majority of the top-performing SaaS tools of 2025.</p>
+
+      <span class="section-anchor" id="enterprise-prod"></span>
+      <h3>Enterprise Productivity &amp; Project Management Voids</h3>
+      <p>The Microsoft 365 suite remains a primary area of unfulfilled potential. Although Microsoft has introduced "Work IQ" servers for specific components, a <strong>unified, cross-application connector</strong> that allows an agent to seamlessly transition between Outlook emails, Excel spreadsheets, and SharePoint document libraries is notably absent.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Target Application</th>
+            <th>Current Status</th>
+            <th>Critical Missing Capabilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Microsoft Excel</strong></td>
+            <td><span class="status partial">Partial</span></td>
+            <td>Power Query integration, pivot table manipulation, and real-time cell-level collaboration tools.</td>
+          </tr>
+          <tr>
+            <td><strong>Outlook</strong></td>
+            <td><span class="status partial">Partial</span></td>
+            <td>Cross-mailbox search, attachment processing (currently limited), and shared inbox management.</td>
+          </tr>
+          <tr>
+            <td><strong>SharePoint</strong></td>
+            <td><span class="status low">Niche</span></td>
+            <td>Permission-aware site management, list operations, and enterprise search integration.</td>
+          </tr>
+          <tr>
+            <td><strong>Microsoft Teams</strong></td>
+            <td><span class="status partial">Partial</span></td>
+            <td>Advanced channel orchestration, automated transcript analysis, and guest user management.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>In the project management space, while ClickUp and Asana have released beta servers, they often suffer from <strong>"Context Bloat"</strong> — an implementation flaw where the server exposes dozens of tools, consuming excessive tokens before the actual work begins.</p>
+
+      <span class="section-anchor" id="crm-gap"></span>
+      <h3>The CRM &amp; Sales Operations Gap</h3>
+      <p>Salesforce and HubSpot represent the operating layers for global revenue operations, yet current MCP implementations are often restricted to <strong>read-only operations</strong> or simple lead creation. Users have expressed frustration over the inability to perform complex "Composability" tasks, such as cross-referencing a Salesforce opportunity with a HubSpot marketing campaign to generate an automated ROI report.</p>
+      <p>The absence of sales engagement tools is also significant. Platforms like <strong>Apollo, Outreach, and Salesloft</strong> — essential for outbound prospecting — have virtually no footprint in the public MCP registry.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">🎯</span>
+        <div>For SkillGalaxy, developing a <strong>"Sales Operations" suite</strong> that unifies CRM and prospecting tools would address a high-value requirement for modern sales teams.</div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL & E-COMMERCE -->
+    <div class="section">
+      <span class="section-anchor" id="finance"></span>
+      <h2>Financial &amp; E-commerce Infrastructure Voids</h2>
+      <p>Financial services require a level of security and composability that experimental servers rarely provide. While the Stripe MCP server is a benchmark for official implementations, it is primarily focused on payments and developer documentation, leaving a void in comprehensive accounting and e-commerce operations.</p>
+
+      <span class="section-anchor" id="accounting"></span>
+      <h3>Accounting &amp; ERP Connectivity</h3>
+      <p>The accounting sector remains largely underserved. <strong>QuickBooks Online</strong> and <strong>Xero</strong> are foundational to small and medium-sized businesses, yet there is no standardized, open-source MCP server that allows Claude to perform deep financial analysis, such as bank reconciliation or cash flow forecasting.</p>
+
+      <div class="callout info">
+        <span class="callout-icon">⚡</span>
+        <div>Claude's <strong>"Always Allow"</strong> option for connected tools makes it uniquely suited for financial connectors, as it can chain 4-5 tool calls — fetching account IDs, querying balances, and running forecasts — without interrupting the user experience.</div>
+      </div>
+
+      <span class="section-anchor" id="ecommerce"></span>
+      <h3>E-commerce Operations Voids</h3>
+      <p>For the e-commerce market, the gap between payment processing (Stripe) and storefront management is vast.</p>
+
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🛒</span>
+            <span class="void-card-title">Shopify Admin</span>
+          </div>
+          <p>Community versions exist, but a comprehensive "Store Manager" for product cataloging, multi-warehouse inventory shifts, and automated discount orchestration is missing.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📦</span>
+            <span class="void-card-title">Amazon Seller Central</span>
+          </div>
+          <p>Currently non-existent in public MCP registries — a massive opportunity for millions of third-party sellers needing AI-assisted inventory and advertising management.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🚚</span>
+            <span class="void-card-title">Logistics &amp; Shipping</span>
+          </div>
+          <p>ShipStation, FedEx, and UPS APIs are missing, preventing end-to-end agents that manage a sale from purchase to delivery.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">💳</span>
+            <span class="void-card-title">Stripe (Extended)</span>
+          </div>
+          <p>Current server covers payments &amp; docs, but lacks subscription lifecycle management, revenue analytics, and fraud reporting.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARTECH GAP -->
+    <div class="section">
+      <span class="section-anchor" id="martech"></span>
+      <h2>The Marketing &amp; Advertising Technology (MarTech) Gap</h2>
+      <p>Marketing and advertising are data-heavy fields that rely on real-time insights from multiple platforms. The current MCP landscape for MarTech is characterized by <strong>"workarounds"</strong> — such as syncing data from Google Ads to a Google Sheet and then reading the sheet via a separate server — rather than direct, high-performance API connections.</p>
+
+      <span class="section-anchor" id="ad-platforms"></span>
+      <h3>Advertising Platform Implementation Gaps</h3>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Current Landscape</th>
+            <th>Voids &amp; Requirements</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Meta Ads</strong></td>
+            <td><span class="status partial">Paid/Community</span></td>
+            <td>Official-grade secure server for creative asset management, audience lookalike analysis, and pixel diagnostics.</td>
+          </tr>
+          <tr>
+            <td><strong>Google Ads</strong></td>
+            <td><span class="status partial">Via Sheets</span></td>
+            <td>Direct API connection for bidding adjustments, keyword mining, and cross-campaign performance analysis.</td>
+          </tr>
+          <tr>
+            <td><strong>LinkedIn Ads</strong></td>
+            <td><span class="status low">Enterprise Only</span></td>
+            <td>Open-source connectivity for B2B lead generation tracking and campaign optimization.</td>
+          </tr>
+          <tr>
+            <td><strong>TikTok Ads</strong></td>
+            <td><span class="status none">Not Available</span></td>
+            <td>Rapidly growing sector with no standardized MCP footprint.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight-box">
+        <div class="insight-label">Vibe Querying</div>
+        <p>The ability to ask, "Which creative is fatiguing fastest across Facebook and Instagram?" and receive a data-backed response instantly. The missing infrastructure to support these natural language queries represents a critical path for SkillGalaxy's expansion into professional marketing tools.</p>
+      </div>
+    </div>
+
+    <!-- TECHNICAL GAPS -->
+    <div class="section">
+      <span class="section-anchor" id="technical-gaps"></span>
+      <h2>Technical Gaps: Authentication, Files &amp; Context Management</h2>
+      <p>Beyond the absence of specific applications, the MCP ecosystem suffers from <strong>systemic technical gaps</strong> that limit the utility of even the most popular connectors.</p>
+
+      <div class="stat-strip">
+        <div class="stat-item">
+          <div class="stat-num">88%</div>
+          <div class="stat-lbl">Require Credentials</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50%+</div>
+          <div class="stat-lbl">Static API Keys</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">85%</div>
+          <div class="stat-lbl">Stdio Transport</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">9%</div>
+          <div class="stat-lbl">Remote (SSE/HTTP)</div>
+        </div>
+      </div>
+
+      <span class="section-anchor" id="auth-gap"></span>
+      <h3>The Authentication Maturity Gap</h3>
+      <p>One of the most significant barriers to production use is the lack of standardized <strong>OAuth 2.0 implementation</strong>. Currently, 88% of MCP implementations require credentials, yet over 50% rely on static API keys or Personal Access Tokens. This creates a security risk and prevents the creation of multi-user "Team" skills where each user authenticates with their own identity.</p>
+      <p>A second technical gap is the protocol's current struggle with <strong>binary file types</strong>. Users have reported that official connectors, such as the Google Drive tool, can fetch the contents of native Google Docs but are unable to read PDFs or other non-native file types stored in the same drive.</p>
+
+      <div class="callout danger">
+        <span class="callout-icon">🔒</span>
+        <div>Static API keys in MCP configurations represent a security risk. The ecosystem urgently needs standardized OAuth 2.1 flows for multi-user, enterprise-grade deployments.</div>
+      </div>
+
+      <span class="section-anchor" id="context-gap"></span>
+      <h3>Context Efficiency &amp; "Code Mode" Gaps</h3>
+      <p>As the number of tools available to Claude increases, the ecosystem faces the <strong>"Context Bloat" problem</strong>. Loading thousands of tool definitions upfront can consume hundreds of thousands of tokens before a single user query is processed.</p>
+      <p>The protocol is currently missing a standardized <strong>"Discovery and Routing" layer</strong> that can dynamically load only the tools required for the current task. Anthropic and Cloudflare have independently proposed "Code Mode" as a solution, where the model writes code to interact with a high-level API rather than calling granular individual tools. However, very few community servers have adopted this pattern.</p>
+    </div>
+
+    <!-- SECTOR-SPECIFIC VOIDS -->
+    <div class="section">
+      <span class="section-anchor" id="verticals"></span>
+      <h2>Sector-Specific Voids: Legal, Healthcare &amp; Education</h2>
+      <p>Specialized sectors require connectors that adhere to strict regulatory and privacy standards. These "Vertical" gaps represent some of the most difficult but highest-value opportunities for SkillGalaxy.</p>
+
+      <span class="section-anchor" id="legal"></span>
+      <h3>Legal &amp; Compliance Connectors</h3>
+      <p>The legal industry relies on tools like <strong>Clio, Ironclad, and NetDocuments</strong>, none of which currently have standardized MCP implementations. The missing requirements include:</p>
+      <ul>
+        <li><strong>Contract Lifecycle Management:</strong> Tools for comparing contract versions and identifying non-standard clauses across large repositories.</li>
+        <li><strong>Legal Research:</strong> Direct connections to court opinion databases like Westlaw or LexisNexis.</li>
+        <li><strong>Audit Trails:</strong> MCP servers that provide a persistent, tamper-proof record of every action taken by the AI for compliance purposes.</li>
+      </ul>
+
+      <span class="section-anchor" id="healthcare"></span>
+      <h3>Healthcare &amp; Global Health</h3>
+      <p>The healthcare sector is virtually absent from the public MCP registry due to the complexities of HIPAA and data privacy. The emergence of "Digital Global Health" initiatives suggests a need for connectors that can interface with Electronic Health Records (EHR) and infectious disease modelling platforms.</p>
+
+      <div class="callout purple">
+        <span class="callout-icon">🏥</span>
+        <div>For SkillGalaxy, the challenge is to build <strong>"Zero-Trust" connectors</strong> that can operate on sensitive patient data without ever transmitting it to the model's context window, perhaps by using local "Code Execution" environments.</div>
+      </div>
+    </div>
+
+    <!-- COMPETITIVE ANALYSIS -->
+    <div class="section">
+      <span class="section-anchor" id="competitive"></span>
+      <h2>Competitive Analysis: MCP vs. ChatGPT Plugins</h2>
+      <p>The strategic direction of SkillGalaxy must account for the competitive landscape of AI integrations. While OpenAI has focused on a consumer-facing "App Store" for GPTs, Anthropic's MCP is positioned as a <strong>developer-first, enterprise-grade standard</strong>.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="feature-col">Feature</th>
+            <th class="claude-col">MCP (Claude)</th>
+            <th class="chatgpt-col">ChatGPT Plugins / GPTs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-col">Focus</td>
+            <td class="claude-col">Enterprise workflows and technical portability</td>
+            <td class="chatgpt-col">Consumer-facing app-like experiences</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Composability</td>
+            <td class="claude-col"><strong>Excellent;</strong> chains 4-5 tools naturally</td>
+            <td class="chatgpt-col">Poor; usually selects one tool and stops</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Permissions</td>
+            <td class="claude-col">"Always Allow" option for frictionless flow</td>
+            <td class="chatgpt-col">"Allow" required for every single action</td>
+          </tr>
+          <tr>
+            <td class="feature-col">Control</td>
+            <td class="claude-col">Developer manages server and local data</td>
+            <td class="chatgpt-col">OpenAI manages ecosystem and sandboxing</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">
+        <span class="callout-icon">🏆</span>
+        <div>The primary <strong>"Competitive Void"</strong> for Claude is the lack of a centralized, user-friendly discovery mechanism for connectors — a role that SkillGalaxy is <strong>uniquely positioned to fill</strong> by categorizing and vetting the thousands of experimental servers currently scattered across GitHub.</div>
+      </div>
+    </div>
+
+    <!-- HUMAN IN THE LOOP -->
+    <div class="section">
+      <span class="section-anchor" id="hitl"></span>
+      <h2>The "Human-in-the-Loop" Gap: Approval &amp; Governance</h2>
+      <p>A significant missing component in the current ecosystem is a standardized <strong>"Human-in-the-Loop" (HITL) protocol</strong>. While users want AI to take actions on their behalf, they often require a mechanism to approve high-stakes actions, such as sending a payment or deleting a production database record.</p>
+      <p>Existing solutions like gotoHuman or Merge Agent Handler have begun to address this, but there is no native MCP standard for "Pending Approvals".</p>
+
+      <div class="callout info">
+        <span class="callout-icon">✋</span>
+        <div>For SkillGalaxy, adding <strong>"Skill Approval" tools</strong> — where a connector can pause a workflow and wait for a user's signal — would resolve a major psychological and operational barrier to the adoption of agentic AI in the workplace.</div>
+      </div>
+    </div>
+
+    <!-- STRATEGIC ROADMAP -->
+    <div class="section">
+      <span class="section-anchor" id="roadmap"></span>
+      <h2>Strategic Roadmap for SkillGalaxy Development</h2>
+      <p>Based on the exhaustive analysis of missing connectors and technical voids, the following roadmap identifies the high-priority skills that would provide the most significant impact.</p>
+
+      <!-- Phase 1 -->
+      <div class="phase-card phase-1">
+        <div class="phase-header">
+          <div class="phase-num">1</div>
+          <div>
+            <div class="phase-title">The Essential Productivity Suite</div>
+            <div class="phase-subtitle">Production-grade, OAuth-native connectors for the "Workplace 100"</div>
+          </div>
+        </div>
+        <ul class="phase-items">
+          <li>
+            <div class="phase-icon">📧</div>
+            <div><strong>Microsoft 365 Unified</strong> — A connector that bridges Outlook, Teams, and Excel into a single cross-application skill.</div>
+          </li>
+          <li>
+            <div class="phase-icon">📁</div>
+            <div><strong>Google Workspace Advanced</strong> — Addressing the "Binary File" gap by enabling PDF and image processing within Google Drive.</div>
+          </li>
+          <li>
+            <div class="phase-icon">📋</div>
+            <div><strong>Jira / Monday.com Standardized</strong> — Creating robust project management tools that prioritize "Code Mode" for token efficiency.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card phase-2">
+        <div class="phase-header">
+          <div class="phase-num">2</div>
+          <div>
+            <div class="phase-title">Revenue Operations &amp; Marketing</div>
+            <div class="phase-subtitle">Deep integrations for the tools that drive business growth</div>
+          </div>
+        </div>
+        <ul class="phase-items">
+          <li>
+            <div class="phase-icon">🤝</div>
+            <div><strong>Unified CRM Gateway</strong> — A single skill that can cross-reference Salesforce and HubSpot data for automated ROI reporting.</div>
+          </li>
+          <li>
+            <div class="phase-icon">📣</div>
+            <div><strong>Meta / Google Ads Direct</strong> — Eliminating the "Sheets Hack" in favor of direct API management for performance marketers.</div>
+          </li>
+          <li>
+            <div class="phase-icon">🛍️</div>
+            <div><strong>E-commerce Store Management</strong> — An official-grade Shopify Admin connector for store owners.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card phase-3">
+        <div class="phase-header">
+          <div class="phase-num">3</div>
+          <div>
+            <div class="phase-title">Vertical Intelligence &amp; Governance</div>
+            <div class="phase-subtitle">Expand into high-compliance and specialized sectors</div>
+          </div>
+        </div>
+        <ul class="phase-items">
+          <li>
+            <div class="phase-icon">⚖️</div>
+            <div><strong>Legal / Compliance Audit</strong> — A specialized server for contract review, clause comparison, and action logging.</div>
+          </li>
+          <li>
+            <div class="phase-icon">💰</div>
+            <div><strong>Financial Forecaster</strong> — A tool that chains bank balances with accounting records for real-time cash flow analysis.</div>
+          </li>
+          <li>
+            <div class="phase-icon">🛡️</div>
+            <div><strong>Governance Middleware</strong> — A security-first server that scans all MCP tool inputs for malicious patterns before execution.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MISSING APP INVENTORY -->
+    <div class="section">
+      <span class="section-anchor" id="inventory"></span>
+      <h2>Inventory of Missing &amp; High-Demand App Skills</h2>
+      <p>The following apps represent the most valuable targets for new skill development due to their lack of stable, official, or deep-integration connectors in the current Claude ecosystem.</p>
+
+      <h3>Sales &amp; Revenue Operations</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🎯</span>
+            <span class="void-card-title">Apollo.io / Outreach / Salesloft</span>
+          </div>
+          <p>Essential B2B prospecting tools with virtually no footprint in public registries.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🔗</span>
+            <span class="void-card-title">Clay</span>
+          </div>
+          <p>Lead Enrichment is high-demand, but Clay lacks a robust native Claude skill.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">💼</span>
+            <span class="void-card-title">LinkedIn (Full Automation)</span>
+          </div>
+          <p>Most tools are restricted to URL scraping; official-grade B2B tracking and campaign management is missing.</p>
+        </div>
+      </div>
+
+      <h3>Accounting &amp; ERP</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📒</span>
+            <span class="void-card-title">QuickBooks Online / Xero</span>
+          </div>
+          <p>Lacking standardized open-source servers for deep analysis — bank reconciliation, cash flow forecasting.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🏢</span>
+            <span class="void-card-title">SAP / NetSuite</span>
+          </div>
+          <p>Large enterprise ERPs foundational to corporate work, currently underserved by standardized connectors.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📊</span>
+            <span class="void-card-title">FreshBooks / Wave</span>
+          </div>
+          <p>Foundational SMB accounting tools currently without dedicated skills.</p>
+        </div>
+      </div>
+
+      <h3>E-commerce &amp; Logistics</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📦</span>
+            <span class="void-card-title">Amazon Seller Central</span>
+          </div>
+          <p>Massive opportunity for inventory and ad management — non-existent in public MCP registries.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🚛</span>
+            <span class="void-card-title">ShipStation / FedEx / UPS</span>
+          </div>
+          <p>Necessary for end-to-end agentic commerce agents managing sales from purchase to delivery.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🛒</span>
+            <span class="void-card-title">Shopify Admin (Advanced)</span>
+          </div>
+          <p>Community versions exist, but comprehensive multi-warehouse orchestration and discount management is missing.</p>
+        </div>
+      </div>
+
+      <h3>Marketing &amp; AdTech</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🎵</span>
+            <span class="void-card-title">TikTok Ads</span>
+          </div>
+          <p>Rapidly growing sector with no standardized MCP footprint.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📘</span>
+            <span class="void-card-title">Meta Ads (Official Grade)</span>
+          </div>
+          <p>Existing implementations are often paid wrappers; secure creative asset management and pixel diagnostics needed.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🔍</span>
+            <span class="void-card-title">Google Ads (Direct API)</span>
+          </div>
+          <p>Most users rely on sync-to-sheets workarounds; direct API connections for real-time bidding adjustment are missing.</p>
+        </div>
+      </div>
+
+      <h3>Legal &amp; Compliance</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">⚖️</span>
+            <span class="void-card-title">Clio / Ironclad / NetDocuments</span>
+          </div>
+          <p>Core legal management tools with no standardized MCP implementations.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📚</span>
+            <span class="void-card-title">Westlaw / LexisNexis</span>
+          </div>
+          <p>Direct connections for legal research databases — high value for law firms and compliance teams.</p>
+        </div>
+      </div>
+
+      <h3>Healthcare &amp; Specialized</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🏥</span>
+            <span class="void-card-title">Epic / Cerner (EHR)</span>
+          </div>
+          <p>Specialized electronic health record platforms requiring strict HIPAA-compliant connectors.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">🧬</span>
+            <span class="void-card-title">PubMed / Benchling</span>
+          </div>
+          <p>Some niche versions exist, but stable and enterprise-ready research connectors are in high demand.</p>
+        </div>
+      </div>
+
+      <h3>General Productivity Limitations</h3>
+      <div class="void-grid">
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">✏️</span>
+            <span class="void-card-title">Draw.io / Excalidraw</span>
+          </div>
+          <p>Users have reported these disappearing from standard connector lists, creating a void for visual diagramming tools.</p>
+        </div>
+        <div class="void-card">
+          <div class="void-card-header">
+            <span class="void-card-icon">📬</span>
+            <span class="void-card-title">Shared Mailbox Management</span>
+          </div>
+          <p>Claude's current Outlook/Gmail tools struggle with shared inboxes and attachment processing (PDFs/images).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONCLUSION -->
+    <div class="section">
+      <span class="section-anchor" id="conclusion"></span>
+      <h2>Summary &amp; Ecosystem Implications</h2>
+      <p>The evolution of the Model Context Protocol suggests several second and third-order implications for the AI tooling market:</p>
+
+      <ul>
+        <li><strong>From Many Simple Tools to Few Sophisticated Environments:</strong> As the "Context Bloat" problem worsens, the industry will shift to "Code Mode", fundamentally changing how developers write MCP servers.</li>
+        <li><strong>Permission Fatigue drives Claude adoption:</strong> The "Permission Fatigue" experienced in other AI ecosystems will drive professional users toward Claude-centric workflows, as Claude's ability to agentically chain multiple tools with minimal friction becomes a decisive productivity advantage.</li>
+        <li><strong>Quality over Quantity:</strong> The "Maturity Gap" indicates that the next phase of MCP will be defined not by the quantity of servers, but by the quality of authentication and the depth of enterprise integration.</li>
+      </ul>
+
+      <div class="insight-box">
+        <div class="insight-label">Strategic Conclusion</div>
+        <p>Platforms like SkillGalaxy that successfully address these voids — by providing curated, secure, and highly functional skills — will effectively become the <strong>"Middleware of the Agentic Era"</strong>, serving as the connective tissue between advanced language models and the complex, fragmented world of enterprise data.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── TOC ACTIVE STATE ── */
+const sections = document.querySelectorAll('.section-anchor');
+const tocLinks  = document.querySelectorAll('.toc a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-60px 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
