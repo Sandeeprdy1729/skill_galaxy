@@ -6,7 +6,7 @@
 [![Live Site](https://img.shields.io/badge/Live-skill--galaxy.vercel.app-black?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Launch%20Day-orange?style=flat-square)](https://www.producthunt.com/products/skillgalaxy-2?launch=skillgalaxy-2)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-9%2C872%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
+[![Skills](https://img.shields.io/badge/Skills-10%2C171%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Built by Timps](https://img.shields.io/badge/Built%20by-Timps-purple?style=flat-square)](https://timps-website.vercel.app/)
 
 ---
@@ -40,7 +40,7 @@ No account needed to download. No friction.
 
 | | |
 |---|---|
-| 🧠 Skills | 10,165+ and growing |
+| 🧠 Skills | 10,171+ and growing |
 | 🌐 Domains | 16 |
 | 💰 Price | Free. Always. |
 | 👥 Model | Community-built, reviewed within 24hrs |
@@ -69,13 +69,15 @@ Skills now carry a `version` (semver) and `changelog` field. Contributors can bu
 
 ---
 
-##  MCP Server — One-Toggle Claude Connection
+##  MCP Server v2.0 — One-Toggle Claude Connection
 
-**NEW:** Connect Claude directly to the entire SkillGalaxy library via [Model Context Protocol](https://modelcontextprotocol.io/). No manual downloads needed.
+Connect Claude directly to the entire SkillGalaxy library via [Model Context Protocol](https://modelcontextprotocol.io/). No manual downloads needed.
 
 ```bash
 cd mcp-server && npm install && npm run build-skills
 ```
+
+### Claude Desktop (stdio)
 
 Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
@@ -90,7 +92,38 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-Restart Claude Desktop — done. Claude can now search, browse, and retrieve all 9,872+ skills on demand.
+Restart Claude Desktop — done. Claude can now search, compose, visualise, and orchestrate all 10,171+ skills.
+
+### Remote Clients (Streamable HTTP)
+
+```bash
+npm run start:http                          # http://localhost:3100/mcp
+MCP_API_KEY=secret npm run start:http       # with bearer auth
+```
+
+### 9 Tools Available
+
+| Tool | Description |
+|------|-------------|
+| `search_skills` | Search by keyword/category/difficulty (L1 metadata only) |
+| `get_skill` | Load full markdown body (L2) |
+| `get_skill_deep` | Full body + related skills + cross-references (L3) |
+| `get_skill_summary` | Compact metadata table |
+| `list_categories` | Browse all 16 categories |
+| `execute_skill_code` | **Code Mode** — run JS pipelines server-side (~37% token savings) |
+| `compose_skills` | Chain skills into workflows with reflection |
+| `generate_visual` | Mermaid diagrams, comparison tables, dashboards |
+| `ingest_file` | Process PDFs, CSVs, XLSX, images natively |
+
+### v2.0 Features
+
+- **Progressive Disclosure** — 3-level loading keeps context minimal
+- **Code Mode** — orchestrate multiple tools in one call, reducing token usage
+- **Composable Workflows** — chain skills with optional self-reflection
+- **Generative UI** — Mermaid diagrams, learning paths, category dashboards
+- **Security** — input sanitisation, rate limiting, audit logging
+- **Binary Ingestion** — PDF, CSV, XLSX, image processing
+- **Streamable HTTP** — remote access with bearer auth
 
 👉 **[Full MCP setup guide →](mcp-server/README.md)**
 
@@ -144,10 +177,11 @@ skill_galaxy/
 │   └── icon_renderer.js    # Simple Icons + emoji icon rendering
 ├── api/
 │   └── validate-skill.js   # Vercel serverless AI validator (Anthropic API)
-├── mcp-server/             # MCP server for Claude Desktop integration
-│   ├── index.js            # MCP server (4 tools: search, get, summary, categories)
-│   ├── skills-data.js      # Auto-generated skills module
-│   └── README.md           # MCP setup instructions
+├── mcp-server/             # MCP server v2.0 for Claude integration
+│   ├── index.js            # Stdio transport (9 tools, Code Mode, Progressive Disclosure)
+│   ├── server-http.js      # Streamable HTTP transport (Express, bearer auth, sessions)
+│   ├── skills-data.js      # Auto-generated skills module (10,171 skills)
+│   └── README.md           # MCP v2.0 setup instructions
 ├── supabase-setup.sql      # Base database schema
 ├── supabase-migrations.sql # Ratings, reviews, versioning migration
 ├── SETUP_GUIDE.md          # Full local setup instructions
