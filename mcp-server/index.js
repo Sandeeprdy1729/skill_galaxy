@@ -1262,7 +1262,7 @@ Returns: recommended skills with token costs, savings vs naive top-k, and
         return diffOrder.indexOf(d) > diffOrder.indexOf(best) ? d : best;
       }, "beginner");
 
-      const kebabName = (query || "meta-skill").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60);
+      const kebabName = (query || "meta-skill").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80);
       const skillList = selected.map((s, i) =>
         `${i + 1}. **${s.skill.name}** — ${(s.skill.desc || "").slice(0, 120)}`
       ).join("\n");

@@ -1443,7 +1443,7 @@ async function runForgeRecommend() {
         const full = allSkills.find(s => s.id === r.id);
         return `
           <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface);border-radius:var(--r-sm);margin-bottom:6px;cursor:pointer"
-               onclick="${full ? `closeForgeRecommend();openDetail('${esc(r.id)}')` : ''}">
+               ${full ? `data-forge-skill-id="${esc(r.id)}"` : ''}>
             <span style="font-size:.68rem;color:var(--text-ter);min-width:18px">${i + 1}.</span>
             <div style="flex:1;min-width:0">
               <div style="font-size:.78rem;font-weight:600;color:var(--text)">${esc(r.name)}</div>
@@ -1453,6 +1453,14 @@ async function runForgeRecommend() {
             <span style="font-size:.62rem;color:var(--text-ter);white-space:nowrap">sim: ${r.similarity}</span>
           </div>`;
       }).join('');
+
+      // Attach click handlers via event delegation
+      listEl.querySelectorAll('[data-forge-skill-id]').forEach(el => {
+        el.addEventListener('click', () => {
+          closeForgeRecommend();
+          openDetail(el.dataset.forgeSkillId);
+        });
+      });
     }
 
     // Show patterns if available

@@ -23,6 +23,7 @@ import {
   recommendSkills,
   naiveRecommend,
   synthesiseMetaSkill,
+  MAX_SKILL_POOL_SIZE,
 } from '../lib/skillforge-engine.js';
 
 export default async function handler(req, res) {
@@ -51,7 +52,7 @@ export default async function handler(req, res) {
 
   try {
     // Limit input sizes for safety
-    const safeSkills = skills.slice(0, 500).map((s) => ({
+    const safeSkills = skills.slice(0, MAX_SKILL_POOL_SIZE).map((s) => ({
       id:          String(s.id || '').slice(0, 120),
       name:        String(s.name || '').slice(0, 120),
       desc:        String(s.desc || s.description || '').slice(0, 300),
