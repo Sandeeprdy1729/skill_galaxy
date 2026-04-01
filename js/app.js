@@ -52,6 +52,7 @@ const appState = {
   view:   'all', // 'all' | 'mine'
   page:   1,     // current page (1-based)
   perPage: 48,   // skills per page
+  compare: [],   // skill IDs selected for comparison (max 3)
 };
 
 // /* ── INIT ────────────────────────────────────────── */
@@ -158,10 +159,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('submitOverlay')?.addEventListener('click', e => {
     if (e.target === document.getElementById('submitOverlay')) closeSubmit();
   });
+  document.getElementById('compareOverlay')?.addEventListener('click', e => {
+    if (e.target === document.getElementById('compareOverlay')) closeCompareModal();
+  });
 
   // Keyboard
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeDetail(); closeAuthModal(); closeSubmit(); }
+    if (e.key === 'Escape') { closeDetail(); closeAuthModal(); closeSubmit(); closeCompareModal(); }
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault(); document.getElementById('searchInput')?.focus();
     }
@@ -292,6 +296,11 @@ function renderGrid() {
         <button class="btn-dl"
                 onclick="event.stopPropagation();handleDownload('${esc(s.id)}')">
           ↓ .md
+        </button>
+        <button class="btn-compare ${appState.compare.includes(s.id) ? 'active' : ''}"
+                onclick="toggleCompare('${esc(s.id)}', event)"
+                title="${appState.compare.includes(s.id) ? 'Remove from compare' : 'Add to compare'}">
+          ⇔
         </button>
         <button class="btn-bookmark ${isBookmarked(s.id) ? 'active' : ''}"
                 onclick="toggleBookmark('${esc(s.id)}', event)"
@@ -1477,6 +1486,183 @@ function copyExport() {
 
 function closeExportModal() {
   document.getElementById('exportOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── SKILL COMPARISON ────────────────────────────── */
+const COMPARE_MAX = 3;
+
+function toggleCompare(skillId, event) {
+  event.stopPropagation();
+  const idx = appState.compare.indexOf(skillId);
+  if (idx > -1) {
+    appState.compare.splice(idx, 1);
+  } else {
+    if (appState.compare.length >= COMPARE_MAX) {
+      toast(`Compare up to ${COMPARE_MAX} skills at a time`, true);
+      return;
+    }
+    appState.compare.push(skillId);
+  }
+  renderGrid();
+  updateCompareTray();
+}
+
+function removeFromCompare(skillId) {
+  appState.compare = appState.compare.filter(id => id !== skillId);
+  renderGrid();
+  updateCompareTray();
+}
+
+function clearCompare() {
+  appState.compare = [];
+  renderGrid();
+  updateCompareTray();
+}
+
+function updateCompareTray() {
+  const tray = document.getElementById('compareTray');
+  if (!tray) return;
+  const ids = appState.compare;
+  if (ids.length === 0) {
+    tray.classList.remove('visible');
+    return;
+  }
+  tray.classList.add('visible');
+
+  const allSkills = getAllSkills();
+  const selected = ids.map(id => allSkills.find(s => s.id === id)).filter(Boolean);
+
+  const chipsHtml = selected.map(s => `
+    <div class="compare-chip">
+      <span class="compare-chip-name">${esc(s.name)}</span>
+      <button class="compare-chip-remove" onclick="removeFromCompare('${esc(s.id)}')" title="Remove">✕</button>
+    </div>`).join('');
+
+  const slotsLeft = COMPARE_MAX - ids.length;
+  const slotsHtml = slotsLeft > 0
+    ? `<span class="compare-slots">${slotsLeft} more slot${slotsLeft > 1 ? 's' : ''}</span>`
+    : '';
+
+  document.getElementById('compareTrayChips').innerHTML = chipsHtml + slotsHtml;
+
+  const cmpBtn = document.getElementById('compareTrayBtn');
+  if (cmpBtn) {
+    cmpBtn.disabled = ids.length < 2;
+    cmpBtn.textContent = `⇔ Compare (${ids.length})`;
+  }
+  document.getElementById('compareCount').textContent = ids.length;
+
+  // Update sidebar nav count
+  const navCount = document.getElementById('compareNavCount');
+  if (navCount) {
+    navCount.textContent = ids.length;
+    navCount.style.display = ids.length > 0 ? 'inline-flex' : 'none';
+  }
+}
+
+function openCompareModal() {
+  if (appState.compare.length < 2) {
+    toast('Select at least 2 skills to compare', true);
+    return;
+  }
+
+  const allSkills = getAllSkills();
+  const selected = appState.compare.map(id => allSkills.find(s => s.id === id)).filter(Boolean);
+
+  const colWidth = Math.floor(100 / selected.length);
+
+  // Header row
+  const headerHtml = selected.map(s => {
+    const c = CATEGORIES[s.cat] || CATEGORIES.ai;
+    const iconHtml = renderIcon(s, 28);
+    const iconBg = (s.iconType === 'simpleicons' && getBrandColor(s))
+      ? `${getBrandColor(s)}18`
+      : c.tag;
+    return `
+    <div class="compare-col" style="width:${colWidth}%">
+      <div class="compare-col-icon" style="background:${iconBg}">${iconHtml}</div>
+      <div class="compare-col-name">${esc(s.name)}</div>
+      <span class="card-tag" style="background:${c.tag};color:${c.tagText};font-size:.62rem">${esc(c.label)}</span>
+    </div>`;
+  }).join('');
+
+  // Metric rows
+  const metrics = [
+    { label: 'Difficulty',      fn: s => `<span class="diff-badge ${esc(s.difficulty || '')}">${esc(s.difficulty || 'intermediate')}</span>` },
+    { label: 'Demand Score',    fn: s => renderScoreBar(s.d, 'demand') },
+    { label: 'Income Score',    fn: s => renderScoreBar(s.i, 'income') },
+    { label: 'Future Score',    fn: s => renderScoreBar(s.f, 'future') },
+    { label: 'Time to Master',  fn: s => `<span style="font-size:.78rem;color:var(--text-sec)">${esc(s.timeToMaster || '—')}</span>` },
+    { label: 'Tags',            fn: s => (s.tags || []).slice(0, 5).map(t => `<span class="chip" style="font-size:.62rem;padding:2px 6px">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+    { label: 'Tools',           fn: s => (s.tools || []).slice(0, 4).map(t => `<span class="tool-chip" style="font-size:.62rem;padding:2px 6px">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+    { label: 'Atomic Skills',   fn: s => (s.skills || []).slice(0, 4).map(sk => `<span class="chip" style="font-size:.62rem;padding:2px 6px">${esc(sk)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+  ];
+
+  const rowsHtml = metrics.map(m => `
+    <div class="compare-row">
+      <div class="compare-row-label">${m.label}</div>
+      <div class="compare-row-values">
+        ${selected.map(s => `<div class="compare-col" style="width:${colWidth}%">${m.fn(s)}</div>`).join('')}
+      </div>
+    </div>`).join('');
+
+  // Description row
+  const descHtml = `
+    <div class="compare-row">
+      <div class="compare-row-label">Description</div>
+      <div class="compare-row-values">
+        ${selected.map(s => `<div class="compare-col" style="width:${colWidth}%"><div class="compare-desc">${esc((s.desc || '').slice(0, 150))}${(s.desc || '').length > 150 ? '…' : ''}</div></div>`).join('')}
+      </div>
+    </div>`;
+
+  // Actions row
+  const actionsHtml = `
+    <div class="compare-row" style="border-bottom:none">
+      <div class="compare-row-label"></div>
+      <div class="compare-row-values">
+        ${selected.map(s => `
+          <div class="compare-col" style="width:${colWidth}%">
+            <div style="display:flex;gap:5px;flex-wrap:wrap">
+              <button class="btn-main" style="padding:6px 12px;font-size:.72rem" onclick="closeCompareModal();openDetail('${esc(s.id)}')">View Details</button>
+              <button class="btn-ghost" style="padding:6px 10px;font-size:.72rem" onclick="handleDownload('${esc(s.id)}')">↓ .md</button>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  document.getElementById('compareModalBody').innerHTML = `
+    <div class="compare-header">
+      <div class="compare-row-values">${headerHtml}</div>
+    </div>
+    ${descHtml}
+    ${rowsHtml}
+    ${actionsHtml}
+  `;
+
+  document.getElementById('compareOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderScoreBar(val, type) {
+  const v = parseInt(val) || 0;
+  const pct = v * 10;
+  const colors = {
+    demand: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
+    income: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
+    future: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
+  };
+  return `
+    <div class="compare-score">
+      <div class="compare-score-bar">
+        <div class="compare-score-fill" style="width:${pct}%;background:${colors[type] || 'var(--copper)'}"></div>
+      </div>
+      <span class="compare-score-val">${v}/10</span>
+    </div>`;
+}
+
+function closeCompareModal() {
+  document.getElementById('compareOverlay')?.classList.remove('open');
   document.body.style.overflow = '';
 }
 

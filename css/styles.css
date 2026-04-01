@@ -779,4 +779,45 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
   .lp-grid{grid-template-columns:1fr}
   .lp-detail-header{flex-direction:column}
   .galaxy-legend{max-width:90vw}
+  .compare-tray-inner{flex-direction:column;gap:10px}
+  .compare-modal .modal-body{overflow-x:auto}
+  .compare-row-values{min-width:500px}
 }
+
+/* ─── Skill Comparison ─── */
+.btn-compare{display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--text-ter);font-size:.82rem;cursor:pointer;transition:all .15s}
+.btn-compare:hover{background:var(--cream-darker);color:var(--teal)}
+.btn-compare.active{color:var(--teal);border-color:var(--teal-lt);background:var(--teal-lt)}
+
+/* Floating compare tray */
+.compare-tray{position:fixed;bottom:0;left:var(--sidebar);right:0;z-index:900;transform:translateY(100%);transition:transform .25s ease;pointer-events:none}
+.compare-tray.visible{transform:translateY(0);pointer-events:all}
+.compare-tray-inner{display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--warm-white);border-top:1px solid var(--border);box-shadow:0 -4px 16px rgba(26,24,20,.08)}
+.compare-tray-label{font-size:.74rem;font-weight:600;color:var(--text-pri);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.compare-tray-count{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--teal);color:white;font-size:.62rem;font-weight:700}
+.compare-tray-chips{display:flex;gap:6px;flex:1;flex-wrap:wrap;min-width:0}
+.compare-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--teal-lt);border:1px solid rgba(58,125,110,.2);border-radius:6px;font-size:.72rem;color:var(--teal);font-weight:500;max-width:180px}
+.compare-chip-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.compare-chip-remove{background:none;border:none;color:var(--teal);cursor:pointer;font-size:.68rem;opacity:.6;padding:0 2px;transition:opacity .15s}
+.compare-chip-remove:hover{opacity:1}
+.compare-slots{font-size:.68rem;color:var(--text-ter);padding:5px 8px;border:1px dashed var(--border);border-radius:6px}
+.compare-tray-actions{display:flex;gap:6px;flex-shrink:0}
+.compare-tray-btn{padding:7px 16px!important;font-size:.74rem!important}
+.compare-tray-clear{padding:7px 12px!important;font-size:.72rem!important}
+
+/* Compare modal */
+.compare-modal .modal-body{padding:0 0 8px}
+.compare-header{padding:16px 20px 12px;border-bottom:1px solid var(--border-lt)}
+.compare-header .compare-row-values{display:flex;gap:14px}
+.compare-col{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;min-width:0}
+.compare-col-icon{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.compare-col-name{font-weight:600;font-size:.82rem;color:var(--text-pri);word-break:break-word}
+.compare-row{padding:10px 20px;border-bottom:1px solid var(--border-lt)}
+.compare-row:nth-child(even){background:var(--cream-dark)}
+.compare-row-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-ter);margin-bottom:7px}
+.compare-row-values{display:flex;gap:14px}
+.compare-desc{font-size:.74rem;color:var(--text-sec);line-height:1.55}
+.compare-score{display:flex;align-items:center;gap:8px}
+.compare-score-bar{width:80px;height:8px;background:var(--cream-darker);border-radius:4px;overflow:hidden}
+.compare-score-fill{height:100%;border-radius:4px;transition:width .3s ease}
+.compare-score-val{font-size:.74rem;font-weight:600;color:var(--text-pri);min-width:32px}
