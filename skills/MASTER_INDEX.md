@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Total Skills Generated: 10,171**
+**Total Skills Generated: 10,276** (including 105 new MCP Connector Skills)
 
 This repository contains a comprehensive collection of professional-grade skills for AI-assisted development. Each skill follows a structured format with detailed guidance on implementation, best practices, and real-world applications.
 
@@ -286,14 +286,90 @@ skill_galaxy_generated/
 └── education/
 ```
 
+## MCP Connector Skills (105 New App Integrations)
+
+These skills provide Claude/MCP connectors for open-source and commercial applications that currently lack AI assistant integration. Each skill includes MCP server architecture, implementation code, Claude Desktop configuration, and best practices.
+
+### Development & IDE Tools (8 skills)
+- Neovim, IntelliJ IDEA Community, Eclipse IDE, Kate (KDE), Geany, Code::Blocks, GNOME Builder, Bluefish
+
+### CMS & Publishing (8 skills)
+- Drupal, Joomla, Grav, Strapi, Directus, PocketBase, BookStack, Outline
+
+### Communication & Messaging (9 skills)
+- Mattermost, Rocket.Chat, Zulip, Element/Matrix, Jitsi Meet, Nextcloud Talk, Discord, Telegram, Discourse
+
+### Wiki & Documentation (4 skills)
+- MediaWiki, DokuWiki, XWiki, TiddlyWiki
+
+### Developer Operations (6 skills)
+- GitLab, Jenkins, Sentry, Postman, Vercel, Supabase
+
+### Project Management (6 skills)
+- OpenProject, Taiga, Wekan, Focalboard, Planka, Kanboard
+
+### Design & Creative (6 skills)
+- GIMP, Inkscape, Krita, Blender, Penpot, Excalidraw
+
+### Media & Entertainment (4 skills)
+- Jellyfin, Kodi, Navidrome, Immich
+
+### Database & Data Tools (6 skills)
+- DBeaver, pgAdmin, MongoDB Compass, RedisInsight, Adminer, phpMyAdmin
+
+### Analytics & BI (2 skills)
+- Metabase, Mixpanel
+
+### Scientific & Research (4 skills)
+- JupyterLab, RStudio, Spyder, GNU Octave
+
+### Infrastructure & DevOps (6 skills)
+- Portainer, Rancher, Proxmox VE, Pulumi, Ansible AWX, Rundeck
+
+### Monitoring & Observability (5 skills)
+- Grafana, Prometheus, Zabbix, Uptime Kuma, Nagios
+
+### File Management & Storage (3 skills)
+- Nextcloud, Seafile, FileBrowser
+
+### Security & Privacy (4 skills)
+- Wazuh, Suricata, OpenVAS, Snort
+
+### Finance & Business (8 skills)
+- Odoo, ERPNext, Dolibarr, Akaunting, Firefly III, GnuCash, QuickBooks, Xero
+
+### Customer Support & CRM (3 skills)
+- Zendesk, Freshdesk, Pipedrive
+
+### E-commerce (2 skills)
+- Shopify, WooCommerce
+
+### HR & Recruiting (1 skill)
+- Greenhouse
+
+### Education & Learning (3 skills)
+- Moodle, Canvas LMS, Open edX
+
+### Writing & Publishing (3 skills)
+- Ghost, Substack, Medium
+
+### Social Media & Marketing (1 skill)
+- Buffer
+
+### Communication Platforms (2 skills)
+- Microsoft Teams, Reddit
+
+### Travel & Hospitality (1 skill)
+- Airbnb Listing
+
 ## License
 
 All skills are licensed under Apache 2.0 unless otherwise specified.
 
 ## Generation Date
 
-Generated on: {date}
+Generated on: 2026-04-01
 
 ---
 
-*Part of SkillGalaxy - A comprehensive collection of 10,000+ professional skills for AI-assisted development.*
+*Part of SkillGalaxy - A comprehensive collection of 10,276+ professional skills for AI-assisted development.*

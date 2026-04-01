@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillGalaxy — The Claude Skills Marketplace</title>
+  <meta name="description" content="10,293+ free skill files for Claude Projects. Download expert .md skills for AI, coding, security, writing and more.">
+  <meta property="og:title" content="SkillGalaxy — The Claude Skills Marketplace">
+  <meta property="og:description" content="Free skill files that make Claude an expert at anything. 10,293+ skills ready to download.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #f9f7f4;
+      --cream-dark: #f2ede6;
+      --warm-white: #fefcfa;
+      --copper: #c07b4a;
+      --copper-lt: #f0e4d8;
+      --teal: #3a7d6e;
+      --teal-lt: #e0f0eb;
+      --text-pri: #1a1814;
+      --text-sec: #5a5347;
+      --text-ter: #8a8279;
+      --border: #e0d9cf;
+      --border-lt: #ede8e1;
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --sh-sm: 0 1px 3px rgba(26,24,20,.04);
+      --sh-md: 0 2px 8px rgba(26,24,20,.06);
+      --sh-lg: 0 4px 20px rgba(26,24,20,.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text-pri);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(249,247,244,.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lt);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-pri);
+    }
+    .nav-logo {
+      width: 28px;
+      height: 28px;
+      background: var(--text-pri);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-logo svg { width: 16px; height: 16px; }
+    .nav-brand-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .92rem;
+      font-weight: 600;
+      letter-spacing: -.3px;
+    }
+    .nav-brand-text em {
+      font-style: normal;
+      color: var(--copper);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link {
+      padding: 6px 14px;
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--text-sec);
+      text-decoration: none;
+      border-radius: var(--r-sm);
+      transition: all .15s;
+    }
+    .nav-link:hover { background: var(--cream-dark); color: var(--text-pri); }
+    .nav-cta {
+      padding: 7px 18px;
+      background: var(--text-pri);
+      color: var(--cream);
+      font-size: .78rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .15s;
+    }
+    .nav-cta:hover { background: #2d2a25; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 32px 48px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--copper-lt);
+      border: 1px solid rgba(192,123,74,.25);
+      color: var(--copper);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 2.8rem;
+      color: var(--text-pri);
+      letter-spacing: -.8px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-sub {
+      font-size: .92rem;
+      color: var(--text-sec);
+      max-width: 540px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-sub code {
+      background: var(--cream-dark);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: .84rem;
+      color: var(--copper);
+    }
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 24px;
+      background: var(--text-pri);
+      color: var(--cream);
+      border: none;
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #2d2a25; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 24px;
+      background: transparent;
+      color: var(--text-sec);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+    }
+    .btn-secondary:hover { background: var(--cream-dark); color: var(--text-pri); }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 24px 0;
+      border-top: 1px solid var(--border-lt);
+      border-bottom: 1px solid var(--border-lt);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.6rem;
+      color: var(--text-pri);
+      font-weight: 400;
+    }
+    .stat-label {
+      font-size: .65rem;
+      color: var(--text-ter);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 32px;
+    }
+    .sec-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .sec-eyebrow {
+      font-size: .65rem;
+      font-weight: 600;
+      color: var(--copper);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .sec-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--text-pri);
+      letter-spacing: -.3px;
+      margin-bottom: 8px;
+    }
+    .sec-desc {
+      font-size: .84rem;
+      color: var(--text-sec);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-strip {
+      display: flex;
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .how-step {
+      flex: 1;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-lt);
+    }
+    .how-step:last-child { border-right: none; }
+    .how-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--copper-lt);
+      color: var(--copper);
+      font-size: .72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .how-text {
+      font-size: .76rem;
+      color: var(--text-sec);
+      line-height: 1.35;
+    }
+    .how-text strong {
+      color: var(--text-pri);
+      display: block;
+      font-size: .78rem;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      transition: all .2s;
+    }
+    .feature-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--sh-md);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--copper-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+    .feature-card h3 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 1rem;
+      color: var(--text-pri);
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: .78rem;
+      color: var(--text-sec);
+      line-height: 1.65;
+    }
+
+    /* ── CATEGORIES ── */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .cat-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-md);
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .cat-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--sh-sm);
+      transform: translateY(-1px);
+    }
+    .cat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .cat-info { min-width: 0; }
+    .cat-name {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-pri);
+    }
+    .cat-count {
+      font-size: .68rem;
+      color: var(--text-ter);
+    }
+
+    /* ── MCP SECTION ── */
+    .mcp-section {
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-xl);
+      padding: 40px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .mcp-left { flex: 1; }
+    .mcp-right {
+      flex-shrink: 0;
+      width: 320px;
+    }
+    .mcp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--teal-lt);
+      border: 1px solid rgba(58,125,110,.2);
+      color: var(--teal);
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .mcp-left h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: var(--text-pri);
+      margin-bottom: 8px;
+    }
+    .mcp-left p {
+      font-size: .82rem;
+      color: var(--text-sec);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .code-block {
+      background: var(--text-pri);
+      border-radius: var(--r-md);
+      padding: 18px 20px;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: .72rem;
+      color: #c8c0b4;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .code-block .ck { color: #c07b4a; }
+    .code-block .cv { color: #7dba98; }
+    .code-block .cs { color: #e8c87a; }
+    .code-block .cc { color: #6a6560; }
+
+    /* ── MCP CONNECTOR HIGHLIGHT ── */
+    .connector-highlight {
+      background: linear-gradient(135deg, var(--cream-dark) 0%, var(--warm-white) 100%);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-xl);
+      padding: 40px;
+      text-align: center;
+    }
+    .connector-highlight h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: var(--text-pri);
+      margin-bottom: 8px;
+    }
+    .connector-highlight p {
+      font-size: .84rem;
+      color: var(--text-sec);
+      max-width: 520px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+    .connector-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .connector-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--warm-white);
+      border: 1px solid var(--border-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .connector-logo:hover {
+      border-color: var(--border);
+      box-shadow: var(--sh-sm);
+      transform: translateY(-2px);
+    }
+    .connector-logo img {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 56px 32px 72px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cta-section h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: 1.8rem;
+      color: var(--text-pri);
+      margin-bottom: 10px;
+    }
+    .cta-section p {
+      font-size: .86rem;
+      color: var(--text-sec);
+      margin-bottom: 24px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border-lt);
+      padding: 28px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left {
+      font-size: .74rem;
+      color: var(--text-ter);
+    }
+    .footer-left a {
+      color: var(--copper);
+      text-decoration: none;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-links a {
+      font-size: .74rem;
+      color: var(--text-ter);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--text-sec); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .stats-row { gap: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .how-strip { flex-direction: column; }
+      .how-step { border-right: none; border-bottom: 1px solid var(--border-lt); }
+      .how-step:last-child { border-bottom: none; }
+      .mcp-section { flex-direction: column; }
+      .mcp-right { width: 100%; }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="nav-logo">
+        <svg viewBox="0 0 16 16" fill="none">
+          <path d="M8 1.5L13 4.5V11.5L8 14.5L3 11.5V4.5L8 1.5Z" stroke="#f9f7f4" stroke-width="1.2"/>
+          <circle cx="8" cy="8" r="2" fill="#f9f7f4"/>
+        </svg>
+      </div>
+      <span class="nav-brand-text">Skill<em>Galaxy</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Browse Skills</a>
+      <a href="guide.html" class="nav-link">Guide</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      <a href="index.html" class="nav-cta">Open App →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">✦ Free &amp; Open Source</div>
+  <h1>The Claude Skills Marketplace</h1>
+  <p class="hero-sub">Download expert <code>.md</code> skill files for Claude Projects. Upload once — Claude applies it automatically in every conversation. No repeated instructions. Just results.</p>
+
+  <div class="hero-actions">
+    <a href="index.html" class="btn-primary">Browse 10,293+ Skills →</a>
+    <a href="guide.html" class="btn-secondary">📖 How It Works</a>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">10,293</div><div class="stat-label">Skills</div></div>
+    <div class="stat"><div class="stat-num">16</div><div class="stat-label">Domains</div></div>
+    <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+    <div class="stat"><div class="stat-num">105</div><div class="stat-label">MCP Connectors</div></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="sec-header">
+    <div class="sec-eyebrow">Getting Started</div>
+    <div class="sec-title">Four steps to a smarter Claude</div>
+  </div>
+  <div class="how-strip">
+    <div class="how-step"><div class="how-num">1</div><div class="how-text"><strong>Browse &amp; Download</strong>Find a skill · click Download .md</div></div>
+    <div class="how-step"><div class="how-num">2</div><div class="how-text"><strong>Add to Claude Project</strong>Project → Instructions → paste file</div></div>
+    <div class="how-step"><div class="how-num">3</div><div class="how-text"><strong>Claude Learns It</strong>Applies the skill in every conversation</div></div>
+    <div class="how-step"><div class="how-num">4</div><div class="how-text"><strong>Share Yours</strong>Sign in → Submit → Live in 24hrs</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="sec-header">
+    <div class="sec-eyebrow">Why SkillGalaxy</div>
+    <div class="sec-title">Everything you need to supercharge Claude</div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Expertise</h3>
+      <p>Drop a skill file into your Claude Project and it instantly becomes an expert — no prompt engineering required.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Curated Bundles</h3>
+      <p>Download complementary skill sets as a single bundle. One zip file with a master activator that routes Claude automatically.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <h3>MCP Server</h3>
+      <p>Connect Claude Desktop directly to SkillGalaxy's catalog via the Model Context Protocol for real-time skill access.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>Community-Driven</h3>
+      <p>Submit your own skills, rate and review others, and help build the largest open skill marketplace for AI assistants.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✨</div>
+      <h3>AI Suggest</h3>
+      <p>Describe your task in natural language and SkillGalaxy recommends the best combination of skills to get it done.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>GitHub Scanner</h3>
+      <p>Paste your GitHub profile and automatically discover which skills match your repos, languages, and workflow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section>
+  <div class="sec-header">
+    <div class="sec-eyebrow">Browse by Domain</div>
+    <div class="sec-title">16 categories, thousands of skills</div>
+    <p class="sec-desc">From machine learning to creative writing, quantum computing to blockchain — every domain covered.</p>
+  </div>
+  <div class="cat-grid">
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#e67e22"></span><div class="cat-info"><div class="cat-name">AI &amp; ML</div><div class="cat-count">3,200+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#3498db"></span><div class="cat-info"><div class="cat-name">Development</div><div class="cat-count">1,800+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#2ecc71"></span><div class="cat-info"><div class="cat-name">Data Science</div><div class="cat-count">1,500+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#e74c3c"></span><div class="cat-info"><div class="cat-name">Security</div><div class="cat-count">800+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#9b59b6"></span><div class="cat-info"><div class="cat-name">Cloud</div><div class="cat-count">650+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#1abc9c"></span><div class="cat-info"><div class="cat-name">Bio &amp; Health</div><div class="cat-count">500+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#f39c12"></span><div class="cat-info"><div class="cat-name">Business</div><div class="cat-count">450+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#e91e63"></span><div class="cat-info"><div class="cat-name">Creative</div><div class="cat-count">400+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#00bcd4"></span><div class="cat-info"><div class="cat-name">Quantum</div><div class="cat-count">300+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#795548"></span><div class="cat-info"><div class="cat-name">Robotics</div><div class="cat-count">250+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#607d8b"></span><div class="cat-info"><div class="cat-name">Spatial</div><div class="cat-count">200+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#ff5722"></span><div class="cat-info"><div class="cat-name">Blockchain</div><div class="cat-count">180+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#4caf50"></span><div class="cat-info"><div class="cat-name">Climate</div><div class="cat-count">150+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#ff9800"></span><div class="cat-info"><div class="cat-name">Education</div><div class="cat-count">130+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#8bc34a"></span><div class="cat-info"><div class="cat-name">Writing</div><div class="cat-count">120+ skills</div></div></a>
+    <a href="index.html" class="cat-card"><span class="cat-dot" style="background:#673ab7"></span><div class="cat-info"><div class="cat-name">Product</div><div class="cat-count">100+ skills</div></div></a>
+  </div>
+</section>
+
+<!-- MCP CONNECTOR SKILLS -->
+<section>
+  <div class="connector-highlight">
+    <div class="mcp-badge">🔌 New — 105 MCP Connectors</div>
+    <h2>Claude Connector Skills for 105 Apps</h2>
+    <p>Apps that lacked native Claude or MCP integration — now fully covered with ready-to-use MCP server blueprints, API patterns, and integration guides.</p>
+    <div class="connector-logos">
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/discord/5865F2" alt="Discord"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/gitlab/FC6D26" alt="GitLab"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/grafana/F46800" alt="Grafana"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/shopify/7AB55C" alt="Shopify"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/blender/E87D0D" alt="Blender"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/jenkins/D24939" alt="Jenkins"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/postman/FF6C37" alt="Postman"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/sentry/362D59" alt="Sentry"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/telegram/26A5E4" alt="Telegram"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/zendesk/03363D" alt="Zendesk"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/jupyter/F37626" alt="Jupyter"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/drupal/0678BE" alt="Drupal"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/nextcloud/0082C9" alt="Nextcloud"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/metabase/509EE3" alt="Metabase"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/ansible/EE0000" alt="Ansible"></div>
+      <div class="connector-logo"><img src="https://cdn.simpleicons.org/prometheus/E6522C" alt="Prometheus"></div>
+    </div>
+    <a href="mcp-connector-visual-final.html" class="btn-secondary">View All 105 Connectors →</a>
+  </div>
+</section>
+
+<!-- MCP SERVER -->
+<section>
+  <div class="mcp-section">
+    <div class="mcp-left">
+      <div class="mcp-badge">✦ Model Context Protocol</div>
+      <h2>Connect Claude Desktop Directly</h2>
+      <p>Install the SkillGalaxy MCP server and let Claude Desktop search, browse, and download skills without leaving the conversation. Real-time access to the full catalog.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="mcp-server.html" class="btn-primary">Setup Guide →</a>
+        <a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener" class="btn-secondary">⭐ Star on GitHub</a>
+      </div>
+    </div>
+    <div class="mcp-right">
+      <div class="code-block">
+<pre><span class="cc">// claude_desktop_config.json</span>
+{
+  <span class="ck">"mcpServers"</span>: {
+    <span class="ck">"skillgalaxy"</span>: {
+      <span class="ck">"command"</span>: <span class="cs">"node"</span>,
+      <span class="ck">"args"</span>: [<span class="cs">"path/to/mcp-server/index.js"</span>],
+      <span class="ck">"env"</span>: {
+        <span class="ck">"SUPABASE_URL"</span>: <span class="cv">"your-url"</span>,
+        <span class="ck">"SUPABASE_KEY"</span>: <span class="cv">"your-key"</span>
+      }
+    }
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Ready to supercharge Claude?</h2>
+  <p>Join the community. Browse skills. Submit your own. It's free — always.</p>
+  <div style="display:flex;gap:10px;justify-content:center">
+    <a href="index.html" class="btn-primary">Open SkillGalaxy →</a>
+    <a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener" class="btn-secondary">⭐ Star on GitHub</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">SkillGalaxy — by <a href="https://timps-website.vercel.app/" target="_blank" rel="noopener">TIMPS</a></div>
+    <div class="footer-links">
+      <a href="index.html">Browse Skills</a>
+      <a href="guide.html">Guide</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

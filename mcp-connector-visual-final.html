@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillGalaxy — 105 MCP Connector Skills</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0e4d0;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .canvas {
+    position: relative;
+    width: 1080px;
+    height: 1080px;
+    background: #f0e4d0;
+    overflow: hidden;
+  }
+
+  .s {
+    position: absolute;
+    border: 2.5px solid #1a1a2e;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    z-index: 5;
+    box-shadow: 3px 3px 0px #1a1a2e;
+    cursor: default;
+    white-space: nowrap;
+    animation: bob var(--d,5s) ease-in-out infinite var(--dl,0s);
+  }
+  .s:hover { transform: scale(1.12); z-index: 25; box-shadow: 4px 4px 0 #1a1a2e, 0 0 20px rgba(90,189,189,0.25); }
+  .s img { width: 20px; height: 20px; flex-shrink: 0; }
+  .s.lg { padding: 9px 16px; font-size: 14px; font-weight: 800; border-width: 3px; box-shadow: 4px 4px 0 #1a1a2e; }
+  .s.lg img { width: 24px; height: 24px; }
+  .s.sm { padding: 5px 9px; font-size: 11px; }
+  .s.sm img { width: 16px; height: 16px; }
+  .s.xs { padding: 4px 8px; font-size: 10px; border-width: 2px; box-shadow: 2px 2px 0 #1a1a2e; }
+  .s.xs img { width: 14px; height: 14px; }
+
+  .c1 { background: #3a9e9e; color: #f0e4d0; }
+  .c2 { background: #5cbdbd; color: #1a1a2e; }
+  .c3 { background: #f2c12e; color: #1a1a2e; }
+  .c4 { background: #d94f30; color: #f0e4d0; }
+  .c5 { background: #1a1a2e; color: #f0e4d0; }
+  .c6 { background: #2d6a8a; color: #f0e4d0; }
+  .c7 { background: #f0e4d0; color: #1a1a2e; border-color: #999; }
+  .c8 { background: #5bc0de; color: #1a1a2e; }
+
+  @keyframes bob {
+    0%,100% { margin-top: 0; }
+    50% { margin-top: var(--b,-6px); }
+  }
+
+  .sp { position: absolute; z-index: 3; pointer-events: none; }
+
+  .title-block {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    text-align: center;
+    pointer-events: none;
+  }
+  .title-block .inner {
+    background: rgba(240,228,208,0.92);
+    backdrop-filter: blur(8px);
+    border: 3px solid #1a1a2e;
+    border-radius: 16px;
+    padding: 32px 48px;
+    box-shadow: 6px 6px 0 #1a1a2e;
+  }
+  .title-block h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 42px;
+    color: #1a1a2e;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 #d94f30;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .title-block p { font-size: 13px; color: #5a4a3a; font-weight: 600; margin-bottom: 12px; }
+  .title-block .tags { display: flex; gap: 8px; justify-content: center; }
+  .title-block .t { padding: 4px 14px; border-radius: 4px; font-size: 11px; font-weight: 800; }
+  .title-block .t.a { background: #d94f30; color: #f0e4d0; }
+  .title-block .t.b { background: #3a9e9e; color: #f0e4d0; }
+  .title-block .t.c { background: #1a1a2e; color: #f0e4d0; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+<!-- ═══ All 105 apps distributed across the full canvas ═══ -->
+
+<!-- ROW 1 (top edge) -->
+<div class="s c1" style="left:15px;top:12px;--d:5.5s;--b:-7px;"><img src="https://cdn.simpleicons.org/neovim/f0e4d0">Neovim</div>
+<div class="s c4" style="left:140px;top:18px;--d:6.2s;--dl:.3s;--b:-9px;"><img src="https://cdn.simpleicons.org/jenkins/f0e4d0">Jenkins</div>
+<div class="s c5 xs" style="left:270px;top:10px;--d:7s;--dl:.6s;--b:-5px;"><img src="https://cdn.simpleicons.org/phpmyadmin/5cbdbd">phpMyAdmin</div>
+<div class="s c2 xs" style="left:395px;top:15px;--d:5.8s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/taiga/1a1a2e">Taiga</div>
+<div class="s c3" style="left:500px;top:10px;--d:6.5s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/airbnb/1a1a2e">Airbnb</div>
+<div class="s c8 xs" style="left:625px;top:18px;--d:5.4s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/quickbooks/1a1a2e">QuickBooks</div>
+<div class="s c1 xs" style="left:760px;top:12px;--d:6.8s;--dl:.2s;--b:-5px;"><img src="https://cdn.simpleicons.org/xero/f0e4d0">Xero</div>
+<div class="s c5 xs" style="left:862px;top:16px;--d:7.3s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/nagios/5cbdbd">Nagios</div>
+<div class="s c2 xs" style="left:968px;top:10px;--d:5.9s;--dl:.8s;--b:-6px;"><img src="https://cdn.simpleicons.org/gnome/1a1a2e">GNOME</div>
+
+<!-- ROW 2 -->
+<div class="s c3 lg" style="left:30px;top:65px;--d:6.1s;--dl:.3s;--b:-9px;"><img src="https://cdn.simpleicons.org/blender/1a1a2e">Blender</div>
+<div class="s c5" style="left:195px;top:70px;--d:5.6s;--dl:.6s;--b:-7px;"><img src="https://cdn.simpleicons.org/dbeaver/5cbdbd">DBeaver</div>
+<div class="s c4 xs" style="left:330px;top:62px;--d:7.4s;--dl:.9s;--b:-10px;"><img src="https://cdn.simpleicons.org/rundeck/f0e4d0">Rundeck</div>
+<div class="s c1 lg" style="left:460px;top:58px;--d:5.3s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/discord/f0e4d0">Discord</div>
+<div class="s c6" style="left:640px;top:68px;--d:6.7s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/discourse/f0e4d0">Discourse</div>
+<div class="s c2 lg" style="left:790px;top:60px;--d:5.8s;--dl:.8s;--b:-9px;"><img src="https://cdn.simpleicons.org/grafana/1a1a2e">Grafana</div>
+<div class="s c5 xs" style="left:960px;top:65px;--d:7.1s;--dl:.1s;--b:-5px;"><img src="https://cdn.simpleicons.org/gnucash/5cbdbd">GnuCash</div>
+
+<!-- ROW 3 -->
+<div class="s c6" style="left:10px;top:130px;--d:6.4s;--dl:.4s;--b:-8px;"><img src="https://cdn.simpleicons.org/eclipseide/f0e4d0">Eclipse</div>
+<div class="s c2" style="left:155px;top:125px;--d:5.5s;--dl:.7s;--b:-6px;"><img src="https://cdn.simpleicons.org/drupal/1a1a2e">Drupal</div>
+<div class="s c8" style="left:305px;top:132px;--d:7.2s;--dl:.2s;--b:-10px;"><img src="https://cdn.simpleicons.org/strapi/1a1a2e">Strapi</div>
+<div class="s c5" style="left:445px;top:125px;--d:5.9s;--dl:.5s;--b:-7px;"><img src="https://cdn.simpleicons.org/postgresql/5cbdbd">pgAdmin</div>
+<div class="s c1" style="left:585px;top:130px;--d:6.6s;--dl:.8s;--b:-9px;"><img src="https://cdn.simpleicons.org/mongodb/f0e4d0">Compass</div>
+<div class="s c4 lg" style="left:740px;top:122px;--d:5.4s;--dl:.1s;--b:-5px;"><img src="https://cdn.simpleicons.org/gitlab/f0e4d0">GitLab</div>
+<div class="s c6" style="left:910px;top:128px;--d:7.5s;--dl:.4s;--b:-8px;"><img src="https://cdn.simpleicons.org/substack/f0e4d0">Substack</div>
+
+<!-- ROW 4 -->
+<div class="s c5" style="left:22px;top:195px;--d:6.3s;--dl:.6s;--b:-7px;"><img src="https://cdn.simpleicons.org/telegram/5cbdbd">Telegram</div>
+<div class="s c2" style="left:178px;top:190px;--d:5.7s;--dl:.9s;--b:-10px;"><img src="https://cdn.simpleicons.org/intellijidea/1a1a2e">IntelliJ</div>
+<div class="s c1 sm" style="left:350px;top:198px;--d:7s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/mediawiki/f0e4d0">MediaWiki</div>
+<div class="s c3 lg" style="left:510px;top:188px;--d:5.3s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/shopify/1a1a2e">Shopify</div>
+<div class="s c5" style="left:695px;top:195px;--d:6.9s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/joomla/5cbdbd">Joomla</div>
+<div class="s c2 sm" style="left:840px;top:192px;--d:5.6s;--dl:.1s;--b:-9px;"><img src="https://cdn.simpleicons.org/pocketbase/1a1a2e">PocketBase</div>
+<div class="s c8" style="left:970px;top:198px;--d:7.4s;--dl:.4s;--b:-7px;"><img src="https://cdn.simpleicons.org/medium/1a1a2e">Medium</div>
+
+<!-- ROW 5 -->
+<div class="s c2" style="left:10px;top:260px;--d:5.9s;--dl:.7s;--b:-8px;"><img src="https://cdn.simpleicons.org/mattermost/1a1a2e">Mattermost</div>
+<div class="s c7 sm" style="left:185px;top:265px;--d:6.5s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/kde/1a1a2e">Kate</div>
+<div class="s c1" style="left:310px;top:258px;--d:7.3s;--dl:.5s;--b:-10px;"><img src="https://cdn.simpleicons.org/sentry/f0e4d0">Sentry</div>
+<div class="s c4" style="left:790px;top:260px;--d:6.2s;--dl:.3s;--b:-7px;"><img src="https://cdn.simpleicons.org/postman/f0e4d0">Postman</div>
+<div class="s c5 sm" style="left:940px;top:265px;--d:5.4s;--dl:.6s;--b:-9px;"><img src="https://cdn.simpleicons.org/bookstack/5cbdbd">BookStack</div>
+
+<!-- ROW 6 -->
+<div class="s c8 sm" style="left:18px;top:328px;--d:7.1s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/rocketdotchat/1a1a2e">Rocket.Chat</div>
+<div class="s c1 sm" style="left:185px;top:330px;--d:5.5s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/element/f0e4d0">Element</div>
+<div class="s c8" style="left:785px;top:325px;--d:6.8s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/zendesk/1a1a2e">Zendesk</div>
+<div class="s c4 sm" style="left:935px;top:330px;--d:7.5s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/vercel/f0e4d0">Vercel</div>
+
+<!-- ROW 7 -->
+<div class="s c5 sm" style="left:12px;top:395px;--d:6.4s;--dl:.2s;--b:-7px;"><img src="https://cdn.simpleicons.org/zulip/5cbdbd">Zulip</div>
+<div class="s c2 sm" style="left:148px;top:398px;--d:5.8s;--dl:.5s;--b:-9px;"><img src="https://cdn.simpleicons.org/directus/1a1a2e">Directus</div>
+<div class="s c2 sm" style="left:830px;top:395px;--d:7.2s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/supabase/1a1a2e">Supabase</div>
+<div class="s c5 sm" style="left:968px;top:398px;--d:5.3s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/outline/5cbdbd">Outline</div>
+
+<!-- ROW 8 -->
+<div class="s c1 sm" style="left:8px;top:460px;--d:6.7s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/jitsi/f0e4d0">Jitsi</div>
+<div class="s c8 sm" style="left:128px;top:462px;--d:5.6s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/nextcloud/1a1a2e">Nextcloud</div>
+<div class="s c6 sm" style="left:820px;top:460px;--d:7.4s;--dl:.2s;--b:-7px;"><img src="https://cdn.simpleicons.org/jellyfin/f0e4d0">Jellyfin</div>
+<div class="s c1 sm" style="left:960px;top:462px;--d:5.9s;--dl:.5s;--b:-9px;"><img src="https://cdn.simpleicons.org/kodi/f0e4d0">Kodi</div>
+
+<!-- ROW 9 -->
+<div class="s c5 sm" style="left:20px;top:528px;--d:6.1s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/immich/5cbdbd">Immich</div>
+<div class="s c2 sm" style="left:155px;top:530px;--d:7.3s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/navidrome/1a1a2e">Navidrome</div>
+<div class="s c1 sm" style="left:840px;top:528px;--d:5.4s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/portainer/f0e4d0">Portainer</div>
+<div class="s c5 sm" style="left:972px;top:530px;--d:6.8s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/pulumi/a78bfa">Pulumi</div>
+
+<!-- ROW 10 -->
+<div class="s c1 sm" style="left:15px;top:595px;--d:7s;--dl:.2s;--b:-7px;"><img src="https://cdn.simpleicons.org/ansible/f0e4d0">Ansible</div>
+<div class="s c2 sm" style="left:155px;top:598px;--d:5.7s;--dl:.5s;--b:-9px;"><img src="https://cdn.simpleicons.org/prometheus/1a1a2e">Prometheus</div>
+<div class="s c3 sm" style="left:325px;top:592px;--d:6.6s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/jupyter/1a1a2e">Jupyter</div>
+<div class="s c5 sm" style="left:660px;top:595px;--d:7.4s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/woocommerce/5cbdbd">WooCommerce</div>
+<div class="s c8 sm" style="left:830px;top:598px;--d:5.3s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/rancher/1a1a2e">Rancher</div>
+<div class="s c6 sm" style="left:968px;top:592px;--d:6.9s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/zabbix/f0e4d0">Zabbix</div>
+
+<!-- ROW 11 -->
+<div class="s c4 sm" style="left:10px;top:662px;--d:5.5s;--dl:.2s;--b:-7px;"><img src="https://cdn.simpleicons.org/proxmox/f0e4d0">Proxmox</div>
+<div class="s c5 sm" style="left:148px;top:665px;--d:6.4s;--dl:.5s;--b:-9px;"><img src="https://cdn.simpleicons.org/wazuh/5cbdbd">Wazuh</div>
+<div class="s c1 sm" style="left:278px;top:660px;--d:7.2s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/metabase/f0e4d0">Metabase</div>
+<div class="s c8 sm" style="left:670px;top:662px;--d:5.8s;--dl:.1s;--b:-8px;"><img src="https://cdn.simpleicons.org/mixpanel/1a1a2e">Mixpanel</div>
+<div class="s c2 sm" style="left:815px;top:665px;--d:7.5s;--dl:.4s;--b:-6px;"><img src="https://cdn.simpleicons.org/rstudio/1a1a2e">RStudio</div>
+<div class="s c4 sm" style="left:952px;top:660px;--d:5.4s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/openvas/f0e4d0">OpenVAS</div>
+
+<!-- ROW 12 -->
+<div class="s c5 xs" style="left:22px;top:730px;--d:6.3s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/gimp/5cbdbd">GIMP</div>
+<div class="s c2 xs" style="left:120px;top:728px;--d:7.1s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/inkscape/1a1a2e">Inkscape</div>
+<div class="s c8 xs" style="left:232px;top:732px;--d:5.6s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/krita/1a1a2e">Krita</div>
+<div class="s c1 xs" style="left:335px;top:728px;--d:6.8s;--dl:.1s;--b:-9px;"><img src="https://cdn.simpleicons.org/excalidraw/f0e4d0">Excalidraw</div>
+<div class="s c5 xs" style="left:465px;top:732px;--d:7.4s;--dl:.4s;--b:-7px;"><img src="https://cdn.simpleicons.org/penpot/5cbdbd">Penpot</div>
+<div class="s c3 xs" style="left:575px;top:728px;--d:5.3s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/openproject/1a1a2e">OpenProject</div>
+<div class="s c1 xs" style="left:710px;top:732px;--d:6.5s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/greenhouse/f0e4d0">Greenhouse</div>
+<div class="s c6 xs" style="left:835px;top:728px;--d:7.3s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/suricata/f0e4d0">Suricata</div>
+<div class="s c4 xs" style="left:958px;top:732px;--d:5.7s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/snort/f0e4d0">Snort</div>
+
+<!-- ROW 13 -->
+<div class="s c2 xs" style="left:15px;top:795px;--d:6.9s;--dl:.1s;--b:-9px;"><img src="https://cdn.simpleicons.org/buffer/1a1a2e">Buffer</div>
+<div class="s c1 xs" style="left:118px;top:798px;--d:5.4s;--dl:.4s;--b:-7px;"><img src="https://cdn.simpleicons.org/microsoftteams/f0e4d0">Teams</div>
+<div class="s c4 xs" style="left:220px;top:792px;--d:7.5s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/reddit/f0e4d0">Reddit</div>
+<div class="s c5 xs" style="left:318px;top:798px;--d:5.8s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/uptimekuma/5cbdbd">Uptime Kuma</div>
+<div class="s c2 xs" style="left:460px;top:792px;--d:6.6s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/pipedrive/1a1a2e">Pipedrive</div>
+<div class="s c6 xs" style="left:580px;top:798px;--d:7.2s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/freshdesk/f0e4d0">Freshdesk</div>
+<div class="s c1 xs" style="left:705px;top:792px;--d:5.5s;--dl:.1s;--b:-9px;"><img src="https://cdn.simpleicons.org/edx/f0e4d0">Open edX</div>
+<div class="s c3 xs" style="left:820px;top:798px;--d:6.4s;--dl:.4s;--b:-7px;"><img src="https://cdn.simpleicons.org/moodle/1a1a2e">Moodle</div>
+<div class="s c5 xs" style="left:930px;top:792px;--d:7.1s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/spyder/d94f30">Spyder</div>
+
+<!-- ROW 14 -->
+<div class="s c1 xs" style="left:25px;top:858px;--d:5.6s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/odoo/f0e4d0">Odoo</div>
+<div class="s c5 xs" style="left:120px;top:862px;--d:6.8s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/redis/d94f30">Redis</div>
+<div class="s c8 xs" style="left:212px;top:855px;--d:7.4s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/grav/1a1a2e">Grav</div>
+<div class="s c2 xs" style="left:305px;top:860px;--d:5.3s;--dl:.1s;--b:-9px;"><img src="https://cdn.simpleicons.org/ghost/1a1a2e">Ghost</div>
+<div class="s c7 xs" style="left:405px;top:858px;--d:6.5s;--dl:.4s;--b:-7px;"><img src="https://cdn.simpleicons.org/geany/1a1a2e">Geany</div>
+<div class="s c4 xs" style="left:510px;top:862px;--d:7.3s;--dl:.7s;--b:-10px;"><img src="https://cdn.simpleicons.org/bluefish/f0e4d0">Bluefish</div>
+<div class="s c5 xs" style="left:625px;top:855px;--d:5.9s;--dl:.2s;--b:-6px;"><img src="https://cdn.simpleicons.org/tiddlywiki/5cbdbd">TiddlyWiki</div>
+<div class="s c1 xs" style="left:750px;top:860px;--d:6.7s;--dl:.5s;--b:-8px;"><img src="https://cdn.simpleicons.org/kanboard/f0e4d0">Kanboard</div>
+<div class="s c8 xs" style="left:870px;top:858px;--d:7.5s;--dl:.8s;--b:-5px;"><img src="https://cdn.simpleicons.org/codeblocks/1a1a2e">Code::Blocks</div>
+
+<!-- SPARKLES -->
+<svg class="sp" style="left:475px;top:50px;width:14px;height:14px"><line x1="7" y1="1" x2="7" y2="13" stroke="#5cbdbd" stroke-width="2"/><line x1="1" y1="7" x2="13" y2="7" stroke="#5cbdbd" stroke-width="2"/></svg>
+<svg class="sp" style="left:890px;top:85px;width:12px;height:12px"><line x1="6" y1="1" x2="6" y2="11" stroke="#d94f30" stroke-width="1.5"/><line x1="1" y1="6" x2="11" y2="6" stroke="#d94f30" stroke-width="1.5"/></svg>
+<svg class="sp" style="left:420px;top:255px;width:10px;height:10px"><line x1="5" y1="1" x2="5" y2="9" stroke="#5cbdbd" stroke-width="1.5"/><line x1="1" y1="5" x2="9" y2="5" stroke="#5cbdbd" stroke-width="1.5"/></svg>
+<svg class="sp" style="left:710px;top:390px;width:14px;height:14px"><line x1="7" y1="1" x2="7" y2="13" stroke="#d94f30" stroke-width="2"/><line x1="1" y1="7" x2="13" y2="7" stroke="#d94f30" stroke-width="2"/></svg>
+<svg class="sp" style="left:300px;top:525px;width:12px;height:12px"><line x1="6" y1="1" x2="6" y2="11" stroke="#5cbdbd" stroke-width="1.5"/><line x1="1" y1="6" x2="11" y2="6" stroke="#5cbdbd" stroke-width="1.5"/></svg>
+<svg class="sp" style="left:600px;top:660px;width:16px;height:16px"><line x1="8" y1="1" x2="8" y2="15" stroke="#5cbdbd" stroke-width="2"/><line x1="1" y1="8" x2="15" y2="8" stroke="#5cbdbd" stroke-width="2"/></svg>
+<svg class="sp" style="left:500px;top:790px;width:10px;height:10px"><line x1="5" y1="1" x2="5" y2="9" stroke="#d94f30" stroke-width="1.5"/><line x1="1" y1="5" x2="9" y2="5" stroke="#d94f30" stroke-width="1.5"/></svg>
+
+<!-- CENTER TITLE -->
+<div class="title-block">
+  <div class="inner">
+    <h1>105 MCP CONNECTOR<br>SKILLS FOR CLAUDE</h1>
+    <p>Apps that lacked AI integration — now fully covered with MCP server blueprints</p>
+    <div class="tags">
+      <span class="t a">105 APPS</span>
+      <span class="t b">9 DOMAINS</span>
+      <span class="t c">10,276 TOTAL</span>
+      <span class="t a">MCP v2.0</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

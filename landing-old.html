@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillGalaxy — 10,276 Skills for Claude AI</title>
+<meta name="description" content="10,276+ free skill files for Claude. The world's largest skill marketplace — download expert .md skills for AI, coding, security, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f0e4d0;
+    --teal: #3a9e9e;
+    --teal-lt: #5cbdbd;
+    --red: #d94f30;
+    --dark: #1a1a2e;
+    --yellow: #f2c12e;
+    --blue: #2d6a8a;
+    --cyan: #5bc0de;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  /* ════════ NAV ════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(240,228,208,0.92); backdrop-filter: blur(12px);
+    border-bottom: 3px solid var(--dark);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 28px; color: var(--dark);
+    text-decoration: none;
+    text-shadow: 2px 2px 0 var(--red);
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 14px; font-weight: 600; color: var(--dark);
+    text-decoration: none; padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color .2s;
+  }
+  .nav-links a:hover { border-bottom-color: var(--red); }
+  .nav-cta {
+    background: var(--dark) !important; color: var(--cream) !important;
+    padding: 8px 20px !important; border-radius: 6px !important;
+    border: none !important; box-shadow: 3px 3px 0 var(--teal);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 4px 5px 0 var(--teal); }
+
+  /* ════════ HERO ════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 100px 40px 60px;
+  }
+  .hero-inner {
+    max-width: 1200px; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .hero-text h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 72px; line-height: 0.95;
+    color: var(--dark);
+    text-shadow: 3px 3px 0 var(--red);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  .hero-text h1 em {
+    font-style: normal;
+    color: var(--red);
+    text-shadow: 3px 3px 0 var(--dark);
+  }
+  .hero-text p {
+    font-size: 18px; line-height: 1.7;
+    color: #4a3f35; max-width: 460px;
+    margin-bottom: 32px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 6px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    border: 3px solid var(--dark);
+    box-shadow: 4px 4px 0 var(--dark);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--dark); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--dark); }
+  .btn-primary { background: var(--red); color: var(--cream); }
+  .btn-secondary { background: var(--teal); color: var(--cream); }
+  .btn-outline { background: var(--cream); color: var(--dark); }
+
+  .hero-visual {
+    position: relative;
+    width: 100%; height: 500px;
+  }
+
+  /* Comic person SVG in hero */
+  .hero-person {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -48%);
+    width: 280px; height: 400px;
+    z-index: 5;
+  }
+
+  /* Floating tags around person */
+  .ftag {
+    position: absolute;
+    padding: 6px 14px; border-radius: 5px;
+    font-size: 12px; font-weight: 700;
+    border: 2.5px solid var(--dark);
+    box-shadow: 3px 3px 0 var(--dark);
+    white-space: nowrap; z-index: 4;
+    animation: bob var(--d, 5s) ease-in-out infinite var(--dl, 0s);
+  }
+  @keyframes bob {
+    0%,100% { margin-top: 0; }
+    50% { margin-top: var(--b, -6px); }
+  }
+  .ftag.c1 { background: var(--teal); color: var(--cream); }
+  .ftag.c2 { background: var(--teal-lt); color: var(--dark); }
+  .ftag.c3 { background: var(--yellow); color: var(--dark); }
+  .ftag.c4 { background: var(--red); color: var(--cream); }
+  .ftag.c5 { background: var(--dark); color: var(--cream); }
+  .ftag.c6 { background: var(--blue); color: var(--cream); }
+  .ftag.c8 { background: var(--cyan); color: var(--dark); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 40px;
+  }
+  .hero-stat { text-align: left; }
+  .hero-stat-num {
+    font-family: 'Bangers', cursive;
+    font-size: 42px; color: var(--dark);
+    text-shadow: 2px 2px 0 var(--teal);
+  }
+  .hero-stat-label { font-size: 12px; font-weight: 600; color: #7a6a5a; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Sparkle crosses */
+  .sp {
+    position: absolute; z-index: 3; pointer-events: none;
+  }
+
+  /* ════════ FEATURES ════════ */
+  .section {
+    padding: 80px 40px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section-header {
+    text-align: center; margin-bottom: 50px;
+  }
+  .section-header h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 48px; color: var(--dark);
+    text-shadow: 2px 2px 0 var(--red);
+    margin-bottom: 8px;
+  }
+  .section-header p {
+    font-size: 16px; color: #5a4a3a;
+    max-width: 560px; margin: 0 auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--cream);
+    border: 3px solid var(--dark);
+    border-radius: 12px;
+    padding: 32px 24px;
+    box-shadow: 5px 5px 0 var(--dark);
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--dark);
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  }
+  .feature-card:nth-child(1)::before { background: var(--teal); }
+  .feature-card:nth-child(2)::before { background: var(--red); }
+  .feature-card:nth-child(3)::before { background: var(--yellow); }
+  .feature-card:nth-child(4)::before { background: var(--blue); }
+  .feature-card:nth-child(5)::before { background: var(--teal-lt); }
+  .feature-card:nth-child(6)::before { background: var(--red); }
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+    border: 2px solid var(--dark);
+    box-shadow: 2px 2px 0 var(--dark);
+  }
+  .feature-card:nth-child(1) .feature-icon { background: var(--teal); }
+  .feature-card:nth-child(2) .feature-icon { background: var(--red); }
+  .feature-card:nth-child(3) .feature-icon { background: var(--yellow); }
+  .feature-card:nth-child(4) .feature-icon { background: var(--blue); }
+  .feature-card:nth-child(5) .feature-icon { background: var(--teal-lt); }
+  .feature-card:nth-child(6) .feature-icon { background: var(--red); }
+  .feature-card h3 {
+    font-size: 18px; font-weight: 800; margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 14px; color: #5a4a3a; line-height: 1.6;
+  }
+
+  /* ════════ CATEGORIES ════════ */
+  .cat-stripe {
+    background: var(--dark); color: var(--cream);
+    padding: 80px 40px;
+  }
+  .cat-stripe .section-header h2 { color: var(--cream); text-shadow: 2px 2px 0 var(--red); }
+  .cat-stripe .section-header p { color: #a8998a; }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .cat-card {
+    border: 2px solid rgba(240,228,208,0.15);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform .2s, border-color .2s, background .2s;
+    cursor: pointer;
+  }
+  .cat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--teal);
+    background: rgba(58,158,158,0.08);
+  }
+  .cat-emoji { font-size: 28px; margin-bottom: 8px; }
+  .cat-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .cat-count { font-size: 12px; color: var(--teal-lt); font-weight: 600; }
+
+  /* ════════ HOW IT WORKS ════════ */
+  .steps-row {
+    display: flex; gap: 0; align-items: stretch;
+    border: 3px solid var(--dark);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 5px 5px 0 var(--dark);
+  }
+  .step {
+    flex: 1;
+    padding: 32px 24px;
+    text-align: center;
+    border-right: 3px solid var(--dark);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bangers', cursive;
+    font-size: 20px;
+    margin: 0 auto 14px;
+    box-shadow: 2px 2px 0 var(--dark);
+  }
+  .step:nth-child(1) .step-num { background: var(--teal); color: var(--cream); }
+  .step:nth-child(2) .step-num { background: var(--yellow); color: var(--dark); }
+  .step:nth-child(3) .step-num { background: var(--red); color: var(--cream); }
+  .step:nth-child(4) .step-num { background: var(--dark); color: var(--cream); }
+  .step h4 { font-size: 16px; margin-bottom: 6px; }
+  .step p { font-size: 13px; color: #5a4a3a; line-height: 1.5; }
+  .step-arrow {
+    position: absolute; right: -14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px; color: var(--dark); z-index: 2;
+    background: var(--cream); width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; border: 2px solid var(--dark);
+  }
+
+  /* ════════ MCP SECTION ════════ */
+  .mcp-section {
+    background: var(--teal);
+    color: var(--cream);
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mcp-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 30px,
+      rgba(26,26,46,0.04) 30px, rgba(26,26,46,0.04) 32px
+    );
+  }
+  .mcp-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .mcp-text h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 44px;
+    text-shadow: 2px 2px 0 var(--dark);
+    margin-bottom: 16px;
+  }
+  .mcp-text p { font-size: 16px; line-height: 1.7; opacity: 0.9; margin-bottom: 24px; }
+  .mcp-code {
+    background: var(--dark);
+    border: 3px solid rgba(240,228,208,0.3);
+    border-radius: 12px;
+    padding: 28px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--teal-lt);
+    box-shadow: 6px 6px 0 rgba(26,26,46,0.4);
+    overflow-x: auto;
+  }
+  .mcp-code .comment { color: #6b8a8a; }
+  .mcp-code .string { color: var(--yellow); }
+  .mcp-code .key { color: var(--cream); }
+
+  /* ════════ CTA ════════ */
+  .cta-section {
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+  }
+  .cta-section h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 56px;
+    text-shadow: 3px 3px 0 var(--red);
+    margin-bottom: 12px;
+  }
+  .cta-section p {
+    font-size: 18px; color: #5a4a3a;
+    max-width: 500px; margin: 0 auto 32px;
+  }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* ════════ FOOTER ════════ */
+  footer {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 40px;
+    text-align: center;
+    border-top: 5px solid var(--red);
+  }
+  footer .f-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 24px;
+    text-shadow: 2px 2px 0 var(--red);
+    margin-bottom: 8px;
+  }
+  footer p { font-size: 13px; opacity: 0.6; }
+  footer a { color: var(--teal-lt); text-decoration: none; }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; margin: 16px 0; }
+  footer .f-links a { font-size: 13px; font-weight: 600; }
+
+  /* ════════ RESPONSIVE ════════ */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-text p { margin: 0 auto 32px; }
+    .hero-btns { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { height: 350px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-row { flex-direction: column; }
+    .step { border-right: none; border-bottom: 3px solid var(--dark); }
+    .step:last-child { border-bottom: none; }
+    .step-arrow { display: none; }
+    .mcp-inner { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    .hero-text h1 { font-size: 48px; }
+  }
+  @media (max-width: 600px) {
+    .hero-text h1 { font-size: 38px; }
+    .cat-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; gap: 16px; align-items: center; }
+    .nav-links a:not(.nav-cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <a href="#" class="nav-logo">SKILLGALAXY</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#categories">Categories</a>
+    <a href="#mcp">MCP Server</a>
+    <a href="index.html" class="nav-cta">Browse Skills →</a>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+
+    <div class="hero-text">
+      <h1>MAKE CLAUDE<br>AN <em>EXPERT</em><br>AT ANYTHING</h1>
+      <p>10,276 free skill files across 16 domains. Download expert <code>.md</code> skills for AI, coding, security, design, business and more — or contribute your own.</p>
+      <div class="hero-btns">
+        <a href="index.html" class="btn btn-primary">Browse All Skills →</a>
+        <a href="https://github.com/Sandeeprdy1729/skill_galaxy" class="btn btn-outline" target="_blank">⭐ Star on GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">10,276</div>
+          <div class="hero-stat-label">Total Skills</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">16</div>
+          <div class="hero-stat-label">Domains</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">105</div>
+          <div class="hero-stat-label">MCP Connectors</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Comic person -->
+      <svg class="hero-person" viewBox="0 0 280 400" fill="none">
+        <ellipse cx="140" cy="370" rx="120" ry="42" fill="#d94f30" stroke="#1a1a2e" stroke-width="3"/>
+        <path d="M90 340 Q140 315 190 340" fill="none" stroke="#1a1a2e" stroke-width="2" opacity="0.3"/>
+        <rect x="118" y="278" width="44" height="55" rx="6" fill="#d94f30" stroke="#1a1a2e" stroke-width="2.5"/>
+        <ellipse cx="140" cy="195" rx="75" ry="95" fill="#d94f30" stroke="#1a1a2e" stroke-width="3"/>
+        <ellipse cx="67" cy="205" rx="12" ry="18" fill="#d94f30" stroke="#1a1a2e" stroke-width="2.5"/>
+        <ellipse cx="213" cy="205" rx="12" ry="18" fill="#d94f30" stroke="#1a1a2e" stroke-width="2.5"/>
+        <ellipse cx="115" cy="193" rx="12" ry="8" fill="#f0e4d0" stroke="#1a1a2e" stroke-width="2"/>
+        <ellipse cx="165" cy="193" rx="12" ry="8" fill="#f0e4d0" stroke="#1a1a2e" stroke-width="2"/>
+        <circle cx="118" cy="193" r="4" fill="#1a1a2e"/>
+        <circle cx="162" cy="193" r="4" fill="#1a1a2e"/>
+        <path d="M100 180 Q115 170 130 180" fill="none" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M150 180 Q165 170 180 180" fill="none" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M138 208 Q134 222 130 226 Q140 230 150 226 Q146 222 142 208" fill="none" stroke="#1a1a2e" stroke-width="1.5"/>
+        <path d="M118 248 Q140 260 162 248" fill="none" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round"/>
+        <g stroke="#1a1a2e" stroke-width="0.6" opacity="0.12">
+          <line x1="78" y1="190" x2="84" y2="206"/><line x1="76" y1="200" x2="82" y2="216"/>
+          <line x1="196" y1="190" x2="202" y2="206"/><line x1="198" y1="200" x2="204" y2="216"/>
+        </g>
+        <g fill="#1a1a2e" opacity="0.1">
+          <circle cx="124" cy="232" r="1.2"/><circle cx="132" cy="236" r="1"/>
+          <circle cx="150" cy="234" r="1.2"/><circle cx="158" cy="230" r="1"/>
+        </g>
+        <!-- Hand pointing up -->
+        <g transform="translate(22, 150)">
+          <rect x="0" y="38" width="34" height="34" rx="7" fill="#d94f30" stroke="#1a1a2e" stroke-width="2.5"/>
+          <rect x="10" y="-10" width="14" height="55" rx="7" fill="#d94f30" stroke="#1a1a2e" stroke-width="2.5"/>
+          <rect x="-2" y="34" width="12" height="26" rx="6" fill="#d94f30" stroke="#1a1a2e" stroke-width="2"/>
+          <rect x="26" y="34" width="12" height="26" rx="6" fill="#d94f30" stroke="#1a1a2e" stroke-width="2"/>
+        </g>
+        <path d="M35 230 Q50 295 85 315" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+        <path d="M55 230 Q62 295 85 315" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+      </svg>
+
+      <!-- Floating tags around person -->
+      <div class="ftag c1" style="left:0;top:30px;--d:5.5s;--b:-8px;">🤖 AI/ML</div>
+      <div class="ftag c3" style="left:10px;top:100px;--d:6.2s;--dl:.3s;--b:-10px;">🔒 Security</div>
+      <div class="ftag c4" style="left:5px;top:180px;--d:5.8s;--dl:.6s;--b:-7px;">☁️ Cloud</div>
+      <div class="ftag c5" style="left:0;top:260px;--d:6.5s;--dl:.1s;--b:-9px;">💻 Dev</div>
+      <div class="ftag c2" style="left:10px;top:340px;--d:7s;--dl:.4s;--b:-6px;">📊 Data</div>
+      <div class="ftag c6" style="right:0;top:20px;--d:6.3s;--dl:.5s;--b:-8px;">🎨 Creative</div>
+      <div class="ftag c8" style="right:5px;top:95px;--d:5.4s;--dl:.7s;--b:-11px;">📝 Writing</div>
+      <div class="ftag c1" style="right:0;top:175px;--d:7.2s;--dl:.2s;--b:-6px;">🧬 Bio</div>
+      <div class="ftag c4" style="right:10px;top:255px;--d:5.6s;--dl:.8s;--b:-10px;">🎓 Education</div>
+      <div class="ftag c5" style="right:0;top:335px;--d:6.8s;--dl:.3s;--b:-7px;">📦 Product</div>
+      <div class="ftag c3" style="left:35%;top:0;--d:5.9s;--dl:.9s;--b:-9px;">🔗 MCP</div>
+      <div class="ftag c6" style="right:30%;top:5px;--d:6.6s;--dl:.1s;--b:-5px;">⚡ 105 NEW</div>
+
+      <!-- Sparkles -->
+      <svg class="sp" style="left:60px;top:65px;width:14px;height:14px"><line x1="7" y1="1" x2="7" y2="13" stroke="#5cbdbd" stroke-width="2"/><line x1="1" y1="7" x2="13" y2="7" stroke="#5cbdbd" stroke-width="2"/></svg>
+      <svg class="sp" style="right:40px;top:140px;width:12px;height:12px"><line x1="6" y1="1" x2="6" y2="11" stroke="#d94f30" stroke-width="1.5"/><line x1="1" y1="6" x2="11" y2="6" stroke="#d94f30" stroke-width="1.5"/></svg>
+      <svg class="sp" style="left:45%;top:380px;width:16px;height:16px"><line x1="8" y1="1" x2="8" y2="15" stroke="#5cbdbd" stroke-width="2"/><line x1="1" y1="8" x2="15" y2="8" stroke="#5cbdbd" stroke-width="2"/></svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ FEATURES ═══════ -->
+<section class="section" id="features">
+  <div class="section-header">
+    <h2>WHY SKILLGALAXY?</h2>
+    <p>The largest open-source collection of skill files that transform Claude into a domain expert</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🌌</div>
+      <h3>10,276+ Skills</h3>
+      <p>The most comprehensive skill library — from machine learning to quantum computing, creative writing to cybersecurity.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <h3>105 MCP Connectors</h3>
+      <p>New! Connect Claude to 105 apps — Grafana, Jenkins, Discord, Shopify, and more via MCP server blueprints.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Copy & Paste Ready</h3>
+      <p>Each skill is a single <code>.md</code> file. Drop it into Claude Projects and instantly get expert-level responses.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>SkillForge AI</h3>
+      <p>Generate custom skills with AI. Describe what you need, and SkillForge creates a production-ready skill file.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>GitHub Scan</h3>
+      <p>Scan your GitHub repos and get personalized skill recommendations based on your tech stack and coding patterns.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>100% Open Source</h3>
+      <p>Every skill is free. Fork it, modify it, contribute back. Built by the community, for the community.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ HOW IT WORKS ═══════ -->
+<section class="section">
+  <div class="section-header">
+    <h2>HOW IT WORKS</h2>
+    <p>Three steps to supercharge your Claude experience</p>
+  </div>
+  <div class="steps-row">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Browse & Search</h4>
+      <p>Find the perfect skill from 10,276 options across 16 domains. Filter by category, difficulty, or keyword.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Copy the Skill</h4>
+      <p>One-click copy the <code>.md</code> content. Each skill contains prompts, context, and expert knowledge.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Paste into Claude</h4>
+      <p>Add it to your Claude Project instructions. Claude instantly becomes an expert in that domain.</p>
+      <div class="step-arrow">→</div>
+    </div>
+    <div class="step">
+      <div class="step-num">✓</div>
+      <h4>Expert Responses</h4>
+      <p>Get dramatically better, more accurate, and more detailed responses — every single time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CATEGORIES ═══════ -->
+<section class="cat-stripe" id="categories">
+  <div class="section-header">
+    <h2>16 DOMAINS COVERED</h2>
+    <p>From AI research to creative writing — find skills for every field</p>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card"><div class="cat-emoji">🤖</div><div class="cat-name">AI & Machine Learning</div><div class="cat-count">3,200+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">💻</div><div class="cat-name">Development</div><div class="cat-count">1,800+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">☁️</div><div class="cat-name">Cloud & DevOps</div><div class="cat-count">950+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🔒</div><div class="cat-name">Security</div><div class="cat-count">720+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">📊</div><div class="cat-name">Data & Analytics</div><div class="cat-count">680+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🎨</div><div class="cat-name">Creative</div><div class="cat-count">540+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">✍️</div><div class="cat-name">Writing</div><div class="cat-count">480+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">💼</div><div class="cat-name">Business</div><div class="cat-count">450+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">📦</div><div class="cat-name">Product</div><div class="cat-count">380+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🎓</div><div class="cat-name">Education</div><div class="cat-count">340+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🧬</div><div class="cat-name">Bio & Health</div><div class="cat-count">290+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🤖</div><div class="cat-name">Robotics</div><div class="cat-count">250+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">⚛️</div><div class="cat-name">Quantum</div><div class="cat-count">180+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🌍</div><div class="cat-name">Climate & Spatial</div><div class="cat-count">200+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🔗</div><div class="cat-name">Blockchain</div><div class="cat-count">160+ skills</div></div>
+    <div class="cat-card"><div class="cat-emoji">🔌</div><div class="cat-name">MCP Connectors</div><div class="cat-count">105 skills — NEW</div></div>
+  </div>
+</section>
+
+<!-- ═══════ MCP SECTION ═══════ -->
+<section class="mcp-section" id="mcp">
+  <div class="mcp-inner">
+    <div class="mcp-text">
+      <h2>MCP SERVER v2.0</h2>
+      <p>Our built-in MCP server gives Claude direct access to the entire skill library. Search, discover, compose, and execute skills — all from natural language.</p>
+      <p>Plus 105 new connector skills let Claude interact with apps like Grafana, Jenkins, Discord, Shopify, GitLab, and more via MCP protocol.</p>
+      <a href="mcp-server.html" class="btn btn-primary" style="border-color: var(--cream);">Explore MCP Server →</a>
+    </div>
+    <div class="mcp-code">
+      <span class="comment">// Claude Desktop — claude_desktop_config.json</span><br>
+      {<br>
+      &nbsp;&nbsp;<span class="key">"mcpServers"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"skillgalaxy"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"command"</span>: <span class="string">"node"</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="key">"args"</span>: [<span class="string">"path/to/mcp-server/index.js"</span>]<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      &nbsp;&nbsp;}<br>
+      }<br><br>
+      <span class="comment">// 9 tools available:</span><br>
+      <span class="comment">// search_skills, get_skill, get_skill_deep,</span><br>
+      <span class="comment">// list_categories, compose_skills,</span><br>
+      <span class="comment">// execute_skill_code, generate_visual...</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section">
+  <h2>READY TO LEVEL UP<br>YOUR CLAUDE?</h2>
+  <p>Join thousands of developers using SkillGalaxy to make Claude better at everything.</p>
+  <div class="cta-btns">
+    <a href="index.html" class="btn btn-primary">Browse 10,276 Skills →</a>
+    <a href="https://github.com/Sandeeprdy1729/skill_galaxy" class="btn btn-secondary" target="_blank">⭐ Star on GitHub</a>
+    <a href="guide.html" class="btn btn-outline">Read the Guide</a>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="f-logo">SKILLGALAXY</div>
+  <div class="f-links">
+    <a href="index.html">Browse Skills</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="guide.html">Guide</a>
+    <a href="mcp-server.html">MCP Server</a>
+    <a href="https://github.com/Sandeeprdy1729/skill_galaxy" target="_blank">GitHub</a>
+  </div>
+  <p>10,276 skills for AI-assisted development · Open Source · Built by <a href="https://timps-website.vercel.app/">TIMPS</a></p>
+</footer>
+
+</body>
+</html>
