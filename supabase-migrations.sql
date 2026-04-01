@@ -232,3 +232,104 @@ CREATE POLICY "Authenticated users can create bundles"
 CREATE INDEX IF NOT EXISTS idx_skill_bundles_cat
   ON public.skill_bundles (cat);
 
+
+-- ── 8. SKILL TRACES TABLE (SkillForge usage tracking) ────────────
+
+CREATE TABLE IF NOT EXISTS public.skill_traces (
+  id          UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id     UUID        REFERENCES auth.users(id) ON DELETE SET NULL,
+  query       TEXT        NOT NULL DEFAULT '',
+  skill_ids   JSONB       NOT NULL DEFAULT '[]',   -- array of skill IDs used together
+  source      TEXT        DEFAULT 'web'
+                          CHECK (source IN ('web', 'mcp', 'api', 'bundle')),
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_skill_traces_created
+  ON public.skill_traces (created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_skill_traces_user
+  ON public.skill_traces (user_id);
+
+-- GIN index on skill_ids JSONB for containment queries
+CREATE INDEX IF NOT EXISTS idx_skill_traces_skill_ids
+  ON public.skill_traces USING GIN (skill_ids);
+
+ALTER TABLE public.skill_traces ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Anyone can insert traces"
+  ON public.skill_traces FOR INSERT
+  WITH CHECK (true);
+
+CREATE POLICY "Anyone can view traces"
+  ON public.skill_traces FOR SELECT
+  USING (true);
+
+
+-- ── 9. SKILL CO-USAGE MATERIALIZED VIEW ─────────────────────────
+-- Aggregates pairwise co-usage counts from skill_traces for SkillForge
+-- graph-based recommendations. Refresh periodically via cron or manual call.
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.skill_co_usage AS
+SELECT
+  a.skill AS skill_a,
+  b.skill AS skill_b,
+  COUNT(*) AS freq
+FROM (
+  SELECT id AS trace_id, jsonb_array_elements_text(skill_ids) AS skill
+  FROM public.skill_traces
+) a
+JOIN (
+  SELECT id AS trace_id, jsonb_array_elements_text(skill_ids) AS skill
+  FROM public.skill_traces
+) b ON a.trace_id = b.trace_id AND a.skill < b.skill
+GROUP BY a.skill, b.skill;
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_skill_co_usage_pair
+  ON public.skill_co_usage (skill_a, skill_b);
+
+
+-- ── 10. HELPER FUNCTIONS FOR SKILLFORGE ──────────────────────────
+
+-- Log a usage trace (called from frontend/API after skill recommendation)
+CREATE OR REPLACE FUNCTION public.log_skill_trace(
+  p_query     TEXT,
+  p_skill_ids JSONB,
+  p_source    TEXT DEFAULT 'web'
+)
+RETURNS UUID
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public
+AS $$
+DECLARE
+  v_id UUID;
+BEGIN
+  INSERT INTO public.skill_traces (user_id, query, skill_ids, source)
+  VALUES (auth.uid(), p_query, p_skill_ids, p_source)
+  RETURNING id INTO v_id;
+  RETURN v_id;
+END;
+$$;
+
+-- Get top co-used skills for a given skill ID
+CREATE OR REPLACE FUNCTION public.get_co_used_skills(
+  p_skill_id TEXT,
+  p_limit    INT DEFAULT 10
+)
+RETURNS TABLE (
+  related_skill TEXT,
+  frequency     BIGINT
+)
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public
+AS $$
+BEGIN
+  RETURN QUERY
+    SELECT
+      CASE WHEN skill_a = p_skill_id THEN skill_b ELSE skill_a END AS related_skill,
+      freq AS frequency
+    FROM public.skill_co_usage
+    WHERE skill_a = p_skill_id OR skill_b = p_skill_id
+    ORDER BY freq DESC
+    LIMIT p_limit;
+END;
+$$;
+

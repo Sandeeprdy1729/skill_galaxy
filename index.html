@@ -108,6 +108,10 @@
     <span style="font-size:11px;opacity:.6">✨</span>
     SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
   </div>
+  <div class="nav-item" onclick="openForgeRecommend()">
+    <span style="font-size:11px;opacity:.6">🔮</span>
+    Forge Bundle <span style="font-size:.58rem;color:var(--teal);font-weight:600;margin-left:3px">NEW</span>
+  </div>
   <div class="nav-item" onclick="showGalaxyView()">
     <span style="font-size:11px;opacity:.6">🌌</span>
     Galaxy View
@@ -645,6 +649,63 @@ npm run build-skills</div>
         <button class="btn-ghost" id="sf-submit-btn" style="display:none" onclick="skillForgeSubmit()">↑ Submit to SkillGalaxy</button>
         <button class="btn-ghost" id="sf-download-btn" style="display:none" onclick="skillForgeDownload()">↓ Download .md</button>
         <button class="btn-ghost" onclick="closeSkillForge()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SKILLFORGE RECOMMEND MODAL -->
+<div class="auth-overlay" id="forgeRecommendOverlay">
+  <div class="submit-modal" style="max-width:620px">
+    <div class="sm-head">
+      <div>
+        <div class="sm-title">🔮 SkillForge — Token-Optimal Recommender</div>
+        <div style="font-size:.74rem;color:var(--text-ter);margin-top:2px">Describe your workflow → get the smallest, most effective skill bundle with token savings</div>
+      </div>
+      <button class="modal-close" onclick="closeForgeRecommend()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="form-group">
+        <label class="form-label" for="fr-query">What workflow are you building?</label>
+        <textarea class="form-textarea" id="fr-query" rows="3"
+          placeholder="e.g. I need to fetch data from an API, validate the schema, transform it into a report, and deploy to S3…"
+          style="min-height:70px"></textarea>
+        <div class="form-hint">Describe your full task — SkillForge finds the optimal skill combination with minimal token cost.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+        <label class="form-label" style="margin:0;white-space:nowrap">Max skills:</label>
+        <select class="form-select" id="fr-max" style="width:80px">
+          <option value="4">4</option>
+          <option value="6" selected>6</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+        </select>
+        <label style="font-size:.72rem;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:auto">
+          <input type="checkbox" id="fr-synthesise" checked> Generate meta-skill .md
+        </label>
+      </div>
+      <div id="fr-error" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="fr-results" style="display:none;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span class="m-lbl" style="margin:0">Optimal Bundle</span>
+          <span id="fr-savings-badge" style="font-size:.68rem;background:var(--teal);color:white;padding:2px 8px;border-radius:99px;font-weight:600"></span>
+        </div>
+        <div id="fr-stats" style="font-size:.72rem;color:var(--text-sec);margin-bottom:10px;line-height:1.6"></div>
+        <div id="fr-skill-list" style="margin-bottom:12px"></div>
+        <div id="fr-patterns" style="display:none;margin-bottom:12px">
+          <div class="m-lbl" style="margin-bottom:6px">Detected Patterns</div>
+          <div id="fr-pattern-list" style="font-size:.72rem;color:var(--text-sec)"></div>
+        </div>
+        <div id="fr-meta-preview" style="display:none;margin-bottom:12px">
+          <div class="m-lbl">Generated Meta-Skill</div>
+          <div class="code-block" id="fr-meta-code" style="max-height:180px;font-size:.68rem;overflow:auto"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-main" id="fr-run-btn" onclick="runForgeRecommend()">🔮 Find Optimal Bundle</button>
+        <button class="btn-ghost" id="fr-download-btn" style="display:none" onclick="forgeRecommendDownload()">↓ Download Meta-Skill</button>
+        <button class="btn-ghost" onclick="closeForgeRecommend()">Cancel</button>
       </div>
     </div>
   </div>

@@ -1356,6 +1356,160 @@ function skillForgeSubmit() {
   }, 350);
 }
 
+/* ── SKILLFORGE RECOMMENDER ──────────────────────── */
+let forgeRecommendMd = '';
+
+function openForgeRecommend() {
+  document.getElementById('forgeRecommendOverlay')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  forgeRecommendMd = '';
+  document.getElementById('fr-results').style.display = 'none';
+  document.getElementById('fr-error').style.display = 'none';
+  document.getElementById('fr-download-btn').style.display = 'none';
+  setTimeout(() => document.getElementById('fr-query')?.focus(), 100);
+}
+
+function closeForgeRecommend() {
+  document.getElementById('forgeRecommendOverlay')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function runForgeRecommend() {
+  const query = document.getElementById('fr-query')?.value?.trim();
+  const maxResults = parseInt(document.getElementById('fr-max')?.value || '6', 10);
+  const synthesise = document.getElementById('fr-synthesise')?.checked ?? true;
+  const btn = document.getElementById('fr-run-btn');
+  const errEl = document.getElementById('fr-error');
+
+  if (!query || query.length < 10) {
+    if (errEl) { errEl.textContent = 'Please describe your workflow in at least 10 characters.'; errEl.style.display = 'block'; }
+    return;
+  }
+
+  if (errEl) errEl.style.display = 'none';
+  if (btn) { btn.disabled = true; btn.textContent = '🔮 Analysing…'; }
+  document.getElementById('fr-results').style.display = 'none';
+
+  // Build skill summaries for the engine
+  const allSkills = getAllSkills();
+  const summaries = allSkills.slice(0, 500).map(s => ({
+    id:         s.id,
+    name:       s.name,
+    desc:       (s.desc || s.description || '').slice(0, 200),
+    cat:        s.cat,
+    tags:       (s.tags || []).slice(0, 8),
+    difficulty: s.difficulty || 'intermediate',
+    trigger:    (s.trigger || '').slice(0, 150),
+  }));
+
+  try {
+    const res = await fetch('/api/skillforge-recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, skills: summaries, traces: [], maxResults, synthesise }),
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      if (errEl) { errEl.textContent = data.error; errEl.style.display = 'block'; }
+      return;
+    }
+
+    const recs = data.recommendations || [];
+    if (!recs.length) {
+      if (errEl) { errEl.textContent = 'No matching skills found. Try different keywords.'; errEl.style.display = 'block'; }
+      return;
+    }
+
+    // Show savings badge
+    const badge = document.getElementById('fr-savings-badge');
+    if (badge) badge.textContent = data.savingsPercent > 0 ? `${data.savingsPercent}% token savings` : 'Optimised';
+
+    // Show stats
+    const statsEl = document.getElementById('fr-stats');
+    if (statsEl) {
+      statsEl.innerHTML = `
+        <strong>${recs.length}</strong> skills selected
+        · <strong>${data.effectiveTokens || data.totalTokens}</strong> effective tokens
+        ${data.metaSavings > 0 ? `· <strong>${data.metaSavings}</strong> saved via meta-skill synthesis` : ''}
+        ${data.naiveTotalTokens ? `· Naive approach: ${data.naiveTotalTokens} tokens` : ''}
+      `;
+    }
+
+    // Render skill list
+    const listEl = document.getElementById('fr-skill-list');
+    if (listEl) {
+      listEl.innerHTML = recs.map((r, i) => {
+        const full = allSkills.find(s => s.id === r.id);
+        return `
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface);border-radius:var(--r-sm);margin-bottom:6px;cursor:pointer"
+               onclick="${full ? `closeForgeRecommend();openDetail('${esc(r.id)}')` : ''}">
+            <span style="font-size:.68rem;color:var(--text-ter);min-width:18px">${i + 1}.</span>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.78rem;font-weight:600;color:var(--text)">${esc(r.name)}</div>
+              <div style="font-size:.68rem;color:var(--text-sec);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.desc || '')}</div>
+            </div>
+            <span style="font-size:.62rem;color:var(--teal);white-space:nowrap">${r.tokenCost} tok</span>
+            <span style="font-size:.62rem;color:var(--text-ter);white-space:nowrap">sim: ${r.similarity}</span>
+          </div>`;
+      }).join('');
+    }
+
+    // Show patterns if available
+    const patternsSection = document.getElementById('fr-patterns');
+    const patternList = document.getElementById('fr-pattern-list');
+    if (data.patterns && data.patterns.length > 0 && patternsSection && patternList) {
+      patternsSection.style.display = 'block';
+      patternList.innerHTML = data.patterns.slice(0, 5).map(p =>
+        `<div style="margin-bottom:4px">🔗 <code>${p.pattern.join(' → ')}</code> <span style="color:var(--copper)">(${p.frequency}× co-used)</span></div>`
+      ).join('');
+    } else if (patternsSection) {
+      patternsSection.style.display = 'none';
+    }
+
+    // Show meta-skill preview
+    const metaPreview = document.getElementById('fr-meta-preview');
+    const metaCode = document.getElementById('fr-meta-code');
+    if (data.metaSkill && metaPreview && metaCode) {
+      forgeRecommendMd = data.metaSkill;
+      metaPreview.style.display = 'block';
+      metaCode.textContent = data.metaSkill.slice(0, 1200) + (data.metaSkill.length > 1200 ? '\n…' : '');
+      document.getElementById('fr-download-btn').style.display = 'inline-flex';
+    } else if (metaPreview) {
+      metaPreview.style.display = 'none';
+    }
+
+    document.getElementById('fr-results').style.display = 'block';
+
+    // Log trace for future graph improvements (fire-and-forget)
+    try {
+      const traceIds = recs.map(r => r.id);
+      fetch('/api/skillforge-recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: '__log_trace__', skills: [{ id: 'noop', name: 'noop', desc: 'noop' }], traces: [traceIds] }),
+      }).catch(() => {});
+    } catch (_) { /* best-effort trace logging */ }
+
+  } catch (err) {
+    if (errEl) { errEl.textContent = 'Error: ' + err.message; errEl.style.display = 'block'; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔮 Find Optimal Bundle'; }
+  }
+}
+
+function forgeRecommendDownload() {
+  if (!forgeRecommendMd) return;
+  const nameMatch = forgeRecommendMd.match(/^name:\s*(.+)$/m);
+  const name = nameMatch ? nameMatch[1].trim() : 'meta-skill';
+  const blob = new Blob([forgeRecommendMd], { type: 'text/markdown' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${name}.md`;
+  a.click();
+  toast(`Downloaded ${name}.md meta-skill bundle`);
+}
+
 /* ── SECURITY SCAN ───────────────────────────────── */
 async function runSecurityScan(md_content, name) {
   try {
