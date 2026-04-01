@@ -1590,13 +1590,13 @@ function openCompareModal() {
   // Metric rows
   const metrics = [
     { label: 'Difficulty',      fn: s => `<span class="diff-badge ${esc(s.difficulty || '')}">${esc(s.difficulty || 'intermediate')}</span>` },
-    { label: 'Demand Score',    fn: s => renderScoreBar(s.d, 'demand') },
-    { label: 'Income Score',    fn: s => renderScoreBar(s.i, 'income') },
-    { label: 'Future Score',    fn: s => renderScoreBar(s.f, 'future') },
+    { label: 'Demand Score',    fn: s => renderScoreBar(s.d) },
+    { label: 'Income Score',    fn: s => renderScoreBar(s.i) },
+    { label: 'Future Score',    fn: s => renderScoreBar(s.f) },
     { label: 'Time to Master',  fn: s => `<span style="font-size:.78rem;color:var(--text-sec)">${esc(s.timeToMaster || '—')}</span>` },
-    { label: 'Tags',            fn: s => (s.tags || []).slice(0, 5).map(t => `<span class="chip" style="font-size:.62rem;padding:2px 6px">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
-    { label: 'Tools',           fn: s => (s.tools || []).slice(0, 4).map(t => `<span class="tool-chip" style="font-size:.62rem;padding:2px 6px">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
-    { label: 'Atomic Skills',   fn: s => (s.skills || []).slice(0, 4).map(sk => `<span class="chip" style="font-size:.62rem;padding:2px 6px">${esc(sk)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+    { label: 'Tags',            fn: s => (s.tags || []).slice(0, 5).map(t => `<span class="chip compare-chip-sm">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+    { label: 'Tools',           fn: s => (s.tools || []).slice(0, 4).map(t => `<span class="tool-chip compare-chip-sm">${esc(t)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
+    { label: 'Atomic Skills',   fn: s => (s.skills || []).slice(0, 4).map(sk => `<span class="chip compare-chip-sm">${esc(sk)}</span>`).join(' ') || '<span style="color:var(--text-ter)">—</span>' },
   ];
 
   const rowsHtml = metrics.map(m => `
@@ -1644,18 +1644,14 @@ function openCompareModal() {
   document.body.style.overflow = 'hidden';
 }
 
-function renderScoreBar(val, type) {
+function renderScoreBar(val) {
   const v = parseInt(val) || 0;
   const pct = v * 10;
-  const colors = {
-    demand: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
-    income: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
-    future: v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)',
-  };
+  const color = v >= 9 ? 'var(--teal)' : v >= 7 ? 'var(--copper)' : 'var(--text-ter)';
   return `
     <div class="compare-score">
       <div class="compare-score-bar">
-        <div class="compare-score-fill" style="width:${pct}%;background:${colors[type] || 'var(--copper)'}"></div>
+        <div class="compare-score-fill" style="width:${pct}%;background:${color}"></div>
       </div>
       <span class="compare-score-val">${v}/10</span>
     </div>`;

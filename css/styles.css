@@ -821,3 +821,4 @@ body{background:var(--cream);color:var(--text-pri);font-family:'Plus Jakarta San
 .compare-score-bar{width:80px;height:8px;background:var(--cream-darker);border-radius:4px;overflow:hidden}
 .compare-score-fill{height:100%;border-radius:4px;transition:width .3s ease}
 .compare-score-val{font-size:.74rem;font-weight:600;color:var(--text-pri);min-width:32px}
+.compare-chip-sm{font-size:.62rem;padding:2px 6px}
