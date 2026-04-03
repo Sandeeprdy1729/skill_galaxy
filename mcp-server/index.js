@@ -1136,6 +1136,298 @@ Returns structured data that can be used by other tools (e.g., Code Mode or comp
   }
 );
 
+// ═══════════════════════════════════════════════════════════════════════
+// Feature 7: SkillForge — Evolutionary Skill Graph Composer
+// ═══════════════════════════════════════════════════════════════════════
+
+/**
+ * Tokenize text into normalized word frequency map for similarity.
+ */
+function forgeTokenize(text) {
+  const words = (text || "").toLowerCase().replace(/[^a-z0-9\s-]/g, "").split(/\s+/).filter(Boolean);
+  const freq = {};
+  for (const w of words) freq[w] = (freq[w] || 0) + 1;
+  return freq;
+}
+
+/**
+ * Cosine similarity between two token frequency maps.
+ */
+function forgeCosineSim(a, b) {
+  const allKeys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  let dot = 0, magA = 0, magB = 0;
+  for (const k of allKeys) {
+    const va = a[k] || 0;
+    const vb = b[k] || 0;
+    dot  += va * vb;
+    magA += va * va;
+    magB += vb * vb;
+  }
+  return (magA === 0 || magB === 0) ? 0 : dot / (Math.sqrt(magA) * Math.sqrt(magB));
+}
+
+/**
+ * Build a synergy graph over candidate skills.
+ */
+function forgeBuildGraph(skills) {
+  const nodes = new Map(skills.map((s) => [s.id, s]));
+  const edges = [];
+
+  for (let i = 0; i < skills.length; i++) {
+    for (let j = i + 1; j < skills.length; j++) {
+      const a = skills[i], b = skills[j];
+      const aTags = new Set((a.tags || []).map((t) => norm(t)));
+      const bTags = new Set((b.tags || []).map((t) => norm(t)));
+      const shared = [...aTags].filter((t) => bTags.has(t));
+      if (shared.length === 0 && a.cat !== b.cat) continue;
+
+      const catBonus = a.cat === b.cat ? 1.5 : 1.0;
+      const synergy = shared.length * 0.3 + catBonus * 0.2;
+
+      const descSim = forgeCosineSim(
+        forgeTokenize(a.desc || ""),
+        forgeTokenize(b.desc || "")
+      );
+      const overlap = Math.min(0.5, descSim * 0.6 + shared.length * 0.05);
+      edges.push({ from: a.id, to: b.id, synergy, overlap, sharedTags: shared });
+    }
+  }
+  return { nodes, edges };
+}
+
+/**
+ * Evaluate fitness of a skill subgraph.
+ */
+function forgeFitness(skills, graph) {
+  if (!skills.length) return 0;
+  const avgSim = skills.reduce((s, sk) => s + (sk._sim || 0), 0) / skills.length;
+  const totalTokens = skills.reduce((s, sk) => s + (sk._tokens || 500), 0);
+  const tokenPenalty = totalTokens / 10000;
+
+  const ids = new Set(skills.map((s) => s.id));
+  let totalSynergy = 0, totalOverlap = 0;
+  for (const edge of graph.edges) {
+    if (ids.has(edge.from) && ids.has(edge.to)) {
+      totalSynergy += edge.synergy;
+      totalOverlap += edge.overlap;
+    }
+  }
+
+  const catSet = new Set(skills.map((s) => s.cat));
+  return avgSim * 3 + 1.5 * 0.8 + totalSynergy * 0.5 - totalOverlap * 0.8 - tokenPenalty * 0.3 + catSet.size * 0.05;
+}
+
+server.tool(
+  "forge_composite",
+  `SkillForge: Evolve an optimal composite skill subgraph for a query using evolutionary optimization. This tool:
+  1. Searches the full skill library for relevant candidates
+  2. Builds a synergy graph (shared tags, category alignment, overlap detection)
+  3. Runs a genetic algorithm (selection → crossover → mutation → pruning) to find the best composition
+  4. Returns an optimized composite skill .md with token savings and provenance
+
+Use this when a user needs multiple skills for a complex workflow and you want the most token-efficient composition.`,
+  {
+    query: z.string().describe("Natural language description of the user's task or workflow"),
+    max_skills: z.number().optional().default(8).describe("Maximum skills in the composite (2-12)"),
+    generations: z.number().optional().default(8).describe("Evolutionary generations to run (1-20)"),
+  },
+  async ({ query, max_skills, generations }) => {
+    rateLimiter.check();
+    sanitiseInput(query);
+
+    const safeMax  = Math.min(Math.max(max_skills || 8, 2), 12);
+    const safeGens = Math.min(Math.max(generations || 8, 1), 20);
+    const popSize  = 20;
+
+    logAudit("forge_composite", { query, max_skills: safeMax, generations: safeGens }, 0);
+
+    // Step 1: Score all skills by relevance
+    const queryTokens = forgeTokenize(query);
+    const scored = SKILLS_DB.map((s) => {
+      const skillTokens = forgeTokenize(
+        [s.name, s.desc, ...(s.tags || [])].join(" ")
+      );
+      const sim = forgeCosineSim(queryTokens, skillTokens);
+      const tokens = s.md ? Math.round(s.md.length / 3.5) : 500;
+      return { ...s, _sim: sim, _tokens: tokens };
+    });
+
+    scored.sort((a, b) => b._sim - a._sim);
+    const candidates = scored.slice(0, 40);
+
+    if (candidates.length === 0 || candidates[0]._sim === 0) {
+      return {
+        content: [{ type: "text", text: "No relevant skills found for this query. Try a different description." }],
+      };
+    }
+
+    // Step 2: Build graph
+    const graph = forgeBuildGraph(candidates);
+
+    // Step 3: Evolutionary search
+    let pop = [];
+    for (let i = 0; i < popSize; i++) {
+      const size = Math.min(3 + Math.floor(Math.random() * (safeMax - 2)), safeMax);
+      const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+      const biased = [
+        ...candidates.slice(0, Math.ceil(size / 2)),
+        ...shuffled.slice(0, Math.floor(size / 2)),
+      ];
+      const unique = [...new Map(biased.map((s) => [s.id, s])).values()].slice(0, size);
+      pop.push(unique);
+    }
+
+    for (let gen = 0; gen < safeGens; gen++) {
+      // Evaluate + sort
+      pop.sort((a, b) => forgeFitness(b, graph) - forgeFitness(a, graph));
+      const survivors = pop.slice(0, Math.ceil(popSize / 2));
+      const newPop = [...survivors];
+
+      while (newPop.length < popSize) {
+        const pA = survivors[Math.floor(Math.random() * survivors.length)];
+        const pB = survivors[Math.floor(Math.random() * survivors.length)];
+        const half = Math.ceil(safeMax / 2);
+        let child = [...pA.slice(0, half), ...pB.slice(half)];
+        child = [...new Map(child.map((s) => [s.id, s])).values()].slice(0, safeMax);
+
+        // Mutation: add graph neighbor
+        if (Math.random() < 0.5 && child.length < safeMax) {
+          const rs = child[Math.floor(Math.random() * child.length)];
+          const nEdges = graph.edges.filter(
+            (e) => (e.from === rs.id || e.to === rs.id) && e.synergy > 0.1
+          );
+          if (nEdges.length > 0) {
+            const e = nEdges[Math.floor(Math.random() * nEdges.length)];
+            const nId = e.from === rs.id ? e.to : e.from;
+            const n = graph.nodes.get(nId);
+            if (n && !child.find((s) => s.id === nId)) child.push(n);
+          }
+        }
+
+        // Mutation: remove weakest
+        if (Math.random() < 0.3 && child.length > 2) {
+          child.sort((a, b) => (b._sim || 0) - (a._sim || 0));
+          child.pop();
+        }
+
+        newPop.push(child);
+      }
+      pop = newPop;
+    }
+
+    // Final selection
+    pop.sort((a, b) => forgeFitness(b, graph) - forgeFitness(a, graph));
+    const best = pop[0];
+    const fitness = forgeFitness(best, graph);
+
+    // Step 4: Metrics
+    const naiveTokens = best.reduce((s, sk) => s + (sk._tokens || 500), 0);
+    const baselineTokens = Math.round(naiveTokens * 1.3);
+
+    // Overlap analysis
+    let totalOverlap = 0, comparisons = 0;
+    const synergies = [];
+    for (let i = 0; i < best.length; i++) {
+      for (let j = i + 1; j < best.length; j++) {
+        const a = best[i], b = best[j];
+        const aTags = new Set((a.tags || []).map((t) => norm(t)));
+        const bTags = new Set((b.tags || []).map((t) => norm(t)));
+        const shared = [...aTags].filter((t) => bTags.has(t));
+        const descSim = forgeCosineSim(forgeTokenize(a.desc || ""), forgeTokenize(b.desc || ""));
+        const overlap = Math.min(0.5, descSim * 0.5 + shared.length * 0.05);
+        totalOverlap += overlap;
+        comparisons++;
+        if (shared.length > 0 || descSim > 0.2) {
+          synergies.push({ pair: [a.name, b.name], sharedTags: shared, overlapPct: Math.round(overlap * 100) });
+        }
+      }
+    }
+    const avgOverlap = comparisons > 0 ? totalOverlap / comparisons : 0;
+    const overlapReduction = Math.min(0.4, avgOverlap * 1.5);
+    const prunedTokens = Math.round(naiveTokens * (1 - overlapReduction));
+    const tokenSavings = Math.round((1 - prunedTokens / baselineTokens) * 100);
+
+    // Step 5: Build composite .md
+    const allTags = [...new Set(best.flatMap((s) => s.tags || []))];
+    const compositeName = `forged-${query.slice(0, 40).replace(/[^a-z0-9]/gi, "-").toLowerCase()}`;
+
+    const compositeMd = [
+      `---`,
+      `name: ${compositeName}`,
+      `description: "Forged composite: ${query.slice(0, 200)}"`,
+      `tags: ${allTags.slice(0, 10).join(", ")}`,
+      `difficulty: intermediate`,
+      `version: 1.0.0`,
+      `forged_from: ${best.map((s) => s.id).join(", ")}`,
+      `token_savings: ${tokenSavings}%`,
+      `---`,
+      ``,
+      `# ${compositeName}`,
+      ``,
+      `> **SkillForge Composite** — ${best.length} skills optimized for: "${query.slice(0, 150)}"`,
+      ``,
+      `## Activation`,
+      `Use this composite skill when you need to:`,
+      ...best.map((s) => `- ${s.desc || s.name}`),
+      ``,
+      `## Composed Skills`,
+      ``,
+      ...best.map((s, i) => {
+        const cat = CATEGORIES[s.cat]?.label || s.cat;
+        return [
+          `### ${i + 1}. ${s.name} (\`${s.id}\`)`,
+          `Category: ${cat} | Relevance: ${Math.round((s._sim || 0) * 100)}% | ~${s._tokens} tokens`,
+          ``,
+          s.desc || "",
+          ``,
+        ].join("\n");
+      }),
+      `## Token Budget`,
+      `| Metric | Value |`,
+      `|--------|-------|`,
+      `| Baseline | ~${baselineTokens} tokens |`,
+      `| Optimized | ~${prunedTokens} tokens |`,
+      `| Savings | ${tokenSavings}% |`,
+      ``,
+      synergies.length > 0
+        ? `## Synergies\n${synergies.slice(0, 5).map((s) => `- **${s.pair[0]}** ↔ **${s.pair[1]}**: ${s.sharedTags.join(", ")} (${s.overlapPct}% overlap pruned)`).join("\n")}`
+        : "",
+      ``,
+      `## Original Skills`,
+      ...best.map((s) => `- \`${s.id}\` — ${s.name}`),
+    ].join("\n");
+
+    // Step 6: Response
+    const summary = [
+      `# SkillForge Composite Result\n`,
+      `**Query:** ${query}`,
+      `**Skills composed:** ${best.length}`,
+      `**Fitness score:** ${fitness.toFixed(3)}`,
+      `**Token savings:** ${tokenSavings}% (${baselineTokens} → ${prunedTokens} tokens)`,
+      `**Overlap pruned:** ${Math.round(overlapReduction * 100)}%\n`,
+      `## Selected Skills\n`,
+      ...best.map((s, i) => {
+        const cat = CATEGORIES[s.cat]?.label || s.cat;
+        return `${i + 1}. **${s.name}** (\`${s.id}\`) — ${cat} | ${Math.round((s._sim || 0) * 100)}% relevance`;
+      }),
+      ``,
+    ];
+
+    if (synergies.length > 0) {
+      summary.push(`## Synergies\n`);
+      for (const s of synergies.slice(0, 5)) {
+        summary.push(`- ${s.pair[0]} ↔ ${s.pair[1]}: ${s.sharedTags.join(", ")} (${s.overlapPct}% overlap)`);
+      }
+    }
+
+    summary.push(`\n---\n\n## Composite Skill File\n\n${compositeMd}`);
+
+    return {
+      content: [{ type: "text", text: summary.join("\n") }],
+    };
+  }
+);
+
 // ── Start server ─────────────────────────────────────────────────────
 
 async function main() {
@@ -1143,7 +1435,7 @@ async function main() {
   await server.connect(transport);
   console.error("SkillGalaxy MCP server v2.0 running on stdio");
   console.error(`Loaded ${SKILLS_DB.length} skills across ${Object.keys(CATEGORIES).length} categories`);
-  console.error("Features: Code Mode, Progressive Disclosure, Composable Workflows, Generative UI, Security Scanning, Binary Ingestion");
+  console.error("Features: Code Mode, Progressive Disclosure, Composable Workflows, Generative UI, Security Scanning, Binary Ingestion, SkillForge");
 }
 
 main().catch((err) => {

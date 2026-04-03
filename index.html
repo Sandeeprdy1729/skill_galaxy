@@ -108,6 +108,10 @@
     <span style="font-size:11px;opacity:.6">✨</span>
     SkillForge <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">AI</span>
   </div>
+  <div class="nav-item" onclick="openForgeComposer()">
+    <span style="font-size:11px;opacity:.6">⚡</span>
+    Forge Composer <span style="font-size:.58rem;color:var(--copper);font-weight:600;margin-left:3px">NEW</span>
+  </div>
   <div class="nav-item" onclick="showGalaxyView()">
     <span style="font-size:11px;opacity:.6">🌌</span>
     Galaxy View
@@ -681,6 +685,64 @@ npm run build-skills</div>
 </div>
 
 
+<!-- FORGE COMPOSER MODAL -->
+<div class="auth-overlay" id="forgeOverlay">
+  <div class="submit-modal" style="max-width:620px">
+    <div class="sm-head">
+      <div>
+        <div class="sm-title">⚡ SkillForge Composer — Evolutionary Skill Optimizer</div>
+        <div style="font-size:.74rem;color:var(--text-ter);margin-top:2px">Describe a workflow → SkillForge evolves the optimal skill composition with minimized tokens</div>
+      </div>
+      <button class="modal-close" onclick="closeForgeComposer()">✕</button>
+    </div>
+    <div class="sm-body">
+      <div class="form-group">
+        <label class="form-label" for="forge-query">What workflow or task do you need skills for?</label>
+        <textarea class="form-textarea" id="forge-query" rows="3"
+          placeholder="e.g. Build a production microservices API with authentication, rate limiting, database design, and CI/CD deployment on AWS…"
+          style="min-height:70px"></textarea>
+        <div class="form-hint">The evolutionary algorithm will search 10k+ skills, detect synergies, prune overlaps, and compose an optimal bundle.</div>
+      </div>
+      <div id="forge-error" style="display:none;color:var(--red);font-size:.75rem;margin-bottom:10px"></div>
+      <div id="forge-metrics" style="display:none;margin-bottom:14px"></div>
+      <div id="forge-result" style="display:none;margin-bottom:14px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-main" id="forge-compose-btn" onclick="runForgeComposer()">⚡ Forge Composite</button>
+        <button class="btn-ghost" id="forge-download-btn" style="display:none" onclick="forgeDownloadComposite()">↓ Download .md</button>
+        <button class="btn-ghost" id="forge-submit-btn" style="display:none" onclick="forgeSubmitComposite()">↑ Submit to SkillGalaxy</button>
+        <button class="btn-ghost" onclick="closeForgeComposer()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.forge-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.forge-metric{background:var(--cream-dark);border:1px solid var(--border-lt);border-radius:var(--r-sm);padding:10px;text-align:center}
+.forge-metric-val{font-family:"Newsreader",Georgia,serif;font-size:1.15rem;color:var(--text-pri);font-weight:400}
+.forge-metric-lbl{font-size:.6rem;color:var(--text-ter);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.forge-comparison{margin-top:10px}
+.forge-bar-label{font-size:.65rem;color:var(--text-ter);margin-bottom:3px}
+.forge-bar{height:22px;border-radius:4px;margin-bottom:8px;overflow:hidden;position:relative}
+.forge-bar.baseline{background:rgba(138,58,78,.1);border:1px solid rgba(138,58,78,.2)}
+.forge-bar.forged{background:rgba(58,125,110,.1);border:1px solid rgba(58,125,110,.2)}
+.forge-bar-fill{height:100%;display:flex;align-items:center;padding:0 8px;font-size:.62rem;font-weight:600;white-space:nowrap}
+.forge-bar.baseline .forge-bar-fill{background:rgba(138,58,78,.15);color:var(--red)}
+.forge-bar.forged .forge-bar-fill{background:rgba(58,125,110,.2);color:var(--teal)}
+.forge-skills-list{display:flex;flex-direction:column;gap:6px}
+.forge-skill-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--warm-white);border:1px solid var(--border-lt);border-radius:var(--r-sm);cursor:pointer;transition:background .15s}
+.forge-skill-row:hover{background:var(--cream-dark)}
+.forge-skill-rank{width:20px;height:20px;border-radius:50%;background:var(--copper-lt);color:var(--copper);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.forge-skill-info{flex:1;min-width:0}
+.forge-skill-name{font-size:.78rem;font-weight:500;color:var(--text-pri)}
+.forge-skill-meta{display:flex;gap:6px;align-items:center;margin-top:2px}
+.forge-synergies{display:flex;flex-direction:column;gap:4px}
+.forge-synergy{font-size:.72rem;color:var(--text-sec);padding:4px 8px;background:var(--cream-dark);border-radius:4px}
+.forge-synergy-tags{color:var(--copper);margin:0 4px}
+.forge-overlap{color:var(--teal);font-weight:600}
+@media(max-width:600px){.forge-metrics-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+
 <!-- TOAST -->
 <div class="toast" id="toast">
   <span style="opacity:.7">✓</span>
@@ -751,6 +813,7 @@ npm run build-skills</div>
 <script src="js/learning-paths.js"></script>
 <script src="js/galaxy-viz.js"></script>
 <script src="js/github-scan.js"></script>
+<script src="js/skillforge-compose.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
 
