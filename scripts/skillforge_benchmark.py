@@ -13,14 +13,14 @@ import time
 np.random.seed(42)
 
 # ── Configuration ────────────────────────────────────────────────────
-NUM_SKILLS    = 100
-EMBED_DIM     = 384
-NUM_QUERIES   = 50
-BASELINE_K    = 5
-FORGE_POP     = 20
-FORGE_GENS    = 10
+NUM_SKILLS = 100
+EMBED_DIM = 384
+NUM_QUERIES = 50
+BASELINE_K = 5
+FORGE_POP = 20
+FORGE_GENS = 10
 MAX_COMPOSITE = 8
-EDGE_PROB     = 0.1
+EDGE_PROB = 0.1
 
 # ── Generate mock data ──────────────────────────────────────────────
 print("=" * 60)
@@ -31,14 +31,30 @@ print(f"Baseline: Top-{BASELINE_K} vector search, naive concat")
 print(f"SkillForge: Pop={FORGE_POP}, Gens={FORGE_GENS}, MaxSize={MAX_COMPOSITE}")
 print()
 
-embeddings    = np.random.rand(NUM_SKILLS, EMBED_DIM)
-token_sizes   = np.random.randint(300, 1200, NUM_SKILLS)
+embeddings = np.random.rand(NUM_SKILLS, EMBED_DIM)
+token_sizes = np.random.randint(300, 1200, NUM_SKILLS)
 success_rates = np.random.uniform(0.6, 0.95, NUM_SKILLS)
-categories    = np.random.choice(['ai', 'dev', 'security', 'data', 'cloud'], NUM_SKILLS)
-tag_pool      = ['python', 'api', 'ml', 'docker', 'react', 'sql', 'aws', 'testing',
-                 'ci-cd', 'kubernetes', 'auth', 'graphql', 'typescript', 'monitoring']
-skill_tags    = [list(np.random.choice(tag_pool, np.random.randint(1, 5), replace=False))
-                 for _ in range(NUM_SKILLS)]
+categories = np.random.choice(["ai", "dev", "security", "data", "cloud"], NUM_SKILLS)
+tag_pool = [
+    "python",
+    "api",
+    "ml",
+    "docker",
+    "react",
+    "sql",
+    "aws",
+    "testing",
+    "ci-cd",
+    "kubernetes",
+    "auth",
+    "graphql",
+    "typescript",
+    "monitoring",
+]
+skill_tags = [
+    list(np.random.choice(tag_pool, np.random.randint(1, 5), replace=False))
+    for _ in range(NUM_SKILLS)
+]
 
 # ── Build synergy graph ─────────────────────────────────────────────
 edges = []
@@ -46,8 +62,11 @@ for i, j in combinations(range(NUM_SKILLS), 2):
     shared = set(skill_tags[i]) & set(skill_tags[j])
     cat_match = categories[i] == categories[j]
     if len(shared) > 0 or (cat_match and np.random.rand() < EDGE_PROB):
-        synergy = (len(shared) * 0.3 + (1.5 if cat_match else 1.0) * 0.2) * \
-                  success_rates[i] * success_rates[j]
+        synergy = (
+            (len(shared) * 0.3 + (1.5 if cat_match else 1.0) * 0.2)
+            * success_rates[i]
+            * success_rates[j]
+        )
         overlap = min(0.5, np.random.uniform(0.05, 0.35))
         edges.append((i, j, synergy, overlap, list(shared)))
 
@@ -67,8 +86,9 @@ def baseline_search(query_emb, k=BASELINE_K):
 
 
 # ── SkillForge: Evolutionary graph composer ──────────────────────────
-def skillforge_evolve(query_emb, generations=FORGE_GENS, pop_size=FORGE_POP,
-                      max_size=MAX_COMPOSITE):
+def skillforge_evolve(
+    query_emb, generations=FORGE_GENS, pop_size=FORGE_POP, max_size=MAX_COMPOSITE
+):
     # Compute similarities
     sims = np.dot(embeddings, query_emb) / (
         np.linalg.norm(embeddings, axis=1) * np.linalg.norm(query_emb) + 1e-10
@@ -96,7 +116,7 @@ def skillforge_evolve(query_emb, generations=FORGE_GENS, pop_size=FORGE_POP,
         total_synergy = 0
         total_overlap = 0
         for n in subgraph:
-            for (neighbor, syn, ovl) in edge_lookup.get(n, []):
+            for neighbor, syn, ovl in edge_lookup.get(n, []):
                 if neighbor in sg_set:
                     total_synergy += syn
                     total_overlap += ovl
@@ -106,22 +126,28 @@ def skillforge_evolve(query_emb, generations=FORGE_GENS, pop_size=FORGE_POP,
         cat_set = set(categories[n] for n in subgraph)
         diversity = len(cat_set) * 0.05
 
-        return (avg_sim * 3.0 + avg_success * 1.5 + total_synergy * 0.5
-                - total_overlap * 0.8 - token_penalty * 0.3 + diversity)
+        return (
+            avg_sim * 3.0
+            + avg_success * 1.5
+            + total_synergy * 0.5
+            - total_overlap * 0.8
+            - token_penalty * 0.3
+            + diversity
+        )
 
     # Initialize population
     pop = []
     for _ in range(pop_size):
         size = min(3 + np.random.randint(0, max_size - 2), max_size)
         shuffled = list(np.random.permutation(candidates))
-        biased = list(candidates[:size // 2]) + shuffled[:size // 2]
+        biased = list(candidates[: size // 2]) + shuffled[: size // 2]
         individual = list(dict.fromkeys(biased))[:size]
         pop.append(individual)
 
     # Evolve
     for gen in range(generations):
         pop.sort(key=lambda sg: fitness(sg), reverse=True)
-        survivors = pop[:pop_size // 2]
+        survivors = pop[: pop_size // 2]
         new_pop = list(survivors)
 
         while len(new_pop) < pop_size:
@@ -161,7 +187,7 @@ def skillforge_evolve(query_emb, generations=FORGE_GENS, pop_size=FORGE_POP,
     pairs = 0
     for i_idx in range(len(best)):
         for j_idx in range(i_idx + 1, len(best)):
-            for (n, syn, ovl) in edge_lookup.get(best[i_idx], []):
+            for n, syn, ovl in edge_lookup.get(best[i_idx], []):
                 if n == best[j_idx]:
                     total_overlap += ovl
                     pairs += 1
@@ -181,13 +207,13 @@ def skillforge_evolve(query_emb, generations=FORGE_GENS, pop_size=FORGE_POP,
 query_embs = np.random.rand(NUM_QUERIES, EMBED_DIM)
 
 baseline_tokens_list = []
-baseline_acc_list    = []
-baseline_sim_list    = []
-forge_tokens_list    = []
-forge_acc_list       = []
-forge_sim_list       = []
-forge_sizes          = []
-forge_fitnesses      = []
+baseline_acc_list = []
+baseline_sim_list = []
+forge_tokens_list = []
+forge_acc_list = []
+forge_sim_list = []
+forge_sizes = []
+forge_fitnesses = []
 
 print("Running benchmark...")
 t_baseline_start = time.time()
@@ -220,15 +246,27 @@ token_savings = (1 - avg_f_tokens / avg_b_tokens) * 100
 
 print(f"\n{'Metric':<30} {'Baseline':<15} {'SkillForge':<15} {'Delta':<12}")
 print("-" * 72)
-print(f"{'Avg Tokens':<30} {avg_b_tokens:<15.0f} {avg_f_tokens:<15.0f} {token_savings:+.1f}%")
-print(f"{'Avg Success Rate':<30} {np.mean(baseline_acc_list):<15.3f} {np.mean(forge_acc_list):<15.3f} {(np.mean(forge_acc_list) - np.mean(baseline_acc_list))*100:+.1f}pp")
-print(f"{'Avg Similarity':<30} {np.mean(baseline_sim_list):<15.3f} {np.mean(forge_sim_list):<15.3f} {(np.mean(forge_sim_list) - np.mean(baseline_sim_list))*100:+.1f}pp")
+print(
+    f"{'Avg Tokens':<30} {avg_b_tokens:<15.0f} {avg_f_tokens:<15.0f} {token_savings:+.1f}%"
+)
+print(
+    f"{'Avg Success Rate':<30} {np.mean(baseline_acc_list):<15.3f} {np.mean(forge_acc_list):<15.3f} {(np.mean(forge_acc_list) - np.mean(baseline_acc_list)) * 100:+.1f}pp"
+)
+print(
+    f"{'Avg Similarity':<30} {np.mean(baseline_sim_list):<15.3f} {np.mean(forge_sim_list):<15.3f} {(np.mean(forge_sim_list) - np.mean(baseline_sim_list)) * 100:+.1f}pp"
+)
 print(f"{'Avg Composite Size':<30} {BASELINE_K:<15d} {np.mean(forge_sizes):<15.1f}")
 print(f"{'Avg Fitness Score':<30} {'N/A':<15} {np.mean(forge_fitnesses):<15.3f}")
-print(f"{'Time ({NUM_QUERIES} queries)':<30} {(t_baseline_end - t_baseline_start)*1000:<15.1f}ms {(t_forge_end - t_forge_start)*1000:<15.1f}ms")
+print(
+    f"{'Time ({0} queries)':<30} {(t_baseline_end - t_baseline_start) * 1000:<15.1f}ms {(t_forge_end - t_forge_start) * 1000:<15.1f}ms".format(
+        NUM_QUERIES
+    )
+)
 
 print(f"\n{'Token Savings':>30}: {token_savings:.1f}%")
-print(f"{'Success Rate Improvement':>30}: +{(np.mean(forge_acc_list) - np.mean(baseline_acc_list))*100:.1f} percentage points")
+print(
+    f"{'Success Rate Improvement':>30}: +{(np.mean(forge_acc_list) - np.mean(baseline_acc_list)) * 100:.1f} percentage points"
+)
 
 print("\n" + "=" * 60)
 print("CONCLUSION")
@@ -236,9 +274,9 @@ print("=" * 60)
 print(f"""
 SkillForge evolutionary composer achieves:
   • {token_savings:.0f}% token savings vs. naive top-K concat
-  • +{(np.mean(forge_acc_list) - np.mean(baseline_acc_list))*100:.0f}pp higher success rate via synergy-aware selection
+  • +{(np.mean(forge_acc_list) - np.mean(baseline_acc_list)) * 100:.0f}pp higher success rate via synergy-aware selection
   • Graph-based pruning removes overlapping content between composed skills
-  • Latency: {(t_forge_end - t_forge_start)*1000/NUM_QUERIES:.1f}ms/query — feasible for real-time recommendations
+  • Latency: {(t_forge_end - t_forge_start) * 1000 / NUM_QUERIES:.1f}ms/query — feasible for real-time recommendations
 
 Production deployment on Supabase edge functions with pgvector + materialized
 graph views would further improve accuracy via learned synergies from real usage.

@@ -258,6 +258,13 @@ function _forgeEvolve(query, allSkills, maxSize, generations, popSize) {
 /* ── RUN FORGE ───────────────────────────────────── */
 async function runForgeComposer() {
   if (forgeRunning) return;
+
+  // Check feature flag
+  if (typeof FEATURES !== 'undefined' && FEATURES.skillforge === false) {
+    showForgeError('SkillForge is currently disabled. Check back soon!');
+    return;
+  }
+
   const query = document.getElementById('forge-query').value.trim();
   if (!query) {
     showForgeError('Please describe what you want the composite skill to do.');

@@ -5,6 +5,56 @@
 -- ════════════════════════════════════════════════════════════════
 
 
+-- ── 0. USAGE TELEMETRY (for RL edge weights) ───────────────────────────────
+
+CREATE TABLE IF NOT EXISTS public.skillforge_usage (
+  id          UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
+  query       TEXT        NOT NULL,
+  skill_ids   TEXT[]      NOT NULL DEFAULT '{}',
+  total_tokens INT         DEFAULT 0,
+  token_saved  INT         DEFAULT 0,
+  success     BOOLEAN     DEFAULT TRUE,
+  session_id  TEXT        DEFAULT '',
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_skillforge_usage_query
+  ON public.skillforge_usage (query);
+
+CREATE INDEX IF NOT EXISTS idx_skillforge_usage_session
+  ON public.skillforge_usage (session_id);
+
+CREATE OR REPLACE FUNCTION public.record_forge_usage(
+  p_query      TEXT,
+  p_skill_ids  TEXT[],
+  p_tokens     INT,
+  p_saved     INT,
+  p_session   TEXT DEFAULT ''
+)
+RETURNS VOID
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public
+AS $$
+BEGIN
+  INSERT INTO public.skillforge_usage (query, skill_ids, total_tokens, token_saved, session_id)
+  VALUES (p_query, p_skill_ids, p_tokens, p_saved, p_session);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION get_skill_edges(p_skill_ids TEXT[])
+RETURNS TABLE (source_id TEXT, target_id TEXT, synergy_score NUMERIC, overlap_score NUMERIC)
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT e.source_id, e.target_id, e.synergy_score, e.overlap_score
+  FROM public.skill_graph_edges e
+  WHERE e.source_id = ANY(p_skill_ids)
+    AND e.target_id = ANY(p_skill_ids)
+  ORDER BY e.synergy_score DESC;
+END;
+$$;
+
+
 -- ── 1. SKILL COMPOSITES TABLE ────────────────────────────────────
 
 CREATE TABLE IF NOT EXISTS public.skill_composites (

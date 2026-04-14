@@ -32,3 +32,10 @@ const VALIDATION = {
 
 /* App site URL */
 const SITE_URL = 'https://skill-galaxy.vercel.app';
+
+/* Feature flags */
+const FEATURES = {
+  skillforge: true,
+  skillforgeLattice: false,
+  nexusRecommendations: true,
+};

@@ -29,6 +29,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { CATEGORIES, SKILLS_DB } from "./skills-data.js";
+import { createNexusTool } from "./src/skillforge-nexus.js";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, extname } from "node:path";
 
@@ -387,6 +388,30 @@ server.tool(
     return {
       content: [{ type: "text", text: `SkillGalaxy has ${SKILLS_DB.length} skills across ${Object.keys(CATEGORIES).length} categories:\n\n${lines.join("\n")}` }],
     };
+  }
+);
+
+// ═══════════════════════════════════════════════════════════════════════
+// Feature: SkillForge Nexus — Graph-based Composition Engine
+// ═══════════════════════════════════════════════════════════════════════
+
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_KEY;
+const nexusTool = createNexusTool(SUPABASE_URL, SUPABASE_KEY);
+
+server.tool(
+  nexusTool.name,
+  nexusTool.description,
+  {
+    query: z.string().describe("Natural language query describing the desired workflow or skill composition"),
+    topK: z.number().optional().default(5).describe("Number of top recommendations to return"),
+    storeMetaSkill: z.boolean().optional().default(false).describe("Store synthesized meta-skills in Supabase"),
+  },
+  async ({ query, topK, storeMetaSkill }) => {
+    rateLimiter.check();
+    sanitiseInput(query);
+    logAudit("nexus_recommend", { query: query.slice(0, 100), topK }, 0);
+    return nexusTool.execute({ query, topK, storeMetaSkill });
   }
 );
 
