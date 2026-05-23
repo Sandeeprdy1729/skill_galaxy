@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)](LICENSE)
 [![Skills](https://img.shields.io/badge/Skills-10%2C171%2B-brightgreen?style=flat-square)](https://skill-galaxy.vercel.app/)
 [![Built by Timps](https://img.shields.io/badge/Built%20by-Timps-purple?style=flat-square)](https://timps-website.vercel.app/)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?style=flat-square&logo=discord&logoColor=white)](https://discord.gg/MmsTNm8WF6)
 
 ---
 
@@ -303,6 +304,14 @@ SkillForge is an **evolutionary skill composer** that automatically combines mul
 Avg Tokens:  4,820 → 1,340 (72% savings)
 Accuracy:   +11% via synergy-aware selection
 ```
+
+---
+
+## Community
+
+Join the Discord for real-time chat, skill submission help, and announcements:
+
+**[discord.gg/MmsTNm8WF6](https://discord.gg/MmsTNm8WF6)**
 
 ---
 
