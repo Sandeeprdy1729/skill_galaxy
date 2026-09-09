@@ -1,4 +1,4 @@
-# ✦ SkillGalaxy — Claude Skills Marketplace
+ ✦ SkillGalaxy — Claude Skills Marketplace
 
 > **The free, open marketplace of `.md` skill files for Claude Projects.**  
 > Download once. Claude applies it automatically in every conversation. Forever.
